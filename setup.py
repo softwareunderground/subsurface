@@ -2,12 +2,15 @@
 """
 Python installation file.
 """
+from os import path
 from setuptools import setup
 import re
 
+this_directory = path.abspath(path.dirname(__file__))
+
 verstr = 'unknown'
-VERSIONFILE = "subsurface/_version.py"
-with open(VERSIONFILE, "r")as f:
+VERSIONFILE = path.join(this_directory, "subsurface", "_version.py")
+with open(VERSIONFILE, 'r', encoding='utf-8')as f:
     verstrline = f.read().strip()
     pattern = re.compile(r"__version__ = ['\"](.*)['\"]")
     mo = pattern.search(verstrline)
@@ -15,6 +18,10 @@ if mo:
     verstr = mo.group(1)
 else:
     raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
+
+DESCRIPTION_FILE = path.join(this_directory, 'README.md')
+with open(DESCRIPTION_FILE, 'r', encoding='utf-8') as f:
+    long_description = f.read()
 
 REQUIREMENTS = ['numpy',
                 ]
@@ -35,6 +42,7 @@ CLASSIFIERS = ['Development Status :: 3 - Alpha',
 setup(name='subsurface',
       version=verstr,
       description='Subsurface data types and utilities',
+      long_description=long_description,
       url='https://softwareunderground.org',
       author='Software Underground',
       author_email='hello@softwareunderground.org',
