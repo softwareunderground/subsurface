@@ -2,8 +2,8 @@ import xarray as xr
 
 
 class Seismic(object):
-    def __init__(self, data):
-        self._obj = xr.DataArray(data)
+    def __init__(self, data, *args, **kwargs):
+        self._obj = xr.DataArray(data, *args, **kwargs)
         
     def __getattr__(self, attr):
         if attr in self.__dict__:
@@ -18,3 +18,11 @@ class Seismic(object):
     
     def __str__(self):
         return "Seismic"
+
+    def add_coords(self):
+        """Ability to easily add physical coordinates."""
+        raise NotImplementedError
+
+    def to_segy(self):
+        """Write to SEGY file."""
+        raise NotImplementedError
