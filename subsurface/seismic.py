@@ -17,7 +17,13 @@ class Seismic:
         return getattr(self._xarray, attr)
     
     def __getitem__(self, item):
-        return self._xarray[item]
+        if isinstance(item, str):
+            return self._xarray._getitem_coord(item)
+
+        # preserve coordinates 
+        cp = list(self._xarray.coords.items())  # parent coordinates
+        coords = [(cp[i]) for i, it in enumerate(item) if not type(it) == int]
+        return Seismic(self._xarray[item].data, coords=coords)
     
     def __repr__(self):
         return self._xarray.__repr__()
@@ -32,3 +38,7 @@ class Seismic:
     def to_segy(self):
         """Write to SEGY file."""
         raise NotImplementedError
+
+    @property
+    def plot(self):
+        return xr.plot.plot._PlotMethods(self)
