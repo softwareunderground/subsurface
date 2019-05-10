@@ -1,5 +1,5 @@
 import pytest
-from subsurface import Seismic, from_segy
+from subsurface.seismic import Seismic, from_segy
 import numpy as np
 import segyio
 

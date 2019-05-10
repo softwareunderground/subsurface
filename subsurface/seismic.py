@@ -1,5 +1,6 @@
 import xarray as xr
 from nptyping import Array
+import segyio
 
 
 class Seismic:
@@ -41,7 +42,7 @@ class Seismic:
 
     @property
     def plot(self):
-        return xr.plot.plot._PlotMethods(self)
+        xr.plot.plot._PlotMethods(self)
 
 
 def from_segy(filepath:str) -> Seismic:
@@ -68,10 +69,4 @@ def from_segy(filepath:str) -> Seismic:
     # ]
 
     cube = segyio.tools.cube(filepath)
-    # cube = np.flip(cube, axis=2)
-    # cube = np.flip(cube, axis=0)
-    # cube = np.flip(cube, axis=1)
-    # cube = np.flip(cube, axis=1)
-    # cube = cube.T
-    # cube = np.flip(cube, axis=0)
     return Seismic(cube, coords=coords)
