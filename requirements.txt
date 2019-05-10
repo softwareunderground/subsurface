@@ -1,0 +1,3 @@
+xarray
+nptyping
+segyio
