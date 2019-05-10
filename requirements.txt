@@ -1,3 +1,4 @@
 xarray
 nptyping
 segyio
+pytest
