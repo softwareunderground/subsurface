@@ -75,4 +75,6 @@ def from_segy(filepath:str, coords=None) -> Seismic:
         ]
 
     cube = segyio.tools.cube(filepath)
-    return Seismic(cube, coords=coords)
+    seismic = Seismic(cube, coords=coords)
+    seismic.header = header
+    return seismic
