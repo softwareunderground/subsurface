@@ -1,0 +1,4 @@
+xarray
+nptyping
+segyio
+pytest
