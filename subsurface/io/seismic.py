@@ -1,11 +1,13 @@
 from ..seismic import Seismic
 import segyio
+from ..units import *
 
 def from_segy(filepath:str) -> Seismic:
     """Create a Seismic data object from a SEGY file.
     
     Args:
         filepath (str): Filepath to the SEGY file.
+        units (units): Unit system for SEGY file.
     
     Returns:
         Seismic: Seismic data object based on xarray.DataArray.
