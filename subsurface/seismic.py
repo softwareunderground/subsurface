@@ -42,3 +42,36 @@ class Seismic:
     @property
     def plot(self):
         return xr.plot.plot._PlotMethods(self)
+
+
+def from_segy(filepath:str) -> Seismic:
+    """Create a Seismic data object from a SEGY file.
+    
+    Args:
+        filepath (str): Filepath to the SEGY file.
+    
+    Returns:
+        Seismic: Seismic data object based on xarray.DataArray.
+    """
+    with segyio.open(filepath) as sf:
+        sf.mmap()  # memory mapping
+        xlines = sf.xlines
+        ilines = sf.ilines
+        samples = sf.samples
+        header = sf.bin
+    
+    coords = None
+    # [
+    #     ("ilines", ilines), 
+    #     ("xlinesa", xlines),
+    #     ("samples", samples)
+    # ]
+
+    cube = segyio.tools.cube(filepath)
+    # cube = np.flip(cube, axis=2)
+    # cube = np.flip(cube, axis=0)
+    # cube = np.flip(cube, axis=1)
+    # cube = np.flip(cube, axis=1)
+    # cube = cube.T
+    # cube = np.flip(cube, axis=0)
+    return Seismic(cube, coords=coords)
