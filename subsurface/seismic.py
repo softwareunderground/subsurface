@@ -1,5 +1,7 @@
 import xarray as xr
 from nptyping import Array
+import segyio
+import matplotlib.pyplot as plt
 
 import numpy as np
 
@@ -14,6 +16,7 @@ class Seismic:
         """
         self._xarray = xr.DataArray(data, *args, **kwargs)
         self._units = self._xarray.attrs.get('units', 'dimensionless')
+        self.n_shp = len(self._xarray.data.shape)
         
     def __getattr__(self, attr):
         if attr in self.__dict__:
@@ -43,9 +46,13 @@ class Seismic:
         """Ability to easily add physical coordinates."""
         raise NotImplementedError
 
-    def to_segy(self):
-        """Write to SEGY file."""
-        raise NotImplementedError
+    def to_segy(self, filepath: str) -> None:
+        """Write given Seismic to SEGY file using segyio.tools.from_array().
+        
+        Args:
+            filepath (str): Filepath for SEGY file.
+        """
+        segyio.tools.from_array(filepath, self._xarray.data)
 
     @property
     def plot(self):
@@ -73,3 +80,32 @@ class Seismic:
     def set_units(self, units):
         """Set the data values to different units in-place."""
         self._units = self._xarray.attrs['units'] = str(units)
+        
+
+def from_segy(filepath:str, coords=None) -> Seismic:
+    """Create a Seismic data object from a SEGY file.
+    
+    Args:
+        filepath (str): Filepath to the SEGY file.
+    
+    Returns:
+        Seismic: Seismic data object based on xarray.DataArray.
+    """
+    with segyio.open(filepath) as sf:
+        sf.mmap()  # memory mapping
+        xlines = sf.xlines
+        ilines = sf.ilines
+        samples = sf.samples
+        header = sf.bin
+
+    if not coords:
+        coords = [
+            ("ilines", ilines), 
+            ("xlines", xlines),
+            ("samples", samples)
+        ]
+
+    cube = segyio.tools.cube(filepath)
+    seismic = Seismic(cube, coords=coords)
+    seismic.header = header
+    return seismic
