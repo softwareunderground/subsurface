@@ -1,5 +1,4 @@
 import pytest
-from subsurface.io import from_segy
 from subsurface.seismic import Seismic, from_segy
 from subsurface import units
 import xarray.testing
@@ -30,7 +29,6 @@ def test_seismic_units():
     """Test creating Seismic instance from SEGY file."""
     seismic = from_segy("tests/data/test.segy")
     assert seismic.units == units.dimensionless
-
 
 def test_seismic_unit_setting():
     """Test creating Seismic instance from SEGY file."""

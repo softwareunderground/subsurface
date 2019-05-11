@@ -1,3 +1,4 @@
+
 import xarray as xr
 from nptyping import Array
 import segyio
@@ -8,21 +9,21 @@ import numpy as np
 from .units import DimensionalityError, units
 
 class Seismic:
-    def __init__(self, data: Array, *args, **kwargs):
+    def __init__(self, data: Array, units='dimensionless', *args, **kwargs):
         """Seismic data object based on xarray.DataArray.
         
         Args:
             data (Array): np.ndarray of the seismic cube / section.
         """
         self._xarray = xr.DataArray(data, *args, **kwargs)
-        self._units = self._xarray.attrs.get('units', 'dimensionless')
+        self._units = self._xarray.attrs.get('units', units)    
         self.n_shp = len(self._xarray.data.shape)
         
     def __getattr__(self, attr):
         if attr in self.__dict__:
             return getattr(self, attr)
         return getattr(self._xarray, attr)
-    
+
     def __getitem__(self, item):
         if isinstance(item, str):
             return self._xarray._getitem_coord(item)
@@ -30,7 +31,9 @@ class Seismic:
         # preserve coordinates 
         cp = list(self._xarray.coords.items())  # parent coordinates
         coords = [(cp[i]) for i, it in enumerate(item) if not type(it) == int]
-        return Seismic(self._xarray[item].data, coords=coords)
+        # preserve units
+        nits = self._units
+        return Seismic(self._xarray[item].data, coords=coords, units=nits)
 
     def copy(self):
         """Deep copy file."""
@@ -58,6 +61,9 @@ class Seismic:
     def plot(self):
         return xr.plot.plot._PlotMethods(self)
 
+    # Copyright (c) 2018 MetPy Developers.
+    # Distributed under the terms of the BSD 3-Clause License.
+    # SPDX-License-Identifier: BSD-3-Clause
     @property
     def units(self):
         return units(self._units)
@@ -80,9 +86,10 @@ class Seismic:
     def set_units(self, units):
         """Set the data values to different units in-place."""
         self._units = self._xarray.attrs['units'] = str(units)
-        
+    
+    # End of MetPy Code.
 
-def from_segy(filepath:str, coords=None) -> Seismic:
+def from_segy(filepath:str, coords=None, units='dimensionless') -> Seismic:
     """Create a Seismic data object from a SEGY file.
     
     Args:
@@ -106,6 +113,6 @@ def from_segy(filepath:str, coords=None) -> Seismic:
         ]
 
     cube = segyio.tools.cube(filepath)
-    seismic = Seismic(cube, coords=coords)
+    seismic = Seismic(cube, coords=coords, units=units)
     seismic.header = header
     return seismic
