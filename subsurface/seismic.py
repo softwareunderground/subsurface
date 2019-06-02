@@ -1,3 +1,6 @@
+# Copyright (c) 2018 MetPy Developers.
+# Distributed under the terms of the BSD 3-Clause License.
+# SPDX-License-Identifier: BSD-3-Clause
 
 import xarray as xr
 from nptyping import Array
@@ -6,9 +9,10 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 
-from .units import DimensionalityError, units
+from .xarray import *
+from .xarray import _reassign_quantity_indexer
 
-class Seismic:
+class Seismic(xr.DataArray):
     def __init__(self, data: Array, units='dimensionless', *args, **kwargs):
         """Seismic data object based on xarray.DataArray.
         
@@ -22,7 +26,10 @@ class Seismic:
     def __getattr__(self, attr):
         if attr in self.__dict__:
             return getattr(self, attr)
-        return getattr(self._xarray, attr)
+        try:
+            return getattr(self._xarray.subsurface, attr)
+        except:
+            return getattr(self._xarray, attr)
 
     def __getitem__(self, item):
         if isinstance(item, str):
@@ -31,23 +38,14 @@ class Seismic:
         # preserve coordinates 
         cp = list(self._xarray.coords.items())  # parent coordinates
         coords = [(cp[i]) for i, it in enumerate(item) if not type(it) == int]
-        # preserve units
         nits = self._units
         return Seismic(self._xarray[item].data, coords=coords, units=nits)
-
-    def copy(self):
-        """Deep copy file."""
-        raise NotImplementedError
-
+    
     def __repr__(self):
         return self._xarray.__repr__()
     
     def __str__(self):
         return "Seismic"
-
-    def add_coords(self):
-        """Ability to easily add physical coordinates."""
-        raise NotImplementedError
 
     def to_segy(self, filepath: str) -> None:
         """Write given Seismic to SEGY file using segyio.tools.from_array().
@@ -60,32 +58,6 @@ class Seismic:
     @property
     def plot(self):
         return xr.plot.plot._PlotMethods(self)
-
-    # Copyright (c) 2018 MetPy Developers.
-    # Distributed under the terms of the BSD 3-Clause License.
-    # SPDX-License-Identifier: BSD-3-Clause
-    @property
-    def units(self):
-        return units(self._units)
-
-    @property
-    def unit_array(self):
-        """Return data values as a `pint.Quantity`."""
-        return self._xarray.values * self.units
-    
-    @unit_array.setter
-    def unit_array(self, values):
-        """Set data values as a `pint.Quantity`."""
-        self._xarray.values = values
-        self._units = self._xarray.attrs['units'] = str(values.units)
-
-    def convert_units(self, units):
-        """Convert the data values to different units in-place."""
-        self.unit_array = self.unit_array.to(units)
-    
-    def set_units(self, units):
-        """Set the data values to different units in-place."""
-        self._units = self._xarray.attrs['units'] = str(units)
     
     # End of MetPy Code.
 

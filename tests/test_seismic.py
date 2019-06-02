@@ -24,6 +24,8 @@ def test_from_segy():
 
 def test_getitem(seismic):
     assert type(seismic.loc[:,:,50]) == Seismic
+    assert seismic.loc[:,:,50].shape == (10,10)
+    assert seismic.loc[:,:,10:19].shape == (10,10,10)
 
 def test_seismic_units():
     """Test creating Seismic instance from SEGY file."""
