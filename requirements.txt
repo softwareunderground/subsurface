@@ -1,4 +1,4 @@
 xarray
-nptyping
 segyio
 pytest
+matplotlib

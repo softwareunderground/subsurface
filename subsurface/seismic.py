@@ -1,11 +1,10 @@
 import xarray as xr
-from nptyping import Array
 import segyio
 import matplotlib.pyplot as plt
 
 
 class Seismic:
-    def __init__(self, data: Array, *args, **kwargs):
+    def __init__(self, data: np.ndarray, *args, **kwargs):
         """Seismic data object based on xarray.DataArray.
         
         Args:
