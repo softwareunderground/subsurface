@@ -49,6 +49,46 @@ class Seismic:
     @property
     def plot(self):
         return xr.plot.plot._PlotMethods(self)
+
+    @property
+    def plot_(self):
+        if self.n_shp == 1:
+            # TODO: plot seismic trace as wiggle plot
+            return _plot_1d(self)
+        elif self.n_shp == 2:
+            # TODO: plot seismic section using imshow
+        elif self.n_shp >= 3:
+            # TODO: plot seismic as hist
+
+
+def _plot_1d(seismic: Seismic, linekwargs={}, fillkwargs={}):
+    fig, ax = plt.subplots(figsize=(2,8))
+    
+    lkwargs = dict(
+        color="black",
+        linewidth=1
+    )
+    lkwargs.update(linekwargs)
+
+    fkwargs = dict(
+        color="grey"
+    )
+    fkwargs.update(fillkwargs)
+
+    y = np.arange(0, *seismic.data.shape)
+    ax.plot(seismic.data, y, **lkwargs)
+    x1 = seismic.data.copy()
+    x1[x1<=0] = 0
+    ax.fill_betweenx(y, x1=x1, **fkwargs)
+    return ax
+
+
+def _plot_2d(seismic: Seismic):
+    pass
+
+
+def _plot_hist(seismic: Seismic):
+    pass
         
 
 def from_segy(filepath:str, coords=None) -> Seismic:
