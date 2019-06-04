@@ -1,6 +1,8 @@
 import xarray as xr
 import segyio
 import matplotlib.pyplot as plt
+import numpy as np
+import pyvista as pv
 
 
 class Seismic:
@@ -10,9 +12,9 @@ class Seismic:
         Args:
             data (Array): np.ndarray of the seismic cube / section.
         """
-        self._xarray = xr.DataArray(data, *args, **kwargs)
-        self.n_shp = len(self._xarray.data.shape)
-        
+        self.n_shp = len(data.shape)
+        self._xarray = xr.DataArray(self._flip(data), *args, **kwargs)
+
     def __getattr__(self, attr):
         if attr in self.__dict__:
             return getattr(self, attr)
@@ -33,6 +35,22 @@ class Seismic:
     def __str__(self):
         return "Seismic"
 
+    def _flip(self, data: np.ndarray) -> np.ndarray:
+        """Flip SEGY data to fit with numpy array orientation.
+
+        Args:
+            data (np.ndarray): Seismic data.
+
+        Returns:
+            (np.ndarray) Flipped seismic data.
+        """
+        if self.n_shp == 1:
+            return data
+        if self.n_shp == 2:
+            return data
+        if self.n_shp == 3:
+            return np.flip(data, axis=2)
+
     def add_coords(self):
         """Ability to easily add physical coordinates."""
         raise NotImplementedError
@@ -45,19 +63,33 @@ class Seismic:
         """
         segyio.tools.from_array(filepath, self._xarray.data)
 
-    @property
-    def plot(self):
+    def plot_(self):
         return xr.plot.plot._PlotMethods(self)
 
-    @property
-    def plot_(self):
+    def plot(self):
         if self.n_shp == 1:
-            # TODO: plot seismic trace as wiggle plot
             return _plot_1d(self)
         elif self.n_shp == 2:
-            # TODO: plot seismic section using imshow
+            pass
+            # TODO: plot seismic section using imshow for correct orientation
         elif self.n_shp >= 3:
-            # TODO: plot seismic as hist
+            _plot_3d(self)
+
+    def create_pyvista_grid(self) -> pv.grid.UniformGrid:
+        """Generate UniformGrid object for 3D plotting of the seismic.
+
+        Args:
+            seismic (Seismic): Seismic object.
+
+        Returns:
+            (pv.grid.UniformGrid)
+        """
+        grid = pv.UniformGrid()
+        grid.spacing = (1, 1, 1)  # TODO: cell sizes? vertical exaggeration etc
+        grid.dimensions = np.array(self.data.shape) + 1
+        grid.cell_arrays["values"] = self.data.flatten(order="F")
+        # TODO: correct orientation of cube
+        return grid
 
 
 def _plot_1d(seismic: Seismic, linekwargs={}, fillkwargs={}):
@@ -80,6 +112,16 @@ def _plot_1d(seismic: Seismic, linekwargs={}, fillkwargs={}):
     x1[x1<=0] = 0
     ax.fill_betweenx(y, x1=x1, **fkwargs)
     return ax
+
+
+def _plot_3d(seismic: Seismic):
+    if not hasattr(seismic, "grid"):
+        seismic.grid = seismic.create_pyvista_grid()
+
+    seismic.grid.plot(cmap="seismic")
+
+
+
 
 
 def _plot_2d(seismic: Seismic):
