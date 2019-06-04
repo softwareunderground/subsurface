@@ -91,6 +91,12 @@ class Seismic:
         # TODO: correct orientation of cube
         return grid
 
+    def plot_3d_slices(self):
+        if self.n_shp != 3:
+            raise AssertionError("Seismic data needs to be a 3-D volume.")
+        # TODO: cmap, kwarg passthrough
+        pv.OrthogonalSlicer(self.grid)
+
 
 def _plot_1d(seismic: Seismic, linekwargs={}, fillkwargs={}):
     fig, ax = plt.subplots(figsize=(2,8))
@@ -119,9 +125,6 @@ def _plot_3d(seismic: Seismic):
         seismic.grid = seismic.create_pyvista_grid()
 
     seismic.grid.plot(cmap="seismic")
-
-
-
 
 
 def _plot_2d(seismic: Seismic):
