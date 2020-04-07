@@ -1,4 +1,7 @@
+python==3.7
+pandas
 xarray
 segyio
 pytest
 matplotlib
+pyvista
