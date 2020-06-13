@@ -46,7 +46,7 @@ class PointSet(Common):
         if isinstance(data, pd.DataFrame):
             if len(point_column_names) != 3:
                 raise ValueError() # TODO: need much better checking than this
-            self._df_points = data[point_column_names]
+            self._df_points = data[list(point_column_names)]
             data_column_names = data.keys().difference(point_column_names)
             self._df_point_data = data[data_column_names]
 
@@ -98,7 +98,7 @@ class _CellDataMixin(object):
     def __init__(self, cell_data=None):
         self._df_cell_data = pd.DataFrame()
         if isinstance(cell_data, pd.DataFrame):
-            self._df_cell_data = data
+            self._df_cell_data = cell_data
 
     @property
     def cell_data(self):
@@ -149,6 +149,9 @@ class TriSurf(PointSet, _CellDataMixin):
 
         # TODO: these must all be integer dtypes!
         self._df_tri_indices = pd.DataFrame(columns=['a', 'b', 'c'])
+        if isinstance(tri_indices, pd.DataFrame):
+            # TODO: run checks to valides indices, dtype, etc.
+            self._df_tri_indices = tri_indices
 
     @property
     def triangles(self):
@@ -212,6 +215,15 @@ class LineSet(PointSet, _CellDataMixin):
 
         # TODO: these must all be integer dtypes!
         self._df_segment_indices = pd.DataFrame(columns=['a', 'b'])
+        if segment_indices is None:
+            # Automattically generate segment indices in order
+            a = np.arange(0, self.n_points-1, dtype=np.int_)
+            b = np.arange(1, self.n_points, dtype=np.int_)
+            self._df_segment_indices['a'] = a
+            self._df_segment_indices['b'] = b
+        elif isinstance(segment_indices, pd.DataFrame):
+            # TODO: run checks!!
+            self._df_segment_indices = segment_indices
 
     @property
     def segments(self):
