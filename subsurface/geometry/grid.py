@@ -1,3 +1,7 @@
+"""For regularly gridded datasets like rasters and tensor meshes.
+
+"""
+
 import xarray as xr
 
 
