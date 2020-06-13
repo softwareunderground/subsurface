@@ -68,3 +68,18 @@ def test_line_set_init():
     mesh = ss.geometry.LineSet(dfv)
     assert mesh.n_points == len(vertices)
     assert mesh.n_segments == len(vertices) - 1
+
+
+def test_tetra_mesh_init():
+    # Single celled example
+    vertices = np.array([[0, 0, 0],
+                         [1, 0, 0],
+                         [1, 1, 0],
+                         [0, 1, 1]])
+    tets = np.array([[0, 1, 2, 3],])
+    dfv = pd.DataFrame(vertices, columns=['x', 'y', 'z'])
+    dft = pd.DataFrame(tets, columns=['a', 'b', 'c', 'd'])
+
+    mesh = ss.geometry.TetraMesh(dfv, dft)
+    assert mesh.n_points == len(vertices)
+    assert mesh.n_tetrahedrals == len(tets)

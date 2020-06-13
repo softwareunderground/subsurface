@@ -4,8 +4,10 @@
 
 import xarray as xr
 
+from .common import Common
 
-class GridData:
+
+class GridData(Common):
     def __init__(self):
         self.ds = xr.Dataset()
 

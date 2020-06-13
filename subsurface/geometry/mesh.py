@@ -27,7 +27,7 @@ class PointSet(Common):
     """
 
     def __init__(self,
-                 data=None,
+                 points=None,
                  point_column_names=('x', 'y', 'z'),
                  ):
         """
@@ -35,7 +35,7 @@ class PointSet(Common):
 
         Parameters
         ----------
-        data : pd.DataFrame
+        points : pd.DataFrame
             A dataframe that has XYZ coordinates that are named as such.
             Additional columns will be tracked as point data.
 
@@ -43,12 +43,12 @@ class PointSet(Common):
         self._df_points = pd.DataFrame(columns=['X', 'Y', 'Z'])
         self._df_point_data = pd.DataFrame()
 
-        if isinstance(data, pd.DataFrame):
+        if isinstance(points, pd.DataFrame):
             if len(point_column_names) != 3:
                 raise ValueError() # TODO: need much better checking than this
-            self._df_points = data[list(point_column_names)]
-            data_column_names = data.keys().difference(point_column_names)
-            self._df_point_data = data[data_column_names]
+            self._df_points = points[list(point_column_names)]
+            data_column_names = points.keys().difference(point_column_names)
+            self._df_point_data = points[data_column_names]
 
     @property
     def points(self):
@@ -67,7 +67,7 @@ class PointSet(Common):
     @property
     def point_data_dict(self):
         """Fetch the point data as a disctionary of numpy arrays."""
-        return dict(zip(self._df_point_data.index, self._df_point_data.values))
+        return dict(zip(self._df_point_data.keys(), self._df_point_data.values.T))
 
     def validate(self):
         """Make sure the number of vertices matches the associated data."""
@@ -112,7 +112,7 @@ class _CellDataMixin(object):
     @property
     def cell_data_dict(self):
         """Fetch the cell data as a disctionary of numpy arrays."""
-        return dict(zip(self._df_cell_data.index, self._df_cell_data.values))
+        return dict(zip(self._df_cell_data.keys(), self._df_cell_data.values.T))
 
 
 class TriSurf(PointSet, _CellDataMixin):
@@ -125,7 +125,7 @@ class TriSurf(PointSet, _CellDataMixin):
 
     """
     def __init__(self,
-                 data=None,
+                 points=None,
                  tri_indices=None,
                  tri_data=None,
                  point_column_names=('x', 'y', 'z'),
@@ -135,7 +135,7 @@ class TriSurf(PointSet, _CellDataMixin):
 
         Parameters
         ----------
-        data : pd.DataFrame
+        points : pd.DataFrame
             A dataframe that has XYZ coordinates that are named as such.
             Additional columns will be tracked as point data.
 
@@ -144,7 +144,7 @@ class TriSurf(PointSet, _CellDataMixin):
             cell in the mesh. Each column corresponds to a triangle cell.
 
         """
-        PointSet.__init__(self, data=data, point_column_names=point_column_names)
+        PointSet.__init__(self, points=points, point_column_names=point_column_names)
         _CellDataMixin.__init__(self, cell_data=tri_data)
 
         # TODO: these must all be integer dtypes!
@@ -185,7 +185,7 @@ class LineSet(PointSet, _CellDataMixin):
 
     """
     def __init__(self,
-                 data=None,
+                 points=None,
                  segment_indices=None,
                  segment_data=None,
                  point_column_names=('x', 'y', 'z'),
@@ -195,7 +195,7 @@ class LineSet(PointSet, _CellDataMixin):
 
         Parameters
         ----------
-        data : pd.DataFrame
+        points : pd.DataFrame
             A dataframe that has XYZ coordinates that are named as such.
             Additional columns will be tracked as point data.
 
@@ -210,7 +210,7 @@ class LineSet(PointSet, _CellDataMixin):
             (cell).
 
         """
-        PointSet.__init__(self, data=data, point_column_names=point_column_names)
+        PointSet.__init__(self, points=points, point_column_names=point_column_names)
         _CellDataMixin.__init__(self, cell_data=segment_data)
 
         # TODO: these must all be integer dtypes!
@@ -247,3 +247,72 @@ class LineSet(PointSet, _CellDataMixin):
         lineset.point_arrays.update(self.point_data_dict)
         lineset.cell_arrays.update(self.cell_data_dict)
         return lineset
+
+
+
+class TetraMesh(PointSet, _CellDataMixin):
+    """PointSet with tetrahedron cells.
+
+    This dataset defines cell connectivity between points to create
+    tetrahedrons. This is volumetric.
+
+    """
+    def __init__(self,
+                 points=None,
+                 tetra_indices=None,
+                 tetra_data=None,
+                 point_column_names=('x', 'y', 'z'),
+                 ):
+        """
+        Initialize the pointset from a datafame.
+
+        Parameters
+        ----------
+        points : pd.DataFrame
+            A dataframe that has XYZ coordinates that are named as such.
+            Additional columns will be tracked as point data.
+
+        tetra_indices : pd.DataFrame
+            A four column dataframe of the indices of the points for each
+            tetrahedron in the mesh. Each column corresponds to a tetrahedron.
+            Every tetrahedron is defined by the four points; where the first
+            three (0,1,2) are the base of the tetrahedron which, using the
+            right hand rule, forms a triangle whose normal points in the
+            direction of the fourth point.
+
+        tetra_data: pd.DataFrame
+            A DataFrame of scalar data to associate with each line segment
+            (cell).
+
+        """
+        PointSet.__init__(self, points=points, point_column_names=point_column_names)
+        _CellDataMixin.__init__(self, cell_data=tetra_data)
+
+        # TODO: these must all be integer dtypes!
+        self._df_tetra_indices = pd.DataFrame(columns=['a', 'b', 'c', 'd'])
+        if isinstance(tetra_indices, pd.DataFrame):
+            # TODO: run checks!!
+            self._df_tetra_indices = tetra_indices
+
+    @property
+    def tetrahedrals(self):
+        return self._df_tetra_indices
+
+    @property
+    def n_tetrahedrals(self):
+        return len(self.tetrahedrals)
+
+    def to_pyvista(self):
+        try:
+            import pyvista as pv
+            import vtk
+        except:
+            raise PyVistaImportError()
+        vertices = self.points.values
+        tets = self.tetrahedrals.values
+        cells = np.c_[np.full(len(tets), 4), tets]
+        ctypes = np.array([vtk.VTK_TETRA,], np.int32)
+        mesh = pv.UnstructuredGrid(cells, ctypes, vertices)
+        mesh.point_arrays.update(self.point_data_dict)
+        mesh.cell_arrays.update(self.cell_data_dict)
+        return mesh
