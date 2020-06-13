@@ -1,7 +1,13 @@
+"""
+TODO: This is legacy code waiting to be updated to the new ideas
+
+
+"""
+
 import pandas as pd
 
 
-def read_faultsticks_kingdom(fp:str, name=None):
+def read_faultsticks_kingdom(fp: str, name=None):
     """
     Reads in Kingdom fault stick files (kingdom) exported from Petrel (tested
     with Petrel 2017) and returns pandas DataFrame.

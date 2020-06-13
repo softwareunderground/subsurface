@@ -1,3 +1,8 @@
+"""
+TODO: This is legacy code waiting to be updated to the new ideas
+
+"""
+
 import xarray as xr
 import segyio
 import matplotlib.pyplot as plt

@@ -1,12 +1,12 @@
 import pytest
 import pandas as pd
-from subsurface.io import faults
-from subsurface.fault import FaultSticks
+from subsurface.io.faults import faults
+from subsurface.geological_formats.fault import FaultSticks
 
 
 @pytest.fixture(scope="module")
 def get_faultsticks() -> pd.DataFrame:
-    fp = "./data/faultsticks"
+    fp = "../data/faultsticks"
     faultsticks = faults.read_faultsticks_charisma(fp)
     return faultsticks
 
