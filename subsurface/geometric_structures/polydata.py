@@ -15,6 +15,7 @@ class PolyData:
 		self.points = pd.DataFrame(columns=['X', 'Y', 'Z'])
 
 		self.edges = pd.DataFrame()
+
 	# Add pyvista methods ...
 
 
