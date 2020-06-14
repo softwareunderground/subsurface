@@ -390,3 +390,9 @@ class CurvilinearMesh(PointSet, _CellDataMixin):
         mesh.point_arrays.update(self.point_data_dict)
         mesh.cell_arrays.update(self.cell_data_dict)
         return mesh
+
+
+class OctreeMesh(PointSet, _CellDataMixin):
+    """TODO: implement as Dom discussed with data frames to track the levels.
+    """
+    pass
