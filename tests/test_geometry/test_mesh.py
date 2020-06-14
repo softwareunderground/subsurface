@@ -83,3 +83,17 @@ def test_tetra_mesh_init():
     mesh = ss.geometry.TetraMesh(dfv, dft)
     assert mesh.n_points == len(vertices)
     assert mesh.n_tetrahedrals == len(tets)
+
+
+def test_curvi_mesh_init():
+    xrng = np.arange(-10, 10, 2)
+    yrng = np.arange(-10, 10, 2)
+    zrng = np.arange(-10, 10, 2)
+    xx, yy, zz = np.meshgrid(xrng, yrng, zrng)
+    vertices = np.c_[xx.ravel(), yy.ravel(), zz.ravel()]
+    dfv = pd.DataFrame(vertices, columns=['x', 'y', 'z'])
+
+    dims = (len(xrng), len(yrng), len(zrng))
+    mesh = ss.geometry.CurvilinearMesh(dfv, dims)
+    assert mesh.n_points == len(vertices)
+    assert np.allclose((xx, yy, zz), mesh.meshgrid)
