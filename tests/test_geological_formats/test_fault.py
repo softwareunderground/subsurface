@@ -2,11 +2,14 @@ import pytest
 import pandas as pd
 from subsurface.io.faults import faults
 from subsurface.geological_formats.fault import FaultSticks
+import os
+
+input_path = os.path.dirname(__file__)+'/../data'
 
 
 @pytest.fixture(scope="module")
 def get_faultsticks() -> pd.DataFrame:
-    fp = "../data/faultsticks"
+    fp = input_path + "/faultsticks"
     faultsticks = faults.read_faultsticks_charisma(fp)
     return faultsticks
 

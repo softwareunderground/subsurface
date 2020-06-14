@@ -253,7 +253,6 @@ class LineSet(PointSet, _CellDataMixin):
         return lineset
 
 
-
 class TetraMesh(PointSet, _CellDataMixin):
     """PointSet with tetrahedron cells.
 
