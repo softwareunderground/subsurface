@@ -1,2 +1,2 @@
-from .mesh import PointSet, TriSurf, LineSet, TetraMesh, CurvilinearMesh
-from .grid import GridData
+from .unstructured_elements import PointSet, TriSurf, LineSet, TetraMesh, CurvilinearMesh
+from .structured_elements import GridData

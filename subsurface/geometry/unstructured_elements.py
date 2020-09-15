@@ -321,6 +321,7 @@ class TetraMesh(PointSet, _CellDataMixin):
         return mesh
 
 
+# This seems as a 2D unstructured grid
 class CurvilinearMesh(PointSet, _CellDataMixin):
     """Container for curvilinear mesh grids.
 

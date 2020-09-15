@@ -1,6 +1,2 @@
 pandas
 xarray
-segyio
-pytest
-matplotlib
-pyvista
