@@ -1,7 +1,12 @@
 from subsurface.geometry import LineSet
-from welly import Well, Location
 import pandas as pd
 from functools import wraps
+
+try:
+    from welly import Well, Location
+    welly_imported = True
+except ImportError:
+    welly_imported = False
 
 
 class WellyToSubsurface:
