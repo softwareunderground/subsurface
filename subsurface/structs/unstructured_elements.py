@@ -30,13 +30,12 @@ class PointSet(Common):
                  data: UnstructuredData
                  ):
         """
-        Initialize the pointset from a datafame.
+        Initialize the pointset from a base structure.
 
         Parameters
         ----------
-        points : pd.DataFrame
-            A dataframe that has XYZ coordinates that are named as such.
-            Additional columns will be tracked as point data.
+        data: UnstructuredData
+            Base object for unstructured data.
 
         """
         if data.edges.shape[1] > 1:
@@ -60,20 +59,9 @@ class PointSet(Common):
         return self.data.attributes
 
     @property
-    def point_data_dict(self, **kwargs):
+    def point_data_dict(self):
         """Fetch the point data as a dictionary of numpy arrays."""
-        return self.data.attributes.to_dict(**kwargs)
-
-    # def to_pyvista(self):
-    #     """Create a PyVista PolyData mesh."""
-    #     try:
-    #         import pyvista as pv
-    #     except:
-    #         raise PyVistaImportError()
-    #     point_cloud = pv.PolyData(self.points.values)
-    #     point_cloud.point_arrays.update(self.point_data_dict)
-    #     return point_cloud
-
+        return self.data.attributes_to_dict
 
 class TriSurf(Common):
     """PointSet with triangle cells.
@@ -152,15 +140,16 @@ class LineSet(Common):
         """
         if data.edges.shape[1] != 2:
             raise AttributeError('data.edges must be of the format'
-                                 'NDArray[(Any, 3), IntX]')
+                                 'NDArray[(Any, 2), IntX]')
         self.data = data
 
         # TODO: these must all be integer dtypes!
 
     def generate_default_edges(self):
-        a = np.arange(0, self.data.n_elements - 1, dtype=np.int_)
-        b = np.arange(1, self.data.n_elements, dtype=np.int_)
-        self.data.edges = np.vstack([a, b])
+        a = np.arange(0, self.data.n_points - 1, dtype=np.int_)
+        b = np.arange(1, self.data.n_points, dtype=np.int_)
+        self.data.edges = np.vstack([a, b]).T
+        return self.data.edges
 
     @property
     def segments(self):

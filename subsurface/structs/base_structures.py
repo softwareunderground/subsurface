@@ -21,12 +21,16 @@ class UnstructuredData:
         return self.edges.shape[0]
 
     @property
+    def n_vertex_per_element(self):
+        return self.edges.shape[1]
+
+    @property
     def n_points(self):
         return self.vertex.shape[0]
 
     @property
-    def attributes_to_dict(self, **kwargs):
-        return self.attributes_to_dict.to_dict(**kwargs)
+    def attributes_to_dict(self, orient='list'):
+        return self.attributes.to_dict(orient)
 
     def validate(self):
         """Make sure the number of vertices matches the associated data."""

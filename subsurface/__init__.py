@@ -1,4 +1,4 @@
 from . import io
 from . import interfaces
-from . import geometry
+from . import structs
 from . import geological_formats

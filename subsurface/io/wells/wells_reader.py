@@ -1,4 +1,4 @@
-from subsurface.geometry import LineSet
+from subsurface.structs import LineSet
 import pandas as pd
 from functools import wraps
 

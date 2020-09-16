@@ -1,6 +1,6 @@
 from typing import Union
 
-from subsurface.geometry.base_structures import UnstructuredData, StructuredData
+from subsurface.structs.base_structures import UnstructuredData, StructuredData
 
 
 class Common(object):

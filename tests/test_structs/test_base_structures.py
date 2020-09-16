@@ -1,6 +1,6 @@
 import pytest
 
-from subsurface.geometry.base_structures import UnstructuredData
+from subsurface.structs.base_structures import UnstructuredData
 import numpy as np
 import pandas as pd
 
