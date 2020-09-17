@@ -1,8 +1,12 @@
 Interfaces
 ==========
 
-Functionality to transform polydata and gridded data into supported
-libraries of the subsurface stack.
+Functionality to transform the *Subsurface data structures* to specific formats
+other libraries of the subsurface stack understand.
 
-This submodule could be moved to each individual library but for now I think
-it is a good idea to keep it here
+In principle, this subpackage only has used for transformations that feed to more
+than one library. Otherwise, **each individual library** should take care of the
+transformation.
+
+Notice, these modules are meant to be within the python ecosystem. To interact
+with the exterior use the subpackage `io`.

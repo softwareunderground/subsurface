@@ -1,0 +1,4 @@
+segyio
+pytest
+matplotlib
+pyvista

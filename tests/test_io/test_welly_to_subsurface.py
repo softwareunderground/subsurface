@@ -1,6 +1,9 @@
+import pytest
+
 import subsurface as ss
 import pandas as pd
 import numpy as np
+welly = pytest.importorskip('welly')
 
 
 def test_welly_to_subsurface():
