@@ -16,3 +16,6 @@ We are changing things. Help us figure it out!
 ## Installation
 
 The project is in pre-alpha and is not yet ready to be used.
+
+
+we are testing git
