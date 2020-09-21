@@ -24,4 +24,4 @@ def test_pyvista_line_set(line_set):
 
 def test_pyvista_tetra(tetra_set):
     s = to_pyvista_tetra(tetra_set)
-    pv_plot([s], image_2d=True)
+    pv_plot([s], image_2d=False)

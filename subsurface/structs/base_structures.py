@@ -7,6 +7,26 @@ import xarray as xr
 
 @dataclass
 class UnstructuredData:
+    """Primary structure definition for unstructured data
+
+    Attributes:
+        vertex (np.ndarray): NDArray[(Any, 3), FloatX]: XYZ point data
+        edges (np.ndarray): NDArray[(Any, ...), IntX]: Combination of vertex that create
+            different geometric elements
+        attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number associated to an element
+
+    Notes:
+        Depending on the shape of `edge` the following unstructured elements can be create:
+        - edges NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -> *Point cloud*.
+         E.g. Outcrop scan with lidar
+        - edges NDArray[(Any, 2), IntX] -> *Lines*. E.g. Borehole
+        - edges NDArray[(Any, 3), IntX] -> *Mesh*. E.g surface-DEM Topography
+        - edges NDArray[(Any, 4), IntX]
+            - -> *tetrahedron*
+            - -> *quadrilateral (or tetragon)* UNSUPPORTED?
+        - edges NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
+
+    """
     vertex: np.ndarray
     edges: np.ndarray
     attributes: pd.DataFrame = None
@@ -40,4 +60,11 @@ class UnstructuredData:
 
 @dataclass
 class StructuredData:
+    """Primary structure definition for structured data
+
+    Attributes:
+        structured_data (xr.Dataset)
+
+    """
+
     structured_data: xr.Dataset
