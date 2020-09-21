@@ -1,7 +1,7 @@
-#from pandas_ods_reader import read_ods
 import pandas as pd
 
-def read_in_land_surface_vertices(path_to_file : str):
+
+def read_in_land_surface_vertices(path_to_file: str):
     """
     Reads in csv files with x, y, z coordinates and returns pandas DataFrame.
 
