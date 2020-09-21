@@ -1,0 +1,32 @@
+DatasetHeader Begin
+	Version     = "3.0"
+        Description = "Total Bouguer correction including terrain and curvature at density 3.10 g/cc, low-pass filtered 100m"
+	DataSetType = ERStorage
+	DataType    = Raster
+	ByteOrder   = LSBFirst
+	CoordinateSpace Begin
+		CoordinateType = EN
+		Units          = "METERS"
+		Rotation = 0:00:00.000
+	CoordinateSpace End
+	RasterInfo Begin
+		CellType        = IEEE4ByteReal
+		RegistrationCellX = 0
+		RegistrationCellY = 0
+		NullCellValue = -1e+032
+		CellInfo Begin
+			Xdimension = 10
+			Ydimension = 10
+		CellInfo End
+		NrOfLines       = 781
+		NrOfCellsPerLine = 1301
+		RegistrationCoord Begin
+			Eastings = 3491995
+			Northings = 7515005
+		RegistrationCoord End
+		NrOfBands       = 1
+		BandId Begin
+			Value = "Band_1"
+		BandId End
+	RasterInfo End
+DatasetHeader End
