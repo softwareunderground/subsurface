@@ -6,10 +6,12 @@ import os
 
 input_path = os.path.dirname(__file__)+'/../data'
 
+
 @pytest.fixture(scope="module")
-def get_vertices() -> pd.DataFrame:
+def get_vertices() -> str:
     fp = input_path + "/land_surface_vertices.csv"
     return fp
+
 
 def test_land_surface_vertices_nrows(get_vertices):
     assert len(read_in_land_surface_vertices(get_vertices)) == 413250
