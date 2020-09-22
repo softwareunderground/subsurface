@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Union
 
 import numpy as np
 import pandas as pd
@@ -62,9 +63,74 @@ class UnstructuredData:
 class StructuredData:
     """Primary structure definition for structured data
 
+    Args:
+        data (xr.Dataset, xr.DataArray, np.ndarray): object containing
+         structured data, i.e. data that can be stored in multidimensional
+         numpy array. The preferred type to pass as data is directly a
+         xr.Dataset to be sure all the attributes are set and named as the user
+         wants.
+        data_name (str): If data is a numpy array or xarray DataArray, data_name
+         provides the name for the xarray data variable
+        coords (dict): If data is a numpy array coords provides the values for
+         the xarray dimension. These dimensions are 'x', 'y' and 'z'
+
     Attributes:
         structured_data (xr.Dataset)
 
     """
 
     structured_data: xr.Dataset
+
+    def __init__(
+            self,
+            data: Union[np.ndarray, xr.DataArray, xr.Dataset],
+            data_name: str = 'data',
+            coords: dict = None
+    ):
+
+        if type(data) == xr.Dataset:
+            self.structured_data = data
+
+        elif type(data) == xr.DataArray:
+            self.structured_data = xr.Dataset({data_name: data})
+
+        elif type(data) == np.ndarray:
+            if data.ndim == 2:
+                self.structured_data = xr.Dataset(
+                    {data_name: (['x', 'y'], data)},
+                    coords=coords
+                )
+            elif data.ndim == 3:
+                self.structured_data = xr.Dataset(
+                    {data_name: (['x', 'y', 'z'], data)},
+                    coords=coords
+                )
+        else:
+            AttributeError('data must be either xarray.Dataset, xarray.DataArray,'
+                           'or numpy.ndarray')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
