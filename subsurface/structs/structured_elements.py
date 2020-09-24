@@ -49,9 +49,25 @@ class StructuredGrid():
         grid_3d = np.meshgrid(self.coord['x'], self.coord['y'], self.coord['z'])
         return grid_3d
 
-    @property
-    def meshgrid_2d(self):
+    def meshgrid_2d(self, attribute:str = None):
+        """
+
+        Args:
+            attribute_name_coord_name(str): Name of the xarray.Dataset coord that will be used
+             for the z direction. This must be 2d
+
+        Returns:
+
+        """
         grid_2d = np.meshgrid(self.coord['x'], self.coord['y'])
+
+        if attribute is not None:
+            z_coord = self.ds.data[attribute].values
+            if z_coord.ndim != 2:
+                raise AttributeError('The attribute must be a 2D array')
+
+            grid_2d.append(z_coord)
+
         return grid_2d
 
         #return np.moveaxis(self.points.values.reshape((*self.dimensions, 3)), -1, 0)

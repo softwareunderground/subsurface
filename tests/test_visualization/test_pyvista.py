@@ -43,4 +43,22 @@ def test_pyvista_structured_grid(struc_data):
     sd = StructuredData(s)
     sg = StructuredGrid(sd)
     s = to_pyvista_grid(sg, 'lith')
+    pv_plot([s], image_2d=True)
+
+    s = to_pyvista_grid(sg, 'geo_map')
     pv_plot([s], image_2d=False)
+
+
+def test_random():
+    import numpy as np
+    # Define a simple Gaussian surface
+    n = 20
+    x = np.linspace(-200, 200, num=n) + np.random.uniform(-5, 5, size=n)
+    y = np.linspace(-200, 200, num=n) + np.random.uniform(-5, 5, size=n)
+    xx, yy = np.meshgrid(x, y)
+    A, b = 100, 100
+    zz = A * np.exp(-0.5 * ((xx / b) ** 2.0 + (yy / b) ** 2.0))
+
+    # Get the points as a 2D NumPy array (N by 3)
+    points = np.c_[xx.reshape(-1), yy.reshape(-1), zz.reshape(-1)]
+    points[0:5, :]

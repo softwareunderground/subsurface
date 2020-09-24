@@ -122,9 +122,15 @@ def to_pyvista_tetra(tetra_mesh: TetraMesh):
 
 
 def to_pyvista_grid(structured_grid: StructuredGrid, attribute: str):
-    coords = structured_grid.ds.data.coords
+    ndim = structured_grid.ds.data[attribute].ndim
+    if ndim == 2:
+        meshgrid = structured_grid.meshgrid_2d(attribute)
+    elif ndim == 3:
+        meshgrid = structured_grid.meshgrid_3d
+    else:
+        raise AttributeError('The DataArray does not have valid dimensionality.')
 
-    mesh = pv.StructuredGrid(*structured_grid.meshgrid_3d)
+    mesh = pv.StructuredGrid(*meshgrid)
     mesh.point_arrays.update({attribute: structured_grid.ds.data[attribute].values.ravel()})
 
     return mesh
