@@ -1,7 +1,10 @@
 import pytest
-from subsurface.structs.base_structures import UnstructuredData
+
+from subsurface.structs import StructuredGrid
+from subsurface.structs.base_structures import UnstructuredData, StructuredData
 from subsurface.visualization.to_pyvista import to_pyvista_points, pv_plot, \
-    to_pyvista_mesh, to_pyvista_line, to_pyvista_tetra
+    to_pyvista_mesh, to_pyvista_line, to_pyvista_tetra, to_pyvista_grid
+import xarray as xr
 
 pv = pytest.importorskip("pyvista")
 
@@ -24,4 +27,20 @@ def test_pyvista_line_set(line_set):
 
 def test_pyvista_tetra(tetra_set):
     s = to_pyvista_tetra(tetra_set)
+    pv_plot([s], image_2d=False)
+
+
+def test_pyvista_structured_grid(struc_data):
+    xx, yy, zz = struc_data[0]
+    geo_map, high = struc_data[1]
+    x_coord, y_coord, z_coord = struc_data[2:]
+    s = xr.Dataset({'lith': (["x", "y", 'z'], xx),
+                    'porosity': (["x", "y", 'z'], yy),
+                    'something_else': (["x", "y", 'z'], zz),
+                    'geo_map': (['x', 'y'], geo_map)},
+                   coords={'x': x_coord, 'y': y_coord, 'z': z_coord})
+    # StructuredData from Dataset
+    sd = StructuredData(s)
+    sg = StructuredGrid(sd)
+    s = to_pyvista_grid(sg, 'lith')
     pv_plot([s], image_2d=False)

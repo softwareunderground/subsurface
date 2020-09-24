@@ -22,16 +22,6 @@ def test_unstructured_data():
         print(foo)
 
 
-@pytest.fixture(scope='module')
-def struc_data():
-    xrng = np.arange(-10, 10, 2)
-    yrng = np.arange(-10, 10, 2)
-    zrng = np.arange(-10, 10, 2)
-    grid_3d = np.meshgrid(xrng*10, yrng*100, zrng*1000)
-    grid_2d = np.meshgrid(xrng*20, yrng*200)
-    return grid_3d, grid_2d, xrng, yrng, zrng
-
-
 def test_structured_data(struc_data):
     xx, yy, zz = struc_data[0]
     geo_map, high = struc_data[1]
@@ -47,7 +37,7 @@ def test_structured_data(struc_data):
 
     # StructuredData from DataArray
     b0 = xr.DataArray(xx, coords={'x': x_coord, 'y': y_coord, 'z': z_coord},
-                    dims=['x', 'y', 'z'])
+                      dims=['x', 'y', 'z'])
     b = StructuredData(b0)
     print(b)
 

@@ -75,11 +75,11 @@ class StructuredData:
          the xarray dimension. These dimensions are 'x', 'y' and 'z'
 
     Attributes:
-        structured_data (xr.Dataset)
+        data (xr.Dataset)
 
     """
 
-    structured_data: xr.Dataset
+    data: xr.Dataset
 
     def __init__(
             self,
@@ -89,25 +89,26 @@ class StructuredData:
     ):
 
         if type(data) == xr.Dataset:
-            self.structured_data = data
+            self.data = data
 
         elif type(data) == xr.DataArray:
-            self.structured_data = xr.Dataset({data_name: data})
+            self.data = xr.Dataset({data_name: data})
 
         elif type(data) == np.ndarray:
             if data.ndim == 2:
-                self.structured_data = xr.Dataset(
+                self.data = xr.Dataset(
                     {data_name: (['x', 'y'], data)},
                     coords=coords
                 )
             elif data.ndim == 3:
-                self.structured_data = xr.Dataset(
+                self.data = xr.Dataset(
                     {data_name: (['x', 'y', 'z'], data)},
                     coords=coords
                 )
         else:
             AttributeError('data must be either xarray.Dataset, xarray.DataArray,'
                            'or numpy.ndarray')
+
 
 
 

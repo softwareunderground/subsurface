@@ -1,6 +1,6 @@
 from typing import Union
 
-from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh
+from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
 from subsurface.structs.common import Common
 from subsurface.structs.errors import PyVistaImportError
 import numpy as np
@@ -118,4 +118,13 @@ def to_pyvista_tetra(tetra_mesh: TetraMesh):
     ctypes = np.array([vtk.VTK_TETRA, ], np.int32)
     mesh = pv.UnstructuredGrid(cells, ctypes, vertices)
     mesh.cell_arrays.update(tetra_mesh.data.attributes_to_dict)
+    return mesh
+
+
+def to_pyvista_grid(structured_grid: StructuredGrid, attribute: str):
+    coords = structured_grid.ds.data.coords
+
+    mesh = pv.StructuredGrid(*structured_grid.meshgrid_3d)
+    mesh.point_arrays.update({attribute: structured_grid.ds.data[attribute].values.ravel()})
+
     return mesh
