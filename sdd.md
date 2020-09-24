@@ -25,6 +25,7 @@ DataHub for geoscientific data in Python. Two main purposes:
     + pyvista
 + Standard formats
     + OMF
+    + geoh5py
 
 ## Data Levels:
 
