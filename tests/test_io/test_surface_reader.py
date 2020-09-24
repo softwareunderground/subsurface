@@ -8,14 +8,14 @@ input_path = os.path.dirname(__file__)+'/../data'
 
 
 @pytest.fixture(scope="module")
-def get_data() -> UnstructuredData:
+def get_unstructured_data() -> UnstructuredData:
     fp = input_path + "/land_surface_vertices.csv"
     unstrdata = surface_reader.read_in_surface_vertices(fp)
     return unstrdata
 
 
 def test_return_type(get_data):
-    assert isinstance(get_data, UnstructuredData)
+    assert isinstance(get_unstructured_data, UnstructuredData)
 #
 #
 # def test_land_surface_vertices_coords(get_vertices):
