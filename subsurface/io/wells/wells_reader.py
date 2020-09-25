@@ -1,6 +1,9 @@
 from subsurface.structs import LineSet
+import numpy as np
 import pandas as pd
 from functools import wraps
+
+from subsurface.structs.base_structures import StructuredData, UnstructuredData
 
 try:
     from welly import Well, Location
@@ -96,8 +99,10 @@ class WellyToSubsurface:
         return self.well.location.trajectory(datum=datum, elev=elev,
                                              points=points, **kwargs)
 
-    def to_subsurface(self, datum=None, elev=True, points=1000, **kwargs):
-        """Method to convert well data to `subsurface.mesh`
+    def to_subsurface(self, datum=None, elev=True, points=1000,
+                      return_element=False,
+                      **kwargs):
+        """Method to convert well data to `subsurface.UnstructuredData`
 
         Parameters
         ----------
@@ -113,10 +118,18 @@ class WellyToSubsurface:
         XYZ_points = self.trajectory(datum, elev, points, **kwargs)
 
         # Make sure deviation is there
-
-        # initialize the function
-        dfv = pd.DataFrame(XYZ_points, columns=['x', 'y', 'z'])
+        a = np.arange(0, XYZ_points.shape[0] - 1, dtype=np.int_)
+        b = np.arange(1, XYZ_points.shape[0], dtype=np.int_)
+        edges = np.vstack([a, b]).T
 
         # Default isinstantiation with automatic segment generation
-        mesh = LineSet(dfv)
-        return mesh
+        unstructured_data = UnstructuredData(
+            XYZ_points,
+            edges,
+            #pd.DataFrame(np.ones(edges.shape[0]), columns=['nan'])
+        )
+
+        if return_element is True:
+            return LineSet(unstructured_data)
+        else:
+            return unstructured_data

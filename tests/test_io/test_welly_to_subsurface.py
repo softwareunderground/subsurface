@@ -3,6 +3,10 @@ import pytest
 import subsurface as ss
 import pandas as pd
 import numpy as np
+
+from subsurface.structs import LineSet
+from subsurface.visualization.to_pyvista import to_pyvista_line, pv_plot
+
 welly = pytest.importorskip('welly')
 
 
@@ -16,7 +20,7 @@ def test_welly_to_subsurface():
     # In a well we can have deviation
     wts.add_deviation(dev[['Depth', 'Dip', 'Azimuth']].values)
     XYZ = wts.trajectory()
-    assert np.testing.assert_almost_equal(XYZ[355:357],
+    np.testing.assert_almost_equal(XYZ[355:357],
                                           np.array([[0., 0., -757.97297297],
                                                     [0., 0., -760.10810811]]))
 
@@ -27,6 +31,9 @@ def test_welly_to_subsurface():
     # Logs
 
     # Everything would be a LineSet with a bunch of properties
-    wts.to_subsurface()
+    unstructured_data = wts.to_subsurface()
+    element = LineSet(unstructured_data)
+    pyvista_mesh = to_pyvista_line(element)
+    pv_plot([pyvista_mesh])
 
 

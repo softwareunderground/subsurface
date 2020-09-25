@@ -66,7 +66,7 @@ class StructuredData:
     Args:
         data (xr.Dataset, xr.DataArray, np.ndarray): object containing
          structured data, i.e. data that can be stored in multidimensional
-         numpy array. The preferred type to pass as data is directly a
+          numpy array. The preferred type to pass as data is directly a
          xr.Dataset to be sure all the attributes are set and named as the user
          wants.
         data_name (str): If data is a numpy array or xarray DataArray, data_name
