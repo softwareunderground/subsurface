@@ -4,7 +4,7 @@ from subsurface.io.faults import faults
 from subsurface.geological_formats.fault import FaultSticks
 import os
 
-input_path = os.path.dirname(__file__)+'/../data'
+input_path = os.path.dirname(__file__)+'/../data/faults'
 
 
 @pytest.fixture(scope="module")

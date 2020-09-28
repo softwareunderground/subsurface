@@ -80,3 +80,13 @@ def tetra_set():
 
     tets = TetraMesh(data)
     return tets
+
+
+@pytest.fixture(scope='session')
+def struc_data():
+    xrng = np.arange(-10, 10, 2)
+    yrng = np.arange(-10, 10, 2)
+    zrng = np.arange(-10, 10, 2)
+    grid_3d = np.meshgrid(xrng*10, yrng*100, zrng*1000)
+    grid_2d = np.meshgrid(xrng*20, yrng*200)
+    return grid_3d, grid_2d, xrng, yrng, zrng

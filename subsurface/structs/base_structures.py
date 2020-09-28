@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Union
 
 import numpy as np
 import pandas as pd
@@ -7,6 +8,26 @@ import xarray as xr
 
 @dataclass
 class UnstructuredData:
+    """Primary structure definition for unstructured data
+
+    Attributes:
+        vertex (np.ndarray): NDArray[(Any, 3), FloatX]: XYZ point data
+        edges (np.ndarray): NDArray[(Any, ...), IntX]: Combination of vertex that create
+            different geometric elements
+        attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number associated to an element
+
+    Notes:
+        Depending on the shape of `edge` the following unstructured elements can be create:
+        - edges NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -> *Point cloud*.
+         E.g. Outcrop scan with lidar
+        - edges NDArray[(Any, 2), IntX] -> *Lines*. E.g. Borehole
+        - edges NDArray[(Any, 3), IntX] -> *Mesh*. E.g surface-DEM Topography
+        - edges NDArray[(Any, 4), IntX]
+            - -> *tetrahedron*
+            - -> *quadrilateral (or tetragon)* UNSUPPORTED?
+        - edges NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
+
+    """
     vertex: np.ndarray
     edges: np.ndarray
     attributes: pd.DataFrame = None
@@ -40,4 +61,77 @@ class UnstructuredData:
 
 @dataclass
 class StructuredData:
-    structured_data: xr.Dataset
+    """Primary structure definition for structured data
+
+    Args:
+        data (xr.Dataset, xr.DataArray, np.ndarray): object containing
+         structured data, i.e. data that can be stored in multidimensional
+         numpy array. The preferred type to pass as data is directly a
+         xr.Dataset to be sure all the attributes are set and named as the user
+         wants.
+        data_name (str): If data is a numpy array or xarray DataArray, data_name
+         provides the name for the xarray data variable
+        coords (dict): If data is a numpy array coords provides the values for
+         the xarray dimension. These dimensions are 'x', 'y' and 'z'
+
+    Attributes:
+        data (xr.Dataset)
+
+    """
+
+    data: xr.Dataset
+
+    def __init__(
+            self,
+            data: Union[np.ndarray, xr.DataArray, xr.Dataset],
+            data_name: str = 'data',
+            coords: dict = None
+    ):
+
+        if type(data) == xr.Dataset:
+            self.data = data
+
+        elif type(data) == xr.DataArray:
+            self.data = xr.Dataset({data_name: data})
+
+        elif type(data) == np.ndarray:
+            if data.ndim == 2:
+                self.data = xr.Dataset(
+                    {data_name: (['x', 'y'], data)},
+                    coords=coords
+                )
+            elif data.ndim == 3:
+                self.data = xr.Dataset(
+                    {data_name: (['x', 'y', 'z'], data)},
+                    coords=coords
+                )
+        else:
+            AttributeError('data must be either xarray.Dataset, xarray.DataArray,'
+                           'or numpy.ndarray')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

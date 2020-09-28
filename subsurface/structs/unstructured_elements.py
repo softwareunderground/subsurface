@@ -21,23 +21,18 @@ from .errors import PyVistaImportError
 class PointSet(Common):
     """Class for pointset based data structures.
 
-    This class contains a data frame of vertices (points) and a data frame
-    of data associated with each of those vertices.
+    This class uses UnstructuredData.vertex as cloud of points and the
+    associated attributes. UnstructuredData.edges are not used.
+
+    Args:
+        data (UnstructuredData): Base object for unstructured data.
 
     """
 
     def __init__(self,
                  data: UnstructuredData
                  ):
-        """
-        Initialize the pointset from a base structure.
 
-        Parameters
-        ----------
-        data: UnstructuredData
-            Base object for unstructured data.
-
-        """
         if data.edges.shape[1] > 1:
             raise AttributeError('data.edges must be of the format'
                                  'NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX]')
@@ -63,33 +58,27 @@ class PointSet(Common):
         """Fetch the point data as a dictionary of numpy arrays."""
         return self.data.attributes_to_dict
 
+
 class TriSurf(Common):
     """PointSet with triangle cells.
 
-    This dataset defines cell connectivity between points to create
+    This dataset defines cell/element connectivity between points to create
     triangulated surface.
 
-    Contains an additional dataframe for the face connectivity.
+    Uses UnstructuredData.edges for the face connectivity.
+
+    Args:
+        data (UnstructuredData): Base object for unstructured data.
+
+         data.edges  represent the point indices for each triangle
+         cell in the mesh. Each column corresponds to a triangle cell.
 
     """
 
     def __init__(self,
                  data: UnstructuredData
                  ):
-        """
-        Initialize the pointset from a datafame.
 
-        Parameters
-        ----------
-        points : pd.DataFrame
-            A dataframe that has XYZ coordinates that are named as such.
-            Additional columns will be tracked as point data.
-
-        tri_indices : pd.DataFrame
-            A three column dataframe of the the point indices for each triangle
-            cell in the mesh. Each column corresponds to a triangle cell.
-
-        """
         if data.edges.shape[1] != 3:
             raise AttributeError('data.edges must be of the format'
                                  'NDArray[(Any, 3), IntX]')
@@ -111,34 +100,23 @@ class LineSet(Common):
     This dataset defines cell connectivity between points to create
     line segments.
 
-    Contains an additional dataframe for the line connectivity.
+    Args:
+        data (UnstructuredData): Base object for unstructured data.
 
+         data.edges represent the indices of the end points for each
+         line segment in the mesh. Each column corresponds to a line
+         segment. If not specified, the vertices are connected in order,
+         equivalent to ``segments=[[0, 1], [1, 2], [2, 3], ...]``
     """
 
     def __init__(self,
                  data: UnstructuredData
                  ):
-        """
-        Initialize the pointset from a datafame.
 
-        Parameters
-        ----------
-        points : pd.DataFrame
-            A dataframe that has XYZ coordinates that are named as such.
-            Additional columns will be tracked as point data.
+        if data.edges is None:
+            self.generate_default_edges()
 
-        segment_indices : pd.DataFrame
-            A two column dataframe of the indices of the end points for each
-            line segment in the mesh. Each column corresponds to a line
-            segment. If not specified, the vertices are connected in order,
-            equivalent to ``segments=[[0, 1], [1, 2], [2, 3], ...]``.
-
-        segment_data: pd.DataFrame
-            A DataFrame of scalar data to associate with each line segment
-            (cell).
-
-        """
-        if data.edges.shape[1] != 2:
+        elif data.edges.shape[1] != 2:
             raise AttributeError('data.edges must be of the format'
                                  'NDArray[(Any, 2), IntX]')
         self.data = data
@@ -146,6 +124,13 @@ class LineSet(Common):
         # TODO: these must all be integer dtypes!
 
     def generate_default_edges(self):
+        """ Method to generate edges based on the order of the vertex. This
+        only works if the LineSet only represents one single line
+
+        Returns:
+            np.ndarray[(Any, 2), IntX]
+
+        """
         a = np.arange(0, self.data.n_points - 1, dtype=np.int_)
         b = np.arange(1, self.data.n_points, dtype=np.int_)
         self.data.edges = np.vstack([a, b]).T
@@ -165,34 +150,22 @@ class TetraMesh(Common):
 
     This dataset defines cell connectivity between points to create
     tetrahedrons. This is volumetric.
+    Args:
+        data (UnstructuredData): Base object for unstructured data.
+
+         data.edges represent the indices of the points for each
+         tetrahedron in the mesh. Each column corresponds to a tetrahedron.
+         Every tetrahedron is defined by the four points; where the first
+         three (0,1,2) are the base of the tetrahedron which, using the
+         right hand rule, forms a triangle whose normal points in the
+         direction of the fourth point.
 
     """
 
     def __init__(self,
                  data: UnstructuredData
                  ):
-        """
-        Initialize the pointset from a datafame.
 
-        Parameters
-        ----------
-        points : pd.DataFrame
-            A dataframe that has XYZ coordinates that are named as such.
-            Additional columns will be tracked as point data.
-
-        tetra_indices : pd.DataFrame
-            A four column dataframe of the indices of the points for each
-            tetrahedron in the mesh. Each column corresponds to a tetrahedron.
-            Every tetrahedron is defined by the four points; where the first
-            three (0,1,2) are the base of the tetrahedron which, using the
-            right hand rule, forms a triangle whose normal points in the
-            direction of the fourth point.
-
-        tetra_data: pd.DataFrame
-            A DataFrame of scalar data to associate with each line segment
-            (cell).
-
-        """
         if data.edges.shape[1] != 4:
             raise AttributeError('data.edges must be of the format'
                                  'NDArray[(Any, 4), IntX]')
