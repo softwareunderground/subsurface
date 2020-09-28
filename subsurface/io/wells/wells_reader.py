@@ -7,6 +7,7 @@ from subsurface.structs.base_structures import StructuredData, UnstructuredData
 
 try:
     from welly import Well, Location
+
     welly_imported = True
 except ImportError:
     welly_imported = False
@@ -51,7 +52,7 @@ class WellyToSubsurface:
 
         # Init empty well
         self.well = Well(params={'header': {'name': well_name}})
-        self.well.location = Location(params={'kb':100})
+        self.well.location = Location(params={'kb': 100})
 
     def add_deviation(self, deviation,
                       td=None,
@@ -71,10 +72,10 @@ class WellyToSubsurface:
         azimuth_datum
         """
         return self.well.location.add_deviation(deviation,
-                      td=td,
-                      method=method,
-                      update_deviation=update_deviation,
-                      azimuth_datum=azimuth_datum)
+                                                td=td,
+                                                method=method,
+                                                update_deviation=update_deviation,
+                                                azimuth_datum=azimuth_datum)
 
     def trajectory(self, datum=None, elev=True, points=1000, **kwargs):
         """
@@ -85,7 +86,7 @@ class WellyToSubsurface:
         Args:
             datum (array-like): A 3-element array with adjustments to (x, y, z).
                 For example, the x-position, y-position, and KB of the tophole
-                location.
+                location. This is also known as collar of the borehole.
             elev (bool): In general the (x, y, z) array of positions will have
                 z as TVD, which is positive down. If `elev` is True, positive
                 will be upwards.
@@ -97,10 +98,13 @@ class WellyToSubsurface:
                 trajectory. Columns are (x, y, z).
         """
         return self.well.location.trajectory(datum=datum, elev=elev,
-                                             points=points, **kwargs)
+                                             points=points,
+                                             **kwargs)
 
-    def to_subsurface(self, datum=None, elev=True, points=1000,
+    def to_subsurface(self, datum=None, elev=True,
+                      n_points=1000,
                       return_element=False,
+                      attributes=None,
                       **kwargs):
         """Method to convert well data to `subsurface.UnstructuredData`
 
@@ -108,14 +112,14 @@ class WellyToSubsurface:
         ----------
         datum
         elev
-        points
+        n_points
         kwargs
 
         Returns
         -------
 
         """
-        XYZ_points = self.trajectory(datum, elev, points, **kwargs)
+        XYZ_points = self.trajectory(datum, elev, n_points, **kwargs)
 
         # Make sure deviation is there
         a = np.arange(0, XYZ_points.shape[0] - 1, dtype=np.int_)
@@ -126,7 +130,7 @@ class WellyToSubsurface:
         unstructured_data = UnstructuredData(
             XYZ_points,
             edges,
-            #pd.DataFrame(np.ones(edges.shape[0]), columns=['nan'])
+            pd.DataFrame(attributes, columns=['nan'])
         )
 
         if return_element is True:
