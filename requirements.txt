@@ -1,6 +1,5 @@
 pandas
 xarray
-segyio
+numpy
 pytest
-matplotlib
-pyvista
+setuptools
