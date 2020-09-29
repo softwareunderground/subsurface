@@ -10,34 +10,28 @@ DataHub for geoscientific data in Python. Two main purposes:
     + Visualization
 
 ## Data Levels:
+The difference between data levels is **not** which data they stored but which data they **parse and understand**. The rationale for this is to be able to pass along any object along while keeping the I/O in subsurface.
 
 **Human**
 
-    geological_format -> Additional context/meta information about the data: OMF, geoh5py
-
-    +-----------+
-
-    geological_object -> Elements that represent some geological concept. E.g: faults, seismic
-
-    +-----------+
-
-    +-----------+
-
-    element -> type of geometric object: PointSet, TriSurf, LineSet, Tetramesh
-
-    +-----------+
-
-    primary_structures -> Set of arrays that define a geometric object: StructuredData, UnstructuredData
-
-    +-----------+
-
-    +-----------+
-
-    Dataframe/Xarray -> Label numpy.arrays
-
-    +-----------+
-
-    numpy.array -> Memory allocation
+     \=================================/'  
+      \===============================/ ' \
+       \==========geo_format=========/ '   \    -> Additional context/meta information about the data
+        \===========================/'   '   \     
+         \=======geo_object========/   '    ' \   -> Elements that represent some 
+          \=======================/  '   '    /      geological concept. E.g: faults, seismic
+           \=====================/' '   ' ' /      
+            \======element======/' ' '  ' /   -> type of geometric object: PointSet,
+             \=================/' ' ' ' /      TriSurf, LineSet, Tetramesh
+              \=primary_struct/   ''  /    - > Set of arrays that define a geometric object: 
+               \=============/ ' '  /            e.g. *StructuredData* **UnstructuredData**
+                \============/''  /  
+                 \DF/Xarray/ ' '/ -> Label numpy.arrays
+                  \=======/'' /
+                   \array/' /   -> Memory allocation
+                    \===/ /
+                     \=//
+                      '
 
 **Computer**
 
