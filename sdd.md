@@ -13,6 +13,7 @@ DataHub for geoscientific data in Python. Two main purposes:
 
 + The core of the package has to be **light**
 + I/O **has** to happen at the level of **primary structures**. Once the primary structure has been exported/imported we can keep going up the pile (i.e. elements, geological objects, etc)
++ **NEW 28.09.20**  Even if primary structures only parse numerical data (e.g. vertex, edges, attributes) **all data levels** should be able to contain all raw data (`dicts` and even `strings`). Therefore, the difference between data levels is **not** which data they stored but which data they **parse and understand**. The rationale for this is to be able to pass along any object along while keeping the I/O in subsurface.
 
 ## Optional libraries:
 + I/O 
@@ -25,39 +26,33 @@ DataHub for geoscientific data in Python. Two main purposes:
     + pyvista
 + Standard formats
     + OMF
-    + geoh5py
 
 ## Data Levels:
 
+The difference between data levels is **not** which data they stored but which data they **parse and understand**. The rationale for this is to be able to pass along any object along while keeping the I/O in subsurface.
+
 **Human**
-
-    geological_format -> Additional context/meta information about the data
-
-    +-----------+
-
-    geological_object -> Elements that represent some geological concept. E.g: faults, seismic
-
-    +-----------+
-
-    +-----------+
-
-    element -> type of geometric object: PointSet, TriSurf, LineSet, Tetramesh
-
-    +-----------+
-
-    primary_structures -> Set of arrays that define a geometric object
-
-    +-----------+
-
-    +-----------+
-
-    Dataframe/Xarray -> Label numpy.arrays
-
-    +-----------+
-
-    numpy.array -> Memory allocation
-
+                        
+     \=================================/'  
+      \===============================/ ' \
+       \==========geo_format=========/ '   \    -> Additional context/meta information about the data
+        \===========================/'   '   \     
+         \=======geo_object========/   '    ' \   -> Elements that represent some 
+          \=======================/  '   '    /      geological concept. E.g: faults, seismic
+           \=====================/' '   ' ' /      
+            \======element======/' ' '  ' /   -> type of geometric object: PointSet,
+             \=================/' ' ' ' /      TriSurf, LineSet, Tetramesh
+              \=primary_struct/   ''  /    - > Set of arrays that define a geometric object: 
+               \=============/ ' '  /            e.g. *StructuredData* **UnstructuredData**
+                \============/''  /  
+                 \DF/Xarray/ ' '/ -> Label numpy.arrays
+                  \=======/'' /
+                   \array/' /   -> Memory allocation
+                    \===/ /
+                     \=//
+                      '
 **Computer**
+
 
 ## Primary Structures definitions:
 
