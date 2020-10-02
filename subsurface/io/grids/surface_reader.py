@@ -24,7 +24,7 @@ def read_in_surface_vertices(path_to_file: str) -> UnstructuredData:
     if (data_cols == ['x', 'y', 'z']).all():
         vertex = data.values
         # create edges with delaunay
-        edges = Delaunay(data).vertex_to_simplex
+        edges = Delaunay(data).simplices
         ud = UnstructuredData(vertex, edges)
         return ud
     else:
