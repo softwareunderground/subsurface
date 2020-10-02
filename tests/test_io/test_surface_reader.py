@@ -1,8 +1,13 @@
 import pytest
 import pandas as pd
+from pyvista import UnstructuredGrid
+
 from subsurface.io.grids import surface_reader
+from subsurface.structs import TetraMesh
 from subsurface.structs.base_structures import UnstructuredData
 import os
+
+from subsurface.visualization.to_pyvista import to_pyvista_tetra, pv_plot
 
 input_path = os.path.dirname(__file__)+'/../data'
 
@@ -10,8 +15,15 @@ input_path = os.path.dirname(__file__)+'/../data'
 @pytest.fixture(scope="module")
 def get_unstructured_data() -> UnstructuredData:
     fp = input_path + "/land_surface_vertices.csv"
-    unstrdata = surface_reader.read_in_surface_vertices(fp)
-    return unstrdata
+    ud = surface_reader.read_in_surface_vertices(fp)
+    return ud
+
+
+@pytest.fixture(scope="module")
+def get_less_unstructured_data() -> UnstructuredData:
+    fp = input_path + "/less_land_surface_vertices.csv"
+    ud_less = surface_reader.read_in_surface_vertices(fp)
+    return ud_less
 
 
 def test_return_type(get_unstructured_data):
@@ -25,13 +37,19 @@ def test_dataframes(get_unstructured_data):
 
 def test_edges_shape(get_unstructured_data):
     assert get_unstructured_data.edges.shape[1] == 4
-#def test_plot_pyvista(get_unstructured_data):
-    # tm = TetraMesh(get_unstructured_data)
-    # s = to_pyvista_tetra(tm)
-    # pv_plot([s], image_2d=True)
-    # topo_df = pd.read_csv(input_path + "/land_surface_vertices.csv")
-    # topo = pv.PolyData(topo_df.values).delaunay_2d()
-    # topo.plot(notebook=False, show_grid=True)
+
+
+def test_unstructured_element(get_less_unstructured_data):
+    tm = TetraMesh(get_less_unstructured_data)
+    assert len(tm.tetrahedrals) == 39
+    assert isinstance(tm, TetraMesh)
+
+
+def test_plot_pyvista(get_less_unstructured_data):
+    tm = TetraMesh(get_less_unstructured_data)
+    s = to_pyvista_tetra(tm) # Process finished here with exit code 139 (interrupted by signal 11: SIGSEGV)
+    assert isinstance(s, UnstructuredGrid)
+    pv_plot([s], image_2d=True)
 #
 # def test_land_surface_vertices_coords(get_vertices):
 #     assert get_vertices.iloc[5][2] == 1493.90209961
