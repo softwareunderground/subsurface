@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Union
+from typing import Union, Optional
 
 import numpy as np
 import pandas as pd
@@ -30,7 +30,7 @@ class UnstructuredData:
     """
     vertex: np.ndarray
     edges: np.ndarray
-    attributes: pd.DataFrame = None
+    attributes: Optional[pd.DataFrame] = None
 
     def __post_init__(self):
         if self.attributes is None:

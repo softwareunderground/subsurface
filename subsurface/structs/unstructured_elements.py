@@ -107,10 +107,13 @@ class LineSet(Common):
          line segment in the mesh. Each column corresponds to a line
          segment. If not specified, the vertices are connected in order,
          equivalent to ``segments=[[0, 1], [1, 2], [2, 3], ...]``
+
+        radius (float): Thickness of the line set
     """
 
     def __init__(self,
-                 data: UnstructuredData
+                 data: UnstructuredData,
+                 radius: float = 1
                  ):
 
         if data.edges is None:
@@ -120,6 +123,7 @@ class LineSet(Common):
             raise AttributeError('data.edges must be of the format'
                                  'NDArray[(Any, 2), IntX]')
         self.data = data
+        self.radius = radius
 
         # TODO: these must all be integer dtypes!
 
