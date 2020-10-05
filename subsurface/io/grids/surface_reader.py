@@ -21,12 +21,17 @@ def read_in_surface_vertices(path_to_file: str) -> UnstructuredData:
     # access columns
     data_cols = data.columns
 
-    if (data_cols == ['x', 'y', 'z']).all():
+    print(data_cols)
+
+    if np.array_equal(data_cols, ['x', 'y', 'z']):
         vertex = data.values
         # create edges with delaunay
         edges = Delaunay(data).simplices
         ud = UnstructuredData(vertex, edges)
         return ud
-    else:
-        if data_cols == ['x', 'y', 'z', 'edge']:
-            pass
+
+    elif np.array_equal(data_cols,['x', 'y', 'z', '0', '1', '2', '3']):
+        vertex = np.asarray([x[:3] for x in data.values if not np.array_equiv(x[:3], ['nan', 'nan', 'nan'])])
+        edges = np.asarray([x[3:] for x in data.values])
+        ud = UnstructuredData(vertex, edges)
+        return ud

@@ -26,8 +26,19 @@ def get_less_unstructured_data() -> UnstructuredData:
     return ud_less
 
 
-def test_return_type(get_unstructured_data):
+@pytest.fixture(scope="module")
+def get_vertices_and_edges() -> UnstructuredData:
+    fp = input_path + "/vertices_and_edges.csv"
+    ud_vae = surface_reader.read_in_surface_vertices(fp)
+    return ud_vae
+
+
+def test_return_type_ex1(get_unstructured_data):
     assert isinstance(get_unstructured_data, UnstructuredData)
+
+
+def test_return_type_ex2(get_vertices_and_edges):
+    assert isinstance(get_vertices_and_edges, UnstructuredData)
 
 
 def test_dataframes(get_unstructured_data):
@@ -47,10 +58,13 @@ def test_unstructured_element(get_less_unstructured_data):
 
 def test_plot_pyvista(get_less_unstructured_data):
     tm = TetraMesh(get_less_unstructured_data)
-    s = to_pyvista_tetra(tm) # Process finished here with exit code 139 (interrupted by signal 11: SIGSEGV)
+    s = to_pyvista_tetra(tm)  # Process finished here with exit code 139 (interrupted by signal 11: SIGSEGV)
     assert isinstance(s, UnstructuredGrid)
     pv_plot([s], image_2d=True)
-#
-# def test_land_surface_vertices_coords(get_vertices):
-#     assert get_vertices.iloc[5][2] == 1493.90209961
-#     assert get_vertices.iloc[-1][-1] == 2430.35742188
+
+
+def test_plot_ex2_pyvista(get_vertices_and_edges):
+    tm = TetraMesh(get_vertices_and_edges)
+    s = to_pyvista_tetra(tm)
+    assert isinstance(s, UnstructuredGrid)
+    pv_plot([s], image_2d=True)
