@@ -62,9 +62,10 @@ class UnstructuredData:
     def to_xarray(self):
         a = xr.DataArray(self.vertex, dims=['points', 'XYZ'])
         b = xr.DataArray(self.edges, dims=['edges', 'node'])
-        e = xr.DataArray(self.attributes)
+        e = xr.DataArray(self.attributes, dims=['element', 'attribute'])
         c = xr.Dataset({'v': a, 'e': b, 'a': e})
-        return c
+        x = c.reset_index('element')
+        return x
 
     def to_disk(self, file: str, **kwargs):
         v = xr.DataArray(self.vertex)
