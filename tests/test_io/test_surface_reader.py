@@ -3,11 +3,11 @@ import pandas as pd
 from pyvista import UnstructuredGrid
 
 from subsurface.io.grids import surface_reader
-from subsurface.structs import TetraMesh
+from subsurface.structs import TetraMesh, TriSurf
 from subsurface.structs.base_structures import UnstructuredData
 import os
 
-from subsurface.visualization.to_pyvista import to_pyvista_tetra, pv_plot
+from subsurface.visualization.to_pyvista import to_pyvista_tetra, pv_plot, to_pyvista_mesh
 
 input_path = os.path.dirname(__file__)+'/../data'
 
@@ -46,9 +46,9 @@ def test_unstructured_element(get_less_unstructured_data):
 
 
 def test_plot_pyvista(get_less_unstructured_data):
-    tm = TetraMesh(get_less_unstructured_data)
-    s = to_pyvista_tetra(tm) # Process finished here with exit code 139 (interrupted by signal 11: SIGSEGV)
-    assert isinstance(s, UnstructuredGrid)
+    ts = TriSurf(get_less_unstructured_data) # The element type should be TriSurf
+    s = to_pyvista_mesh(ts) # Process finished here with exit code 139 (interrupted by signal 11: SIGSEGV)
+    # assert isinstance(s, UnstructuredGrid) This assert is wrong
     pv_plot([s], image_2d=True)
 #
 # def test_land_surface_vertices_coords(get_vertices):
