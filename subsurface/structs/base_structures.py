@@ -1,3 +1,4 @@
+import pathlib
 from dataclasses import dataclass
 from typing import Union, Optional
 
@@ -57,6 +58,25 @@ class UnstructuredData:
         """Make sure the number of vertices matches the associated data."""
         if self.edges.shape[0] != self.attributes.shape[0]:
             raise AttributeError('Attributes and edges must have the same length.')
+
+    def to_xarray(self):
+        a = xr.DataArray(self.vertex, dims=['points', 'XYZ'])
+        b = xr.DataArray(self.edges, dims=['edges', 'node'])
+        e = xr.DataArray(self.attributes)
+        c = xr.Dataset({'v': a, 'e': b, 'a': e})
+        return c
+
+    def to_disk(self, file: str, **kwargs):
+        v = xr.DataArray(self.vertex)
+        e = xr.DataArray(self.edges)
+        a = xr.DataArray(self.attributes)
+
+        pathlib.Path(file)
+        np.save(file, self.vertex)
+        np.save(file, self.edges)
+        self.attributes.to_hdf(file, **kwargs)
+
+        return True
 
 
 @dataclass

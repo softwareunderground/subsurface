@@ -7,6 +7,12 @@ import pandas as pd
 
 
 @pytest.fixture(scope='session')
+def unstruc():
+    foo = UnstructuredData(np.ones((5, 3)), np.ones((4, 3)),
+                           pd.DataFrame({'foo': np.arange(4)}))
+    return foo
+
+@pytest.fixture(scope='session')
 def point_set():
     n = 100
 
