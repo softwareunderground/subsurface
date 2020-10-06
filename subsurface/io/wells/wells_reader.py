@@ -1,7 +1,6 @@
 import pathlib
 from typing import Iterable, Union
 
-from striplog import Striplog
 import warnings
 from subsurface.structs import LineSet
 import numpy as np
@@ -12,10 +11,11 @@ from subsurface.structs.base_structures import StructuredData, UnstructuredData
 
 try:
     from welly import Well, Location, Project, Curve
-
+    from striplog import Striplog
     welly_imported = True
 except ImportError:
     welly_imported = False
+
 
 def read_wells(backend='welly'):
     pass
