@@ -4,7 +4,7 @@ import numpy as np
 from scipy.spatial import Delaunay
 
 
-def read_in_surface_vertices(path_to_file: str) -> UnstructuredData:
+def read_in_surface_vertices(path_to_file: str, delaunay: bool = True) -> UnstructuredData:
     """
     Reads in csv files with n columns and returns UnstructuredData object.
 
@@ -26,7 +26,11 @@ def read_in_surface_vertices(path_to_file: str) -> UnstructuredData:
     if np.array_equal(data_cols, ['x', 'y', 'z']):
         vertex = data.values
         # create edges with delaunay
-        edges = Delaunay(data).simplices
+        if delaunay is True:
+            import pyvista as pv
+            a = pv.PolyData(vertex)
+            b = a.delaunay_2d().faces
+            edges = b.reshape(-1, 4)[:, 1:]
         ud = UnstructuredData(vertex, edges)
         return ud
 
