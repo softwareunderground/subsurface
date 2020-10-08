@@ -255,10 +255,15 @@ class WellyToSubsurface:
 
                     w.data['lith_log'] = Curve(np.zeros(n_points - 1))
 
+        try:
+            df = self.p.df().loc['foo']
+        except KeyError:
+            df = self.p.df()
+        df = self.p.df()
         unstructured_data = UnstructuredData(
             vertex,
             edges,
-            self.p.df()
+            df
         )
 
         if return_element is True:

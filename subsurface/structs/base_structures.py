@@ -29,14 +29,50 @@ class UnstructuredData:
         - edges NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
 
     """
-    vertex: np.ndarray
-    edges: np.ndarray
-    attributes: Optional[pd.DataFrame] = None
+    data: xr.Dataset
+    #vertex: np.ndarray
+    #edges: np.ndarray
+    #attributes: Optional[pd.DataFrame] = None
 
-    def __post_init__(self):
-        if self.attributes is None:
-            self.attributes = pd.DataFrame(np.zeros((self.edges.shape[0], 0)))
+    def __init__(self, vertex: np.ndarray, edges: np.ndarray,
+                 attributes: Optional[pd.DataFrame] = None):
+        v = xr.DataArray(vertex, dims=['points', 'XYZ'])
+        e = xr.DataArray(edges, dims=['edge', 'nodes'])
+
+        if attributes is None:
+            attributes = pd.DataFrame(np.zeros((edges.shape[0], 0)))
+
+        a = xr.DataArray(attributes, dims=['element', 'attribute'])
+        c = xr.Dataset({'vertex': v, 'edges': e, 'attributes': a})
+        self.data = c.reset_index('element')
+
         self.validate()
+
+
+    @property
+    def vertex(self):
+        return self.data['vertex'].values
+
+    @vertex.setter
+    def vertex(self, array):
+        self.vertex = xr.DataArray(array, dims=['points', 'XYZ'])
+
+    @property
+    def edges(self):
+        return self.data['edges'].values
+
+    @edges.setter
+    def edges(self, array):
+        self.data['edges'] = xr.DataArray(array, dims=['e', 'nodes'])
+
+    @property
+    def attributes(self):
+        return self.data['attributes'].to_dataframe()['attributes'].unstack(level=1)
+
+    @attributes.setter
+    def attributes(self, dataframe):
+        self.data['attributes'] = xr.DataArray(dataframe,
+                                              dims=['element', 'attribute'])
 
     @property
     def n_elements(self):
@@ -56,7 +92,7 @@ class UnstructuredData:
 
     def validate(self):
         """Make sure the number of vertices matches the associated data."""
-        if self.edges.shape[0] != self.attributes.shape[0]:
+        if self.data['edges'].shape[0] != self.data['attributes'].shape[0]:
             raise AttributeError('Attributes and edges must have the same length.')
 
     def to_xarray(self):
@@ -64,19 +100,11 @@ class UnstructuredData:
         b = xr.DataArray(self.edges, dims=['edges', 'node'])
         e = xr.DataArray(self.attributes, dims=['element', 'attribute'])
         c = xr.Dataset({'v': a, 'e': b, 'a': e})
-        x = c.reset_index('element')
-        return x
+        #x = c.reset_index('attribute')
+        return c
 
     def to_disk(self, file: str, **kwargs):
-        v = xr.DataArray(self.vertex)
-        e = xr.DataArray(self.edges)
-        a = xr.DataArray(self.attributes)
-
-        pathlib.Path(file)
-        np.save(file, self.vertex)
-        np.save(file, self.edges)
-        self.attributes.to_hdf(file, **kwargs)
-
+        self.data.to_netcdf(file, **kwargs)
         return True
 
 

@@ -250,5 +250,5 @@ def test_read_assay():
 def test_read_density():
     d = pd.read_excel(data_path.joinpath('borehole_density.xlsx'),
                       index_col=0)
-    d.drop('TO', axis=1, inplace=True)
+    d.drop('DEPTH_TO', axis=1, inplace=True)
     return d
