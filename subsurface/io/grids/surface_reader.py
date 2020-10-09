@@ -34,8 +34,8 @@ def read_in_surface_vertices(path_to_file: str, delaunay: bool = True) -> Unstru
         ud = UnstructuredData(vertex, edges)
         return ud
 
-    elif np.array_equal(data_cols,['x', 'y', 'z', '0', '1', '2', '3']):
-        vertex = np.asarray([x[:3] for x in data.values if not np.array_equiv(x[:3], ['nan', 'nan', 'nan'])])
-        edges = np.asarray([x[3:] for x in data.values])
+    elif np.array_equal(data_cols, ['x', 'y', 'z', '0', '1', '2']):
+        vertex = np.array([[x[0], x[1], x[2]] for x in data.values])
+        edges = np.array([[int(x[-3]), int(x[-2]), int(x[-1])] for x in data.values if not np.isnan(x[-3])])
         ud = UnstructuredData(vertex, edges)
         return ud

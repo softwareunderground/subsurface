@@ -26,6 +26,13 @@ def get_less_unstructured_data() -> UnstructuredData:
     return ud_less
 
 
+@pytest.fixture(scope="module")
+def get_unstructured_data_with_edges() -> UnstructuredData:
+    fp = input_path + "/vertices_and_edges.csv"
+    ud_edges = surface_reader.read_in_surface_vertices(fp)
+    return ud_edges
+
+
 def test_return_type(get_unstructured_data):
     assert isinstance(get_unstructured_data, UnstructuredData)
 
@@ -47,14 +54,18 @@ def test_unstructured_element(get_less_unstructured_data):
 
 
 def test_plot_pyvista(get_unstructured_data):
-    ts = TriSurf(get_unstructured_data) # The element type should be TriSurf
-    s = to_pyvista_mesh(ts) # Process finished here with exit code 139 (interrupted by signal 11: SIGSEGV)
-    # assert isinstance(s, UnstructuredGrid) This assert is wrong
+    ts = TriSurf(get_unstructured_data)
+    s = to_pyvista_mesh(ts)
     pv_plot([s], image_2d=True)
 
 
 def test_plot_less_pyvista(get_less_unstructured_data):
-    ts = TriSurf(get_less_unstructured_data) # The element type should be TriSurf
-    s = to_pyvista_mesh(ts) # Process finished here with exit code 139 (interrupted by signal 11: SIGSEGV)
-    # assert isinstance(s, UnstructuredGrid) This assert is wrong
+    ts = TriSurf(get_less_unstructured_data)
+    s = to_pyvista_mesh(ts)
+    pv_plot([s], image_2d=True)
+
+
+def test_plot_edges_pyvista(get_unstructured_data_with_edges):
+    ts = TriSurf(get_unstructured_data_with_edges)
+    s = to_pyvista_mesh(ts)
     pv_plot([s], image_2d=True)
