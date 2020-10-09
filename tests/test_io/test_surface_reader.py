@@ -15,21 +15,21 @@ input_path = os.path.dirname(__file__)+'/../data'
 @pytest.fixture(scope="module")
 def get_unstructured_data() -> UnstructuredData:
     fp = input_path + "/land_surface_vertices.csv"
-    ud = surface_reader.read_in_surface_vertices(fp)
+    ud = surface_reader.read_in_surface_vertices(fp, [0, 1, 2], [])
     return ud
 
 
 @pytest.fixture(scope="module")
 def get_less_unstructured_data() -> UnstructuredData:
     fp = input_path + "/less_land_surface_vertices.csv"
-    ud_less = surface_reader.read_in_surface_vertices(fp)
+    ud_less = surface_reader.read_in_surface_vertices(fp, [0, 1, 2], [])
     return ud_less
 
 
 @pytest.fixture(scope="module")
 def get_unstructured_data_with_edges() -> UnstructuredData:
     fp = input_path + "/vertices_and_edges.csv"
-    ud_edges = surface_reader.read_in_surface_vertices(fp)
+    ud_edges = surface_reader.read_in_surface_vertices(fp, [0, 1, 2], [-3, -2, -1])
     return ud_edges
 
 
@@ -43,7 +43,6 @@ def test_dataframes(get_unstructured_data):
 
 
 def test_edges_shape(get_unstructured_data):
-    print(get_unstructured_data.vertex)
     assert get_unstructured_data.edges.shape[1] == 3
 
 
