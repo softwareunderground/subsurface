@@ -1,4 +1,3 @@
-from . import io
-from . import interfaces
-from . import structs
-from . import geological_formats
+from subsurface.io import *
+from subsurface.structs import *
+from subsurface.visualization import to_pyvista
