@@ -60,6 +60,8 @@ def test_read_wells_to_unstruct():
     # Plot default LITH
     pv_plot([pyvista_mesh], image_2d=True)
 
+
+
 def test_create_welly_to_subsurface():
     wts = WellyToSubsurface()
     collars = test_read_collars()
