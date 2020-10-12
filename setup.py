@@ -3,7 +3,7 @@
 Python installation file.
 """
 from os import path
-from setuptools import setup
+from setuptools import setup, find_packages
 import re
 
 this_directory = path.abspath(path.dirname(__file__))
@@ -38,6 +38,7 @@ CLASSIFIERS = ['Development Status :: 3 - Alpha',
 
 setup(name='subsurface',
       version=verstr,
+      packages=find_packages(exclude=('test', 'docs')),
       description='Subsurface data types and utilities',
       long_description=long_description,
       long_description_content_type='text/markdown',
@@ -45,7 +46,6 @@ setup(name='subsurface',
       author='Software Underground',
       author_email='hello@softwareunderground.org',
       license='Apache 2',
-      packages=['subsurface'],
       tests_require=TEST_REQUIREMENTS,
       install_requires=REQUIREMENTS,
       classifiers=CLASSIFIERS,
