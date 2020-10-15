@@ -83,6 +83,7 @@ class WellyToSubsurface:
             w = self.p.get_well(b)
             assert data.loc[[b]].shape[1] == 3, 'datum must be XYZ coord'
             w.position = data.loc[[b]].values
+         #   w.location.position = data.loc[[b]].values
         print(w)
         # datum = collars.loc[['foo'], [1, 2, 3]].values
         return self.p
@@ -167,6 +168,8 @@ class WellyToSubsurface:
         self.add_wells(unique_borehole)
         for b in unique_borehole:
             w = self.p.get_well(b)
+            # if td is None:
+            #     td = w.position
             w.location.add_deviation(deviations.loc[b, ['md', 'inc', 'azi']],
                                      td=td,
                                      method=method,
@@ -285,12 +288,14 @@ def read_wells(backend='welly', n_points=1000, **kwargs):
 def _get_reader(file_format):
     if file_format == '.xlsx':
         reader = pd.read_excel
+    elif file_format == 'dict':
+        reader = pd.DataFrame.from_dict
     else:  # file_format == '.csv':
         reader = pd.read_csv
     return reader
 
 
-def read_collar(file, **kwargs):
+def read_collar(file_or_buffer, **kwargs):
     """
 
     Args:
@@ -307,23 +312,50 @@ def read_collar(file, **kwargs):
     header = kwargs.pop('header', None)
     cols = kwargs.pop('usecols', [0, 1, 2, 3])
     index_col = kwargs.pop('index_col', 0)
+    is_json = kwargs.pop('is_json', False)
+    # Check file_or_buffer type
+    if is_json is True:
+        d = pd.read_json(file_or_buffer, orient='split')
 
-    file_format = file.suffix
-    reader = _get_reader(file_format)
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
+        # Parse file
+        file_or_buffer = pathlib.Path(file_or_buffer)
 
-    d = reader(file,
-               usecols=cols,
-               header=header,
-               index_col=index_col, **kwargs)
+        file_format = file_or_buffer.suffix
+        reader = _get_reader(file_format)
+
+        d = reader(file_or_buffer,
+                   usecols=cols,
+                   header=header,
+                   index_col=index_col, **kwargs)
+
+    elif type(file_or_buffer) == dict:
+        reader = _get_reader('dict')
+        d = reader(file_or_buffer)
+
+    else:
+        raise AttributeError('file_or_buffer must be either a path or a dict')
+
     return d
 
 
-def read_survey(file, index_map=None, columns_map=None, **kwargs):
-    file_format = file.suffix
-    reader = _get_reader(file_format)
-    index_col = kwargs.pop('index_col', 0)
+def read_survey(file_or_buffer, index_map=None, columns_map=None, **kwargs):
+    is_json = kwargs.pop('is_json', False)
 
-    d = reader(file, index_col=index_col, **kwargs)
+    if is_json is True:
+        d = pd.read_json(file_or_buffer, orient='split')
+
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
+        file_or_buffer = pathlib.Path(file_or_buffer)
+        file_format = file_or_buffer.suffix
+        reader = _get_reader(file_format)
+        index_col = kwargs.pop('index_col', 0)
+        d = reader(file_or_buffer, index_col=index_col, **kwargs)
+    elif type(file_or_buffer) == dict:
+        reader = _get_reader('dict')
+        d = reader(file_or_buffer)
+    else:
+        raise AttributeError('file_or_buffer must be either a path or a dict')
 
     if index_map is not None:
         d.index = d.index.map(index_map)
@@ -338,17 +370,28 @@ def read_survey(file, index_map=None, columns_map=None, **kwargs):
     return d
 
 
-def read_lith(file, columns_map=None, **kwargs):
+def read_lith(file_or_buffer, columns_map=None, **kwargs):
     """Columns MUST contain:
         - top
         - base
         - component lith
     """
-    file_format = file.suffix
-    reader = _get_reader(file_format)
-    index_col = kwargs.pop('index_col', 0)
+    is_json = kwargs.pop('is_json', False)
+    if is_json is True:
+        d = pd.read_json(file_or_buffer, orient='split')
 
-    d = reader(file, index_col=index_col, **kwargs)
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
+        file_or_buffer = pathlib.Path(file_or_buffer)
+        file_format = file_or_buffer.suffix
+        reader = _get_reader(file_format)
+        index_col = kwargs.pop('index_col', 0)
+
+        d = reader(file_or_buffer, index_col=index_col, **kwargs)
+    elif type(file_or_buffer) == dict:
+        reader = _get_reader('dict')
+        d = reader(file_or_buffer)
+    else:
+        raise AttributeError('file_or_buffer must be either a path or a dict')
 
     if columns_map is not None:
         d.columns = d.columns.map(columns_map)
@@ -360,13 +403,24 @@ def read_lith(file, columns_map=None, **kwargs):
     return d
 
 
-def read_attributes(file, columns_map=None,
+def read_attributes(file_or_buffer, columns_map=None,
                     drop_cols: Optional[list] = None, **kwargs):
-    file_format = file.suffix
-    reader = _get_reader(file_format)
+    is_json = kwargs.pop('is_json', False)
+    if is_json is True:
+        d = pd.read_json(file_or_buffer, orient='split')
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
+        file_or_buffer = pathlib.Path(file_or_buffer)
+        file_format = file_or_buffer.suffix
+        reader = _get_reader(file_format)
 
-    index_col = kwargs.pop('index_col', 0)
-    d = reader(file, index_col=index_col, **kwargs)
+        index_col = kwargs.pop('index_col', 0)
+        d = reader(file_or_buffer, index_col=index_col, **kwargs)
+    elif type(file_or_buffer) == dict:
+        reader = _get_reader('dict')
+        d = reader(file_or_buffer)
+    else:
+        raise AttributeError('file_or_buffer must be either a path or a dict')
+
     if columns_map is not None:
         #d.columns = d.columns.replace(columns_map)
         d.rename(columns_map, axis=1, inplace=True)
@@ -405,25 +459,24 @@ def read_to_welly(
         wts = WellyToSubsurface()
 
     if collar_file is not None:
-        path_object = pathlib.Path(collar_file)
-        collars = read_collar(path_object, **read_collar_kwargs)
+
+        collars = read_collar(collar_file, **read_collar_kwargs)
         wts.add_datum(collars)
 
     if survey_file is not None:
-        path_object = pathlib.Path(survey_file)
+
         col_map = read_survey_kwargs.pop('columns_map', None)
         idx_map = read_survey_kwargs.pop('index_map', None)
-        survey_file = read_survey(
-            path_object,
+        survey = read_survey(
+            survey_file,
             index_map=idx_map,
             columns_map=col_map,
             **read_survey_kwargs)
-        wts.add_deviation(survey_file)
+        wts.add_deviation(survey)
 
     if lith_file is not None:
-        path_object = pathlib.Path(lith_file)
         col_map = read_lith_kwargs.pop('columns_map', None)
-        lith = read_lith(path_object, columns_map=col_map, **read_lith_kwargs)
+        lith = read_lith(lith_file, columns_map=col_map, **read_lith_kwargs)
         wts.add_striplog(lith)
 
     # First check if is just a path or list

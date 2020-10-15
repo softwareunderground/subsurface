@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 
 from subsurface.io import WellyToSubsurface
 from subsurface.io.basic_structs_io import read_wells_to_unstruct
-from subsurface.io.wells.wells_reader import read_to_welly
+from subsurface.io.wells.wells_reader import read_to_welly, read_collar, read_survey
 from subsurface.structs import LineSet
-from subsurface.visualization.to_pyvista import to_pyvista_line, pv_plot
+import subsurface
 import pathlib
 
 welly = pytest.importorskip('welly')
@@ -57,9 +57,9 @@ def test_read_wells_to_unstruct():
     unstructured_data.to_disk('wells.nc')
 
     element = LineSet(unstructured_data)
-    pyvista_mesh = to_pyvista_line(element)
+    pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
     # Plot default LITH
-    pv_plot([pyvista_mesh], image_2d=True)
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
 def test_create_welly_to_subsurface():
@@ -77,16 +77,44 @@ def test_create_welly_to_subsurface():
     unstructured_data = wts.to_subsurface(n_points=1000, attributes=None)
     unstructured_data.to_xarray()
     element = LineSet(unstructured_data)
-    pyvista_mesh = to_pyvista_line(element)
+    pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
     # Plot default LITH
-    pv_plot([pyvista_mesh], image_2d=True)
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
     # Plot gold
     pyvista_mesh.set_active_scalar('Au (g/t)')
-    pv_plot([pyvista_mesh], image_2d=True)
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
-def test_read_to_welly():
+def test_read_to_welly_dict():
+    """Read from dict is important for json"""
+
+    # Convert xlsx into dict. Dict has to be already cleaned
+    collar = read_collar(file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+                         usecols=[0, 1, 2, 4])
+    survey = read_survey(file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
+                         columns_map={'DEPTH': 'md', 'INCLINATION': 'inc',
+                                      'DIRECTION': 'azi'},
+                         index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
+                         )
+
+    dict_ = collar.to_json(orient='split')
+    wts = read_to_welly(collar_file=dict_,
+                        read_collar_kwargs={'is_json': True},
+                        survey_file=survey.to_json(orient='split'),
+                        read_survey_kwargs={'is_json': True}
+                        )
+
+    print('\n', wts)
+    unstructured_data = wts.to_subsurface()
+    print('\n', unstructured_data)
+    element = LineSet(unstructured_data)
+    pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
+    # Plot default LITH
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
+
+
+def test_read_to_welly_xlsx():
     wts = read_to_welly()
     print('\n', wts)
 
@@ -107,9 +135,9 @@ def test_read_to_welly():
     unstructured_data = wts.to_subsurface()
     print('\n', unstructured_data)
     element = LineSet(unstructured_data)
-    pyvista_mesh = to_pyvista_line(element)
+    pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
     # Plot default LITH
-    pv_plot([pyvista_mesh], image_2d=True)
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
     wts = read_to_welly(lith_file=data_path.joinpath('borehole_lith.xlsx'),
                         read_lith_kwargs={
@@ -124,9 +152,9 @@ def test_read_to_welly():
     unstructured_data = wts.to_subsurface()
     print('\n', unstructured_data)
     element = LineSet(unstructured_data)
-    pyvista_mesh = to_pyvista_line(element)
+    pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
     # Plot default LITH
-    pv_plot([pyvista_mesh], image_2d=True)
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
     # All in one
     wts = read_to_welly(collar_file=data_path.joinpath('borehole_collar.xlsx'),
@@ -159,10 +187,10 @@ def test_read_to_welly():
     unstructured_data = wts.to_subsurface()
     print('\n', unstructured_data)
     element = LineSet(unstructured_data)
-    pyvista_mesh = to_pyvista_line(element)
+    pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
     pyvista_mesh.set_active_scalar('Au (g/t)')
     # Plot default LITH
-    pv_plot([pyvista_mesh], image_2d=True)
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
 def test_excel_to_subsurface():
