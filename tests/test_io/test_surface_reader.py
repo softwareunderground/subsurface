@@ -7,7 +7,8 @@ from subsurface.structs import TetraMesh, TriSurf
 from subsurface.structs.base_structures import UnstructuredData
 import os
 
-from subsurface.visualization.to_pyvista import to_pyvista_tetra, pv_plot, to_pyvista_mesh
+from subsurface.structs.errors import VertexMissingError
+from subsurface.visualization.to_pyvista import pv_plot, to_pyvista_mesh
 
 input_path = os.path.dirname(__file__)+'/../data'
 
@@ -33,8 +34,16 @@ def get_unstructured_data_with_edges() -> UnstructuredData:
     return ud_edges
 
 
-def test_return_type(get_unstructured_data):
-    assert isinstance(get_unstructured_data, UnstructuredData)
+@pytest.fixture(scope="module")
+def get_unstructured_data_with_attribute() -> UnstructuredData:
+    fp = input_path + "/well_based_temperature.csv"
+    ud_attribute = surface_reader.read_in_surface_vertices(fp, [0, 1, 2], [], {'T': 3})
+    return ud_attribute
+
+
+def test_return_type(get_unstructured_data, get_unstructured_data_with_attribute):
+    # assert isinstance(get_unstructured_data, UnstructuredData)
+    assert isinstance(get_unstructured_data_with_attribute, UnstructuredData)
 
 
 def test_dataframes(get_unstructured_data):
@@ -68,3 +77,10 @@ def test_plot_edges_pyvista(get_unstructured_data_with_edges):
     ts = TriSurf(get_unstructured_data_with_edges)
     s = to_pyvista_mesh(ts)
     pv_plot([s], image_2d=True)
+
+
+def test_error():
+    with pytest.raises(VertexMissingError,
+                       match="""The columns have to be specified where surface_reader can expect vertices."""):
+        fp = input_path + "/less_land_surface_vertices.csv"
+        surface_reader.read_in_surface_vertices(fp, [], [])
