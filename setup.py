@@ -38,7 +38,7 @@ CLASSIFIERS = ['Development Status :: 3 - Alpha',
 
 setup(name='subsurface',
       version=verstr,
-      packages=find_packages(exclude=('test', 'docs')),
+      packages=find_packages(exclude=('tests', 'docs')),
       description='Subsurface data types and utilities',
       long_description=long_description,
       long_description_content_type='text/markdown',

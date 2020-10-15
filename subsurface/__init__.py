@@ -1,3 +1,7 @@
 from subsurface.io import *
 from subsurface.structs import *
-from subsurface.visualization import to_pyvista
+
+try:
+    from subsurface.visualization import to_pyvista
+except ImportError:
+    pass

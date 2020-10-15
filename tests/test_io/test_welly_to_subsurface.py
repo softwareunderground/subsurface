@@ -54,12 +54,12 @@ def test_read_wells_to_unstruct():
         }
 
     )
+    unstructured_data.to_disk('wells.nc')
 
     element = LineSet(unstructured_data)
     pyvista_mesh = to_pyvista_line(element)
     # Plot default LITH
     pv_plot([pyvista_mesh], image_2d=True)
-
 
 
 def test_create_welly_to_subsurface():
@@ -218,7 +218,7 @@ def test_read_lith():
                                'DEPTH_TO': 'base',
                                'LITHOLOGY': 'component lith',
                                'SITE_ID': 'description'})
-
+    d.to_csv('lith.csv')
     print(d)
     return d
 
@@ -229,7 +229,7 @@ def test_read_survey():
                       index_col=0)
     d.index = d.index.map({'ELV-01': 'foo', 'ELV-02': 'bar'})
     d.columns = d.columns.map({'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'})
-
+    d.to_csv('survey.csv')
     print(d)
     return d
 
@@ -239,13 +239,21 @@ def test_read_collars():
     d = pd.read_excel(data_path.joinpath('borehole_collar.xlsx'), usecols=cols,
                       header=None, index_col=0)
     print(d)
+    d.to_csv('collars.csv')
     return d
+
+
+# @pytest.mark.skip(reason='specific use')
+# def test_read_collars_and_send():
+#     df = test_read_collars()
+#     df.to_
 
 
 def test_read_assay():
     d = pd.read_excel(data_path.joinpath('borehole_assays.xlsx'),
                       index_col=0)
     d.drop('TO', axis=1, inplace=True)
+    d.to_csv('assay.csv')
     return d
 
 
