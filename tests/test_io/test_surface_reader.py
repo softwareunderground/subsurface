@@ -41,8 +41,11 @@ def get_unstructured_data_with_attribute() -> UnstructuredData:
     return ud_attribute
 
 
-def test_return_type(get_unstructured_data, get_unstructured_data_with_attribute):
-    # assert isinstance(get_unstructured_data, UnstructuredData)
+def test_return_type_1(get_unstructured_data):
+    assert isinstance(get_unstructured_data, UnstructuredData)
+
+
+def test_return_type_2(get_unstructured_data_with_attribute):
     assert isinstance(get_unstructured_data_with_attribute, UnstructuredData)
 
 
@@ -75,6 +78,12 @@ def test_plot_less_pyvista(get_less_unstructured_data):
 
 def test_plot_edges_pyvista(get_unstructured_data_with_edges):
     ts = TriSurf(get_unstructured_data_with_edges)
+    s = to_pyvista_mesh(ts)
+    pv_plot([s], image_2d=True)
+
+
+def test_plot_attributes_pyvista(get_unstructured_data_with_attribute):
+    ts = TriSurf(get_unstructured_data_with_attribute)
     s = to_pyvista_mesh(ts)
     pv_plot([s], image_2d=True)
 
