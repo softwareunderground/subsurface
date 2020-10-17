@@ -1,4 +1,7 @@
-from . import io
-from . import interfaces
-from . import structs
-from . import geological_formats
+import subsurface.io
+from subsurface.structs import *
+
+try:
+    import subsurface.visualization
+except ImportError:
+    pass

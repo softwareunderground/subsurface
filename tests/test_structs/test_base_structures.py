@@ -21,7 +21,6 @@ def test_unstructured_data():
                                pd.DataFrame({'foo': np.arange(1)}))
         print(foo)
 
-
 def test_structured_data(struc_data):
     xx, yy, zz = struc_data[0]
     geo_map, high = struc_data[1]

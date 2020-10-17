@@ -8,7 +8,7 @@ import numpy as np
 try:
     import pyvista as pv
 except ImportError:
-    raise PyVistaImportError()
+    raise ImportError()
 
 
 def pv_plot(meshes: list,
