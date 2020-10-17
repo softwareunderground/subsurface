@@ -3,7 +3,7 @@ from subsurface.structs.base_structures import UnstructuredData
 import numpy as np
 import math
 
-from subsurface.structs.errors import VertexMissingError
+# from subsurface.structs.errors import VertexMissingError
 
 
 def read_in_surface_vertices(path_to_file: str,
@@ -86,6 +86,16 @@ def read_in_surface_vertices(path_to_file: str,
         # print(len(attributes))
         df = pd.DataFrame(attributes)
         df.columns = [k for k, v in attribute_cols.items()]
-        ud = UnstructuredData(vertex, edges, df)
+
+        # Check if is point or cell data
+        if df.shape[0] == vertex.shape[0]:
+            kwargs_ = {'points_attributes': df}
+        elif df.shape[0] == edges.shape[0]:
+            kwargs_ = {'attributes': df}
+        else:
+            raise ValueError('Attribute cols must be either of the shape of vertex or'
+                             'edges.')
+
+        ud = UnstructuredData(vertex, edges, **kwargs_)
 
     return ud

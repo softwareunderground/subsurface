@@ -74,6 +74,7 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf]) -> pv.PolyData:
                   unstructured_element.data.edges]
     mesh = pv.PolyData(vertices, edges)
     mesh.cell_arrays.update(unstructured_element.data.attributes_to_dict)
+    mesh.point_arrays.update(unstructured_element.data.points_attributes)
     return mesh
 
 

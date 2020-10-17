@@ -30,24 +30,31 @@ class UnstructuredData:
 
     """
     data: xr.Dataset
-    #vertex: np.ndarray
-    #edges: np.ndarray
-    #attributes: Optional[pd.DataFrame] = None
+
+    # vertex: np.ndarray
+    # edges: np.ndarray
+    # attributes: Optional[pd.DataFrame] = None
 
     def __init__(self, vertex: np.ndarray, edges: np.ndarray,
-                 attributes: Optional[pd.DataFrame] = None):
+                 attributes: Optional[pd.DataFrame] = None,
+                 points_attributes: Optional[pd.DataFrame] = None):
         v = xr.DataArray(vertex, dims=['points', 'XYZ'])
         e = xr.DataArray(edges, dims=['edge', 'nodes'])
 
         if attributes is None:
             attributes = pd.DataFrame(np.zeros((edges.shape[0], 0)))
 
-        a = xr.DataArray(attributes, dims=['element', 'attribute'])
-        c = xr.Dataset({'vertex': v, 'edges': e, 'attributes': a})
-        self.data = c.reset_index('element')
+        if points_attributes is None:
+            points_attributes = pd.DataFrame(np.zeros((vertex.shape[0], 0)))
+
+        a = xr.DataArray(attributes, dims=['edge', 'attribute'])
+        pa = xr.DataArray(points_attributes, dims=['points', 'points_attribute'])
+
+        c = xr.Dataset({'vertex': v, 'edges': e,
+                        'attributes': a, 'points_attributes': pa})
+        self.data = c.reset_index('edge')
 
         self.validate()
-
 
     @property
     def vertex(self):
@@ -72,7 +79,16 @@ class UnstructuredData:
     @attributes.setter
     def attributes(self, dataframe):
         self.data['attributes'] = xr.DataArray(dataframe,
-                                              dims=['element', 'attribute'])
+                                               dims=['element', 'attribute'])
+
+    @property
+    def points_attributes(self):
+        return self.data['points_attributes'].to_dataframe()['points_attributes'].unstack(level=1)
+
+    @points_attributes.setter
+    def points_attributes(self, dataframe):
+        self.data['point_attributes'] = xr.DataArray(dataframe,
+                                                     dims=['points', 'points_attribute'])
 
     @property
     def n_elements(self):
@@ -90,6 +106,10 @@ class UnstructuredData:
     def attributes_to_dict(self, orient='list'):
         return self.attributes.to_dict(orient)
 
+    @property
+    def points_attributes_to_dict(self, orient='list'):
+        return self.points_attributes_to_dict.to_dict(orient)
+
     def validate(self):
         """Make sure the number of vertices matches the associated data."""
         if self.data['edges'].shape[0] != self.data['attributes'].shape[0]:
@@ -100,7 +120,7 @@ class UnstructuredData:
         b = xr.DataArray(self.edges, dims=['edges', 'node'])
         e = xr.DataArray(self.attributes, dims=['element', 'attribute'])
         c = xr.Dataset({'v': a, 'e': b, 'a': e})
-        #x = c.reset_index('attribute')
+        # x = c.reset_index('attribute')
         return c
 
     def to_disk(self, file: str, **kwargs):
@@ -157,30 +177,3 @@ class StructuredData:
         else:
             AttributeError('data must be either xarray.Dataset, xarray.DataArray,'
                            'or numpy.ndarray')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

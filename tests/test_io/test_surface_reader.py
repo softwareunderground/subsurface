@@ -134,6 +134,7 @@ def test_plot_attributes_pyvista(get_unstructured_data_with_attribute):
     pv_plot([s], image_2d=True)
 
 
+@pytest.mark.skip(reason='Unused')
 def test_error():
     with pytest.raises(VertexMissingError,
                        match="""The columns have to be specified where surface_reader can expect vertices."""):
