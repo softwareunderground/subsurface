@@ -10,35 +10,81 @@ import os
 from subsurface.structs.errors import VertexMissingError
 from subsurface.visualization.to_pyvista import pv_plot, to_pyvista_mesh
 
-input_path = os.path.dirname(__file__)+'/../data'
+input_path = os.path.dirname(__file__) + '/../data'
 
 
 @pytest.fixture(scope="module")
 def get_unstructured_data() -> UnstructuredData:
     fp = input_path + "/land_surface_vertices.csv"
-    ud = surface_reader.read_in_surface_vertices(fp, [0, 1, 2], [])
+    ud = surface_reader.read_in_surface_vertices(fp)
     return ud
 
 
 @pytest.fixture(scope="module")
 def get_less_unstructured_data() -> UnstructuredData:
     fp = input_path + "/less_land_surface_vertices.csv"
-    ud_less = surface_reader.read_in_surface_vertices(fp, [0, 1, 2], [])
+    ud_less = surface_reader.read_in_surface_vertices(fp)
     return ud_less
 
 
 @pytest.fixture(scope="module")
 def get_unstructured_data_with_edges() -> UnstructuredData:
     fp = input_path + "/vertices_and_edges.csv"
-    ud_edges = surface_reader.read_in_surface_vertices(fp, [0, 1, 2], [-3, -2, -1])
+    ud_edges = surface_reader.read_in_surface_vertices(
+        fp,
+        columns_map={
+            'x': 'x',
+            'y': 'y',
+            'z': 'z',
+            '0': 'e1',
+            '1': 'e2',
+            '2': 'e3'
+        }
+    )
     return ud_edges
 
 
 @pytest.fixture(scope="module")
 def get_unstructured_data_with_attribute() -> UnstructuredData:
     fp = input_path + "/well_based_temperature.csv"
-    ud_attribute = surface_reader.read_in_surface_vertices(fp, [0, 1, 2], [], {'T': 3})
+    ud_attribute = surface_reader.read_in_surface_vertices(
+        fp,
+        columns_map={
+            'x': 'x',
+            'y': 'y',
+            'z': 'z',
+            '0': 'e1',
+            '1': 'e2',
+            '2': 'e3'
+        },
+        attribute_cols={'T': 3})
     return ud_attribute
+
+
+def test_read_surface():
+    # Read a csv which column names are already right
+    fp = input_path + "/land_surface_vertices.csv"
+    ud = surface_reader.read_in_surface_vertices(fp)
+    print(ud)
+
+    # Try reading a column with no index
+    with pytest.raises(KeyError):
+        fp = input_path + "/less_land_surface_vertices_no_col.csv"
+        ud = surface_reader.read_in_surface_vertices(fp)
+        print(ud)
+
+    # Say pandas that there is no header and the name of the columns
+    fp = input_path + "/less_land_surface_vertices_no_col.csv"
+    ud = surface_reader.read_in_surface_vertices(fp, header=0, names=['x', 'y', 'z'])
+    print(ud)
+
+    # Remap column names to fit the requirements
+    fp = input_path + "/less_land_surface_vertices_wrong_col.csv"
+    ud = surface_reader.read_in_surface_vertices(
+        fp,
+        columns_map={'foo': 'x', 'bar': 'y', 'baz': 'z'})
+    print(ud)
+    return ud
 
 
 def test_return_type_1(get_unstructured_data):
@@ -92,4 +138,4 @@ def test_error():
     with pytest.raises(VertexMissingError,
                        match="""The columns have to be specified where surface_reader can expect vertices."""):
         fp = input_path + "/less_land_surface_vertices.csv"
-        surface_reader.read_in_surface_vertices(fp, [], [])
+        surface_reader.read_in_surface_vertices(fp)
