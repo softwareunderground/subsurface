@@ -1,3 +1,4 @@
+import io
 import pathlib
 from typing import Iterable, Union, List, Optional
 
@@ -331,7 +332,8 @@ def read_collar(file_or_buffer, **kwargs):
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or\
+            type(file_or_buffer) == io.BytesIO:
         # Parse file
         file_or_buffer = pathlib.Path(file_or_buffer)
 
@@ -359,7 +361,8 @@ def read_survey(file_or_buffer, index_map=None, columns_map=None, **kwargs):
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or\
+            type(file_or_buffer) == io.BytesIO:
         file_or_buffer = pathlib.Path(file_or_buffer)
         file_format = file_or_buffer.suffix
         reader = _get_reader(file_format)
@@ -394,7 +397,8 @@ def read_lith(file_or_buffer, columns_map=None, **kwargs):
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or\
+            type(file_or_buffer) == io.BytesIO:
         file_or_buffer = pathlib.Path(file_or_buffer)
         file_format = file_or_buffer.suffix
         reader = _get_reader(file_format)
@@ -419,10 +423,12 @@ def read_lith(file_or_buffer, columns_map=None, **kwargs):
 
 def read_attributes(file_or_buffer, columns_map=None,
                     drop_cols: Optional[list] = None, **kwargs):
+
     is_json = kwargs.pop('is_json', False)
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or\
+            type(file_or_buffer) == io.BytesIO:
         file_or_buffer = pathlib.Path(file_or_buffer)
         file_format = file_or_buffer.suffix
         reader = _get_reader(file_format)
@@ -436,7 +442,6 @@ def read_attributes(file_or_buffer, columns_map=None,
         raise AttributeError('file_or_buffer must be either a path or a dict')
 
     if columns_map is not None:
-        #d.columns = d.columns.replace(columns_map)
         d.rename(columns_map, axis=1, inplace=True)
     if drop_cols is not None:
         d.drop(drop_cols, axis=1, inplace=True)

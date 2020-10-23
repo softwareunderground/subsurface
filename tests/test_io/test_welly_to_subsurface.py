@@ -86,6 +86,12 @@ def test_create_welly_to_subsurface():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
+def test_read_to_welly():
+    wts = read_to_welly(collar_file=data_path.joinpath('borehole_collar.xlsx'),
+                        read_collar_kwargs={'usecols': [0, 1, 2, 3]})
+    print(wts)
+
+
 def test_read_to_welly_json():
     """Read from dict is important for json"""
 
@@ -128,10 +134,7 @@ def test_read_to_welly_dict():
 
     dict_ = collar.to_dict(orient='split')
     wts = read_to_welly(collar_file=dict_,
-                        read_collar_kwargs={'is_json': False},
-                        survey_file=survey.to_dict(orient='split'),
-                        read_survey_kwargs={'is_json': False}
-                        )
+                        survey_file=survey.to_dict(orient='split'))
 
     print('\n', wts)
     unstructured_data = wts.to_subsurface()
@@ -140,7 +143,6 @@ def test_read_to_welly_dict():
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
     # Plot default LITH
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
-
 
 
 def test_read_to_welly_xlsx():
