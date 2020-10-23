@@ -285,11 +285,25 @@ def read_wells(backend='welly', n_points=1000, **kwargs):
     return unstruct
 
 
+def _dict_reader(dict_):
+    """
+
+    Args:
+        dict_: data, index, columns
+
+    Returns:
+
+    """
+    return pd.DataFrame(data=dict_['data'],
+                        columns=dict_['columns'],
+                        index=dict_['index'])
+
+
 def _get_reader(file_format):
     if file_format == '.xlsx':
         reader = pd.read_excel
     elif file_format == 'dict':
-        reader = pd.DataFrame.from_dict
+        reader = _dict_reader
     else:  # file_format == '.csv':
         reader = pd.read_csv
     return reader

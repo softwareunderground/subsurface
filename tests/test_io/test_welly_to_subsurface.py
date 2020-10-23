@@ -86,7 +86,7 @@ def test_create_welly_to_subsurface():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
-def test_read_to_welly_dict():
+def test_read_to_welly_json():
     """Read from dict is important for json"""
 
     # Convert xlsx into dict. Dict has to be already cleaned
@@ -112,6 +112,35 @@ def test_read_to_welly_dict():
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
     # Plot default LITH
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
+
+
+def test_read_to_welly_dict():
+    """Read from dict is important for json"""
+
+    # Convert xlsx into dict. Dict has to be already cleaned
+    collar = read_collar(file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+                         usecols=[0, 1, 2, 4])
+    survey = read_survey(file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
+                         columns_map={'DEPTH': 'md', 'INCLINATION': 'inc',
+                                      'DIRECTION': 'azi'},
+                         index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
+                         )
+
+    dict_ = collar.to_dict(orient='split')
+    wts = read_to_welly(collar_file=dict_,
+                        read_collar_kwargs={'is_json': False},
+                        survey_file=survey.to_dict(orient='split'),
+                        read_survey_kwargs={'is_json': False}
+                        )
+
+    print('\n', wts)
+    unstructured_data = wts.to_subsurface()
+    print('\n', unstructured_data)
+    element = LineSet(unstructured_data)
+    pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
+    # Plot default LITH
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
+
 
 
 def test_read_to_welly_xlsx():
