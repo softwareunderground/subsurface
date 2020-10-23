@@ -474,7 +474,14 @@ def read_to_welly(
         read_survey_kwargs=None,
         read_lith_kwargs=None,
         read_attributes_kwargs=None,
+        return_pandas=False
 ):
+
+    collars = None
+    survey = None
+    lith = None
+    attributes_ = None
+
     if read_attributes_kwargs is None:
         read_attributes_kwargs = {}
     if read_lith_kwargs is None:
@@ -517,6 +524,8 @@ def read_to_welly(
         drop_cols = read_attributes_kwargs.pop('drop_cols', [None] * len(attrib_file))
         col_map = read_attributes_kwargs.pop('columns_map', [None] * len(attrib_file))
         # basis = read_attributes_kwargs('basis', 'basis')
+
+        attributes_ = list()
         for e, f in enumerate(attrib_file):
             attributes = read_attributes(
                 f,
@@ -524,7 +533,13 @@ def read_to_welly(
                 columns_map=col_map[e],
                 **read_attributes_kwargs
             )
-
+            attributes_.append(attributes)
             wts.add_assays(attributes, basis='basis')
 
+    if return_pandas is True:
+        dfs_ = list()
+        for i in [collars, survey, lith, attributes_]:
+            if i is not None:
+                dfs_.append(i)
+        return dfs_
     return wts
