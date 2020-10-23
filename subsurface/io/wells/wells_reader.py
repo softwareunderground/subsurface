@@ -464,23 +464,23 @@ def read_attributes(file_or_buffer, columns_map=None,
     return d
 
 
-def read_to_welly(
+def read_borehole_files(
         collar_file: str = None,
         survey_file: str = None,
         lith_file: str = None,
         attrib_file: Union[str, List] = None,
-        wts: WellyToSubsurface = None,
         read_collar_kwargs=None,
         read_survey_kwargs=None,
         read_lith_kwargs=None,
         read_attributes_kwargs=None,
-        return_pandas=False
 ):
 
+    data_frames = list()
     collars = None
     survey = None
     lith = None
     attributes_ = None
+
 
     if read_attributes_kwargs is None:
         read_attributes_kwargs = {}
@@ -491,17 +491,11 @@ def read_to_welly(
     if read_collar_kwargs is None:
         read_collar_kwargs = {}
 
-    # Init WellyToSubsurface object
-    if wts is None:
-        wts = WellyToSubsurface()
-
     if collar_file is not None:
-
         collars = read_collar(collar_file, **read_collar_kwargs)
-        wts.add_datum(collars)
+        data_frames.append(collars)
 
     if survey_file is not None:
-
         col_map = read_survey_kwargs.pop('columns_map', None)
         idx_map = read_survey_kwargs.pop('index_map', None)
         survey = read_survey(
@@ -509,12 +503,12 @@ def read_to_welly(
             index_map=idx_map,
             columns_map=col_map,
             **read_survey_kwargs)
-        wts.add_deviation(survey)
+        data_frames.append(survey)
 
     if lith_file is not None:
         col_map = read_lith_kwargs.pop('columns_map', None)
         lith = read_lith(lith_file, columns_map=col_map, **read_lith_kwargs)
-        wts.add_striplog(lith)
+        data_frames.append(lith)
 
     # First check if is just a path or list
     if attrib_file is not None:
@@ -534,12 +528,63 @@ def read_to_welly(
                 **read_attributes_kwargs
             )
             attributes_.append(attributes)
-            wts.add_assays(attributes, basis='basis')
+        data_frames.append(attributes_)
 
-    if return_pandas is True:
-        dfs_ = list()
-        for i in [collars, survey, lith, attributes_]:
-            if i is not None:
-                dfs_.append(i)
-        return dfs_
+    return data_frames
+
+
+def pandas_to_welly(
+        wts: WellyToSubsurface = None,
+        collar_df: pd.DataFrame = None,
+        survey_df: pd.DataFrame = None,
+        lith_df: pd.DataFrame = None,
+        attrib_dfs: List[pd.DataFrame] = None
+):
+    # Init WellyToSubsurface object
+    if wts is None:
+        wts = WellyToSubsurface()
+
+    if collar_df is not None:
+        wts.add_datum(collar_df)
+
+    if survey_df is not None:
+        wts.add_deviation(survey_df)
+
+    if lith_df is not None:
+        wts.add_striplog(lith_df)
+
+    # First check if is just a path or list
+    if attrib_dfs is not None:
+
+        attributes_ = list()
+        for e, attrib in enumerate(attrib_dfs):
+
+            wts.add_assays(attrib, basis='basis')
+    return wts
+
+
+def read_to_welly(
+        collar_file: str = None,
+        survey_file: str = None,
+        lith_file: str = None,
+        attrib_file: Union[str, List] = None,
+        wts: WellyToSubsurface = None,
+        read_collar_kwargs=None,
+        read_survey_kwargs=None,
+        read_lith_kwargs=None,
+        read_attributes_kwargs=None,
+
+):
+    dfs = read_borehole_files(
+        collar_file,
+        survey_file,
+        lith_file,
+        attrib_file,
+        read_collar_kwargs,
+        read_survey_kwargs,
+        read_lith_kwargs,
+        read_attributes_kwargs)
+
+    wts = pandas_to_welly(wts, *dfs)
+
     return wts
