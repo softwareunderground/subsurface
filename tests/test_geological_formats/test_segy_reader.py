@@ -31,5 +31,5 @@ def test_pyvista_structured_grid(get_structured_data):
     # StructuredData from Dataset
     for x in get_structured_data:
         sg = StructuredGrid(x)
-        s = to_pyvista_grid(sg, 'data') # works only for test.segy as x.shape == y.shape so the test fails here
+        s = to_pyvista_grid(sg, 'data') # works only for test.segy as x.shape == y.shape so the test fails here for the other files
         pv_plot([s], image_2d=True)
