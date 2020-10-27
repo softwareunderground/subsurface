@@ -10,12 +10,23 @@ from tests.conftest import struc_data
 
 
 def read_in_segy(filepath: str, coords=None) -> StructuredData:
+    """Reader for seismic data stored in sgy/segy files
+
+    Args:
+        filepath (str): the path of the sgy/segy file
+        coords (dict): If data is a numpy array coords provides the values for
+         the xarray dimension. These dimensions are 'x', 'y' and 'z'
+
+    Returns: a StructuredData object with data, the traces with samples written into an xr.Dataset, optionally with
+     labels defined by coords
+
+    """
 
     segyfile = segyio.open(filepath, ignore_geometry=True)
+    # plot the seismic profiles
     # clip = 1e+2
     # vmin, vmax = -clip, clip
-
-    # Figure
+    #
     # figsize = (20, 20)
     # fig, axs = plt.subplots(nrows=1, ncols=1, figsize=figsize, facecolor='w', edgecolor='k',
     #                         squeeze=False,
@@ -24,8 +35,8 @@ def read_in_segy(filepath: str, coords=None) -> StructuredData:
     # im = axs[0].imshow(segyfile.trace.raw[:].T, cmap=plt.cm.seismic, vmin=vmin, vmax=vmax)
     # plt.show()
 
-    array = np.asarray([np.copy(tr) for tr in segyfile.trace[:]])
-    sd = StructuredData(array)
+    data = np.asarray([np.copy(tr) for tr in segyfile.trace[:]])
+    sd = StructuredData(data) # data holds traces * (samples per trace) values
     segyfile.close()
     print(sd)
     return sd
