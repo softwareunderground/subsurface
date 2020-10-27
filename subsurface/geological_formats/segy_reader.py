@@ -12,8 +12,6 @@ from tests.conftest import struc_data
 def read_in_segy(filepath: str, coords=None) -> StructuredData:
 
     segyfile = segyio.open(filepath, ignore_geometry=True)
-    print(segyfile.unstructured)
-    print(segyfile.samples)
     # clip = 1e+2
     # vmin, vmax = -clip, clip
 
@@ -26,13 +24,9 @@ def read_in_segy(filepath: str, coords=None) -> StructuredData:
     # im = axs[0].imshow(segyfile.trace.raw[:].T, cmap=plt.cm.seismic, vmin=vmin, vmax=vmax)
     # plt.show()
 
-    # samples = segyio.tools.collect(segyio.tools.sample_indexes(segyfile))
-    # array = segyfile.trace[0]
     array = np.asarray([np.copy(tr) for tr in segyfile.trace[:]])
-    print(type(array))
     sd = StructuredData(array)
-    # sd.data = samples
     segyfile.close()
-    print(sd.data)
+    print(sd)
     return sd
 
