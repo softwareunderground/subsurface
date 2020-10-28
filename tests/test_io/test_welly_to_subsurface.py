@@ -120,6 +120,33 @@ def test_read_to_welly_json():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
+def test_read_borehole_stateless():
+    collar = read_collar(file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+                         usecols=[0, 1, 2, 4])
+    survey = read_survey(file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
+                         columns_map={'DEPTH': 'md', 'INCLINATION': 'inc',
+                                      'DIRECTION': 'azi'},
+                         index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
+                         )
+    dict_collar = collar.to_dict('split')
+    dict_survey = survey.to_dict('split')
+    c_df = pd.DataFrame(data= dict_collar['data'],
+                        index=dict_collar['index'],
+                        columns=dict_collar['columns'])
+    s_df = pd.DataFrame(data= dict_survey['data'],
+                        index=dict_survey['index'],
+                        columns=dict_survey['columns'])
+
+    wts = subsurface.io.pandas_to_welly(
+        collar_df=c_df,
+        survey_df=s_df,
+    )
+
+    unstruct = wts.to_subsurface()
+    print(unstruct)
+
+
+
 def test_read_to_welly_dict():
     """Read from dict is important for json"""
 

@@ -123,9 +123,8 @@ class UnstructuredData:
         # x = c.reset_index('attribute')
         return c
 
-    def to_disk(self, file: str, **kwargs):
-        self.data.to_netcdf(file, **kwargs)
-        return True
+    def to_disk(self, file: str = None, **kwargs):
+        return self.data.to_netcdf(file, **kwargs)
 
 
 @dataclass
