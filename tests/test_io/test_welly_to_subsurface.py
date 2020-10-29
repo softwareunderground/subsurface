@@ -116,6 +116,7 @@ def test_read_to_welly_json():
     print('\n', unstructured_data)
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
+
     # Plot default LITH
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
