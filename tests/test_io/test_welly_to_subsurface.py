@@ -1,8 +1,6 @@
 import pytest
 
-import subsurface as ss
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 
 from subsurface.io import WellyToSubsurface
@@ -16,8 +14,7 @@ welly = pytest.importorskip('welly')
 xlrd = pytest.importorskip('xlrd')
 pf = pathlib.Path(__file__).parent.absolute()
 data_path = pf.joinpath('../data/borehole/')
-from welly import Curve
-from striplog import Legend, Striplog
+from striplog import Striplog
 
 
 def test_empty_project():
