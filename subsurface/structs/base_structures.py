@@ -12,10 +12,15 @@ class UnstructuredData:
     """Primary structure definition for unstructured data
 
     Attributes:
+        data (`xarray.Dataset`): Data structure where we store
+
+    Args:
         vertex (np.ndarray): NDArray[(Any, 3), FloatX]: XYZ point data
         edges (np.ndarray): NDArray[(Any, ...), IntX]: Combination of vertex that create
             different geometric elements
         attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number associated to an element
+        points_attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number
+         associated to points
 
     Notes:
         Depending on the shape of `edge` the following unstructured elements can be create:
@@ -30,10 +35,6 @@ class UnstructuredData:
 
     """
     data: xr.Dataset
-
-    # vertex: np.ndarray
-    # edges: np.ndarray
-    # attributes: Optional[pd.DataFrame] = None
 
     def __init__(self, vertex: np.ndarray, edges: np.ndarray,
                  attributes: Optional[pd.DataFrame] = None,
@@ -120,7 +121,6 @@ class UnstructuredData:
         b = xr.DataArray(self.edges, dims=['edges', 'node'])
         e = xr.DataArray(self.attributes, dims=['element', 'attribute'])
         c = xr.Dataset({'v': a, 'e': b, 'a': e})
-        # x = c.reset_index('attribute')
         return c
 
     def to_disk(self, file: str = None, **kwargs):
