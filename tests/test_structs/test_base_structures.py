@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
+
 def test_unstructured_data():
     # Normal constructor
     foo = UnstructuredData(np.ones((5, 3)), np.ones((4, 3)),
@@ -16,7 +17,7 @@ def test_unstructured_data():
     print(foo)
 
     #Failed validation
-    with pytest.raises(AttributeError, match=r".*edges must.*"):
+    with pytest.raises(ValueError):
         foo = UnstructuredData(np.ones((5, 3)), np.ones((4, 3)),
                                pd.DataFrame({'foo': np.arange(1)}))
         print(foo)
@@ -84,5 +85,5 @@ def test_xarray():
 
     print(type(s), '\n')
 
-    s3 =  xr.Dataset({'foo': (['x', 'y', 'z'], xx)})
+    s3 = xr.Dataset({'foo': (['x', 'y', 'z'], xx)})
     print(s3)

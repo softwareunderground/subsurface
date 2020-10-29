@@ -1,1 +1,2 @@
-from .wells.wells_reader import WellyToSubsurface
+from .wells.wells_reader import *
+from .basic_structs_io import *
