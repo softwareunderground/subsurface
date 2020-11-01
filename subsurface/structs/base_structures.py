@@ -39,7 +39,8 @@ class UnstructuredData:
     def __init__(self, vertex: np.ndarray, edges: np.ndarray = None,
                  attributes: Optional[
                      Union[pd.DataFrame, Dict[str, xr.DataArray]]] = None,
-                 points_attributes: Optional[pd.DataFrame] = None):
+                 points_attributes: Optional[pd.DataFrame] = None,
+                 coords=None):
 
         self.attributes_name = 'attributes'
         self.points_attributes_name = 'points_attributes'
@@ -53,7 +54,7 @@ class UnstructuredData:
         xarray_dict['vertex'] = v
 
         if edges is None:
-            edges = np.atleast_2d(v.coords['points'])
+            edges = np.atleast_2d(v.coords['points']).T
 
         e = xr.DataArray(edges, dims=['edge', 'nodes'])
         xarray_dict['edges'] = e
@@ -73,14 +74,14 @@ class UnstructuredData:
                   'points_attribute'],
             attributes_type=self.points_attributes_name
         )
-        self.data = xr.Dataset(xarray_dict)
+        self.data = xr.Dataset(xarray_dict, coords=coords)
 
         try:
             self.data = self.data.reset_index('edge')
         except KeyError:
             pass
 
-        self.validate()
+        self._validate()
 
     def set_attributes_data_array(self, attributes, n_item, xarray_dict, dims,
                                   attributes_type):
@@ -163,9 +164,9 @@ class UnstructuredData:
     def points_attributes_to_dict(self, orient='list'):
         return self.points_attributes_to_dict.to_dict(orient)
 
-    def validate(self):
+    def _validate(self):
         """Make sure the number of vertices matches the associated data."""
-        if self.data['edges'].shape[0] != self.data[self.attributes_name].shape[0]:
+        if self.data['edges']['edge'].size != self.data[self.attributes_name]['edge'].size:
             raise AttributeError('Attributes and edges must have the same length.')
 
     def to_xarray(self):
@@ -212,12 +213,11 @@ class StructuredData:
         if type(data) == xr.Dataset:
             self.data = data
 
-        elif type(data) == list:
+        elif type(data) == dict:
             self.data = xr.Dataset(
                 data_vars=data,
                 coords=coords
             )
-
         elif type(data) == xr.DataArray:
             self.data = xr.Dataset({data_name: data})
         elif type(data) == np.ndarray:
@@ -232,5 +232,5 @@ class StructuredData:
                     coords=coords
                 )
         else:
-            AttributeError('data must be either xarray.Dataset, xarray.DataArray,'
-                           'or numpy.ndarray')
+            raise AttributeError('data must be either xarray.Dataset, xarray.DataArray,'
+                                 'or numpy.ndarray')
