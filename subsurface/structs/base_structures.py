@@ -1,6 +1,6 @@
 import pathlib
 from dataclasses import dataclass
-from typing import Union, Optional
+from typing import Union, Optional, Dict
 
 import numpy as np
 import pandas as pd
@@ -36,26 +36,75 @@ class UnstructuredData:
     """
     data: xr.Dataset
 
-    def __init__(self, vertex: np.ndarray, edges: np.ndarray,
-                 attributes: Optional[pd.DataFrame] = None,
+    def __init__(self, vertex: np.ndarray, edges: np.ndarray = None,
+                 attributes: Optional[
+                     Union[pd.DataFrame, Dict[str, xr.DataArray]]] = None,
                  points_attributes: Optional[pd.DataFrame] = None):
-        v = xr.DataArray(vertex, dims=['points', 'XYZ'])
+
+        self.attributes_name = 'attributes'
+        self.points_attributes_name = 'points_attributes'
+
+        xarray_dict = dict()
+
+        v = xr.DataArray(vertex,
+                         dims=['points', 'XYZ'],
+                         coords={'XYZ': ['X', 'Y', 'Z']}
+                         )
+        xarray_dict['vertex'] = v
+
+        if edges is None:
+            edges = np.atleast_2d(v.coords['points'])
+
         e = xr.DataArray(edges, dims=['edge', 'nodes'])
+        xarray_dict['edges'] = e
 
-        if attributes is None:
-            attributes = pd.DataFrame(np.zeros((edges.shape[0], 0)))
+        xarray_dict = self.set_attributes_data_array(
+            attributes,
+            edges.shape[0],
+            xarray_dict,
+            dims=['edge', 'attribute'],
+            attributes_type=self.attributes_name
+        )
+        xarray_dict = self.set_attributes_data_array(
+            points_attributes,
+            vertex.shape[0],
+            xarray_dict,
+            dims=['points',
+                  'points_attribute'],
+            attributes_type=self.points_attributes_name
+        )
+        self.data = xr.Dataset(xarray_dict)
 
-        if points_attributes is None:
-            points_attributes = pd.DataFrame(np.zeros((vertex.shape[0], 0)))
-
-        a = xr.DataArray(attributes, dims=['edge', 'attribute'])
-        pa = xr.DataArray(points_attributes, dims=['points', 'points_attribute'])
-
-        c = xr.Dataset({'vertex': v, 'edges': e,
-                        'attributes': a, 'points_attributes': pa})
-        self.data = c.reset_index('edge')
+        try:
+            self.data = self.data.reset_index('edge')
+        except KeyError:
+            pass
 
         self.validate()
+
+    def set_attributes_data_array(self, attributes, n_item, xarray_dict, dims,
+                                  attributes_type):
+        if attributes is None:
+            attributes = pd.DataFrame(np.zeros((n_item, 0)))
+        if type(attributes) is pd.DataFrame:
+            a = xr.DataArray(attributes, dims=dims)
+            xarray_dict[attributes_type] = a
+        elif type(attributes) is dict:
+            x_attr = self.set_attributes_for_dicts(attributes,
+                                                   attributes_type,
+                                                   xarray_dict)
+            xarray_dict = {**xarray_dict, **x_attr}
+
+        return xarray_dict
+
+    def set_attributes_for_dicts(self, attributes, attributes_type, xarray_dict):
+        new_default_name = attributes.get(attributes_type, next(iter(attributes)))
+        if attributes_type == self.attributes_name:
+            self.attributes_name = new_default_name
+        elif attributes_type == self.points_attributes_name:
+            self.points_attributes_name = new_default_name
+        xarray_dict = {**xarray_dict, **attributes}
+        return xarray_dict
 
     @property
     def vertex(self):
@@ -75,21 +124,24 @@ class UnstructuredData:
 
     @property
     def attributes(self):
-        return self.data['attributes'].to_dataframe()['attributes'].unstack(level=1)
+        xarray = self.data[self.attributes_name]
+        return xarray.to_dataframe()[self.attributes_name].unstack(level=1)
 
     @attributes.setter
     def attributes(self, dataframe):
-        self.data['attributes'] = xr.DataArray(dataframe,
-                                               dims=['element', 'attribute'])
+        self.data[self.attributes_name] = xr.DataArray(dataframe,
+                                                       dims=['element', 'attribute'])
 
     @property
     def points_attributes(self):
-        return self.data['points_attributes'].to_dataframe()['points_attributes'].unstack(level=1)
+        return self.data[self.points_attributes_name].to_dataframe()[
+            self.points_attributes_name].unstack(level=1)
 
     @points_attributes.setter
     def points_attributes(self, dataframe):
-        self.data['point_attributes'] = xr.DataArray(dataframe,
-                                                     dims=['points', 'points_attribute'])
+        self.data[self.points_attributes_name] = xr.DataArray(dataframe,
+                                                              dims=['points',
+                                                                    'points_attribute'])
 
     @property
     def n_elements(self):
@@ -113,7 +165,7 @@ class UnstructuredData:
 
     def validate(self):
         """Make sure the number of vertices matches the associated data."""
-        if self.data['edges'].shape[0] != self.data['attributes'].shape[0]:
+        if self.data['edges'].shape[0] != self.data[self.attributes_name].shape[0]:
             raise AttributeError('Attributes and edges must have the same length.')
 
     def to_xarray(self):
@@ -151,7 +203,8 @@ class StructuredData:
 
     def __init__(
             self,
-            data: Union[np.ndarray, xr.DataArray, xr.Dataset],
+            data: Union[
+                np.ndarray, xr.DataArray, xr.Dataset, Dict[str, xr.DataArray]],
             data_name: str = 'data',
             coords: dict = None
     ):
@@ -159,9 +212,14 @@ class StructuredData:
         if type(data) == xr.Dataset:
             self.data = data
 
+        elif type(data) == list:
+            self.data = xr.Dataset(
+                data_vars=data,
+                coords=coords
+            )
+
         elif type(data) == xr.DataArray:
             self.data = xr.Dataset({data_name: data})
-
         elif type(data) == np.ndarray:
             if data.ndim == 2:
                 self.data = xr.Dataset(

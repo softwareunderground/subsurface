@@ -71,7 +71,7 @@ def test_create_welly_to_subsurface():
     wts.add_striplog(lith)
     wts.add_assays(assays, basis='FROM')
 
-    unstructured_data = wts.to_subsurface(n_points=1000, attributes=None)
+    unstructured_data = wts.to_subsurface(n_points=1000)
     unstructured_data.to_xarray()
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)

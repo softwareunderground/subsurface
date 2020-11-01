@@ -23,6 +23,24 @@ def test_unstructured_data():
         print(foo)
 
 
+def test_unstructured_data_no_edges():
+    foo = UnstructuredData(np.ones((5, 3)))
+    print(foo)
+
+
+def test_unstructured_data_no_edges_no_attributes():
+    attributes = {'notAttributeName': xr.DataArray(pd.DataFrame({'foo': np.arange(4)}))}
+
+    foo = UnstructuredData(
+        vertex=np.ones((5, 3)),
+        edges=np.ones((4, 3)),
+        attributes=attributes
+
+    )
+
+    print(foo)
+
+
 def test_structured_data(struc_data):
     xx, yy, zz = struc_data[0]
     geo_map, high = struc_data[1]
@@ -64,7 +82,6 @@ def test_xarray():
     s2 = xr.DataArray(xx, coords={'x': xrng, 'y': yrng, 'z': zrng},
                       dims=['x', 'y', 'z'])
     print(s2)
-
 
     # Each data set can be align to different dimensions that is why we need to specify
     # The coordinate name
