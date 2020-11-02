@@ -11,10 +11,10 @@ from subsurface.structs.base_structures import UnstructuredData
 
 def test_point_set_init(point_set):
     n = 100
-    # Test check of number of edges:
+    # Test check of number of cells:
     data = UnstructuredData(
         vertex=np.random.rand(n, 3),
-        edges=np.random.rand(n, 3),
+        cells=np.random.rand(n, 3),
         attributes=pd.DataFrame({'foo': np.arange(n)})
     )
 
@@ -44,7 +44,7 @@ def test_line_set_init(line_set):
 def test_tetra_mesh_init(tetra_set):
 
     mesh = tetra_set
-    assert mesh.n_tetrahedrals == len(mesh.data.edges)
+    assert mesh.n_tetrahedrals == len(mesh.data.cells)
 
 
 @pytest.mark.skip()

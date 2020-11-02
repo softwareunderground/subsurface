@@ -23,19 +23,32 @@ def test_unstructured_data():
         print(foo)
 
 
-def test_unstructured_data_no_edges():
+def test_unstructured_data_no_cells():
     foo = UnstructuredData(np.ones((5, 3)))
     print(foo)
 
 
-def test_unstructured_data_no_edges_no_attributes():
+def test_unstructured_data_no_cells_no_attributes():
     attributes = {'notAttributeName': xr.DataArray(pd.DataFrame({'foo': np.arange(4)}))}
+
+    with pytest.raises(KeyError):
+        foo = UnstructuredData(
+            vertex=np.ones((5, 3)),
+            cells=np.ones((4, 3)),
+            attributes=attributes
+
+        )
+
+    attributes2 = {
+        'notAttributeName': xr.DataArray(
+            pd.DataFrame({'foo': np.arange(4)}),
+            dims=['cell', 'attribute']
+        )}
 
     foo = UnstructuredData(
         vertex=np.ones((5, 3)),
-        edges=np.ones((4, 3)),
-        attributes=attributes
-
+        cells=np.ones((4, 3)),
+        attributes=attributes2
     )
 
     print(foo)

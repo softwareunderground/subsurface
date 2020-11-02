@@ -28,9 +28,9 @@ def get_less_unstructured_data() -> UnstructuredData:
 
 
 @pytest.fixture(scope="module")
-def get_unstructured_data_with_edges() -> UnstructuredData:
+def get_unstructured_data_with_cells() -> UnstructuredData:
     fp = input_path + "/vertices_and_edges.csv"
-    ud_edges = surface_reader.read_in_surface_vertices(
+    ud_cells = surface_reader.read_in_surface_vertices(
         fp,
         columns_map={
             'x': 'x',
@@ -41,7 +41,7 @@ def get_unstructured_data_with_edges() -> UnstructuredData:
             '2': 'e3'
         }
     )
-    return ud_edges
+    return ud_cells
 
 
 @pytest.fixture(scope="module")
@@ -97,11 +97,11 @@ def test_return_type_2(get_unstructured_data_with_attribute):
 
 def test_dataframes(get_unstructured_data):
     assert len(get_unstructured_data.vertex) == 132695
-    assert len(get_unstructured_data.edges) == 263894
+    assert len(get_unstructured_data.cells) == 263894
 
 
-def test_edges_shape(get_unstructured_data):
-    assert get_unstructured_data.edges.shape[1] == 3
+def test_cells_shape(get_unstructured_data):
+    assert get_unstructured_data.cells.shape[1] == 3
 
 
 def test_unstructured_element(get_less_unstructured_data):
@@ -122,8 +122,8 @@ def test_plot_less_pyvista(get_less_unstructured_data):
     pv_plot([s], image_2d=True)
 
 
-def test_plot_edges_pyvista(get_unstructured_data_with_edges):
-    ts = TriSurf(get_unstructured_data_with_edges)
+def test_plot_cells_pyvista(get_unstructured_data_with_cells):
+    ts = TriSurf(get_unstructured_data_with_cells)
     s = to_pyvista_mesh(ts)
     pv_plot([s], image_2d=True)
 

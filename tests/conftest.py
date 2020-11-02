@@ -18,7 +18,7 @@ def point_set():
 
     data = UnstructuredData(
         vertex=np.random.rand(n, 3),
-        edges=np.random.rand(n, 0),
+        cells=np.random.rand(n, 0),
         attributes=pd.DataFrame({'foo': np.arange(n)})
     )
 
@@ -40,7 +40,7 @@ def tri_surf():
 
     data = UnstructuredData(
         vertex=vertices,
-        edges=faces,
+        cells=faces,
         attributes=pd.DataFrame({'foo': np.arange(faces.shape[0])})
     )
 
@@ -61,12 +61,12 @@ def line_set():
 
     data = UnstructuredData(
         vertex=v,
-        edges=np.random.rand(n-1, 2),
+        cells=np.random.rand(n-1, 2),
         attributes=pd.DataFrame({'foo': np.arange(n-1)})
     )
 
     lineset = LineSet(data)
-    lineset.generate_default_edges()
+    lineset.generate_default_cells()
     return lineset
 
 
@@ -76,12 +76,12 @@ def tetra_set():
                          [1, 0, 0],
                          [1, 1, 0],
                          [0, 1, 1]])
-    edges = np.array([[0, 1, 2, 3], ])
+    cells = np.array([[0, 1, 2, 3], ])
 
     data = UnstructuredData(
         vertex=vertices,
-        edges=edges,
-        attributes=pd.DataFrame({'foo': np.arange(edges.shape[0])})
+        cells=cells,
+        attributes=pd.DataFrame({'foo': np.arange(cells.shape[0])})
     )
 
     tets = TetraMesh(data)

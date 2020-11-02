@@ -70,9 +70,9 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf]) -> pv.PolyData:
     """
     nve = unstructured_element.data.n_vertex_per_element
     vertices = unstructured_element.data.vertex
-    edges = np.c_[np.full(unstructured_element.data.n_elements, nve),
-                  unstructured_element.data.edges]
-    mesh = pv.PolyData(vertices, edges)
+    cells = np.c_[np.full(unstructured_element.data.n_elements, nve),
+                  unstructured_element.data.cells]
+    mesh = pv.PolyData(vertices, cells)
     mesh.cell_arrays.update(unstructured_element.data.attributes_to_dict)
     mesh.point_arrays.update(unstructured_element.data.points_attributes)
     return mesh
@@ -94,12 +94,12 @@ def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,
     """
     nve = line_set.data.n_vertex_per_element
     vertices = line_set.data.vertex
-    edges = np.c_[np.full(line_set.data.n_elements, nve),
-                  line_set.data.edges]
+    cells = np.c_[np.full(line_set.data.n_elements, nve),
+                  line_set.data.cells]
     if spline is False:
         mesh = pv.PolyData()
         mesh.points = vertices
-        mesh.lines = edges
+        mesh.lines = cells
     else:
         raise NotImplementedError
         # mesh = pv.Spline(ver)
@@ -113,7 +113,7 @@ def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,
 def to_pyvista_tetra(tetra_mesh: TetraMesh):
     """Create pyvista.UnstructuredGrid"""
     vertices = tetra_mesh.data.vertex
-    tets = tetra_mesh.data.edges
+    tets = tetra_mesh.data.cells
     cells = np.c_[np.full(len(tets), 4), tets]
     import vtk
     ctypes = np.array([vtk.VTK_TETRA, ], np.int32)
