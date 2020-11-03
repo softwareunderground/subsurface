@@ -36,8 +36,8 @@ def read_in_segy(filepath: str, coords=None) -> StructuredData:
     # plt.show()
 
     data = np.asarray([np.copy(tr) for tr in segyfile.trace[:]])
+
     sd = StructuredData(data) # data holds traces * (samples per trace) values
     segyfile.close()
-    print(sd)
     return sd
 
