@@ -1,3 +1,4 @@
+import os
 import pathlib
 from dataclasses import dataclass
 from typing import Union, Optional, Dict
@@ -7,8 +8,28 @@ import pandas as pd
 import xarray as xr
 
 
+class CommonDataMethods:
+    def __init__(self):
+        self.data = None
+
+    @staticmethod
+    def default_path_and_name(path, name='subsurface_data.nc', ):
+        if not path:
+            path = './'
+        if os.path.isdir(path):
+            print("Directory already exists, files will be overwritten")
+        else:
+            os.makedirs(f'{path}')
+        path = f'{path}/{name}'
+        return name, path
+
+    def to_netcdf(self, path=None, file: str = None, **kwargs):
+        name, path = self.default_path_and_name(path, file)
+        return self.data.to_netcdf(path, **kwargs)
+
+
 @dataclass
-class UnstructuredData:
+class UnstructuredData(CommonDataMethods):
     """Primary structure definition for unstructured data
 
     Attributes:
@@ -16,7 +37,7 @@ class UnstructuredData:
 
     Args:
         vertex (np.ndarray): NDArray[(Any, 3), FloatX]: XYZ point data
-        cells (np.ndarray): NDArray[(Any, ...), IntX]: Combination of vertex that create
+        edges (np.ndarray): NDArray[(Any, ...), IntX]: Combination of vertex that create
             different geometric elements
         attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number associated to an element
         points_attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number
@@ -36,7 +57,7 @@ class UnstructuredData:
     """
     data: xr.Dataset
 
-    def __init__(self, vertex: np.ndarray, cells: np.ndarray = None,
+    def __init__(self, vertex: np.ndarray, edges: np.ndarray = None,
                  attributes: Optional[
                      Union[pd.DataFrame, Dict[str, xr.DataArray]]] = None,
                  points_attributes: Optional[pd.DataFrame] = None,
@@ -53,15 +74,15 @@ class UnstructuredData:
                          )
         xarray_dict['vertex'] = v
 
-        if cells is None:
-            cells = np.atleast_2d(v.coords['points']).T
+        if edges is None:
+            edges = np.atleast_2d(v.coords['points']).T
 
-        e = xr.DataArray(cells, dims=['cell', 'nodes'])
+        e = xr.DataArray(edges, dims=['cell', 'nodes'])
         xarray_dict['cells'] = e
 
         xarray_dict = self.set_attributes_data_array(
             attributes,
-            cells.shape[0],
+            edges.shape[0],
             xarray_dict,
             dims=['cell', 'attribute'],
             attributes_type=self.attributes_name
@@ -84,6 +105,26 @@ class UnstructuredData:
 
         self._validate()
 
+    def _validate(self):
+        try:
+            _ = self.data[self.attributes_name]['cell']
+            _ = self.data[self.attributes_name]['attribute']
+
+        except KeyError:
+            raise KeyError('Attributes DataArrays must contain dimension cell and '
+                           'attribute')
+        """Make sure the number of vertices matches the associated data."""
+        try:
+            _ = self.data[self.points_attributes_name]['points_attribute']
+            _ = self.data[self.points_attributes_name]['points']
+        except KeyError:
+            raise KeyError('Point Attribute DataArrays must contain dimensions'
+                           ' points and points_attribute.')
+
+        if self.data['cells']['cell'].size != self.data[self.attributes_name][
+            'cell'].size:
+            raise AttributeError('Attributes and cells must have the same length.')
+
     def set_attributes_data_array(self, attributes, n_item, xarray_dict, dims,
                                   attributes_type):
         if attributes is None:
@@ -99,7 +140,8 @@ class UnstructuredData:
 
         return xarray_dict
 
-    def set_attributes_names_from_dicts(self, attributes, attributes_type, xarray_dict):
+    def set_attributes_names_from_dicts(self, attributes, attributes_type,
+                                        xarray_dict):
         new_default_name = attributes.get(attributes_type, next(iter(attributes)))
         if attributes_type == self.attributes_name:
             self.attributes_name = new_default_name
@@ -165,25 +207,6 @@ class UnstructuredData:
     def points_attributes_to_dict(self, orient='list'):
         return self.points_attributes_to_dict.to_dict(orient)
 
-    def _validate(self):
-        """Make sure the number of vertices matches the associated data."""
-        try:
-            _ = self.data[self.attributes_name]['cell']
-            _ = self.data[self.attributes_name]['attribute']
-
-        except KeyError:
-            raise KeyError('Attributes DataArrays must contain dimension cell and '
-                           'attribute')
-        try:
-            _ = self.data[self.points_attributes_name]['points_attribute']
-            _ = self.data[self.points_attributes_name]['points']
-        except KeyError:
-            raise KeyError('Point Attribute DataArrays must contain dimensions'
-                           ' points and points_attribute.')
-
-        if self.data['cells']['cell'].size != self.data[self.attributes_name]['cell'].size:
-            raise AttributeError('Attributes and cells must have the same length.')
-
     def to_xarray(self):
         a = xr.DataArray(self.vertex, dims=['points', 'XYZ'])
         b = xr.DataArray(self.cells, dims=['cells', 'node'])
@@ -191,12 +214,9 @@ class UnstructuredData:
         c = xr.Dataset({'v': a, 'e': b, 'a': e})
         return c
 
-    def to_disk(self, file: str = None, **kwargs):
-        return self.data.to_netcdf(file, **kwargs)
-
 
 @dataclass
-class StructuredData:
+class StructuredData(CommonDataMethods):
     """Primary structure definition for structured data
 
     Args:
@@ -247,5 +267,6 @@ class StructuredData:
                     coords=coords
                 )
         else:
-            raise AttributeError('data must be either xarray.Dataset, xarray.DataArray,'
-                                 'or numpy.ndarray')
+            raise AttributeError(
+                'data must be either xarray.Dataset, xarray.DataArray,'
+                'or numpy.ndarray')

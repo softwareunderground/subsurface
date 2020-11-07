@@ -34,7 +34,7 @@ def test_unstructured_data_no_cells_no_attributes():
     with pytest.raises(KeyError):
         foo = UnstructuredData(
             vertex=np.ones((5, 3)),
-            cells=np.ones((4, 3)),
+            edges=np.ones((4, 3)),
             attributes=attributes
 
         )
@@ -47,7 +47,7 @@ def test_unstructured_data_no_cells_no_attributes():
 
     foo = UnstructuredData(
         vertex=np.ones((5, 3)),
-        cells=np.ones((4, 3)),
+        edges=np.ones((4, 3)),
         attributes=attributes2
     )
 

@@ -8,7 +8,7 @@ import re
 
 this_directory = path.abspath(path.dirname(__file__))
 
-verstr = 'unknown'
+verstr = '0.1.0'
 VERSIONFILE = path.join(this_directory, "subsurface", "_version.py")
 with open(VERSIONFILE, 'r', encoding='utf-8')as f:
     verstrline = f.read().strip()

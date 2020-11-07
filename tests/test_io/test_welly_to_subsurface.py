@@ -49,9 +49,9 @@ def test_read_wells_to_unstruct():
                 {'DEPTH_TO': 'basis'}
             ]
         }
-
     )
-    unstructured_data.to_disk('wells.nc')
+
+    unstructured_data.to_netcdf()
 
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
@@ -142,7 +142,6 @@ def test_read_borehole_stateless():
 
     unstruct = wts.to_subsurface()
     print(unstruct)
-
 
 
 def test_read_to_welly_dict():
@@ -255,7 +254,6 @@ def test_excel_to_subsurface():
     collar = pd.read_excel(data_path.joinpath('borehole_collar.xlsx'))
 
     well_name_column = 'SITE_ID'
-    depth_name = 'DEPTH_FROM'
     well_names = data[well_name_column].unique()
 
     foo = data.groupby(well_name_column).get_group(well_names[0])
@@ -281,7 +279,6 @@ def test_striplog():
 def test_striplog_2():
     data = pd.read_excel(data_path.joinpath('borehole_lith.xlsx'))
     well_name_column = 'SITE_ID'
-    depth_name = 'DEPTH_FROM'
     well_names = data[well_name_column].unique()
     foo = data.groupby(well_name_column).get_group(well_names[0])
     data_dict = foo.to_dict('list')
@@ -302,7 +299,7 @@ def test_read_lith():
                                'DEPTH_TO': 'base',
                                'LITHOLOGY': 'component lith',
                                'SITE_ID': 'description'})
-    d.to_csv('lith.csv')
+    #d.to_csv('lith.csv')
     print(d)
     return d
 
@@ -313,7 +310,7 @@ def test_read_survey():
                       index_col=0)
     d.index = d.index.map({'ELV-01': 'foo', 'ELV-02': 'bar'})
     d.columns = d.columns.map({'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'})
-    d.to_csv('survey.csv')
+    #d.to_csv('survey.csv')
     print(d)
     return d
 
@@ -323,21 +320,15 @@ def test_read_collars():
     d = pd.read_excel(data_path.joinpath('borehole_collar.xlsx'), usecols=cols,
                       header=None, index_col=0)
     print(d)
-    d.to_csv('collars.csv')
+    #d.to_csv('collars.csv')
     return d
-
-
-# @pytest.mark.skip(reason='specific use')
-# def test_read_collars_and_send():
-#     df = test_read_collars()
-#     df.to_
 
 
 def test_read_assay():
     d = pd.read_excel(data_path.joinpath('borehole_assays.xlsx'),
                       index_col=0)
     d.drop('TO', axis=1, inplace=True)
-    d.to_csv('assay.csv')
+    #d.to_csv('assay.csv')
     return d
 
 
