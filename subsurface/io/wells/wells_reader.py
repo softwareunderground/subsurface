@@ -214,7 +214,7 @@ class WellyToSubsurface:
 
         """
         vertex = np.zeros((0, 3))
-        edges = np.zeros((0, 2), dtype=np.int_)
+        cells = np.zeros((0, 2), dtype=np.int_)
 
         last_index = 0
         for w in self.p.get_wells():
@@ -227,10 +227,10 @@ class WellyToSubsurface:
             a = np.arange(0 + last_index, xyz.shape[0] - 1 + last_index, dtype=np.int_)
             b = np.arange(1 + last_index, xyz.shape[0] + last_index, dtype=np.int_)
             last_index += xyz.shape[0]
-            edges_b = np.vstack([a, b]).T
+            cells_b = np.vstack([a, b]).T
 
             vertex = np.vstack((vertex, xyz))
-            edges = np.vstack((edges, edges_b))
+            cells = np.vstack((cells, cells_b))
 
             # Change curve basis
             start, stop, step_size = self._calculate_basis_parameters(w, n_points)
@@ -257,7 +257,7 @@ class WellyToSubsurface:
         df = self.p.df()
         unstructured_data = UnstructuredData(
             vertex,
-            edges,
+            cells,
             df
         )
 

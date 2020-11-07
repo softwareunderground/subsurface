@@ -60,21 +60,21 @@ The difference between data levels is **not** which data they stored but which d
 Basic components:
 
 - vertex:  NDArray[(Any, 3), FloatX]: XYZ point data
-- edges: NDArray[(Any, ...), IntX]: Combination of vertex that create different geometric elements
+- cells: NDArray[(Any, ...), IntX]: Combination of vertex that create different geometric elements
 - attributes: NDArray[(Any, ...), FloatX]: Number associated to an element
 
 Depending on the shape of `edge` the following unstructured elements can be create:
-- edges NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -> *Point cloud*. E.g. Outcrop scan with lidar 
-- edges NDArray[(Any, 2), IntX] -> *Lines*. E.g. Borehole
-- edges NDArray[(Any, 3), IntX] -> *Mesh*. E.g surface-DEM Topography
-- edges NDArray[(Any, 4), IntX] 
+- cells NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -> *Point cloud*. E.g. Outcrop scan with lidar 
+- cells NDArray[(Any, 2), IntX] -> *Lines*. E.g. Borehole
+- cells NDArray[(Any, 3), IntX] -> *Mesh*. E.g surface-DEM Topography
+- cells NDArray[(Any, 4), IntX] 
     - -> *tetrahedron*
     - -> *quadrilateral (or tetragon)* UNSUPPORTED?
-- edges NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
+- cells NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
 
 
 ### Structured: NumPy, XArray
-The main distinction from unstructures is that we do not need to provide edges since that can be determined by the order of the points (vertex) and the description of the coordinate
+The main distinction from unstructures is that we do not need to provide cells since that can be determined by the order of the points (vertex) and the description of the coordinate
 
 
 Basic components (XArray lingo):

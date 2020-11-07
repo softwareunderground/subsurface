@@ -16,7 +16,7 @@ def read_wells_to_unstruct(backend='welly', n_points=1000,
          `subsurface.io.wells.read_wells` args
 
     Returns:
-        tuple: `subsurface.UnstructuredData` and if `return_welly` also the
+        `subsurface.UnstructuredData`:  if `return_welly` also the
          welly object
 
     Examples:
@@ -51,7 +51,7 @@ def read_wells_to_unstruct(backend='welly', n_points=1000,
     if backend == 'welly':
         wts = read_to_welly(**kwargs)
         unstruct = wts.to_subsurface(n_points=n_points)
-        s = (unstruct, wts.p) if return_welly is True else (unstruct)
+        s = (unstruct, wts.p) if return_welly is True else unstruct
 
     else:
         raise AttributeError('Only welly is available at the moment')
