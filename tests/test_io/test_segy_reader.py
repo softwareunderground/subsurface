@@ -7,6 +7,8 @@ from subsurface import StructuredGrid
 from subsurface.geological_formats import segy_reader
 from subsurface.structs.base_structures import StructuredData
 
+segyio = pytest.importorskip('segyio')
+
 input_path = os.path.dirname(__file__) + '/../data/segy'
 files = ['/E5_MIG_DMO_FINAL.sgy', '/E5_MIG_DMO_FINAL_DEPTH.sgy', '/E5_STACK_DMO_FINAL.sgy', '/test.segy']
 # all files are unstructured: only raw data reading and writing is supported by segyio

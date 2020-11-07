@@ -1,10 +1,11 @@
-import segyio
-from dask.array.tests.test_xarray import xr
-
 from subsurface.structs.base_structures import StructuredData
 import matplotlib.pyplot as plt
-import segyio
 import numpy as np
+try:
+    import segyio
+    segyio_imported = True
+except ImportError:
+    segyio_imported = False
 
 from tests.conftest import struc_data
 
