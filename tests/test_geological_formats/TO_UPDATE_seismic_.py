@@ -9,14 +9,14 @@ def seismic():
     """Benchmark Seismic object."""
     # coords = [{"x": np.arange(10)}, {"y": np.arange(10)}, {"z": np.arange(100)}]
     coords = [("x", np.arange(10)), ("y", np.arange(10)), ("z", np.arange(100))]
-    cube = segyio.tools.cube("../data/test.segy")
+    cube = segyio.tools.cube("../data/segy/test.segy")
     # seis = from_segy("tests/data/test.segy")
     return Seismic(cube, coords=coords)
 
 
 def test_from_segy():
     """Test creating Seismic instance from SEGY file."""
-    seismic = from_segy("tests/data/test.segy")
+    seismic = from_segy("/home/monique/Documents/subsurface/tests/data/segy/test.segy")
     assert type(seismic) == Seismic
 
 

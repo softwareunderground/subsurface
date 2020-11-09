@@ -6,8 +6,6 @@ from subsurface.io.grids import surface_reader
 from subsurface.structs import TetraMesh, TriSurf
 from subsurface.structs.base_structures import UnstructuredData
 import os
-
-from subsurface.structs.errors import VertexMissingError
 from subsurface.visualization.to_pyvista import pv_plot, to_pyvista_mesh
 
 input_path = os.path.dirname(__file__) + '/../data'

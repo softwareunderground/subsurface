@@ -1,4 +1,5 @@
-from typing import List
+import shapely as shapely
+from typing import List, Union
 
 import pytest
 import os
@@ -7,12 +8,15 @@ from subsurface import StructuredGrid
 from subsurface.geological_formats import segy_reader
 from subsurface.structs.base_structures import StructuredData
 import matplotlib.pyplot as plt
+import numpy as np
+import pyvista as pv
 
 
 segyio = pytest.importorskip('segyio')
 
 input_path = os.path.dirname(__file__) + '/../data/segy'
 files = ['/E5_MIG_DMO_FINAL.sgy', '/E5_MIG_DMO_FINAL_DEPTH.sgy', '/E5_STACK_DMO_FINAL.sgy', '/test.segy']
+images = ['/myplot_cropped.png', '/myplot2_cropped.png', '/myplot3_cropped.png', '/myplot4_cropped.png']
 # all files are unstructured: only raw data reading and writing is supported by segyio
 
 
@@ -23,19 +27,38 @@ def get_structured_data() -> List[StructuredData]:
     return sd_array
 
 
+@pytest.fixture(scope="module")
+def get_images() -> List[str]:
+    image_array = [input_path + y for y in images]
+    return image_array
+
+
 def test_converted_to_structured_data(get_structured_data):
     for x in get_structured_data:
-        # print(x.data.items())
         assert isinstance(x, StructuredData)
         x.data['data'].plot()
         plt.show()
 
 
-def test_pyvista_structured_grid(get_structured_data):
-    from subsurface.visualization import to_pyvista_grid
-    from subsurface.visualization import pv_plot
-    # StructuredData from Dataset
-    for x in get_structured_data:
-        sg = StructuredGrid(x)
-        s = to_pyvista_grid(sg, 'data') # works only for test.segy as x.shape == y.shape so the test fails here for the other files
-        pv_plot([s], image_2d=True)
+def test_pyvista_grid(get_structured_data, get_images):
+    for s, t in zip(get_structured_data, get_images):
+
+        x = s.data['x']
+        y = s.data['y']
+
+        x2, y2 = np.meshgrid(x, y)
+        print(x2, y2)
+        tex = pv.read_texture(t)
+        z = np.zeros((len(y),len(x)))
+        # z.reshape(z, (-1, 1101))
+        print(x2.shape, y2.shape, z.shape)
+
+        # create a surface to host this texture
+        surf = pv.StructuredGrid(z, x2, y2)
+        print(surf)
+
+        surf.texture_map_to_plane(inplace=True)
+
+        surf.plot(texture=tex)
+
+
