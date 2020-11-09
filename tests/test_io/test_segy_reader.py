@@ -6,6 +6,10 @@ import os
 from subsurface import StructuredGrid
 from subsurface.geological_formats import segy_reader
 from subsurface.structs.base_structures import StructuredData
+import matplotlib.pyplot as plt
+
+
+segyio = pytest.importorskip('segyio')
 
 input_path = os.path.dirname(__file__) + '/../data/segy'
 files = ['/E5_MIG_DMO_FINAL.sgy', '/E5_MIG_DMO_FINAL_DEPTH.sgy', '/E5_STACK_DMO_FINAL.sgy', '/test.segy']
@@ -23,6 +27,8 @@ def test_converted_to_structured_data(get_structured_data):
     for x in get_structured_data:
         # print(x.data.items())
         assert isinstance(x, StructuredData)
+        x.data['data'].plot()
+        plt.show()
 
 
 def test_pyvista_structured_grid(get_structured_data):

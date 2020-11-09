@@ -1,19 +1,23 @@
-import numpy as np
-import pandas as pd
-
 from subsurface.io.wells.wells_reader import read_to_welly
 
 
 def read_wells_to_unstruct(backend='welly', n_points=1000,
                            return_welly=False, **kwargs):
-    """
+    """Read from csv files (or excel) to `subsurface.Unstructured` object.
 
     Args:
-        backend:
-        n_points:
+        backend (string): Which library use for reading and processing of data.
+         So far: welly
+        n_points (int): Number of vertex used to describe the geometry of the
+         well.
+        return_welly (bool): If True return also the welly project object.
+
         **kwargs:
+         `subsurface.io.wells.read_wells` args
 
     Returns:
+        `subsurface.UnstructuredData`:  if `return_welly` also the
+         welly object
 
     Examples:
         unstructured_data = read_wells_to_unstruct(
@@ -47,7 +51,7 @@ def read_wells_to_unstruct(backend='welly', n_points=1000,
     if backend == 'welly':
         wts = read_to_welly(**kwargs)
         unstruct = wts.to_subsurface(n_points=n_points)
-        s = (unstruct, wts.p) if return_welly is True else (unstruct)
+        s = (unstruct, wts.p) if return_welly is True else unstruct
 
     else:
         raise AttributeError('Only welly is available at the moment')

@@ -22,7 +22,7 @@ class PointSet(Common):
     """Class for pointset based data structures.
 
     This class uses UnstructuredData.vertex as cloud of points and the
-    associated attributes. UnstructuredData.edges are not used.
+    associated attributes. UnstructuredData.cells are not used.
 
     Args:
         data (UnstructuredData): Base object for unstructured data.
@@ -33,8 +33,8 @@ class PointSet(Common):
                  data: UnstructuredData
                  ):
 
-        if data.edges.shape[1] > 1:
-            raise AttributeError('data.edges must be of the format'
+        if data.cells.shape[1] > 1:
+            raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX]')
 
         self.data = data
@@ -65,12 +65,12 @@ class TriSurf(Common):
     This dataset defines cell/element connectivity between points to create
     triangulated surface.
 
-    Uses UnstructuredData.edges for the face connectivity.
+    Uses UnstructuredData.cells for the face connectivity.
 
     Args:
         data (UnstructuredData): Base object for unstructured data.
 
-         data.edges  represent the point indices for each triangle
+         data.cells  represent the point indices for each triangle
          cell in the mesh. Each column corresponds to a triangle cell.
 
     """
@@ -79,19 +79,19 @@ class TriSurf(Common):
                  data: UnstructuredData
                  ):
 
-        if data.edges.shape[1] != 3:
-            raise AttributeError('data.edges must be of the format'
+        if data.cells.shape[1] != 3:
+            raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 3), IntX]')
 
         self.data = data
 
     @property
     def triangles(self):
-        return self.data.edges
+        return self.data.cells
 
     @property
     def n_triangles(self):
-        return self.data.edges.shape[0]
+        return self.data.cells.shape[0]
 
 
 class LineSet(Common):
@@ -103,7 +103,7 @@ class LineSet(Common):
     Args:
         data (UnstructuredData): Base object for unstructured data.
 
-         data.edges represent the indices of the end points for each
+         data.cells represent the indices of the end points for each
          line segment in the mesh. Each column corresponds to a line
          segment. If not specified, the vertices are connected in order,
          equivalent to ``segments=[[0, 1], [1, 2], [2, 3], ...]``
@@ -116,19 +116,19 @@ class LineSet(Common):
                  radius: float = 1
                  ):
 
-        if data.edges is None:
-            self.generate_default_edges()
+        if data.cells is None:
+            self.generate_default_cells()
 
-        elif data.edges.shape[1] != 2:
-            raise AttributeError('data.edges must be of the format'
+        elif data.cells.shape[1] != 2:
+            raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 2), IntX]')
         self.data = data
         self.radius = radius
 
         # TODO: these must all be integer dtypes!
 
-    def generate_default_edges(self):
-        """ Method to generate edges based on the order of the vertex. This
+    def generate_default_cells(self):
+        """ Method to generate cells based on the order of the vertex. This
         only works if the LineSet only represents one single line
 
         Returns:
@@ -137,12 +137,12 @@ class LineSet(Common):
         """
         a = np.arange(0, self.data.n_points - 1, dtype=np.int_)
         b = np.arange(1, self.data.n_points, dtype=np.int_)
-        self.data.edges = np.vstack([a, b]).T
-        return self.data.edges
+        self.data.cells = np.vstack([a, b]).T
+        return self.data.cells
 
     @property
     def segments(self):
-        return self.data.edges
+        return self.data.cells
 
     @property
     def n_segments(self):
@@ -157,7 +157,7 @@ class TetraMesh(Common):
     Args:
         data (UnstructuredData): Base object for unstructured data.
 
-         data.edges represent the indices of the points for each
+         data.cells represent the indices of the points for each
          tetrahedron in the mesh. Each column corresponds to a tetrahedron.
          Every tetrahedron is defined by the four points; where the first
          three (0,1,2) are the base of the tetrahedron which, using the
@@ -170,15 +170,15 @@ class TetraMesh(Common):
                  data: UnstructuredData
                  ):
 
-        if data.edges.shape[1] != 4:
-            raise AttributeError('data.edges must be of the format'
+        if data.cells.shape[1] != 4:
+            raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 4), IntX]')
 
         self.data = data
 
     @property
     def tetrahedrals(self):
-        return self.data.edges
+        return self.data.cells
 
     @property
     def n_tetrahedrals(self):

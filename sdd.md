@@ -13,6 +13,7 @@ DataHub for geoscientific data in Python. Two main purposes:
 
 + The core of the package has to be **light**
 + I/O **has** to happen at the level of **primary structures**. Once the primary structure has been exported/imported we can keep going up the pile (i.e. elements, geological objects, etc)
++ **NEW 28.09.20**  Even if primary structures only parse numerical data (e.g. vertex, edges, attributes) **all data levels** should be able to contain all raw data (`dicts` and even `strings`). Therefore, the difference between data levels is **not** which data they stored but which data they **parse and understand**. The rationale for this is to be able to pass along any object along while keeping the I/O in subsurface.
 
 ## Optional libraries:
 + I/O 
@@ -25,39 +26,33 @@ DataHub for geoscientific data in Python. Two main purposes:
     + pyvista
 + Standard formats
     + OMF
-    + geoh5py
 
 ## Data Levels:
 
+The difference between data levels is **not** which data they stored but which data they **parse and understand**. The rationale for this is to be able to pass along any object along while keeping the I/O in subsurface.
+
 **Human**
-
-    geological_format -> Additional context/meta information about the data
-
-    +-----------+
-
-    geological_object -> Elements that represent some geological concept. E.g: faults, seismic
-
-    +-----------+
-
-    +-----------+
-
-    element -> type of geometric object: PointSet, TriSurf, LineSet, Tetramesh
-
-    +-----------+
-
-    primary_structures -> Set of arrays that define a geometric object
-
-    +-----------+
-
-    +-----------+
-
-    Dataframe/Xarray -> Label numpy.arrays
-
-    +-----------+
-
-    numpy.array -> Memory allocation
-
+                        
+     \=================================/'  
+      \===============================/ ' \
+       \==========geo_format=========/ '   \    -> Additional context/meta information about the data
+        \===========================/'   '   \     
+         \=======geo_object========/   '    ' \   -> Elements that represent some 
+          \=======================/  '   '    /      geological concept. E.g: faults, seismic
+           \=====================/' '   ' ' /      
+            \======element======/' ' '  ' /   -> type of geometric object: PointSet,
+             \=================/' ' ' ' /      TriSurf, LineSet, Tetramesh
+              \=primary_struct/   ''  /    - > Set of arrays that define a geometric object: 
+               \=============/ ' '  /            e.g. *StructuredData* **UnstructuredData**
+                \============/''  /  
+                 \DF/Xarray/ ' '/ -> Label numpy.arrays
+                  \=======/'' /
+                   \array/' /   -> Memory allocation
+                    \===/ /
+                     \=//
+                      '
 **Computer**
+
 
 ## Primary Structures definitions:
 
@@ -65,21 +60,21 @@ DataHub for geoscientific data in Python. Two main purposes:
 Basic components:
 
 - vertex:  NDArray[(Any, 3), FloatX]: XYZ point data
-- edges: NDArray[(Any, ...), IntX]: Combination of vertex that create different geometric elements
+- cells: NDArray[(Any, ...), IntX]: Combination of vertex that create different geometric elements
 - attributes: NDArray[(Any, ...), FloatX]: Number associated to an element
 
 Depending on the shape of `edge` the following unstructured elements can be create:
-- edges NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -> *Point cloud*. E.g. Outcrop scan with lidar 
-- edges NDArray[(Any, 2), IntX] -> *Lines*. E.g. Borehole
-- edges NDArray[(Any, 3), IntX] -> *Mesh*. E.g surface-DEM Topography
-- edges NDArray[(Any, 4), IntX] 
+- cells NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -> *Point cloud*. E.g. Outcrop scan with lidar 
+- cells NDArray[(Any, 2), IntX] -> *Lines*. E.g. Borehole
+- cells NDArray[(Any, 3), IntX] -> *Mesh*. E.g surface-DEM Topography
+- cells NDArray[(Any, 4), IntX] 
     - -> *tetrahedron*
     - -> *quadrilateral (or tetragon)* UNSUPPORTED?
-- edges NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
+- cells NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
 
 
 ### Structured: NumPy, XArray
-The main distinction from unstructures is that we do not need to provide edges since that can be determined by the order of the points (vertex) and the description of the coordinate
+The main distinction from unstructures is that we do not need to provide cells since that can be determined by the order of the points (vertex) and the description of the coordinate
 
 
 Basic components (XArray lingo):

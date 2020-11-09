@@ -1,60 +1,154 @@
+import os
 import pathlib
 from dataclasses import dataclass
-from typing import Union, Optional
+from typing import Union, Optional, Dict
 
 import numpy as np
 import pandas as pd
 import xarray as xr
 
 
+class CommonDataMethods:
+    def __init__(self):
+        self.data = None
+
+    @staticmethod
+    def default_path_and_name(path, name='subsurface_data.nc', ):
+        if not path:
+            path = './'
+        if os.path.isdir(path):
+            print("Directory already exists, files will be overwritten")
+        else:
+            os.makedirs(f'{path}')
+        path = f'{path}/{name}'
+        return name, path
+
+    def to_netcdf(self, path=None, file: str = None, **kwargs):
+        name, path = self.default_path_and_name(path, file)
+        return self.data.to_netcdf(path, **kwargs)
+
+
 @dataclass
-class UnstructuredData:
+class UnstructuredData(CommonDataMethods):
     """Primary structure definition for unstructured data
 
     Attributes:
+        data (`xarray.Dataset`): Data structure where we store
+
+    Args:
         vertex (np.ndarray): NDArray[(Any, 3), FloatX]: XYZ point data
         edges (np.ndarray): NDArray[(Any, ...), IntX]: Combination of vertex that create
             different geometric elements
         attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number associated to an element
+        points_attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number
+         associated to points
 
     Notes:
         Depending on the shape of `edge` the following unstructured elements can be create:
-        - edges NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -> *Point cloud*.
+        - cells NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -> *Point cloud*.
          E.g. Outcrop scan with lidar
-        - edges NDArray[(Any, 2), IntX] -> *Lines*. E.g. Borehole
-        - edges NDArray[(Any, 3), IntX] -> *Mesh*. E.g surface-DEM Topography
-        - edges NDArray[(Any, 4), IntX]
+        - cells NDArray[(Any, 2), IntX] -> *Lines*. E.g. Borehole
+        - cells NDArray[(Any, 3), IntX] -> *Mesh*. E.g surface-DEM Topography
+        - cells NDArray[(Any, 4), IntX]
             - -> *tetrahedron*
             - -> *quadrilateral (or tetragon)* UNSUPPORTED?
-        - edges NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
+        - cells NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
 
     """
     data: xr.Dataset
 
-    # vertex: np.ndarray
-    # edges: np.ndarray
-    # attributes: Optional[pd.DataFrame] = None
+    def __init__(self, vertex: np.ndarray, edges: np.ndarray = None,
+                 attributes: Optional[
+                     Union[pd.DataFrame, Dict[str, xr.DataArray]]] = None,
+                 points_attributes: Optional[pd.DataFrame] = None,
+                 coords=None):
 
-    def __init__(self, vertex: np.ndarray, edges: np.ndarray,
-                 attributes: Optional[pd.DataFrame] = None,
-                 points_attributes: Optional[pd.DataFrame] = None):
-        v = xr.DataArray(vertex, dims=['points', 'XYZ'])
-        e = xr.DataArray(edges, dims=['edge', 'nodes'])
+        self.attributes_name = 'attributes'
+        self.points_attributes_name = 'points_attributes'
 
+        xarray_dict = dict()
+
+        v = xr.DataArray(vertex,
+                         dims=['points', 'XYZ'],
+                         coords={'XYZ': ['X', 'Y', 'Z']}
+                         )
+        xarray_dict['vertex'] = v
+
+        if edges is None:
+            edges = np.atleast_2d(v.coords['points']).T
+
+        e = xr.DataArray(edges, dims=['cell', 'nodes'])
+        xarray_dict['cells'] = e
+
+        xarray_dict = self.set_attributes_data_array(
+            attributes,
+            edges.shape[0],
+            xarray_dict,
+            dims=['cell', 'attribute'],
+            attributes_type=self.attributes_name
+        )
+        xarray_dict = self.set_attributes_data_array(
+            points_attributes,
+            vertex.shape[0],
+            xarray_dict,
+            dims=['points',
+                  'points_attribute'],
+            attributes_type=self.points_attributes_name
+        )
+
+        self.data = xr.Dataset(xarray_dict, coords=coords)
+
+        try:
+            self.data = self.data.reset_index('cell')
+        except KeyError:
+            pass
+
+        self._validate()
+
+    def _validate(self):
+        try:
+            _ = self.data[self.attributes_name]['cell']
+            _ = self.data[self.attributes_name]['attribute']
+
+        except KeyError:
+            raise KeyError('Attributes DataArrays must contain dimension cell and '
+                           'attribute')
+        """Make sure the number of vertices matches the associated data."""
+        try:
+            _ = self.data[self.points_attributes_name]['points_attribute']
+            _ = self.data[self.points_attributes_name]['points']
+        except KeyError:
+            raise KeyError('Point Attribute DataArrays must contain dimensions'
+                           ' points and points_attribute.')
+
+        if self.data['cells']['cell'].size != self.data[self.attributes_name][
+            'cell'].size:
+            raise AttributeError('Attributes and cells must have the same length.')
+
+    def set_attributes_data_array(self, attributes, n_item, xarray_dict, dims,
+                                  attributes_type):
         if attributes is None:
-            attributes = pd.DataFrame(np.zeros((edges.shape[0], 0)))
+            attributes = pd.DataFrame(np.zeros((n_item, 0)))
+        if type(attributes) is pd.DataFrame:
+            a = xr.DataArray(attributes, dims=dims)
+            xarray_dict[attributes_type] = a
+        elif type(attributes) is dict:
+            x_attr = self.set_attributes_names_from_dicts(attributes,
+                                                          attributes_type,
+                                                          xarray_dict)
+            xarray_dict = {**xarray_dict, **x_attr}
 
-        if points_attributes is None:
-            points_attributes = pd.DataFrame(np.zeros((vertex.shape[0], 0)))
+        return xarray_dict
 
-        a = xr.DataArray(attributes, dims=['edge', 'attribute'])
-        pa = xr.DataArray(points_attributes, dims=['points', 'points_attribute'])
-
-        c = xr.Dataset({'vertex': v, 'edges': e,
-                        'attributes': a, 'points_attributes': pa})
-        self.data = c.reset_index('edge')
-
-        self.validate()
+    def set_attributes_names_from_dicts(self, attributes, attributes_type,
+                                        xarray_dict):
+        new_default_name = attributes.get(attributes_type, next(iter(attributes)))
+        if attributes_type == self.attributes_name:
+            self.attributes_name = new_default_name
+        elif attributes_type == self.points_attributes_name:
+            self.points_attributes_name = new_default_name
+        xarray_dict = {**xarray_dict, **attributes}
+        return xarray_dict
 
     @property
     def vertex(self):
@@ -65,38 +159,41 @@ class UnstructuredData:
         self.vertex = xr.DataArray(array, dims=['points', 'XYZ'])
 
     @property
-    def edges(self):
-        return self.data['edges'].values
+    def cells(self):
+        return self.data['cells'].values
 
-    @edges.setter
-    def edges(self, array):
-        self.data['edges'] = xr.DataArray(array, dims=['e', 'nodes'])
+    @cells.setter
+    def cells(self, array):
+        self.data['cells'] = xr.DataArray(array, dims=['e', 'nodes'])
 
     @property
     def attributes(self):
-        return self.data['attributes'].to_dataframe()['attributes'].unstack(level=1)
+        xarray = self.data[self.attributes_name]
+        return xarray.to_dataframe()[self.attributes_name].unstack(level=1)
 
     @attributes.setter
     def attributes(self, dataframe):
-        self.data['attributes'] = xr.DataArray(dataframe,
-                                               dims=['element', 'attribute'])
+        self.data[self.attributes_name] = xr.DataArray(dataframe,
+                                                       dims=['element', 'attribute'])
 
     @property
     def points_attributes(self):
-        return self.data['points_attributes'].to_dataframe()['points_attributes'].unstack(level=1)
+        return self.data[self.points_attributes_name].to_dataframe()[
+            self.points_attributes_name].unstack(level=1)
 
     @points_attributes.setter
     def points_attributes(self, dataframe):
-        self.data['point_attributes'] = xr.DataArray(dataframe,
-                                                     dims=['points', 'points_attribute'])
+        self.data[self.points_attributes_name] = xr.DataArray(dataframe,
+                                                              dims=['points',
+                                                                    'points_attribute'])
 
     @property
     def n_elements(self):
-        return self.edges.shape[0]
+        return self.cells.shape[0]
 
     @property
     def n_vertex_per_element(self):
-        return self.edges.shape[1]
+        return self.cells.shape[1]
 
     @property
     def n_points(self):
@@ -110,26 +207,16 @@ class UnstructuredData:
     def points_attributes_to_dict(self, orient='list'):
         return self.points_attributes_to_dict.to_dict(orient)
 
-    def validate(self):
-        """Make sure the number of vertices matches the associated data."""
-        if self.data['edges'].shape[0] != self.data['attributes'].shape[0]:
-            raise AttributeError('Attributes and edges must have the same length.')
-
     def to_xarray(self):
         a = xr.DataArray(self.vertex, dims=['points', 'XYZ'])
-        b = xr.DataArray(self.edges, dims=['edges', 'node'])
+        b = xr.DataArray(self.cells, dims=['cells', 'node'])
         e = xr.DataArray(self.attributes, dims=['element', 'attribute'])
         c = xr.Dataset({'v': a, 'e': b, 'a': e})
-        # x = c.reset_index('attribute')
         return c
-
-    def to_disk(self, file: str, **kwargs):
-        self.data.to_netcdf(file, **kwargs)
-        return True
 
 
 @dataclass
-class StructuredData:
+class StructuredData(CommonDataMethods):
     """Primary structure definition for structured data
 
     Args:
@@ -152,7 +239,8 @@ class StructuredData:
 
     def __init__(
             self,
-            data: Union[np.ndarray, xr.DataArray, xr.Dataset],
+            data: Union[
+                np.ndarray, xr.DataArray, xr.Dataset, Dict[str, xr.DataArray]],
             data_name: str = 'data',
             coords: dict = None
     ):
@@ -160,9 +248,13 @@ class StructuredData:
         if type(data) == xr.Dataset:
             self.data = data
 
+        elif type(data) == dict:
+            self.data = xr.Dataset(
+                data_vars=data,
+                coords=coords
+            )
         elif type(data) == xr.DataArray:
             self.data = xr.Dataset({data_name: data})
-
         elif type(data) == np.ndarray:
             if data.ndim == 2:
                 self.data = xr.Dataset(
@@ -175,5 +267,6 @@ class StructuredData:
                     coords=coords
                 )
         else:
-            AttributeError('data must be either xarray.Dataset, xarray.DataArray,'
-                           'or numpy.ndarray')
+            raise AttributeError(
+                'data must be either xarray.Dataset, xarray.DataArray,'
+                'or numpy.ndarray')
