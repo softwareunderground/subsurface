@@ -1,3 +1,4 @@
+import io
 import pathlib
 from typing import Iterable, Union, List, Optional
 
@@ -21,7 +22,8 @@ except ImportError:
 class WellyToSubsurface:
     def __init__(self, well_name: str = None):
         """ Class that wraps `welly` to read borehole data - las files
-         and deviations - and converts it into a `subsurface.mesh`
+         and deviations, csv, excel - and converts it into a
+         `subsurface.UnstructuredData`
 
         This class is only meant to be extended with all the necessary functionality
          to load borehole data. For extensive manipulations of the data
@@ -32,19 +34,19 @@ class WellyToSubsurface:
 
         A borehole has:
 
-            - [ ] Datum (XYZ location)
+            -  Datum (XYZ location)
 
-            - [X] Deviation
+            -  Deviation
 
-            - [ ] Lithology: For this we are going to need striplog
+            - Lithology: For this we are going to need striplog
 
-            - [ ] Logs
+            - Logs
 
         Everything would be a LineSet with a bunch of properties
 
         Parameters
         ----------
-        well_name (str): Name of the borehole
+        well_name (Optional[str]): Name of the borehole
 
         Notes
         -----
@@ -83,9 +85,7 @@ class WellyToSubsurface:
             w = self.p.get_well(b)
             assert data.loc[[b]].shape[1] == 3, 'datum must be XYZ coord'
             w.position = data.loc[[b]].values
-         #   w.location.position = data.loc[[b]].values
-        print(w)
-        # datum = collars.loc[['foo'], [1, 2, 3]].values
+
         return self.p
 
     def add_collar(self, *args, **kwargs):
@@ -99,7 +99,6 @@ class WellyToSubsurface:
             w = self.p.get_well(b)
             data_dict = data.loc[b].to_dict('list')
             s = Striplog.from_dict(data_dict, points=True)
-            # step_size = (w.location.md.max() - w.location.md.min()) / w.location.md.shape[0]
 
             start, stop, step_size = self._calculate_basis_parameters(w, w.location.md.shape[0])
             s_log, basis, table = s.to_log(step_size, start, stop, return_meta=True)
@@ -132,15 +131,7 @@ class WellyToSubsurface:
 
     @staticmethod
     def _calculate_basis_parameters(well, n_points):
-        """
 
-        Args:
-            well:
-            n_points:
-
-        Returns:
-            start, stop, step
-        """
         max_ = well.location.md.max()
         min_ = well.location.md.min()
         step_size = (max_ - min_) / n_points
@@ -168,8 +159,6 @@ class WellyToSubsurface:
         self.add_wells(unique_borehole)
         for b in unique_borehole:
             w = self.p.get_well(b)
-            # if td is None:
-            #     td = w.position
             w.location.add_deviation(deviations.loc[b, ['md', 'inc', 'azi']],
                                      td=td,
                                      method=method,
@@ -202,28 +191,31 @@ class WellyToSubsurface:
                                              points=points,
                                              **kwargs)
 
-    def to_subsurface(self, datum=None, elev=True,
+    def to_subsurface(self,
+                      elev=True,
                       n_points=1000,
                       return_element=False,
                       convert_lith=True,
-                      attributes=None,
                       **kwargs):
         """Method to convert well data to `subsurface.UnstructuredData`
 
-        Parameters
-        ----------
-        datum
-        elev
-        n_points
-        kwargs
+        Args:
+            elev (bool): In general the (x, y, z) array of positions will have
+                z as TVD, which is positive down. If `elev` is True, positive
+                will be upwards.
+            n_points (int): Number of vertex used to describe the geometry of the
+             well.
+            return_element (bool): if True return a `subsurface.LineSet` instead
+            convert_lith (bool): if True convert lith from stiplog to curve
+            **kwargs:
+                `Well.location.trajectory` kwargs
 
-        Returns
-        -------
+        Returns:
 
         """
         vertex = np.zeros((0, 3))
-        edges = np.zeros((0, 2), dtype=np.int_)
-        attributes = pd.DataFrame(columns=self.p.uwis)
+        cells = np.zeros((0, 2), dtype=np.int_)
+
         last_index = 0
         for w in self.p.get_wells():
             if w.location.position is None:
@@ -235,10 +227,10 @@ class WellyToSubsurface:
             a = np.arange(0 + last_index, xyz.shape[0] - 1 + last_index, dtype=np.int_)
             b = np.arange(1 + last_index, xyz.shape[0] + last_index, dtype=np.int_)
             last_index += xyz.shape[0]
-            edges_b = np.vstack([a, b]).T
+            cells_b = np.vstack([a, b]).T
 
             vertex = np.vstack((vertex, xyz))
-            edges = np.vstack((edges, edges_b))
+            cells = np.vstack((cells, cells_b))
 
             # Change curve basis
             start, stop, step_size = self._calculate_basis_parameters(w, n_points)
@@ -265,7 +257,7 @@ class WellyToSubsurface:
         df = self.p.df()
         unstructured_data = UnstructuredData(
             vertex,
-            edges,
+            cells,
             df
         )
 
@@ -275,22 +267,24 @@ class WellyToSubsurface:
             return unstructured_data
 
 
-def read_wells(backend='welly', n_points=1000, **kwargs):
-    if backend == 'welly':
-        wts = read_to_welly(**kwargs)
-        unstruct = wts.to_subsurface(n_points=n_points)
-    else:
-        raise AttributeError('Only welly is available at the moment')
+def _dict_reader(dict_):
+    """
 
-    return unstruct
+    Args:
+        dict_: data, index, columns
+
+    """
+    return pd.DataFrame(data=dict_['data'],
+                        columns=dict_['columns'],
+                        index=dict_['index'])
 
 
 def _get_reader(file_format):
     if file_format == '.xlsx':
         reader = pd.read_excel
     elif file_format == 'dict':
-        reader = pd.DataFrame.from_dict
-    else:  # file_format == '.csv':
+        reader = _dict_reader
+    else:
         reader = pd.read_csv
     return reader
 
@@ -299,30 +293,32 @@ def read_collar(file_or_buffer, **kwargs):
     """
 
     Args:
-        file:
-        cols (Optional[list]): if None the 3 first columns will be used
+        file_or_buffer:
         **kwargs:
 
     Returns:
 
     """
-    # if cols is None:
-    #     cols = [0, 1, 2, 3]
 
     header = kwargs.pop('header', None)
     cols = kwargs.pop('usecols', [0, 1, 2, 3])
     index_col = kwargs.pop('index_col', 0)
     is_json = kwargs.pop('is_json', False)
+
     # Check file_or_buffer type
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
-        # Parse file
-        file_or_buffer = pathlib.Path(file_or_buffer)
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or\
+            type(file_or_buffer) == io.BytesIO:
 
-        file_format = file_or_buffer.suffix
-        reader = _get_reader(file_format)
+        # Parse file
+        if type(file_or_buffer) is not io.BytesIO:
+            file_or_buffer = pathlib.Path(file_or_buffer)
+            file_format = file_or_buffer.suffix
+            reader = _get_reader(file_format)
+        else:
+            reader = _get_reader('.csv')
 
         d = reader(file_or_buffer,
                    usecols=cols,
@@ -345,10 +341,14 @@ def read_survey(file_or_buffer, index_map=None, columns_map=None, **kwargs):
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
-        file_or_buffer = pathlib.Path(file_or_buffer)
-        file_format = file_or_buffer.suffix
-        reader = _get_reader(file_format)
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or\
+            type(file_or_buffer) == io.BytesIO:
+        if type(file_or_buffer) is not io.BytesIO:
+            file_or_buffer = pathlib.Path(file_or_buffer)
+            file_format = file_or_buffer.suffix
+            reader = _get_reader(file_format)
+        else:
+            reader = _get_reader('.csv')
         index_col = kwargs.pop('index_col', 0)
         d = reader(file_or_buffer, index_col=index_col, **kwargs)
     elif type(file_or_buffer) == dict:
@@ -380,10 +380,14 @@ def read_lith(file_or_buffer, columns_map=None, **kwargs):
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
-        file_or_buffer = pathlib.Path(file_or_buffer)
-        file_format = file_or_buffer.suffix
-        reader = _get_reader(file_format)
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or\
+            type(file_or_buffer) == io.BytesIO:
+        if type(file_or_buffer) is not io.BytesIO:
+            file_or_buffer = pathlib.Path(file_or_buffer)
+            file_format = file_or_buffer.suffix
+            reader = _get_reader(file_format)
+        else:
+            reader = _get_reader('.csv')
         index_col = kwargs.pop('index_col', 0)
 
         d = reader(file_or_buffer, index_col=index_col, **kwargs)
@@ -405,13 +409,18 @@ def read_lith(file_or_buffer, columns_map=None, **kwargs):
 
 def read_attributes(file_or_buffer, columns_map=None,
                     drop_cols: Optional[list] = None, **kwargs):
+
     is_json = kwargs.pop('is_json', False)
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath:
-        file_or_buffer = pathlib.Path(file_or_buffer)
-        file_format = file_or_buffer.suffix
-        reader = _get_reader(file_format)
+    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or\
+            type(file_or_buffer) == io.BytesIO:
+        if type(file_or_buffer) is not io.BytesIO:
+            file_or_buffer = pathlib.Path(file_or_buffer)
+            file_format = file_or_buffer.suffix
+            reader = _get_reader(file_format)
+        else:
+            reader = _get_reader('.csv')
 
         index_col = kwargs.pop('index_col', 0)
         d = reader(file_or_buffer, index_col=index_col, **kwargs)
@@ -422,7 +431,6 @@ def read_attributes(file_or_buffer, columns_map=None,
         raise AttributeError('file_or_buffer must be either a path or a dict')
 
     if columns_map is not None:
-        #d.columns = d.columns.replace(columns_map)
         d.rename(columns_map, axis=1, inplace=True)
     if drop_cols is not None:
         d.drop(drop_cols, axis=1, inplace=True)
@@ -432,6 +440,96 @@ def read_attributes(file_or_buffer, columns_map=None,
                                             'Use columns_map to assign' \
                                             'column names to these fields.'
     return d
+
+
+def read_borehole_files(
+        collar_file: str = None,
+        survey_file: str = None,
+        lith_file: str = None,
+        attrib_file: Union[str, List] = None,
+        read_collar_kwargs=None,
+        read_survey_kwargs=None,
+        read_lith_kwargs=None,
+        read_attributes_kwargs=None,
+):
+
+    data_frames = list()
+
+    if read_attributes_kwargs is None:
+        read_attributes_kwargs = {}
+    if read_lith_kwargs is None:
+        read_lith_kwargs = {}
+    if read_survey_kwargs is None:
+        read_survey_kwargs = {}
+    if read_collar_kwargs is None:
+        read_collar_kwargs = {}
+
+    if collar_file is not None:
+        collars = read_collar(collar_file, **read_collar_kwargs)
+        data_frames.append(collars)
+
+    if survey_file is not None:
+        col_map = read_survey_kwargs.pop('columns_map', None)
+        idx_map = read_survey_kwargs.pop('index_map', None)
+        survey = read_survey(
+            survey_file,
+            index_map=idx_map,
+            columns_map=col_map,
+            **read_survey_kwargs)
+        data_frames.append(survey)
+
+    if lith_file is not None:
+        col_map = read_lith_kwargs.pop('columns_map', None)
+        lith = read_lith(lith_file, columns_map=col_map, **read_lith_kwargs)
+        data_frames.append(lith)
+
+    # First check if is just a path or list
+    if attrib_file is not None:
+        if type(attrib_file) is str:
+            attrib_file = list(attrib_file)
+
+        drop_cols = read_attributes_kwargs.pop('drop_cols', [None] * len(attrib_file))
+        col_map = read_attributes_kwargs.pop('columns_map', [None] * len(attrib_file))
+
+        attributes_ = list()
+        for e, f in enumerate(attrib_file):
+            attributes = read_attributes(
+                f,
+                drop_cols=drop_cols[e],
+                columns_map=col_map[e],
+                **read_attributes_kwargs
+            )
+            attributes_.append(attributes)
+        data_frames.append(attributes_)
+
+    return data_frames
+
+
+def pandas_to_welly(
+        wts: WellyToSubsurface = None,
+        collar_df: pd.DataFrame = None,
+        survey_df: pd.DataFrame = None,
+        lith_df: pd.DataFrame = None,
+        attrib_dfs: List[pd.DataFrame] = None
+):
+    # Init WellyToSubsurface object
+    if wts is None:
+        wts = WellyToSubsurface()
+
+    if collar_df is not None:
+        wts.add_datum(collar_df)
+
+    if survey_df is not None:
+        wts.add_deviation(survey_df)
+
+    if lith_df is not None:
+        wts.add_striplog(lith_df)
+
+    # First check if is just a path or list
+    if attrib_dfs is not None:
+        for e, attrib in enumerate(attrib_dfs):
+            wts.add_assays(attrib, basis='basis')
+    return wts
 
 
 def read_to_welly(
@@ -444,57 +542,18 @@ def read_to_welly(
         read_survey_kwargs=None,
         read_lith_kwargs=None,
         read_attributes_kwargs=None,
+
 ):
-    if read_attributes_kwargs is None:
-        read_attributes_kwargs = {}
-    if read_lith_kwargs is None:
-        read_lith_kwargs = {}
-    if read_survey_kwargs is None:
-        read_survey_kwargs = {}
-    if read_collar_kwargs is None:
-        read_collar_kwargs = {}
+    dfs = read_borehole_files(
+        collar_file,
+        survey_file,
+        lith_file,
+        attrib_file,
+        read_collar_kwargs,
+        read_survey_kwargs,
+        read_lith_kwargs,
+        read_attributes_kwargs)
 
-    # Init WellyToSubsurface object
-    if wts is None:
-        wts = WellyToSubsurface()
-
-    if collar_file is not None:
-
-        collars = read_collar(collar_file, **read_collar_kwargs)
-        wts.add_datum(collars)
-
-    if survey_file is not None:
-
-        col_map = read_survey_kwargs.pop('columns_map', None)
-        idx_map = read_survey_kwargs.pop('index_map', None)
-        survey = read_survey(
-            survey_file,
-            index_map=idx_map,
-            columns_map=col_map,
-            **read_survey_kwargs)
-        wts.add_deviation(survey)
-
-    if lith_file is not None:
-        col_map = read_lith_kwargs.pop('columns_map', None)
-        lith = read_lith(lith_file, columns_map=col_map, **read_lith_kwargs)
-        wts.add_striplog(lith)
-
-    # First check if is just a path or list
-    if attrib_file is not None:
-        if type(attrib_file) is str:
-            attrib_file = list(attrib_file)
-
-        drop_cols = read_attributes_kwargs.pop('drop_cols', [None] * len(attrib_file))
-        col_map = read_attributes_kwargs.pop('columns_map', [None] * len(attrib_file))
-        # basis = read_attributes_kwargs('basis', 'basis')
-        for e, f in enumerate(attrib_file):
-            attributes = read_attributes(
-                f,
-                drop_cols=drop_cols[e],
-                columns_map=col_map[e],
-                **read_attributes_kwargs
-            )
-
-            wts.add_assays(attributes, basis='basis')
+    wts = pandas_to_welly(wts, *dfs)
 
     return wts
