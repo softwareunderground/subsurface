@@ -123,7 +123,8 @@ def to_pyvista_tetra(tetra_mesh: TetraMesh):
 
 
 def to_pyvista_grid(structured_grid: StructuredGrid, attribute: str):
-    ndim = structured_grid.ds.data[attribute].ndim
+    ndim = _n_cartesian_coord(attribute, structured_grid)
+
     if ndim == 2:
         meshgrid = structured_grid.meshgrid_2d(attribute)
     elif ndim == 3:
@@ -135,3 +136,9 @@ def to_pyvista_grid(structured_grid: StructuredGrid, attribute: str):
     mesh.point_arrays.update({attribute: structured_grid.ds.data[attribute].values.ravel()})
 
     return mesh
+
+
+def _n_cartesian_coord(attribute, structured_grid):
+    coord_names = np.array(['X', 'Y', 'Z', 'x', 'y', 'z'])
+    ndim = np.isin(coord_names, structured_grid.ds.data[attribute].dims).sum()
+    return ndim

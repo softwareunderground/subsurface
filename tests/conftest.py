@@ -4,6 +4,12 @@ from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh
 from subsurface.structs.base_structures import UnstructuredData
 import numpy as np
 import pandas as pd
+import os
+
+
+@pytest.fixture(scope='session')
+def data_path():
+    return os.path.abspath(os.path.dirname(__file__)+'/data')
 
 
 @pytest.fixture(scope='session')
@@ -11,6 +17,7 @@ def unstruc():
     foo = UnstructuredData(np.ones((5, 3)), np.ones((4, 3)),
                            pd.DataFrame({'foo': np.arange(4)}))
     return foo
+
 
 @pytest.fixture(scope='session')
 def point_set():

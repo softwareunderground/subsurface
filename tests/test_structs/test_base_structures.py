@@ -1,9 +1,12 @@
 import pytest
+from subsurface import TriSurf, StructuredGrid
+from subsurface.io import read_unstruct, read_struct
 
 from subsurface.structs.base_structures import UnstructuredData, StructuredData
 import numpy as np
 import pandas as pd
 import xarray as xr
+from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
 
 
 def test_unstructured_data():
@@ -117,3 +120,19 @@ def test_xarray():
 
     s3 = xr.Dataset({'foo': (['x', 'y', 'z'], xx)})
     print(s3)
+
+
+def test_read_unstruct(data_path):
+    us = read_unstruct(data_path + '/interpolator_meshes.nc')
+    trisurf = TriSurf(us)
+    s = to_pyvista_mesh(trisurf)
+    pv_plot([s], image_2d=True)
+
+
+def test_read_struct(data_path):
+    s = read_struct(data_path+'/interpolator_regular_grid.nc')
+    sg = StructuredGrid(s)
+    s = to_pyvista_grid(sg, 'block_matrix')
+
+    pv_plot([s], image_2d=True)
+

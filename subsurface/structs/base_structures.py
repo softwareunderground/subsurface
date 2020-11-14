@@ -24,7 +24,8 @@ class CommonDataMethods:
         return name, path
 
     def to_netcdf(self, path=None, file: str = None, **kwargs):
-        name, path = self.default_path_and_name(path, file)
+        if path is None:
+            name, path = self.default_path_and_name(path, file)
         return self.data.to_netcdf(path, **kwargs)
 
 
@@ -42,6 +43,8 @@ class UnstructuredData(CommonDataMethods):
         attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number associated to an element
         points_attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number
          associated to points
+        ds (xarray.Dataset): Directly a dataset with the expected structured. This
+         arg is specially thought for loading data from disk
 
     Notes:
         Depending on the shape of `edge` the following unstructured elements can be create:
@@ -57,29 +60,41 @@ class UnstructuredData(CommonDataMethods):
     """
     data: xr.Dataset
 
-    def __init__(self, vertex: np.ndarray, edges: np.ndarray = None,
+    def __init__(self, vertex: np.ndarray = None, edges: np.ndarray = None,
                  attributes: Optional[
                      Union[pd.DataFrame, Dict[str, xr.DataArray]]] = None,
                  points_attributes: Optional[pd.DataFrame] = None,
-                 coords=None):
-
+                 coords=None,
+                 ds=None):
         self.attributes_name = 'attributes'
         self.points_attributes_name = 'points_attributes'
 
+        if vertex is None and ds is None:
+            raise AttributeError('Either vertex or ds must be passed.')
+
+        if ds is None:
+            ds = self._create_dataset_from_numpy(attributes, coords, edges,
+                                                 points_attributes, vertex)
+        self.data = ds
+
+        try:
+            self.data = self.data.reset_index('cell')
+        except KeyError:
+            pass
+
+        self._validate()
+
+    def _create_dataset_from_numpy(self, attributes, coords,  edges,
+                                   points_attributes, vertex):
+
         xarray_dict = dict()
-
-        v = xr.DataArray(vertex,
-                         dims=['points', 'XYZ'],
-                         coords={'XYZ': ['X', 'Y', 'Z']}
-                         )
+        v = xr.DataArray(vertex, dims=['points', 'XYZ'],
+                         coords={'XYZ': ['X', 'Y', 'Z']})
         xarray_dict['vertex'] = v
-
         if edges is None:
             edges = np.atleast_2d(v.coords['points']).T
-
         e = xr.DataArray(edges, dims=['cell', 'nodes'])
         xarray_dict['cells'] = e
-
         xarray_dict = self.set_attributes_data_array(
             attributes,
             edges.shape[0],
@@ -91,19 +106,11 @@ class UnstructuredData(CommonDataMethods):
             points_attributes,
             vertex.shape[0],
             xarray_dict,
-            dims=['points',
-                  'points_attribute'],
+            dims=['points','points_attribute'],
             attributes_type=self.points_attributes_name
         )
-
-        self.data = xr.Dataset(xarray_dict, coords=coords)
-
-        try:
-            self.data = self.data.reset_index('cell')
-        except KeyError:
-            pass
-
-        self._validate()
+        ds = xr.Dataset(xarray_dict, coords=coords)
+        return ds
 
     def _validate(self):
         try:

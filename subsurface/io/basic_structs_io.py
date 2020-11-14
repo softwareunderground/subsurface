@@ -1,4 +1,16 @@
+from subsurface.structs.base_structures import UnstructuredData, StructuredData
 from subsurface.io.wells.wells_reader import read_to_welly
+import xarray as xr
+
+
+def read_unstruct(path, **kwargs):
+    ds = xr.open_dataset(path, **kwargs)
+    return UnstructuredData(ds=ds)
+
+
+def read_struct(path, **kwargs):
+    ds = xr.open_dataset(path, **kwargs)
+    return StructuredData(data=ds)
 
 
 def read_wells_to_unstruct(backend='welly', n_points=1000,

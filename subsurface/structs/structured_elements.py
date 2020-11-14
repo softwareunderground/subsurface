@@ -38,7 +38,13 @@ class StructuredGrid():
 
     @property
     def dimensions(self):
-        return self.ds.data.dims
+        #n = np.isin(self.ds.data.dims, ['X', 'Y', 'Z', 'x', 'y', 'z']).sum()
+        return len(self.cartesian_coords_names)
+
+    @property
+    def cartesian_coords_names(self):
+        coord_names = np.array(['X', 'Y', 'Z', 'x', 'y', 'z'])
+        return coord_names[np.isin(coord_names, self.ds.data.dims)]
 
     @property
     def coord(self):
@@ -46,7 +52,8 @@ class StructuredGrid():
 
     @property
     def meshgrid_3d(self):
-        grid_3d = np.meshgrid(self.coord['x'], self.coord['y'], self.coord['z'])
+        cart_coord = [self.coord[i] for i in self.cartesian_coords_names]
+        grid_3d = np.meshgrid(*cart_coord)
         return grid_3d
 
     def meshgrid_2d(self, attribute:str = None):
@@ -60,7 +67,6 @@ class StructuredGrid():
 
         """
         grid_2d = np.meshgrid(self.coord['x'], self.coord['y'])
-
         if attribute is not None:
             z_coord = self.ds.data[attribute].values
             if z_coord.ndim != 2:
