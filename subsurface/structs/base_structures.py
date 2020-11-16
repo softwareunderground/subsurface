@@ -38,7 +38,7 @@ class UnstructuredData(CommonDataMethods):
 
     Args:
         vertex (np.ndarray): NDArray[(Any, 3), FloatX]: XYZ point data
-        edges (np.ndarray): NDArray[(Any, ...), IntX]: Combination of vertex that create
+        cells (np.ndarray): NDArray[(Any, ...), IntX]: Combination of vertex that create
             different geometric elements
         attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number associated to an element
         points_attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number
@@ -60,7 +60,8 @@ class UnstructuredData(CommonDataMethods):
     """
     data: xr.Dataset
 
-    def __init__(self, vertex: np.ndarray = None, edges: np.ndarray = None,
+    def __init__(self, vertex: np.ndarray = None,
+                 cells: np.ndarray = None,
                  attributes: Optional[
                      Union[pd.DataFrame, Dict[str, xr.DataArray]]] = None,
                  points_attributes: Optional[pd.DataFrame] = None,
@@ -73,7 +74,7 @@ class UnstructuredData(CommonDataMethods):
             raise AttributeError('Either vertex or ds must be passed.')
 
         if ds is None:
-            ds = self._create_dataset_from_numpy(attributes, coords, edges,
+            ds = self._create_dataset_from_numpy(attributes, coords, cells,
                                                  points_attributes, vertex)
         self.data = ds
 

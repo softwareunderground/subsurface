@@ -14,7 +14,8 @@ def data_path():
 
 @pytest.fixture(scope='session')
 def unstruc():
-    foo = UnstructuredData(np.ones((5, 3)), np.ones((4, 3)),
+    foo = UnstructuredData(np.ones((5, 3)),
+                           np.ones((4, 3)),
                            pd.DataFrame({'foo': np.arange(4)}))
     return foo
 
@@ -25,7 +26,7 @@ def point_set():
 
     data = UnstructuredData(
         vertex=np.random.rand(n, 3),
-        edges=np.random.rand(n, 0),
+        cells=np.random.rand(n, 0),
         attributes=pd.DataFrame({'foo': np.arange(n)})
     )
 
@@ -47,7 +48,7 @@ def tri_surf():
 
     data = UnstructuredData(
         vertex=vertices,
-        edges=faces,
+        cells=faces,
         attributes=pd.DataFrame({'foo': np.arange(faces.shape[0])})
     )
 
@@ -68,7 +69,7 @@ def line_set():
 
     data = UnstructuredData(
         vertex=v,
-        edges=np.random.rand(n - 1, 2),
+        cells=np.random.rand(n - 1, 2),
         attributes=pd.DataFrame({'foo': np.arange(n-1)})
     )
 
@@ -87,7 +88,7 @@ def tetra_set():
 
     data = UnstructuredData(
         vertex=vertices,
-        edges=cells,
+        cells=cells,
         attributes=pd.DataFrame({'foo': np.arange(cells.shape[0])})
     )
 
