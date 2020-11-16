@@ -24,7 +24,7 @@ class CommonDataMethods:
         return name, path
 
     def to_netcdf(self, path=None, file: str = None, **kwargs):
-        if path is None:
+        if path is None and file is not None:
             name, path = self.default_path_and_name(path, file)
         return self.data.to_netcdf(path, **kwargs)
 
