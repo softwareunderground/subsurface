@@ -26,7 +26,7 @@ def test_wells_to_binary(wells):
         "vertex_shape": wells.vertex.shape,
         "cell_shape": wells.cells.shape,
         "cell_attr_shape": wells.attributes.shape,
-        "vetex_attr_shape": wells.points_attributes.shape,
+        "vertex_attr_shape": wells.points_attributes.shape,
         "cell_attr_names": wells.attributes.columns.to_list(),
         "vertex_attr_names": wells.points_attributes.columns.to_list(),
     }
