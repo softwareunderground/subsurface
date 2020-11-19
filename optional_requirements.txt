@@ -3,3 +3,4 @@ pytest
 matplotlib
 pyvista
 xlrd # For reading xlsx
+geopandas
