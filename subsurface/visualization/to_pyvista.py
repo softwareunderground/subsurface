@@ -13,6 +13,7 @@ except ImportError:
 
 def pv_plot(meshes: list,
             image_2d=False,
+            texture=None,
             plotter_kwargs: dict = None,
             add_mesh_kwargs: dict = None):
     """
@@ -133,7 +134,8 @@ def to_pyvista_grid(structured_grid: StructuredGrid, attribute: str):
         raise AttributeError('The DataArray does not have valid dimensionality.')
 
     mesh = pv.StructuredGrid(*meshgrid)
-    mesh.point_arrays.update({attribute: structured_grid.ds.data[attribute].values.ravel()})
+    mesh.point_arrays.update(
+        {attribute: structured_grid.ds.data[attribute].values.ravel()})
 
     return mesh
 
