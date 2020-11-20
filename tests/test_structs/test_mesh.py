@@ -30,7 +30,7 @@ def test_tri_surf_init(tri_surf):
 
     # Test Fixture
     mesh = tri_surf
-    assert mesh.data.n_points == 5
+    assert mesh.mesh.n_points == 5
     assert mesh.n_triangles == 3
 
 

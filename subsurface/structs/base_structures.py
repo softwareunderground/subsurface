@@ -85,7 +85,7 @@ class UnstructuredData(CommonDataMethods):
 
         self._validate()
 
-    def _create_dataset_from_numpy(self, attributes, coords,  edges,
+    def _create_dataset_from_numpy(self, attributes, coords, edges,
                                    points_attributes, vertex):
 
         xarray_dict = dict()
@@ -107,7 +107,7 @@ class UnstructuredData(CommonDataMethods):
             points_attributes,
             vertex.shape[0],
             xarray_dict,
-            dims=['points','points_attribute'],
+            dims=['points', 'points_attribute'],
             attributes_type=self.points_attributes_name
         )
         ds = xr.Dataset(xarray_dict, coords=coords)
@@ -252,6 +252,7 @@ class StructuredData(CommonDataMethods):
             data_name: str = 'data',
             coords: dict = None
     ):
+        self.data_name = data_name
 
         if type(data) == xr.Dataset:
             self.data = data
@@ -278,3 +279,7 @@ class StructuredData(CommonDataMethods):
             raise AttributeError(
                 'data must be either xarray.Dataset, xarray.DataArray,'
                 'or numpy.ndarray')
+
+    @property
+    def values(self):
+        return self.data[self.data_name].values

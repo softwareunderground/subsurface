@@ -69,13 +69,24 @@ def to_pyvista_points(point_set: PointSet):
 def to_pyvista_mesh(unstructured_element: Union[TriSurf]) -> pv.PolyData:
     """Create planar surface PolyData from unstructured element such as TriSurf
     """
-    nve = unstructured_element.data.n_vertex_per_element
-    vertices = unstructured_element.data.vertex
-    cells = np.c_[np.full(unstructured_element.data.n_elements, nve),
-                  unstructured_element.data.cells]
+    nve = unstructured_element.mesh.n_vertex_per_element
+    vertices = unstructured_element.mesh.vertex
+    cells = np.c_[np.full(unstructured_element.mesh.n_elements, nve),
+                  unstructured_element.mesh.cells]
     mesh = pv.PolyData(vertices, cells)
-    mesh.cell_arrays.update(unstructured_element.data.attributes_to_dict)
-    mesh.point_arrays.update(unstructured_element.data.points_attributes)
+    mesh.cell_arrays.update(unstructured_element.mesh.attributes_to_dict)
+    mesh.point_arrays.update(unstructured_element.mesh.points_attributes)
+
+    if unstructured_element.texture is not None:
+        mesh.texture_map_to_plane(
+            inplace=True,
+            origin=unstructured_element.texture_origin,
+            point_u=unstructured_element.texture_point_u,
+            point_v=unstructured_element.texture_point_v
+        )
+        tex = pv.numpy_to_texture(unstructured_element.texture.values)
+        mesh._textures = {0: tex}
+
     return mesh
 
 

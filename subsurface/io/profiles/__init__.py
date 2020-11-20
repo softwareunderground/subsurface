@@ -4,10 +4,10 @@ from scipy.spatial.qhull import Delaunay
 from shapely.geometry import LineString
 
 
-def create_mesh_cross_section(linestring: LineString,
-                              zmax: Union[float, int],
-                              zmin: Union[float, int],
-                              ):
+def create_mesh_from_trace(linestring: LineString,
+                           zmax: Union[float, int],
+                           zmin: Union[float, int],
+                           ):
     n = len(list(linestring.coords))
     coords = np.array([[x[0] for x in list(linestring.coords)],
                        [y[1] for y in list(linestring.coords)]]).T
