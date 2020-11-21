@@ -136,3 +136,11 @@ def test_read_struct(data_path):
 
     pv_plot([s], image_2d=True)
 
+
+def test_remove_outliers(data_path):
+    topo_path = data_path + '/topo/dtm_rp.tif'
+    from subsurface.io.topography import read_topography
+    struct = read_topography(topo_path)
+    struct.replace_outliers('topography', 0.99)
+    print(struct.data['topography'])
+    print(struct.data['topography'].min())

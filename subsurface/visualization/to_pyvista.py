@@ -146,7 +146,7 @@ def to_pyvista_grid(structured_grid: StructuredGrid, attribute: str):
 
     mesh = pv.StructuredGrid(*meshgrid)
     mesh.point_arrays.update(
-        {attribute: structured_grid.ds.data[attribute].values.ravel()})
+        {attribute: structured_grid.ds.data[attribute].values.T.ravel()})
 
     return mesh
 

@@ -52,7 +52,6 @@ def read_in_surface_vertices(path_to_file: str,
 
     if attribute_cols:
         attributes = [[x[v] for k, v in attribute_cols.items()] for x in data.values]
-        # print(len(attributes))
         df = pd.DataFrame(attributes)
         df.columns = [k for k, v in attribute_cols.items()]
 

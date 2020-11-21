@@ -1,11 +1,21 @@
-from subsurface import TriSurf
-from subsurface.io.topography import read_topography
-from subsurface.visualization import to_pyvista_mesh, pv_plot
+from subsurface import TriSurf, StructuredGrid
+from subsurface.io.topography import  read_structured_topography, \
+    read_unstructured_topography
+from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
 
 
 def test_read_topography_from_dxf(data_path):
     topo_path = data_path + '/topo/Topografia.dxf'
-    unstruct = read_topography(topo_path)
+    unstruct = read_unstructured_topography(topo_path)
     ts = TriSurf(mesh=unstruct)
     s = to_pyvista_mesh(ts)
+    pv_plot([s], image_2d=False)
+
+
+def test_read_topography_from_tif(data_path):
+    topo_path = data_path + '/topo/dtm_rp.tif'
+    struct = read_structured_topography(topo_path)
+    struct.replace_outliers('topography', 0.99)
+    sg = StructuredGrid(struct)
+    s = to_pyvista_grid(sg, 'topography')
     pv_plot([s], image_2d=False)

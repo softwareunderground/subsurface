@@ -1,20 +1,50 @@
-# import rasterio
+import rasterio
 
 from pathlib import Path
 import ezdxf
 import numpy as np
 from scipy.spatial.qhull import Delaunay
 
-from subsurface import UnstructuredData
+from subsurface import UnstructuredData, StructuredData
 
 
-def read_topography(path) -> UnstructuredData:
+def read_structured_topography(path) -> StructuredData:
+    extension = get_extension(path)
+    if extension == '.tif':
+        dataset = rasterio.open(path)
+        structured_data = rasterio_dataset_to_structured_data(dataset)
+    else:
+        raise NotImplementedError('The extension given cannot be read yet')
+
+    return structured_data
+
+
+def rasterio_dataset_to_structured_data(dataset):
+    data = dataset.read(1)
+    shape = data.shape
+    coords = {
+        'x': np.linspace(
+            dataset.bounds.left,
+            dataset.bounds.right,
+            shape[0]
+        ),
+        'y': np.linspace(
+            dataset.bounds.bottom,
+            dataset.bounds.top,
+            shape[1]
+        )
+    }
+    structured_data = StructuredData(data=data, coords=coords,
+                                     data_name='topography')
+    return structured_data
+
+
+def read_unstructured_topography(path) -> UnstructuredData:
     extension = get_extension(path)
     if extension == '.dxf':
         faces, vertex = dxf_to_vertex_edges(path)
     else:
         raise NotImplementedError('The extension given cannot be read yet')
-
     unstruct = UnstructuredData(vertex, faces)
     return unstruct
 

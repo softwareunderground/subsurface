@@ -28,6 +28,30 @@ class CommonDataMethods:
             name, path = self.default_path_and_name(path, file)
         return self.data.to_netcdf(path, **kwargs)
 
+    def replace_outliers(self, dim=0, perc=0.99, replace_for=None):
+        """@Edoardo Guerreiro https://stackoverflow.com/questions/60816533/
+         is-there-a-built-in-function-in-xarray-to-remove-outliers-from-a-dataset"""
+
+        data = self.data
+        # calculate percentile
+        threshold = data[dim].quantile(perc)
+
+        # find outliers and replace them with max among remaining values
+        mask = data[dim].where(abs(data[dim]) <= threshold)
+        if replace_for == 'max':
+            max_value = mask.max().values
+            # .where replace outliers with nan
+            mask = mask.fillna(max_value)
+        elif replace_for == 'min':
+            min_value = mask.min().values
+            # .where replace outliers with nan
+            mask = mask.fillna(min_value)
+
+        print(mask)
+        data[dim] = mask
+
+        return data
+
 
 @dataclass
 class UnstructuredData(CommonDataMethods):
@@ -250,7 +274,7 @@ class StructuredData(CommonDataMethods):
             data: Union[
                 np.ndarray, xr.DataArray, xr.Dataset, Dict[str, xr.DataArray]],
             data_name: str = 'data',
-            coords: dict = None
+            coords: dict = None,
     ):
         self.data_name = data_name
 
