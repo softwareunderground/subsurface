@@ -1,6 +1,10 @@
 segyio
-pytest
-matplotlib
-pyvista
+matplotlib~=3.3.3
+pyvista~=0.27.2
 xlrd # For reading xlsx
-geopandas
+geopandas~=0.8.1
+rasterio~=1.1.8
+imageio~=2.9.0
+scipy~=1.5.4
+shapely~=1.7.1
+requests~=2.25.0
