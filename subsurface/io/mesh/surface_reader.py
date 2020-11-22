@@ -2,11 +2,11 @@ import pandas as pd
 from subsurface.structs.base_structures import UnstructuredData
 
 
-def read_in_surface_vertices(path_to_file: str,
-                             columns_map: dict = None,
-                             attribute_cols: dict = None,
-                             delaunay: bool = True,
-                             **kwargs) -> UnstructuredData:
+def read_2d_mesh(path_to_file: str,
+                 columns_map: dict = None,
+                 attribute_cols: dict = None,
+                 delaunay: bool = True,
+                 **kwargs) -> UnstructuredData:
     """
     Reads in csv files with n table columns and returns UnstructuredData object. m cells have to be in m columns named
     with the order of the points. If no cells are present default ones are generated.

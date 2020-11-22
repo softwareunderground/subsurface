@@ -1,11 +1,10 @@
 import rasterio
-
-from pathlib import Path
 import ezdxf
 import numpy as np
 from scipy.spatial.qhull import Delaunay
 
 from subsurface import UnstructuredData, StructuredData
+from subsurface.utils import get_extension
 
 
 def read_structured_topography(path) -> StructuredData:
@@ -64,6 +63,4 @@ def dxf_to_vertex_edges(path):
     return faces, vertex
 
 
-def get_extension(path):
-    p = Path(path)
-    return p.suffix
+
