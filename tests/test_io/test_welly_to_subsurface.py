@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from subsurface.io import WellyToSubsurface
-from subsurface.io.basic_structs_io import read_wells_to_unstruct
+from subsurface.io.read_to_basic_structs import read_wells_to_unstruct
 from subsurface.io.wells.wells_reader import read_to_welly, read_collar, read_survey
 from subsurface.structs import LineSet
 import subsurface

@@ -1,2 +1,2 @@
 from .wells.wells_reader import *
-from .basic_structs_io import *
+from .read_to_basic_structs import *
