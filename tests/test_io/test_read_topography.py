@@ -9,7 +9,7 @@ def test_read_topography_from_dxf(data_path):
     unstruct = read_unstructured_topography(topo_path)
     ts = TriSurf(mesh=unstruct)
     s = to_pyvista_mesh(ts)
-    pv_plot([s], image_2d=False)
+    pv_plot([s], image_2d=True)
 
 
 def test_read_topography_from_tif(data_path):
@@ -18,4 +18,4 @@ def test_read_topography_from_tif(data_path):
     struct.replace_outliers('topography', 0.99)
     sg = StructuredGrid(struct)
     s = to_pyvista_grid(sg, 'topography')
-    pv_plot([s], image_2d=False)
+    pv_plot([s], image_2d=True)

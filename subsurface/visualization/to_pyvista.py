@@ -43,7 +43,7 @@ def pv_plot(meshes: list,
             import matplotlib.pyplot as plt
         except ImportError:
             raise ImportError('Matplotlib is necessary for generating a 2D image.')
-        img = p.plot(screenshot=True)
+        img = p.show(screenshot=True)
         fig = plt.imshow(img[1])
         plt.axis('off')
         plt.show()
