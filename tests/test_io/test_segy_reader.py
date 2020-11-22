@@ -4,13 +4,15 @@ from typing import List, Union
 import pytest
 import os
 
-from subsurface import StructuredGrid
+from subsurface import StructuredGrid, TriSurf
 from subsurface.geological_formats import segy_reader
-from subsurface.structs.base_structures import StructuredData
+from subsurface.structs.base_structures import StructuredData, UnstructuredData
 import matplotlib.pyplot as plt
 import numpy as np
 import pyvista as pv
+import imageio
 
+from subsurface.visualization import to_pyvista_mesh, pv_plot
 
 segyio = pytest.importorskip('segyio')
 
@@ -61,4 +63,26 @@ def test_pyvista_grid(get_structured_data, get_images):
 
         surf.plot(texture=tex)
 
+        # use Trisurf with Structured Data for texture and UnstructuredData for geometry
 
+
+def test_read_segy_to_struct_data_imageio(get_structured_data, get_images):
+    for x, image in zip(get_structured_data, get_images):
+        vertex = np.array([[0, x.data['x'][0], x.data['y'][0]], [0, x.data['x'][-1], x.data['y'][0]], [0, x.data['x'][0], x.data['y'][-1]], [0, x.data['x'][-1], x.data['y'][-1]]])
+        # [print(s) for s in vertex]
+        import pyvista as pv
+        a = pv.PolyData(vertex)
+        b = a.delaunay_2d().faces
+        cells = b.reshape(-1, 4)[:, 1:]
+        print('cells', cells)
+        struct = StructuredData(np.array(imageio.imread(image)))
+        unstruct = UnstructuredData(vertex, cells)
+        ts = TriSurf(
+            mesh=unstruct,
+            texture=struct
+            # texture_point_u=point_u,
+            # texture_point_v=point_v
+        )
+
+        s = to_pyvista_mesh(ts)
+        pv_plot([s], image_2d=False)
