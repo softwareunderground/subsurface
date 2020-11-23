@@ -41,9 +41,6 @@ pyvista.BUILDING_GALLERY = True
 if not os.path.exists(pyvista.FIGURE_PATH):
     os.makedirs(pyvista.FIGURE_PATH)
 
-import IPython.sphinxext
-from pygments.plugin import find_plugin_lexers
-
 sys.path.insert(0, os.path.abspath('.'))
 
 # -- General configuration ------------------------------------------------

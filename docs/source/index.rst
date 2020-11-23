@@ -18,6 +18,29 @@ The goal of this project is to support other subsurface geoscience and
 engineering projects with a set of classes for common subsurface data entities,
 such as seismic and GPR datasets, log curves
 
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+   self
+   installation
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Getting started
+
+   getting_started/index
+   tutorials/index
+   examples/index
+   integrations/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference
+
+   code
+
 
 References
 ----------
