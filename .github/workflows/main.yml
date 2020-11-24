@@ -37,3 +37,19 @@ jobs:
         pip install pytest-cov
         pytest --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
 
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v1
+
+      - name: Generate your awesome content
+        working-directory: docs/
+        run: pipenv run make html
+
+      - name: Publish generated content to GitHub Pages
+        uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
+        with:
+          dir: docs/build/html
+          branch: gh-pages
+          token: ${{ secrets.ACCESS_TOKEN }}
