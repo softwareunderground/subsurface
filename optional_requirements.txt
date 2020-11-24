@@ -8,3 +8,4 @@ imageio~=2.9.0
 scipy~=1.5.4
 shapely~=1.7.1
 requests~=2.25.0
+ezdxf
