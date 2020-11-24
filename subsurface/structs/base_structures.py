@@ -246,6 +246,31 @@ class UnstructuredData(CommonDataMethods):
         c = xr.Dataset({'v': a, 'e': b, 'a': e})
         return c
 
+    def to_binary(self):
+        bytearray_le = self._to_bytearray()
+        header = self._set_binary_header()
+
+        return bytearray_le, header
+
+    def _set_binary_header(self):
+        header = {
+            "vertex_shape": self.vertex.shape,
+            "cell_shape": self.cells.shape,
+            "cell_attr_shape": self.attributes.shape,
+            "vertex_attr_shape": self.points_attributes.shape,
+            "cell_attr_names": self.attributes.columns.to_list(),
+            "vertex_attr_names": self.points_attributes.columns.to_list(),
+        }
+        return header
+
+    def _to_bytearray(self):
+        vertex = self.vertex.astype('float32').tobytes()
+        cells = self.cells.astype('int32').tobytes()
+        cell_attribute = self.attributes.values.astype('float32').tobytes()
+        vertex_attribute = self.points_attributes.values.astype('float32').tobytes()
+        bytearray_le = vertex + cells + cell_attribute + vertex_attribute
+        return bytearray_le
+
 
 @dataclass
 class StructuredData(CommonDataMethods):
@@ -307,3 +332,20 @@ class StructuredData(CommonDataMethods):
     @property
     def values(self):
         return self.data[self.data_name].values
+
+    def to_binary(self):
+        bytearray_le = self._to_bytearray()
+        header = self._set_binary_header()
+
+        return bytearray_le, header
+
+    def _set_binary_header(self):
+        header = {
+            "data_shape": self.values.shape,
+        }
+        return header
+
+    def _to_bytearray(self):
+        data = self.values.astype('float32').tobytes()
+        bytearray_le = data
+        return bytearray_le
