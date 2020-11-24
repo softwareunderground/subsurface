@@ -1,0 +1,33 @@
+﻿subsurface.structs.base\_structures.CommonDataMethods
+=====================================================
+
+.. currentmodule:: subsurface.structs.base_structures
+
+
+.. autoclass:: CommonDataMethods
+   :no-undoc-members:
+
+   
+   .. rubric:: Examples using CommonDataMethods
+   .. include:: ../gen_modules/backreferences/subsurface.structs.base_structures.CommonDataMethods.examples
+   .. raw:: html
+
+       <div class="sphx-glr-clear"></div>
+   
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+   
+      ~CommonDataMethods.__init__
+      ~CommonDataMethods.default_path_and_name
+      ~CommonDataMethods.replace_outliers
+      ~CommonDataMethods.to_netcdf
+   
+   
+
+   
+   
+   
+
+

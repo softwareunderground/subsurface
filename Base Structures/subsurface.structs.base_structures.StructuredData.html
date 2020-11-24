@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>subsurface.structs.base_structures.StructuredData &#8212; subsurface 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="subsurface.structs.base_structures.CommonDataMethods" href="subsurface.structs.base_structures.CommonDataMethods.html" />
+    <link rel="prev" title="subsurface.structs.base_structures.UnstructuredData" href="subsurface.structs.base_structures.UnstructuredData.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="subsurface-structs-base-structures-structureddata">
+<h1>subsurface.structs.base_structures.StructuredData<a class="headerlink" href="#subsurface-structs-base-structures-structureddata" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="subsurface.structs.base_structures.StructuredData">
+<em class="property">class </em><code class="sig-prename descclassname">subsurface.structs.base_structures.</code><code class="sig-name descname">StructuredData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">Union<span class="p">[</span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">, </span>xarray.core.dataset.Dataset<span class="p">, </span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">data_name</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span> <span class="o">=</span> <span class="default_value">'data'</span></em>, <em class="sig-param"><span class="n">coords</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures.html#StructuredData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.structs.base_structures.StructuredData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Primary structure definition for structured data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>xr.Dataset</em><em>, </em><em>xr.DataArray</em><em>, </em><em>np.ndarray</em>) – <p>object containing
+structured data, i.e. data that can be stored in multidimensional</p>
+<blockquote>
+<div><p>numpy array. The preferred type to pass as data is directly a</p>
+</div></blockquote>
+<p>xr.Dataset to be sure all the attributes are set and named as the user
+wants.</p>
+</p></li>
+<li><p><strong>data_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – If data is a numpy array or xarray DataArray, data_name
+provides the name for the xarray data variable</p></li>
+<li><p><strong>coords</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – If data is a numpy array coords provides the values for
+the xarray dimension. These dimensions are ‘x’, ‘y’ and ‘z’</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="subsurface.structs.base_structures.StructuredData.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#subsurface.structs.base_structures.StructuredData.data" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>xr.Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples using StructuredData</p>
+<div class="sphx-glr-clear"></div><p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.structs.base_structures.StructuredData.__init__" title="subsurface.structs.base_structures.StructuredData.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(data[, data_name, coords])</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_path_and_name</span></code>(path[, name])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_outliers</span></code>([dim, perc, replace_for])</p></td>
+<td><p>&#64;Edoardo Guerreiro <a class="reference external" href="https://stackoverflow.com/questions/60816533/">https://stackoverflow.com/questions/60816533/</a> is-there-a-built-in-function-in-xarray-to-remove-outliers-from-a-dataset</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_binary</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_netcdf</span></code>([path, file])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="subsurface.structs.base_structures.StructuredData.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">Union<span class="p">[</span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">, </span>xarray.core.dataset.Dataset<span class="p">, </span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">data_name</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span> <span class="o">=</span> <span class="default_value">'data'</span></em>, <em class="sig-param"><span class="n">coords</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures.html#StructuredData.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.structs.base_structures.StructuredData.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/./logos/subsurface_place_holder.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">subsurface</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=softwareunderground&repo=subsurface&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/softwareunderground/subsurface">
+    <img
+        alt="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+        src="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Placeholder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Placeholder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Placeholder</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../code.html">Code</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../code.html#subsurface-base-structures">Subsurface Base Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code.html#plot">Plot</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../code.html">Code</a><ul>
+      <li>Previous: <a href="subsurface.structs.base_structures.UnstructuredData.html" title="previous chapter">subsurface.structs.base_structures.UnstructuredData</a></li>
+      <li>Next: <a href="subsurface.structs.base_structures.CommonDataMethods.html" title="next chapter">subsurface.structs.base_structures.CommonDataMethods</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019-2020, The subsurface developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/Base Structures/subsurface.structs.base_structures.StructuredData.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

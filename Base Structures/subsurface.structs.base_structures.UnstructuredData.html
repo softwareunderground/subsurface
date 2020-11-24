@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>subsurface.structs.base_structures.UnstructuredData &#8212; subsurface 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="subsurface.structs.base_structures.StructuredData" href="subsurface.structs.base_structures.StructuredData.html" />
+    <link rel="prev" title="Code" href="../code.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="subsurface-structs-base-structures-unstructureddata">
+<h1>subsurface.structs.base_structures.UnstructuredData<a class="headerlink" href="#subsurface-structs-base-structures-unstructureddata" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="subsurface.structs.base_structures.UnstructuredData">
+<em class="property">class </em><code class="sig-prename descclassname">subsurface.structs.base_structures.</code><code class="sig-name descname">UnstructuredData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vertex</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cells</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">attributes</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">points_attributes</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coords</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ds</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures.html#UnstructuredData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.structs.base_structures.UnstructuredData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Primary structure definition for unstructured data</p>
+<dl class="py attribute">
+<dt id="subsurface.structs.base_structures.UnstructuredData.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#subsurface.structs.base_structures.UnstructuredData.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data structure where we store</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><cite>xarray.Dataset</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vertex</strong> (<em>np.ndarray</em>) – NDArray[(Any, 3), FloatX]: XYZ point data</p></li>
+<li><p><strong>cells</strong> (<em>np.ndarray</em>) – NDArray[(Any, …), IntX]: Combination of vertex that create
+different geometric elements</p></li>
+<li><p><strong>attributes</strong> (<em>pd.DataFrame</em>) – NDArray[(Any, …), FloatX]: Number associated to an element</p></li>
+<li><p><strong>points_attributes</strong> (<em>pd.DataFrame</em>) – NDArray[(Any, …), FloatX]: Number
+associated to points</p></li>
+<li><p><strong>ds</strong> (<em>xarray.Dataset</em>) – Directly a dataset with the expected structured. This
+arg is specially thought for loading data from disk</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Depending on the shape of <cite>edge</cite> the following unstructured elements can be create:
+- cells NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -&gt; <em>Point cloud</em>.</p>
+<blockquote>
+<div><p>E.g. Outcrop scan with lidar</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>cells NDArray[(Any, 2), IntX] -&gt; <em>Lines</em>. E.g. Borehole</p></li>
+<li><p>cells NDArray[(Any, 3), IntX] -&gt; <em>Mesh</em>. E.g surface-DEM Topography</p></li>
+<li><dl class="simple">
+<dt>cells NDArray[(Any, 4), IntX]</dt><dd><ul>
+<li><p>-&gt; <em>tetrahedron</em></p></li>
+<li><p>-&gt; <em>quadrilateral (or tetragon)</em> UNSUPPORTED?</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>cells NDArray[(Any, 8), IntX] -&gt; <em>Hexahedron: Unstructured grid/Prisms</em></p></li>
+</ul>
+<p class="rubric">Examples using UnstructuredData</p>
+<div class="sphx-glr-clear"></div><p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.structs.base_structures.UnstructuredData.__init__" title="subsurface.structs.base_structures.UnstructuredData.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([vertex, cells, attributes, …])</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_path_and_name</span></code>(path[, name])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_outliers</span></code>([dim, perc, replace_for])</p></td>
+<td><p>&#64;Edoardo Guerreiro <a class="reference external" href="https://stackoverflow.com/questions/60816533/">https://stackoverflow.com/questions/60816533/</a> is-there-a-built-in-function-in-xarray-to-remove-outliers-from-a-dataset</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_attributes_data_array</span></code>(attributes, …)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_attributes_names_from_dicts</span></code>(attributes, …)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_binary</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_netcdf</span></code>([path, file])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_xarray</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attributes</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">attributes_to_dict</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cells</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_elements</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_points</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_vertex_per_element</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">points_attributes</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">points_attributes_to_dict</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="subsurface.structs.base_structures.UnstructuredData.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vertex</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cells</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">attributes</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">points_attributes</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coords</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ds</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures.html#UnstructuredData.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.structs.base_structures.UnstructuredData.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/./logos/subsurface_place_holder.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">subsurface</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=softwareunderground&repo=subsurface&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/softwareunderground/subsurface">
+    <img
+        alt="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+        src="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Placeholder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Placeholder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Placeholder</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../code.html">Code</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../code.html#subsurface-base-structures">Subsurface Base Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code.html#plot">Plot</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../code.html">Code</a><ul>
+      <li>Previous: <a href="../code.html" title="previous chapter">Code</a></li>
+      <li>Next: <a href="subsurface.structs.base_structures.StructuredData.html" title="next chapter">subsurface.structs.base_structures.StructuredData</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019-2020, The subsurface developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/Base Structures/subsurface.structs.base_structures.UnstructuredData.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
