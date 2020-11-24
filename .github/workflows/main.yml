@@ -31,6 +31,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r optional_requirements.txt
+        pip install -r dev_requirements.txt
     - name: Test with pytest
       run: |
         pip install pytest
@@ -45,7 +46,7 @@ jobs:
 
       - name: Generate your awesome content
         working-directory: docs/
-        run: pipenv run make html
+        run: make html
 
       - name: Publish generated content to GitHub Pages
         uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
