@@ -32,6 +32,11 @@ jobs:
         pip install -r requirements.txt
         pip install -r optional_requirements.txt
         pip install -r dev_requirements.txt
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    
     - name: Test with pytest
       run: |
         pip install pytest
@@ -39,6 +44,7 @@ jobs:
         pytest --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
 
   publish:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Check out
