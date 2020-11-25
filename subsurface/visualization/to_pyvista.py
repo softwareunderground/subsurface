@@ -35,6 +35,8 @@ def pv_plot(meshes: list,
     for m in meshes:
         p.add_mesh(m, **add_mesh_kwargs)
 
+    p.show_bounds()
+
     if image_2d is False:
         return p.show()
 
