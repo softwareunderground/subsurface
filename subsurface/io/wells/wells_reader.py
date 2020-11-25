@@ -57,6 +57,8 @@ class WellyToSubsurface:
 
         """
         # Init empty Project
+        if welly_imported is False:
+            raise ImportError('You need to install welly to read well data.')
 
         self.p = Project([])
         self._well_names = set()
@@ -83,8 +85,10 @@ class WellyToSubsurface:
 
         for b in unique_borehole:
             w = self.p.get_well(b)
-            assert data.loc[[b]].shape[1] == 3, 'datum must be XYZ coord'
-            w.position = data.loc[[b]].values
+            datum = data.loc[[b]]
+            assert datum.shape[1] == 3, 'datum must be XYZ coord'
+            w.position = datum.values[0]
+
 
         return self.p
 
@@ -159,11 +163,13 @@ class WellyToSubsurface:
         self.add_wells(unique_borehole)
         for b in unique_borehole:
             w = self.p.get_well(b)
-            w.location.add_deviation(deviations.loc[b, ['md', 'inc', 'azi']],
+            w.location.add_deviation(deviations.loc[[b], ['md', 'inc', 'azi']],
                                      td=td,
                                      method=method,
                                      update_deviation=update_deviation,
                                      azimuth_datum=azimuth_datum)
+            if w.location.position is None:
+                raise ValueError('Deviations could not be calculated.')
 
         return self.p
 
@@ -217,10 +223,14 @@ class WellyToSubsurface:
         cells = np.zeros((0, 2), dtype=np.int_)
 
         last_index = 0
+        missed_wells = []
         for w in self.p.get_wells():
             if w.location.position is None:
-                raise AttributeError('At least one of the wells do not have'
-                                     'assigned a survey.')
+                warnings.warn(f'At least one of the wells do not have'
+                              'assigned a survey. Borehole name: {w.name}')
+                missed_wells.append(w.name)
+                continue
+
             xyz = w.location.trajectory(None, elev, n_points, **kwargs)
 
             # Make sure deviation is there
@@ -238,7 +248,7 @@ class WellyToSubsurface:
             w.unify_basis(keys=None, basis=basis)
 
             # Convert striplog into Curve
-            if convert_lith is True:
+            if convert_lith is True and 'lith' in w.data:
                 try:
                     start, stop, step_size = self._calculate_basis_parameters(w, n_points - 1)
                     s_log, basis, table = w.data['lith'].to_log(step_size, start, stop, return_meta=True)
@@ -251,15 +261,16 @@ class WellyToSubsurface:
                     w.data['lith_log'] = Curve(np.zeros(n_points - 1))
 
         try:
-            df = self.p.df().loc['foo']
-        except KeyError:
             df = self.p.df()
-        df = self.p.df()
+        except ValueError:
+            df = None
+
         unstructured_data = UnstructuredData(
             vertex,
             cells,
             df
         )
+        print('The following boreholes failed being processed: ', missed_wells)
 
         if return_element is True:
             return LineSet(unstructured_data)
@@ -295,6 +306,7 @@ def read_collar(file_or_buffer, **kwargs):
     Args:
         file_or_buffer:
         **kwargs:
+            usecols: well_name, X, Y, Z
 
     Returns:
 
@@ -337,6 +349,7 @@ def read_collar(file_or_buffer, **kwargs):
 
 def read_survey(file_or_buffer, index_map=None, columns_map=None, **kwargs):
     is_json = kwargs.pop('is_json', False)
+    index_col = kwargs.pop('index_col', 0)
 
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
@@ -349,7 +362,6 @@ def read_survey(file_or_buffer, index_map=None, columns_map=None, **kwargs):
             reader = _get_reader(file_format)
         else:
             reader = _get_reader('.csv')
-        index_col = kwargs.pop('index_col', 0)
         d = reader(file_or_buffer, index_col=index_col, **kwargs)
     elif type(file_or_buffer) == dict:
         reader = _get_reader('dict')
@@ -363,11 +375,20 @@ def read_survey(file_or_buffer, index_map=None, columns_map=None, **kwargs):
     if columns_map is not None:
         d.columns = d.columns.map(columns_map)
 
-    assert d.columns.isin(['md', 'inc', 'azi']).all(), 'md, inc, and azi columns' \
-                                                       'must be present in the file.' \
-                                                       'Use columns_map to assign' \
-                                                       'column names to these fields.'
-    return d
+    if not d.columns.isin(['md']).any():
+        raise AttributeError('md, inc, and azi columns must be present in the file.'
+                             'Use columns_map to assign column names to these fields.')
+
+    elif not d.columns.isin(['md', 'inc', 'azi']).all():
+        warnings.warn('inc and/or azi columns are not present in the file.'
+                      ' The boreholes will be straight.')
+        d['inc'] = -90
+        d['azi'] = 1
+
+    # Drop wells that contain only one value
+    d_no_singles = d[d.index.duplicated(keep=False)]
+
+    return d_no_singles
 
 
 def read_lith(file_or_buffer, columns_map=None, **kwargs):
