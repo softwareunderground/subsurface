@@ -113,3 +113,4 @@ venv.bak/
 !/docs/source/installation.rst
 !/docs/source/_static/
 !/docs/source/_templates/
+/data/

@@ -8,7 +8,6 @@ import imageio
 import numpy as np
 
 
-@pytest.mark.skip(reason='CI breaks')
 def test_read_trace_to_unstruct(data_path):
     traces = gpd.read_file(data_path + '/profiles/Traces.shp')
     v, e = create_mesh_from_trace(traces.loc[0, 'geometry'], traces.loc[0, 'zmax'],
