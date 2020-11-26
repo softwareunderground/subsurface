@@ -10,3 +10,4 @@ shapely~=1.7.1
 requests~=2.25.0
 ezdxf
 git+https://github.com/Leguark/welly.git
+imageio

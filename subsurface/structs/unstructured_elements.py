@@ -135,14 +135,15 @@ class LineSet(Common):
                  radius: float = 1
                  ):
 
-        if data.cells is None:
+        self.data = data
+        self.radius = radius
+
+        if data.cells is None or data.cells.shape[1] < 2:
             self.generate_default_cells()
 
         elif data.cells.shape[1] != 2:
             raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 2), IntX]')
-        self.data = data
-        self.radius = radius
 
         # TODO: these must all be integer dtypes!
 

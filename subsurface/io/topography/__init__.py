@@ -24,13 +24,13 @@ def rasterio_dataset_to_structured_data(dataset):
     shape = data.shape
     coords = {
         'x': np.linspace(
-            dataset.bounds.left,
             dataset.bounds.right,
+            dataset.bounds.left,
             shape[0]
         ),
         'y': np.linspace(
-            dataset.bounds.bottom,
             dataset.bounds.top,
+            dataset.bounds.bottom,
             shape[1]
         )
     }

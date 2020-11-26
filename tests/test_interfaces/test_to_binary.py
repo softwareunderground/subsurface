@@ -27,10 +27,10 @@ def test_wells_to_binary(wells):
     bytearray_le, header = wells.to_binary()
     print(header)
 
-    with open('well.json', 'w') as outfile:
+    with open('well_f.json', 'w') as outfile:
         json.dump(header, outfile)
 
-    new_file = open("wells.le", "wb")
+    new_file = open("wells_f.le", "wb")
     new_file.write(bytearray_le)
 
 

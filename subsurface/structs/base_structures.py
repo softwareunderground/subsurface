@@ -62,8 +62,9 @@ class UnstructuredData(CommonDataMethods):
 
     Args:
         vertex (np.ndarray): NDArray[(Any, 3), FloatX]: XYZ point data
-        cells (np.ndarray): NDArray[(Any, ...), IntX]: Combination of vertex that create
-            different geometric elements
+        cells (np.ndarray, str['points', 'line']): NDArray[(Any, ...), IntX]:
+         Combination of vertex that create different geometric elements. If
+         str use default values for either points or lines
         attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number associated to an element
         points_attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number
          associated to points
@@ -85,7 +86,7 @@ class UnstructuredData(CommonDataMethods):
     data: xr.Dataset
 
     def __init__(self, vertex: np.ndarray = None,
-                 cells: np.ndarray = None,
+                 cells: Union[np.ndarray, str] = None,
                  attributes: Optional[
                      Union[pd.DataFrame, Dict[str, xr.DataArray]]] = None,
                  points_attributes: Optional[pd.DataFrame] = None,
@@ -116,8 +117,14 @@ class UnstructuredData(CommonDataMethods):
         v = xr.DataArray(vertex, dims=['points', 'XYZ'],
                          coords={'XYZ': ['X', 'Y', 'Z']})
         xarray_dict['vertex'] = v
-        if edges is None:
+        if edges is None or edges == 'points':
             edges = np.atleast_2d(v.coords['points']).T
+        elif edges == 'lines':
+            n_vertex = v.coords['points'].shape[0]
+            a = np.arange(0, n_vertex - 1, dtype=np.int_)
+            b = np.arange(1, n_vertex, dtype=np.int_)
+            edges = np.vstack([a, b]).T
+
         e = xr.DataArray(edges, dims=['cell', 'nodes'])
         xarray_dict['cells'] = e
         xarray_dict = self.set_attributes_data_array(
@@ -246,8 +253,8 @@ class UnstructuredData(CommonDataMethods):
         c = xr.Dataset({'v': a, 'e': b, 'a': e})
         return c
 
-    def to_binary(self):
-        bytearray_le = self._to_bytearray()
+    def to_binary(self, order='F'):
+        bytearray_le = self._to_bytearray(order)
         header = self._set_binary_header()
 
         return bytearray_le, header
@@ -263,11 +270,11 @@ class UnstructuredData(CommonDataMethods):
         }
         return header
 
-    def _to_bytearray(self):
-        vertex = self.vertex.astype('float32').tobytes()
-        cells = self.cells.astype('int32').tobytes()
-        cell_attribute = self.attributes.values.astype('float32').tobytes()
-        vertex_attribute = self.points_attributes.values.astype('float32').tobytes()
+    def _to_bytearray(self, order):
+        vertex = self.vertex.astype('float32').tobytes(order)
+        cells = self.cells.astype('int32').tobytes(order)
+        cell_attribute = self.attributes.values.astype('float32').tobytes(order)
+        vertex_attribute = self.points_attributes.values.astype('float32').tobytes(order)
         bytearray_le = vertex + cells + cell_attribute + vertex_attribute
         return bytearray_le
 
@@ -333,8 +340,8 @@ class StructuredData(CommonDataMethods):
     def values(self):
         return self.data[self.data_name].values
 
-    def to_binary(self):
-        bytearray_le = self._to_bytearray()
+    def to_binary(self, order='F'):
+        bytearray_le = self._to_bytearray(order)
         header = self._set_binary_header()
 
         return bytearray_le, header
@@ -345,7 +352,7 @@ class StructuredData(CommonDataMethods):
         }
         return header
 
-    def _to_bytearray(self):
-        data = self.values.astype('float32').tobytes()
+    def _to_bytearray(self, order):
+        data = self.values.astype('float32').tobytes(order)
         bytearray_le = data
         return bytearray_le
