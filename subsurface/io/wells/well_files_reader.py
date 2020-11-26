@@ -110,8 +110,9 @@ def read_survey(file_or_buffer, index_map=None, columns_map=None, **kwargs):
     elif not d.columns.isin(['md', 'inc', 'azi']).all():
         warnings.warn('inc and/or azi columns are not present in the file.'
                       ' The boreholes will be straight.')
-        d['inc'] = -90
-        d['azi'] = 1
+        d['inc'] = 0
+        d['azi'] = 0
+
 
     # Drop wells that contain only one value
     d_no_singles = d[d.index.duplicated(keep=False)]

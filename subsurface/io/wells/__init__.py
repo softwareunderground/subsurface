@@ -1,9 +1,15 @@
-from subsurface.io import read_to_welly
+from subsurface.structs.base_structures import UnstructuredData
+from subsurface.io.wells.welly_reader import read_to_welly
 from subsurface.io.wells.well_files_reader import read_collar
 
 
-def borehole_location_to_unstruct(collar_file, read_collar_kwargs):
+def borehole_location_to_unstruct(collar_file, read_collar_kwargs=None):
+    if read_collar_kwargs is None:
+        read_collar_kwargs = dict()
     collars = read_collar(collar_file, **read_collar_kwargs)
+    ud = UnstructuredData(vertex=collars.values)
+
+    return ud
 
 
 def read_wells_to_unstruct(backend='welly', n_points=1000,

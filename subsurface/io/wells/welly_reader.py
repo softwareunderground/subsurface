@@ -164,6 +164,7 @@ class WellyToSubsurface:
         """
         unique_borehole = np.unique(deviations.index)
         self.add_wells(unique_borehole)
+
         for b in unique_borehole:
             w = self.p.get_well(b)
             w.location.add_deviation(deviations.loc[[b], ['md', 'inc', 'azi']],
@@ -234,7 +235,7 @@ class WellyToSubsurface:
                 missed_wells.append(w.name)
                 continue
 
-            xyz = w.location.trajectory(None, elev, n_points, **kwargs)
+            xyz = w.location.trajectory(w.position, elev, n_points, **kwargs)
 
             # Make sure deviation is there
             a = np.arange(0 + last_index, xyz.shape[0] - 1 + last_index,

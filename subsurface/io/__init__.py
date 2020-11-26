@@ -1,9 +1,8 @@
 import xarray as xr
 
 from .wells.welly_reader import *
-from .topography import *
-from .wells import *
-from .. import UnstructuredData, StructuredData
+from .topography import read_structured_topography, read_unstructured_topography
+from .wells import borehole_location_to_unstruct, read_wells_to_unstruct
 
 
 def read_unstruct(path, **kwargs):

@@ -66,9 +66,9 @@ class StructuredGrid():
         Returns:
 
         """
-        grid_2d = np.meshgrid(self.coord['y'], self.coord['x'])
+        grid_2d = np.meshgrid(self.coord['x'], self.coord['y'])
         if attribute is not None:
-            z_coord = self.ds.data[attribute].values
+            z_coord = self.ds.data[attribute].values.T
             if z_coord.ndim != 2:
                 raise AttributeError('The attribute must be a 2D array')
 

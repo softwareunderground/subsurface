@@ -13,7 +13,7 @@ except ImportError:
 
 def pv_plot(meshes: list,
             image_2d=False,
-            texture=None,
+            ve=None,
             plotter_kwargs: dict = None,
             add_mesh_kwargs: dict = None):
     """
@@ -22,6 +22,7 @@ def pv_plot(meshes: list,
         meshes (List[pv.PolyData]):
         image_2d (bool): If True convert plot to matplotlib imshow. This helps for visualizing
          the plot in IDEs
+        ve (float): vertical exaggeration
         plotter_kwargs (dict): pyvista.Plotter kwargs
         add_mesh_kwargs (dict): pyvista.add_mesh kwargs
 
@@ -31,6 +32,8 @@ def pv_plot(meshes: list,
     add_mesh_kwargs = dict() if add_mesh_kwargs is None else add_mesh_kwargs
 
     p = pv.Plotter(**plotter_kwargs, off_screen=image_2d)
+    if ve is not None:
+        p.set_scale(zscale=ve)
 
     for m in meshes:
         p.add_mesh(m, **add_mesh_kwargs)
@@ -68,7 +71,8 @@ def to_pyvista_points(point_set: PointSet):
     return poly
 
 
-def to_pyvista_mesh(unstructured_element: Union[TriSurf]) -> pv.PolyData:
+def to_pyvista_mesh(unstructured_element: Union[TriSurf],
+                    return_uv=False) -> pv.PolyData:
     """Create planar surface PolyData from unstructured element such as TriSurf
     """
     nve = unstructured_element.mesh.n_vertex_per_element
@@ -88,6 +92,10 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf]) -> pv.PolyData:
         )
         tex = pv.numpy_to_texture(unstructured_element.texture.values)
         mesh._textures = {0: tex}
+        if return_uv is True:
+            from vtkmodules.util.numpy_support import vtk_to_numpy
+            uv = vtk_to_numpy(mesh.GetPointData().GetTCoords())
+            return mesh, uv
 
     return mesh
 
@@ -148,7 +156,7 @@ def to_pyvista_grid(structured_grid: StructuredGrid, attribute: str):
 
     mesh = pv.StructuredGrid(*meshgrid)
     mesh.point_arrays.update(
-        {attribute: structured_grid.ds.data[attribute].values.T.ravel()})
+        {attribute: structured_grid.ds.data[attribute].values.ravel()})
 
     return mesh
 
