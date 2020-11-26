@@ -3,9 +3,11 @@ from typing import List, Union
 
 import pytest
 import os
-
+import pandas as pd
+import geopandas as gpd
 from subsurface import StructuredGrid, TriSurf
 from subsurface.geological_formats import segy_reader
+from subsurface.io.profiles import create_mesh_from_trace
 from subsurface.structs.base_structures import StructuredData, UnstructuredData
 import matplotlib.pyplot as plt
 import numpy as np
@@ -20,6 +22,20 @@ input_path = os.path.dirname(__file__) + '/../data/segy'
 files = ['/E5_MIG_DMO_FINAL.sgy', '/E5_MIG_DMO_FINAL_DEPTH.sgy', '/E5_STACK_DMO_FINAL.sgy', '/test.segy']
 images = ['/myplot_cropped.png', '/myplot2_cropped.png', '/myplot3_cropped.png', '/myplot4_cropped.png']
 # all files are unstructured: only raw data reading and writing is supported by segyio
+
+coords_file = input_path + '/E5_CMP_COORDS.txt'
+coords = {}
+with open(coords_file, 'r') as cf:
+    lines = cf.readlines()
+    xs = []
+    ys = []
+    for line in lines:
+        x = line.split()[1]
+        y = line.split()[2]
+        xs.append(x)
+        ys.append(y)
+coords = {'x': xs, 'y': ys}
+# coords = input_path + '/E5_CMP_COORDS.csv'
 
 
 @pytest.fixture(scope="module")
@@ -69,6 +85,7 @@ def test_pyvista_grid(get_structured_data, get_images):
 def test_read_segy_to_struct_data_imageio(get_structured_data, get_images):
     for x, image in zip(get_structured_data, get_images):
         vertex = np.array([[0, x.data['x'][0], x.data['y'][0]], [0, x.data['x'][-1], x.data['y'][0]], [0, x.data['x'][0], x.data['y'][-1]], [0, x.data['x'][-1], x.data['y'][-1]]])
+        # vertex = np.array([[0, coords['x'][0], coords['y'][0]], [0, coords['x'][-1], coords['y'][-1]], [0, coords['x'][0], coords['y'][0]], [0, coords['x'][0], coords['y'][0]]])
         # [print(s) for s in vertex]
         import pyvista as pv
         a = pv.PolyData(vertex)
@@ -82,6 +99,22 @@ def test_read_segy_to_struct_data_imageio(get_structured_data, get_images):
             texture=struct
             # texture_point_u=point_u,
             # texture_point_v=point_v
+        )
+
+        s = to_pyvista_mesh(ts)
+        pv_plot([s], image_2d=False)
+
+
+def test_read_segy_to_struct_data_coords(get_structured_data, get_images):
+    for x, image in zip(get_structured_data, get_images):
+        v, e = segy_reader.create_mesh_from_coords(coords, -100, 100)
+
+        struct = StructuredData(np.array(imageio.imread(image)))
+        unstruct = UnstructuredData(v, e)
+
+        ts = TriSurf(
+            mesh=unstruct,
+            texture=struct
         )
 
         s = to_pyvista_mesh(ts)
