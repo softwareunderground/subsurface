@@ -105,16 +105,25 @@ def test_read_segy_to_struct_data_imageio(get_structured_data, get_images):
         pv_plot([s], image_2d=False)
 
 
-def test_read_segy_to_struct_data_coords(get_structured_data, get_images):
+def test_plot_segy_as_struct_data_with_coords_dict(get_structured_data, get_images):
     for x, image in zip(get_structured_data, get_images):
-        v, e = segy_reader.create_mesh_from_coords(coords, -100, 100)
+        zmin = -6000.0
+        zmax = 0.0
+        v, e = segy_reader.create_mesh_from_coords(coords, zmin, zmax)
 
         struct = StructuredData(np.array(imageio.imread(image)))
+        print(struct) # normalize to number of samples
         unstruct = UnstructuredData(v, e)
 
+        origin = [float(coords['x'][0]), float(coords['y'][0]), zmin]
+        point_u = [float(coords['x'][-1]), float(coords['y'][-1]), zmin]
+        point_v = [float(coords['x'][0]), float(coords['y'][0]), zmax]
         ts = TriSurf(
             mesh=unstruct,
-            texture=struct
+            texture=struct,
+            texture_origin=origin,
+            texture_point_u=point_u,
+            texture_point_v=point_v
         )
 
         s = to_pyvista_mesh(ts)
