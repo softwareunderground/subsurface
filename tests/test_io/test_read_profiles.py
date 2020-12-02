@@ -39,11 +39,11 @@ def test_read_trace_to_unstruct(data_path):
 
     s = to_pyvista_mesh(ts)
 
-    pv_plot([s], image_2d=False)
+    pv_plot([s], image_2d=True)
 
 
 def test_tri_surf_from_traces_and_png(data_path):
-    mesh_list = create_tri_surf_from_traces_texture(
+    us, mesh_list = create_tri_surf_from_traces_texture(
         data_path + '/profiles/Traces.shp',
         path_to_texture=[
             data_path + '/profiles/Profil1_cropped.png',
@@ -53,12 +53,34 @@ def test_tri_surf_from_traces_and_png(data_path):
             data_path + '/profiles/Profil5_cropped.png',
             data_path + '/profiles/Profil6_cropped.png',
             data_path + '/profiles/Profil7_cropped.png',
-        ]
+        ],
+        return_mesh=True,
+        return_uv=False
     )
 
-    pv_plot(mesh_list, image_2d=False)
+    pv_plot(mesh_list, image_2d=True)
+
+
+def test_tri_surf_from_traces_and_png_uv(data_path):
+    us, mesh_list = create_tri_surf_from_traces_texture(
+        data_path + '/profiles/Traces.shp',
+        path_to_texture=[
+            data_path + '/profiles/Profil1_cropped.png',
+            data_path + '/profiles/Profil2_cropped.png',
+            data_path + '/profiles/Profil3_cropped.png',
+            data_path + '/profiles/Profil4_cropped.png',
+            data_path + '/profiles/Profil5_cropped.png',
+            data_path + '/profiles/Profil6_cropped.png',
+            data_path + '/profiles/Profil7_cropped.png',
+        ],
+        return_mesh=True,
+        return_uv=True
+    )
+
+    print(us[0].mesh.data.points_attributes)
+    pv_plot(mesh_list, image_2d=True)
 
 
 def test_line_set_from_trace(data_path):
     m = line_set_from_trace(data_path + '/profiles/Traces.shp')
-    pv_plot(m, image_2d=False)
+    pv_plot(m, image_2d=True)

@@ -5,6 +5,8 @@ from typing import Optional, Union, List
 
 import pandas as pd
 
+from subsurface.io.wells.wells_utils import add_tops_from_base_and_altitude_in_place
+
 
 def _dict_reader(dict_):
     """
@@ -107,12 +109,11 @@ def read_survey(file_or_buffer, index_map=None, columns_map=None, **kwargs):
         raise AttributeError('md, inc, and azi columns must be present in the file.'
                              'Use columns_map to assign column names to these fields.')
 
-    elif not d.columns.isin(['md', 'inc', 'azi']).all():
+    elif not pd.np.isin(['md', 'inc', 'azi'], d.columns).all():
         warnings.warn('inc and/or azi columns are not present in the file.'
                       ' The boreholes will be straight.')
         d['inc'] = 0
         d['azi'] = 0
-
 
     # Drop wells that contain only one value
     d_no_singles = d[d.index.duplicated(keep=False)]
@@ -127,6 +128,8 @@ def read_lith(file_or_buffer, columns_map=None, **kwargs):
         - component lith
     """
     is_json = kwargs.pop('is_json', False)
+    index_col = kwargs.pop('index_col', 0)
+
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
@@ -138,7 +141,6 @@ def read_lith(file_or_buffer, columns_map=None, **kwargs):
             reader = _get_reader(file_format)
         else:
             reader = _get_reader('.csv')
-        index_col = kwargs.pop('index_col', 0)
 
         d = reader(file_or_buffer, index_col=index_col, **kwargs)
     elif type(file_or_buffer) == dict:
@@ -150,11 +152,22 @@ def read_lith(file_or_buffer, columns_map=None, **kwargs):
     if columns_map is not None:
         d.columns = d.columns.map(columns_map)
 
-    assert d.columns.isin(['top', 'base', 'component lith', 'description']).all(), \
-        'basis column must be present in the file. Use columns_map to assign' \
-        'column names to these fields.'
+    given_top = pd.np.isin(['top', 'base', 'component lith'], d.columns).all()
+    given_altitude_and_base = pd.np.isin(
+        ['altitude', 'base', 'component lith'], d.columns).all()
 
-    return d
+    if given_altitude_and_base and not given_top:
+        d = add_tops_from_base_and_altitude_in_place(
+            d,
+            index_col,
+            'base',
+            'altitude'
+        )
+
+    elif not given_top and not given_altitude_and_base:
+        raise ValueError('basis column must be present in the file. Use '
+                         'columns_map to assign column names to these fields.')
+    return d[['top', 'base', 'component lith']]
 
 
 def read_attributes(file_or_buffer, columns_map=None,

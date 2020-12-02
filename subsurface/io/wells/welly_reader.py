@@ -100,18 +100,31 @@ class WellyToSubsurface:
     def add_striplog(self, data: pd.DataFrame):
         unique_borehole = np.unique(data.index)
         self.add_wells(unique_borehole)
+        missed_borehole = []
         for b in unique_borehole:
             w = self.p.get_well(b)
-            data_dict = data.loc[b].to_dict('list')
+            data_dict = data.loc[[b]].to_dict('list')
+
             s = Striplog.from_dict(data_dict, points=True)
 
-            start, stop, step_size = self._calculate_basis_parameters(w,
-                                                                      w.location.md.shape[
-                                                                          0])
-            s_log, basis, table = s.to_log(step_size, start, stop, return_meta=True)
+            try:
+                n_basis = w.location.md.shape[0]
+            except TypeError:
+                n_basis = 2
+            try:
+                start, stop, step_size = self._calculate_basis_parameters(
+                    w,
+                    n_basis)
+                s_log, basis, table = s.to_log(step_size, start, stop,
+                                               return_meta=True)
 
-            w.data['lith'] = s
-            w.data['lith_log'] = Curve(s_log, basis)
+                w.data['lith'] = s
+                w.data['lith_log'] = Curve(s_log, basis)
+            except TypeError:
+                missed_borehole.append(b)
+                continue
+
+        print('The following striplog failed being processed: ', missed_borehole)
 
         return self.p
 
@@ -203,7 +216,7 @@ class WellyToSubsurface:
 
     def to_subsurface(self,
                       elev=True,
-                      n_points=1000,
+                      n_points=250,
                       return_element=False,
                       convert_lith=True,
                       **kwargs):
@@ -230,8 +243,8 @@ class WellyToSubsurface:
         missed_wells = []
         for w in self.p.get_wells():
             if w.location.position is None:
-                warnings.warn(f'At least one of the wells do not have'
-                              'assigned a survey. Borehole name: {w.name}')
+                warnings.warn('At least one of the wells do not have'
+                              'assigned a survey. Borehole name: ' + w.name)
                 missed_wells.append(w.name)
                 continue
 
@@ -269,17 +282,20 @@ class WellyToSubsurface:
 
                     w.data['lith_log'] = Curve(np.zeros(n_points - 1))
 
-        try:
-            df = self.p.df()
-        except ValueError:
-            df = None
+        df = self.p.df()
+
+        # try:
+        #     df = self.p.df()
+        # except ValueError:
+        #     df = None
+
+        print('The following boreholes failed being processed: ', missed_wells)
 
         unstructured_data = UnstructuredData(
             vertex,
             cells,
             df
         )
-        print('The following boreholes failed being processed: ', missed_wells)
 
         if return_element is True:
             return LineSet(unstructured_data)
@@ -339,5 +355,3 @@ def read_to_welly(
     wts = pandas_to_welly(wts, *dfs)
 
     return wts
-
-

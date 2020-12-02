@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Tuple, Optional
 
 from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
 from subsurface.structs.common import Common
@@ -72,7 +72,7 @@ def to_pyvista_points(point_set: PointSet):
 
 
 def to_pyvista_mesh(unstructured_element: Union[TriSurf],
-                    return_uv=False) -> pv.PolyData:
+                    return_uv=False) -> Tuple[pv.PolyData, Optional[np.array]]:
     """Create planar surface PolyData from unstructured element such as TriSurf
     """
     nve = unstructured_element.mesh.n_vertex_per_element
@@ -97,7 +97,7 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf],
             uv = vtk_to_numpy(mesh.GetPointData().GetTCoords())
             return mesh, uv
 
-    return mesh
+    return mesh, None
 
 
 def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,

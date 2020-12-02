@@ -7,7 +7,7 @@ def borehole_location_to_unstruct(collar_file, read_collar_kwargs=None):
     if read_collar_kwargs is None:
         read_collar_kwargs = dict()
     collars = read_collar(collar_file, **read_collar_kwargs)
-    ud = UnstructuredData(vertex=collars.values)
+    ud = UnstructuredData(vertex=collars.values.astype('float32'))
 
     return ud
 

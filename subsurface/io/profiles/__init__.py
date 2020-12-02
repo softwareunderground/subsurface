@@ -5,6 +5,7 @@ from shapely.geometry import LineString
 import geopandas as gpd
 import subsurface
 from subsurface.visualization import to_pyvista_mesh, to_pyvista_line
+import pandas as pd
 
 
 def create_mesh_from_trace(linestring: LineString,
@@ -35,17 +36,32 @@ def create_mesh_from_trace(linestring: LineString,
 def create_tri_surf_from_traces_texture(
         path_to_trace,
         path_to_texture: Union[List[str]],
-        idx=None
+        idx=None,
+        return_mesh=False,
+        return_uv=False,
+        uv=None
 ):
     args_list = traces_texture_to_sub_structs(path_to_trace,
                                               path_to_texture,
-                                              idx)
+                                              idx,
+                                              uv=uv)
 
     tri_surf_list = base_structs_to_tri_surf(args_list)
+    meshes = None
 
-    meshes = [to_pyvista_mesh(i) for i in tri_surf_list]
-
-    return meshes
+    if return_mesh is True or return_uv is True:
+        meshes_uv = [to_pyvista_mesh(i, return_uv=return_uv) for i in tri_surf_list]
+        meshes, uv = list(zip(*meshes_uv))
+        if return_uv is True:
+            tri_surf_list, meshes = create_tri_surf_from_traces_texture(
+                path_to_trace,
+                path_to_texture,
+                idx=idx,
+                return_mesh=return_mesh,
+                return_uv=False,
+                uv=uv
+            )
+    return tri_surf_list, meshes
 
 
 def base_structs_to_tri_surf(args_list) -> List:
@@ -62,16 +78,23 @@ def base_structs_to_tri_surf(args_list) -> List:
     return ts_list
 
 
-def traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx):
+def traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx, uv=None):
     traces = gpd.read_file(path_to_trace)
     traces = _select_traces_by_index(idx, traces)
 
     base_args = []
+    n = 0
     for index, row in traces.iterrows():
         v, e = create_mesh_from_trace(row['geometry'],
                                       row['zmax'],
                                       row['zmin'])
-        unstruct = subsurface.UnstructuredData(v, e)
+        if uv is not None:
+            uv_item = pd.DataFrame(uv[n],
+                                   columns=['u', 'v'])
+        else:
+            uv_item = None
+
+        unstruct = subsurface.UnstructuredData(v, e, points_attributes=uv_item)
 
         import imageio
         cross = imageio.imread(path_to_texture[index])
@@ -88,6 +111,7 @@ def traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx):
                    row['zmax']]
 
         base_args.append((unstruct, struct, origin, point_u, point_v))
+        n += 1
     return base_args
 
 

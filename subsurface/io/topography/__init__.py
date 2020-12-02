@@ -29,8 +29,8 @@ def rasterio_dataset_to_structured_data(dataset):
             shape[0]
         ),
         'y': np.linspace(
-            dataset.bounds.top,
             dataset.bounds.bottom,
+            dataset.bounds.top,
             shape[1]
         )
     }
