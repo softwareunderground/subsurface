@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Tuple, Optional
 
 from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
 from subsurface.structs.common import Common
@@ -10,30 +10,49 @@ try:
 except ImportError:
     raise ImportError()
 
+try:
+    from pyvistaqt import BackgroundPlotter
+    background_plotter_imported = True
+except ImportError:
+    background_plotter_imported = False
 
 def pv_plot(meshes: list,
             image_2d=False,
-            texture=None,
+            ve=None,
             plotter_kwargs: dict = None,
-            add_mesh_kwargs: dict = None):
+            add_mesh_kwargs: dict = None,
+            background_plotter = False):
     """
 
     Args:
         meshes (List[pv.PolyData]):
         image_2d (bool): If True convert plot to matplotlib imshow. This helps for visualizing
          the plot in IDEs
+        ve (float): vertical exaggeration
         plotter_kwargs (dict): pyvista.Plotter kwargs
         add_mesh_kwargs (dict): pyvista.add_mesh kwargs
-
+        background_plotter (bool): if true and pyvistaqt installed use pyvista
+         backgroung plotter.
     """
 
     plotter_kwargs = dict() if plotter_kwargs is None else plotter_kwargs
     add_mesh_kwargs = dict() if add_mesh_kwargs is None else add_mesh_kwargs
 
-    p = pv.Plotter(**plotter_kwargs, off_screen=image_2d)
+    if background_plotter is True:
+        if background_plotter_imported is True:
+            p = BackgroundPlotter(**plotter_kwargs, off_screen=image_2d)
+        else:
+            raise ImportError('You need to install pyvistaqt for using this plotter.')
+    else:
+        p = pv.Plotter(**plotter_kwargs, off_screen=image_2d)
+
+    if ve is not None:
+        p.set_scale(zscale=ve)
 
     for m in meshes:
         p.add_mesh(m, **add_mesh_kwargs)
+
+    p.show_bounds()
 
     if image_2d is False:
         return p.show()
@@ -66,8 +85,12 @@ def to_pyvista_points(point_set: PointSet):
     return poly
 
 
-def to_pyvista_mesh(unstructured_element: Union[TriSurf]) -> pv.PolyData:
+def to_pyvista_mesh(unstructured_element: Union[TriSurf],
+                    return_uv=False) -> Tuple[pv.PolyData, Optional[np.array]]:
     """Create planar surface PolyData from unstructured element such as TriSurf
+
+    Returns:
+        mesh texture
     """
     nve = unstructured_element.mesh.n_vertex_per_element
     vertices = unstructured_element.mesh.vertex
@@ -86,8 +109,12 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf]) -> pv.PolyData:
         )
         tex = pv.numpy_to_texture(unstructured_element.texture.values)
         mesh._textures = {0: tex}
+        if return_uv is True:
+            from vtkmodules.util.numpy_support import vtk_to_numpy
+            uv = vtk_to_numpy(mesh.GetPointData().GetTCoords())
+            return mesh, uv
 
-    return mesh
+    return mesh, None
 
 
 def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,
@@ -134,19 +161,48 @@ def to_pyvista_tetra(tetra_mesh: TetraMesh):
     return mesh
 
 
-def to_pyvista_grid(structured_grid: StructuredGrid, attribute: str):
-    ndim = _n_cartesian_coord(attribute, structured_grid)
+def to_pyvista_grid(structured_grid: StructuredGrid, data_set_name: str = None,
+                    attribute_slice: dict = None):
+    """
+
+    Args:
+        structured_grid:
+        data_set_name:
+        attribute_slice: dictionary to select which 3D array will be displayed as color
+
+    Returns:
+
+    """
+
+    ndim = structured_grid.cartesian_dimensions
 
     if ndim == 2:
-        meshgrid = structured_grid.meshgrid_2d(attribute)
+        meshgrid = structured_grid.meshgrid_2d(data_set_name)
     elif ndim == 3:
         meshgrid = structured_grid.meshgrid_3d
     else:
-        raise AttributeError('The DataArray does not have valid dimensionality.')
+        raise AttributeError('The DataArray does not have valid dimensionality. '
+                             'Possibly there are not valid dimension name in the'
+                             'xarray. DataArray. These are X Y Z x y z')
 
     mesh = pv.StructuredGrid(*meshgrid)
+    update_grid_attribute(mesh, structured_grid, attribute_slice, data_set_name)
+
+    return mesh
+
+
+def update_grid_attribute(mesh, structured_grid, attribute_slice=None,
+                          data_set_name=None):
+    if attribute_slice is None:
+        attribute_slice = dict()
+
+    if data_set_name is None:
+        data_set_name = structured_grid.ds.data_array_name
+
     mesh.point_arrays.update(
-        {attribute: structured_grid.ds.data[attribute].values.T.ravel()})
+        {data_set_name: structured_grid.ds.data[data_set_name].sel(
+            **attribute_slice
+        ).values.ravel('F')})
 
     return mesh
 

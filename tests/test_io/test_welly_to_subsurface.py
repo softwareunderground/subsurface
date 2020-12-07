@@ -3,9 +3,9 @@ import pytest
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from subsurface.io import WellyToSubsurface
-from subsurface.io.read_to_basic_structs import read_wells_to_unstruct
-from subsurface.io.wells.wells_reader import read_to_welly, read_collar, read_survey
+from subsurface.io import WellyToSubsurface, read_to_welly
+from subsurface.io.wells import read_wells_to_unstruct
+from subsurface.io.wells.well_files_reader import read_collar, read_survey
 from subsurface.structs import LineSet
 import subsurface
 import pathlib

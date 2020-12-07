@@ -9,3 +9,6 @@ scipy~=1.5.4
 shapely~=1.7.1
 requests~=2.25.0
 ezdxf
+git+https://github.com/Leguark/welly.git
+git+https://github.com/Leguark/striplog.git
+imageio

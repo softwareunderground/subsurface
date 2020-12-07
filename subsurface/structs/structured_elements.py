@@ -37,7 +37,7 @@ class StructuredGrid():
         self.ds = structured_data
 
     @property
-    def dimensions(self):
+    def cartesian_dimensions(self):
         #n = np.isin(self.ds.data.dims, ['X', 'Y', 'Z', 'x', 'y', 'z']).sum()
         return len(self.cartesian_coords_names)
 
@@ -53,7 +53,7 @@ class StructuredGrid():
     @property
     def meshgrid_3d(self):
         cart_coord = [self.coord[i] for i in self.cartesian_coords_names]
-        grid_3d = np.meshgrid(*cart_coord)
+        grid_3d = np.meshgrid(*cart_coord, indexing='ij')
         return grid_3d
 
     def meshgrid_2d(self, attribute:str = None):
@@ -66,9 +66,9 @@ class StructuredGrid():
         Returns:
 
         """
-        grid_2d = np.meshgrid(self.coord['y'], self.coord['x'])
+        grid_2d = np.meshgrid(self.coord['x'], self.coord['y'])
         if attribute is not None:
-            z_coord = self.ds.data[attribute].values
+            z_coord = self.ds.data[attribute].values.T
             if z_coord.ndim != 2:
                 raise AttributeError('The attribute must be a 2D array')
 

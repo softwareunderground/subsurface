@@ -1,7 +1,6 @@
 import pandas as pd
 from subsurface.structs.base_structures import UnstructuredData
 from subsurface.utils import get_extension
-import ezdxf
 import numpy as np
 from scipy.spatial.qhull import Delaunay
 
@@ -107,6 +106,8 @@ def map_columns_names(columns_map, data):
 
 
 def dxf_to_vertex_edges(path):
+    import ezdxf
+
     dataset = ezdxf.readfile(path)
     vertex = []
     entity = dataset.modelspace()
