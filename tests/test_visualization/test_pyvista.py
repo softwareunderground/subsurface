@@ -42,8 +42,8 @@ def test_pyvista_structured_grid(struc_data):
     # StructuredData from Dataset
     sd = StructuredData(s)
     sg = StructuredGrid(sd)
-    s = to_pyvista_grid(sg, 'lith')
-    pv_plot([s], image_2d=True)
+    s = to_pyvista_grid(sg, 'something_else')
+    pv_plot([s], image_2d=False)
 
     s = to_pyvista_grid(sg, 'geo_map')
     pv_plot([s], image_2d=True)

@@ -1,5 +1,4 @@
 import rasterio
-import ezdxf
 import numpy as np
 from scipy.spatial.qhull import Delaunay
 
@@ -34,8 +33,8 @@ def rasterio_dataset_to_structured_data(dataset):
             shape[1]
         )
     }
-    structured_data = StructuredData(data=data, coords=coords,
-                                     data_name='topography')
+    structured_data = StructuredData(data=data, data_array_name='topography',
+                                     coords=coords)
     return structured_data
 
 

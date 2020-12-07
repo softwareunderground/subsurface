@@ -1,7 +1,7 @@
 import os
 import pathlib
 from dataclasses import dataclass
-from typing import Union, Optional, Dict
+from typing import Union, Optional, Dict, List
 
 import numpy as np
 import pandas as pd
@@ -274,7 +274,8 @@ class UnstructuredData(CommonDataMethods):
         vertex = self.vertex.astype('float32').tobytes(order)
         cells = self.cells.astype('int32').tobytes(order)
         cell_attribute = self.attributes.values.astype('float32').tobytes(order)
-        vertex_attribute = self.points_attributes.values.astype('float32').tobytes(order)
+        vertex_attribute = self.points_attributes.values.astype('float32').tobytes(
+            order)
         bytearray_le = vertex + cells + cell_attribute + vertex_attribute
         return bytearray_le
 
@@ -289,7 +290,7 @@ class StructuredData(CommonDataMethods):
           numpy array. The preferred type to pass as data is directly a
          xr.Dataset to be sure all the attributes are set and named as the user
          wants.
-        data_name (str): If data is a numpy array or xarray DataArray, data_name
+        data_array_name (str): If data is a numpy array or xarray DataArray, data_name
          provides the name for the xarray data variable
         coords (dict): If data is a numpy array coords provides the values for
          the xarray dimension. These dimensions are 'x', 'y' and 'z'
@@ -303,12 +304,15 @@ class StructuredData(CommonDataMethods):
 
     def __init__(
             self,
-            data: Union[
-                np.ndarray, xr.DataArray, xr.Dataset, Dict[str, xr.DataArray]],
-            data_name: str = 'data',
+            data: Union[np.ndarray, xr.DataArray,
+                        xr.Dataset, Dict[str, xr.DataArray]],
+            data_array_name='data_array',
             coords: dict = None,
+            coords_names=None
     ):
-        self.data_name = data_name
+
+        self.data_array_name = data_array_name
+        self.coord_names = coords_names
 
         if type(data) == xr.Dataset:
             self.data = data
@@ -319,18 +323,22 @@ class StructuredData(CommonDataMethods):
                 coords=coords
             )
         elif type(data) == xr.DataArray:
-            self.data = xr.Dataset({data_name: data})
+            self.data = xr.Dataset({data_array_name: data})
         elif type(data) == np.ndarray:
-            if data.ndim == 2:
-                self.data = xr.Dataset(
-                    {data_name: (['x', 'y'], data)},
-                    coords=coords
-                )
-            elif data.ndim == 3:
-                self.data = xr.Dataset(
-                    {data_name: (['x', 'y', 'z'], data)},
-                    coords=coords
-                )
+            if coords_names is None:
+                if data.ndim == 2:
+                    self.coord_names = ['x', 'y']
+                elif data.ndim == 3:
+                    self.coord_names = ['x', 'y', 'z']
+                else:
+                    self.coord_names = ['dim' + str(i) for i in range(data.ndim)]
+
+            # if they are more than 3 we do not know the dimension name but it should
+            # valid:
+            self.data = xr.Dataset(
+                {data_array_name: (self.coord_names, data)},
+                coords=coords
+            )
         else:
             raise AttributeError(
                 'data must be either xarray.Dataset, xarray.DataArray,'
@@ -338,7 +346,7 @@ class StructuredData(CommonDataMethods):
 
     @property
     def values(self):
-        return self.data[self.data_name].values
+        return self.data[self.data_array_name].values
 
     def to_binary(self, order='F'):
         bytearray_le = self._to_bytearray(order)

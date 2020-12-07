@@ -37,7 +37,7 @@ class StructuredGrid():
         self.ds = structured_data
 
     @property
-    def dimensions(self):
+    def cartesian_dimensions(self):
         #n = np.isin(self.ds.data.dims, ['X', 'Y', 'Z', 'x', 'y', 'z']).sum()
         return len(self.cartesian_coords_names)
 
@@ -53,7 +53,7 @@ class StructuredGrid():
     @property
     def meshgrid_3d(self):
         cart_coord = [self.coord[i] for i in self.cartesian_coords_names]
-        grid_3d = np.meshgrid(*cart_coord)
+        grid_3d = np.meshgrid(*cart_coord, indexing='ij')
         return grid_3d
 
     def meshgrid_2d(self, attribute:str = None):

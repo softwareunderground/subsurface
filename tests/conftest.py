@@ -98,9 +98,9 @@ def tetra_set():
 
 @pytest.fixture(scope='session')
 def struc_data():
-    xrng = np.arange(-10, 10, 2)
-    yrng = np.arange(-10, 10, 2)
+    xrng = np.arange(-10, 10, 5)
+    yrng = np.arange(-10, 10, 7)
     zrng = np.arange(-10, 10, 2)
-    grid_3d = np.meshgrid(xrng*10, yrng*100, zrng*1000)
-    grid_2d = np.meshgrid(xrng*20, yrng*200)
+    grid_3d = np.meshgrid(xrng*10, yrng*100, zrng*1000, indexing='ij')
+    grid_2d = np.meshgrid(xrng*20, yrng*200, indexing='ij')
     return grid_3d, grid_2d, xrng, yrng, zrng
