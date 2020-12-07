@@ -8,7 +8,8 @@ import numpy as np
 
 from subsurface import UnstructuredData, TriSurf, StructuredData
 from subsurface.io.profiles import create_mesh_from_trace
-from subsurface.visualization import to_pyvista_mesh, pv_plot
+from subsurface.visualization import to_pyvista_mesh, pv_plot, \
+    to_pyvista_mesh_and_texture
 
 
 @pytest.fixture(scope='module')
@@ -67,7 +68,7 @@ def test_profile_to_binary(data_path):
         texture_point_v=point_v
     )
 
-    _, uv = to_pyvista_mesh(ts, return_uv=True)
+    _, uv = to_pyvista_mesh_and_texture(ts)
     import pandas as pd
 
     unstruct = UnstructuredData(v, e,

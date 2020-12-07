@@ -282,12 +282,13 @@ class WellyToSubsurface:
 
                     w.data['lith_log'] = Curve(np.zeros(n_points - 1))
 
-        df = self.p.df()
-
-        # try:
-        #     df = self.p.df()
-        # except ValueError:
-        #     df = None
+        try:
+            df = self.p.df()
+        except ValueError as e:
+            if 'objects passed' in str(e):
+                df = None
+            else:
+                raise ValueError
 
         print('The following boreholes failed being processed: ', missed_wells)
 
@@ -352,6 +353,6 @@ def read_to_welly(
         read_lith_kwargs,
         read_attributes_kwargs)
 
-    wts = pandas_to_welly(wts, *dfs)
+    wts = pandas_to_welly(wts, **dfs)
 
     return wts

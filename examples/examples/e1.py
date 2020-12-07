@@ -1,8 +1,9 @@
 """
 E1
 ==
-Modify after @Alex Juistel
+authors: Miguel de la Varga and Alexander Juestel
 """
+
 # %%md
 # This example how to read into subsurface structuctures a bunch of differnt
 # data such as:
@@ -30,10 +31,10 @@ import os
 # %%
 
 data_path = os.path.abspath(
-    os.path.dirname(__file__) + '../../../data/Daten_Miguel/')
+    os.path.dirname(__file__) + '../../../data/data_example1/')
 
 # Read original file
-ori_wells = pd.read_csv(data_path + '/wells_ori.csv')
+ori_wells = pd.read_csv(data_path + '/wells.csv')
 
 # Add top and base columns
 well_adding_tops = add_tops_from_base_and_altitude_in_place(
@@ -130,19 +131,19 @@ topo_mesh = subsurface.visualization.to_pyvista_grid(topo_sg, 'topography')
 trisurf_list, mesh_list = create_tri_surf_from_traces_texture(
     data_path + '/Profiles_cropped/Profile_PyVista.shp',
     path_to_texture=[
-        data_path + '/Profiles_cropped/profile001_Gronau_GK100.png',
-        data_path + '/Profiles_cropped/profile002_Muenster_GK200.png',
-        data_path + '/Profiles_cropped/profile003_Lingen_GK200.png',
-        data_path + '/Profiles_cropped/profile004_Bielefeld_GK200.png',
-        data_path + '/Profiles_cropped/profile005_Duesseldorf_GK200.png',
-        data_path + '/Profiles_cropped/profile006_Muenster_GK100.png',
-        data_path + '/Profiles_cropped/profile007_Rheine_GK100.png',
-        data_path + '/Profiles_cropped/profile008_Rheine2_GK100.png',
-        data_path + '/Profiles_cropped/profile009_Bielefeld_GK100.png',
-        data_path + '/Profiles_cropped/profile010_Recklinghausen1_GK100.png',
-        data_path + '/Profiles_cropped/profile011_Recklinghausen2_GK100.png',
-        data_path + '/Profiles_cropped/profile012_Guetersloh_GK100.png',
-        data_path + '/Profiles_cropped/profile013_Guetersloh2_GK100.png',
+        data_path + '/Profiles_cropped/profile001.png',
+        data_path + '/Profiles_cropped/profile002.png',
+        data_path + '/Profiles_cropped/profile003.png',
+        data_path + '/Profiles_cropped/profile004.png',
+        data_path + '/Profiles_cropped/profile005.png',
+        data_path + '/Profiles_cropped/profile006.png',
+        data_path + '/Profiles_cropped/profile007.png',
+        data_path + '/Profiles_cropped/profile008.png',
+        data_path + '/Profiles_cropped/profile009.png',
+        data_path + '/Profiles_cropped/profile010.png',
+        data_path + '/Profiles_cropped/profile011.png',
+        data_path + '/Profiles_cropped/profile012.png',
+        data_path + '/Profiles_cropped/profile013.png',
     ],
     idx=range(13),
     return_mesh=True,
@@ -151,7 +152,7 @@ trisurf_list, mesh_list = create_tri_surf_from_traces_texture(
 
 # %%
 # UnstructuredData
-gempy_us = subsurface.io.read_unstruct(data_path + '/ModelMuenster_meshes.nc')
+gempy_us = subsurface.io.read_unstruct(data_path + '/meshes.nc')
 
 # Element
 trisurf_gempy = subsurface.TriSurf(gempy_us)
@@ -186,15 +187,15 @@ subsurface.visualization.pv_plot(
 
 # %%
 
-base_structs_to_binary_file(data_path + '/le/gempy_base_muenster', gempy_us)
-base_structs_to_binary_file(data_path + '/le/wells_muenster_few', wells_us)
-base_structs_to_binary_file(data_path + '/le/topo_muenster', topo)
-base_structs_to_binary_file(data_path + '/le/collars_muenster',
+base_structs_to_binary_file(data_path + '/le/gempy_base', gempy_us)
+base_structs_to_binary_file(data_path + '/le/wells', wells_us)
+base_structs_to_binary_file(data_path + '/le/topo', topo)
+base_structs_to_binary_file(data_path + '/le/collars',
                             borehole_location_struct)
 
 for e, tri_surf in enumerate(trisurf_list):
-    base_structs_to_binary_file(data_path + f'/le/profile_{e}_mesh_muenster',
+    base_structs_to_binary_file(data_path + f'/le/profile_{e}_mesh',
                                 tri_surf.mesh)
-    base_structs_to_binary_file(data_path + f'/le/profile_{e}_texture_muenster_C',
+    base_structs_to_binary_file(data_path + f'/le/profile_{e}_texture_C',
                                 tri_surf.texture,
                                 order='C')

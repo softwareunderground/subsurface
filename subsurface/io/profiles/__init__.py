@@ -4,7 +4,8 @@ from scipy.spatial.qhull import Delaunay
 from shapely.geometry import LineString
 import geopandas as gpd
 import subsurface
-from subsurface.visualization import to_pyvista_mesh, to_pyvista_line
+from subsurface.visualization import to_pyvista_mesh, to_pyvista_line, \
+    to_pyvista_mesh_and_texture
 import pandas as pd
 
 
@@ -50,7 +51,8 @@ def create_tri_surf_from_traces_texture(
     meshes = None
 
     if return_mesh is True or return_uv is True:
-        meshes_uv = [to_pyvista_mesh(i, return_uv=return_uv) for i in tri_surf_list]
+        meshes_uv = [to_pyvista_mesh_and_texture(i) for i
+                     in tri_surf_list]
         meshes, uv = list(zip(*meshes_uv))
         if return_uv is True:
             tri_surf_list, meshes = create_tri_surf_from_traces_texture(

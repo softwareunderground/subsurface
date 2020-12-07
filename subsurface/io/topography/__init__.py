@@ -1,13 +1,13 @@
-import rasterio
 import numpy as np
 from scipy.spatial.qhull import Delaunay
-
 from subsurface.structs.base_structures import UnstructuredData, StructuredData
 from subsurface.io.mesh.surface_reader import read_2d_mesh
 from subsurface.utils import get_extension
 
 
 def read_structured_topography(path) -> StructuredData:
+    import rasterio
+
     extension = get_extension(path)
     if extension == '.tif':
         dataset = rasterio.open(path)

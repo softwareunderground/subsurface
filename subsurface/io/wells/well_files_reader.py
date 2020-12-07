@@ -214,7 +214,7 @@ def read_borehole_files(
         read_lith_kwargs=None,
         read_attributes_kwargs=None,
 ):
-    data_frames = list()
+    data_frames = dict()
 
     if read_attributes_kwargs is None:
         read_attributes_kwargs = {}
@@ -227,7 +227,7 @@ def read_borehole_files(
 
     if collar_file is not None:
         collars = read_collar(collar_file, **read_collar_kwargs)
-        data_frames.append(collars)
+        data_frames['collar_df'] = collars
 
     if survey_file is not None:
         col_map = read_survey_kwargs.pop('columns_map', None)
@@ -237,12 +237,12 @@ def read_borehole_files(
             index_map=idx_map,
             columns_map=col_map,
             **read_survey_kwargs)
-        data_frames.append(survey)
+        data_frames['survey_df'] = survey
 
     if lith_file is not None:
         col_map = read_lith_kwargs.pop('columns_map', None)
         lith = read_lith(lith_file, columns_map=col_map, **read_lith_kwargs)
-        data_frames.append(lith)
+        data_frames['lith_df'] = lith
 
     # First check if is just a path or list
     if attrib_file is not None:
@@ -263,6 +263,7 @@ def read_borehole_files(
                 **read_attributes_kwargs
             )
             attributes_.append(attributes)
-        data_frames.append(attributes_)
+
+        data_frames['attrib_dfs'] = attributes_
 
     return data_frames

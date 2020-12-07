@@ -12,16 +12,18 @@ except ImportError:
 
 try:
     from pyvistaqt import BackgroundPlotter
+
     background_plotter_imported = True
 except ImportError:
     background_plotter_imported = False
+
 
 def pv_plot(meshes: list,
             image_2d=False,
             ve=None,
             plotter_kwargs: dict = None,
             add_mesh_kwargs: dict = None,
-            background_plotter = False):
+            background_plotter=False):
     """
 
     Args:
@@ -42,7 +44,8 @@ def pv_plot(meshes: list,
         if background_plotter_imported is True:
             p = BackgroundPlotter(**plotter_kwargs, off_screen=image_2d)
         else:
-            raise ImportError('You need to install pyvistaqt for using this plotter.')
+            raise ImportError(
+                'You need to install pyvistaqt for using this plotter.')
     else:
         p = pv.Plotter(**plotter_kwargs, off_screen=image_2d)
 
@@ -86,7 +89,7 @@ def to_pyvista_points(point_set: PointSet):
 
 
 def to_pyvista_mesh(unstructured_element: Union[TriSurf],
-                    return_uv=False) -> Tuple[pv.PolyData, Optional[np.array]]:
+                    ) -> pv.PolyData:
     """Create planar surface PolyData from unstructured element such as TriSurf
 
     Returns:
@@ -100,21 +103,35 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf],
     mesh.cell_arrays.update(unstructured_element.mesh.attributes_to_dict)
     mesh.point_arrays.update(unstructured_element.mesh.points_attributes)
 
-    if unstructured_element.texture is not None:
-        mesh.texture_map_to_plane(
-            inplace=True,
-            origin=unstructured_element.texture_origin,
-            point_u=unstructured_element.texture_point_u,
-            point_v=unstructured_element.texture_point_v
-        )
-        tex = pv.numpy_to_texture(unstructured_element.texture.values)
-        mesh._textures = {0: tex}
-        if return_uv is True:
-            from vtkmodules.util.numpy_support import vtk_to_numpy
-            uv = vtk_to_numpy(mesh.GetPointData().GetTCoords())
-            return mesh, uv
+    return mesh
 
-    return mesh, None
+
+def to_pyvista_mesh_and_texture(
+        unstructured_element: Union[TriSurf],
+        ) -> \
+        Tuple[pv.PolyData, Optional[np.array]]:
+    """Create planar surface PolyData from unstructured element such as TriSurf
+
+    Returns:
+        mesh texture
+    """
+    mesh = to_pyvista_mesh(unstructured_element)
+
+    if unstructured_element.texture is None:
+        raise ValueError('unstructured_element needs texture data to be mapped.')
+
+    mesh.texture_map_to_plane(
+        inplace=True,
+        origin=unstructured_element.texture_origin,
+        point_u=unstructured_element.texture_point_u,
+        point_v=unstructured_element.texture_point_v
+    )
+    tex = pv.numpy_to_texture(unstructured_element.texture.values)
+    mesh._textures = {0: tex}
+
+    from vtkmodules.util.numpy_support import vtk_to_numpy
+    uv = vtk_to_numpy(mesh.GetPointData().GetTCoords())
+    return mesh, uv
 
 
 def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,
@@ -161,8 +178,10 @@ def to_pyvista_tetra(tetra_mesh: TetraMesh):
     return mesh
 
 
-def to_pyvista_grid(structured_grid: StructuredGrid, data_set_name: str = None,
-                    attribute_slice: dict = None):
+def to_pyvista_grid(structured_grid: StructuredGrid,
+                    data_set_name: str = None,
+                    attribute_slice: dict = None,
+                    data_order: str = 'F'):
     """
 
     Args:
@@ -173,25 +192,40 @@ def to_pyvista_grid(structured_grid: StructuredGrid, data_set_name: str = None,
     Returns:
 
     """
+    if attribute_slice is None:
+        attribute_slice = dict()
 
-    ndim = structured_grid.cartesian_dimensions
+    if data_set_name is None:
+        data_set_name = structured_grid.ds.data_array_name
 
-    if ndim == 2:
+    cart_dims = structured_grid.cartesian_dimensions
+    data_dims = structured_grid.ds.data[data_set_name].sel(
+            **attribute_slice
+        ).ndim
+    if cart_dims < data_dims:
+        raise AttributeError('Data dimension and cartesian dimensions must match.'
+                             'Possibly there are not valid dimension name in the'
+                             'xarray.DataArray. These are X Y Z x y z')
+
+    if data_dims == 2:
         meshgrid = structured_grid.meshgrid_2d(data_set_name)
-    elif ndim == 3:
+    elif data_dims == 3:
         meshgrid = structured_grid.meshgrid_3d
     else:
         raise AttributeError('The DataArray does not have valid dimensionality. '
                              'Possibly there are not valid dimension name in the'
-                             'xarray. DataArray. These are X Y Z x y z')
+                             'xarray.DataArray. These are X Y Z x y z')
 
     mesh = pv.StructuredGrid(*meshgrid)
-    update_grid_attribute(mesh, structured_grid, attribute_slice, data_set_name)
+    update_grid_attribute(mesh, structured_grid, data_order,
+                          attribute_slice, data_set_name)
 
     return mesh
 
 
-def update_grid_attribute(mesh, structured_grid, attribute_slice=None,
+def update_grid_attribute(mesh, structured_grid,
+                          data_order='F',
+                          attribute_slice=None,
                           data_set_name=None):
     if attribute_slice is None:
         attribute_slice = dict()
@@ -202,7 +236,7 @@ def update_grid_attribute(mesh, structured_grid, attribute_slice=None,
     mesh.point_arrays.update(
         {data_set_name: structured_grid.ds.data[data_set_name].sel(
             **attribute_slice
-        ).values.ravel('F')})
+        ).values.ravel(data_order)})
 
     return mesh
 

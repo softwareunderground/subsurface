@@ -9,7 +9,7 @@ def test_borehole_location_to_unstruct(data_path):
         data_path+'/borehole/borehole_collar.xlsx', {})
     point_set = PointSet(us)
     s = to_pyvista_points(point_set)
-    pv_plot([s], image_2d=False)
+    pv_plot([s], image_2d=True)
 
 
 def test_generate_tops(data_path):
