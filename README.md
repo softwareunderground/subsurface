@@ -37,7 +37,9 @@ The difference between data levels is **not** which data they stored but which d
 
 ## Installation
 
-The project is in pre-alpha and is not yet ready to be used.
+`pip install subsurface`
+
+Be aware that to read different formats you will require to install manually the specific dependency (e.g. welly to read well data).
 
 ## Changes Log
 
