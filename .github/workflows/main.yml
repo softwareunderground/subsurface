@@ -58,7 +58,7 @@ jobs:
           pip install -r optional_requirements.txt
           pip install -r dev_requirements.txt
           pip install -e .
-      - name: Generate your awesome content
+      - name: Generate Sphinx Docs
         working-directory: docs/
         run: make html
 

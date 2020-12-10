@@ -1,6 +1,6 @@
 segyio
 matplotlib~=3.3.3
-pyvista~=0.27.2
+pyvista~=0.27.3
 xlrd # For reading xlsx
 geopandas~=0.8.1
 rasterio~=1.1.8
