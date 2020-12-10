@@ -43,6 +43,8 @@ jobs:
         source ./gl-ci-helpers/travis/setup_headless_display.sh
     - name: Test with pytest
       run: |
+        git clone --depth 1 git://github.com/pyvista/gl-ci-helpers.git
+        source ./gl-ci-helpers/travis/setup_headless_display.sh
         pip install pytest
         pip install pytest-cov
         pytest
