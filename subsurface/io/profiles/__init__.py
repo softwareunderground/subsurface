@@ -1,18 +1,26 @@
 from typing import Union, List
 import numpy as np
-from scipy.spatial.qhull import Delaunay
-from shapely.geometry import LineString
-import geopandas as gpd
 import subsurface
-from subsurface.visualization import to_pyvista_mesh, to_pyvista_line, \
-    to_pyvista_mesh_and_texture
+from subsurface.visualization import  to_pyvista_line,to_pyvista_mesh_and_texture
 import pandas as pd
 
 
-def create_mesh_from_trace(linestring: LineString,
+def create_mesh_from_trace(linestring,
                            zmax: Union[float, int],
                            zmin: Union[float, int],
                            ):
+    """
+
+    Args:
+        linestring (shapely.geometry.LineString):
+        zmax:
+        zmin:
+
+    Returns:
+
+    """
+    from scipy.spatial.qhull import Delaunay
+
     n = len(list(linestring.coords))
     coords = np.array([[x[0] for x in list(linestring.coords)],
                        [y[1] for y in list(linestring.coords)]]).T
@@ -81,6 +89,8 @@ def base_structs_to_tri_surf(args_list) -> List:
 
 
 def traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx, uv=None):
+    import geopandas as gpd
+
     traces = gpd.read_file(path_to_trace)
     traces = _select_traces_by_index(idx, traces)
 
@@ -118,6 +128,8 @@ def traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx, uv=None):
 
 
 def lineset_from_trace(path_to_trace, idx=None):
+    import geopandas as gpd
+
     traces = gpd.read_file(path_to_trace)
     traces = _select_traces_by_index(idx, traces)
 
