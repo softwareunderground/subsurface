@@ -8,9 +8,13 @@ Getting started
 #
 # This example how to read into subsurface structures a bunch of different
 # data such as:
+#
 # - well data -> from csv all in one single file
+#
 # - topography -> from tif
+#
 # - Cross sections with textures from trace -> shp, png
+#
 # - Exported gempy model from netcdf
 
 
@@ -239,7 +243,7 @@ meshes_list = ([*profiles_mesh_list, *profiles_traces, gempy_mesh,
 # Plot mesh
 
 # %%
-# sphinx_gallery_thumbnail_number = 5
+# sphinx_gallery_thumbnail_number = 6
 ss.visualization.pv_plot(
     meshes_list,
     image_2d=False,

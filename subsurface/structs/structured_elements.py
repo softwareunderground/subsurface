@@ -12,6 +12,7 @@ class OctreeMesh(Common):
     """
     TODO: implement as Dom discussed with data frames to track the levels.
     """
+
     def __init__(self, data: StructuredData):
         raise NotImplementedError
 
@@ -38,7 +39,6 @@ class StructuredGrid():
 
     @property
     def cartesian_dimensions(self):
-        #n = np.isin(self.ds.data.dims, ['X', 'Y', 'Z', 'x', 'y', 'z']).sum()
         return len(self.cartesian_coords_names)
 
     @property
@@ -56,23 +56,22 @@ class StructuredGrid():
         grid_3d = np.meshgrid(*cart_coord, indexing='ij')
         return grid_3d
 
-    def meshgrid_2d(self, attribute:str = None):
+    def meshgrid_2d(self, attribute_name_coord_name: str = None):
         """
 
         Args:
-            attribute_name_coord_name(str): Name of the xarray.Dataset coord that will be used
-             for the z direction. This must be 2d
+            attribute_name_coord_name(str): Name of the xarray.Dataset coord that
+             will be used for the z direction. This must be 2d
 
         Returns:
 
         """
         grid_2d = np.meshgrid(self.coord['x'], self.coord['y'])
-        if attribute is not None:
-            z_coord = self.ds.data[attribute].values.T
+        if attribute_name_coord_name is not None:
+            z_coord = self.ds.data[attribute_name_coord_name].values.T
             if z_coord.ndim != 2:
                 raise AttributeError('The attribute must be a 2D array')
 
             grid_2d.append(z_coord)
 
         return grid_2d
-

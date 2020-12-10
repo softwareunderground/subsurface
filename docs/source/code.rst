@@ -7,18 +7,25 @@ Code
 
 Subsurface Base Structures
 --------------------------
-.. currentmodule:: subsurface.structs.base_structures
+.. currentmodule:: subsurface
 .. autosummary::
     :toctree: Base Structures
     :template: class.rst
 
     UnstructuredData
     StructuredData
+
+
+.. currentmodule:: subsurface.structs.base_structures
+.. autosummary::
+    :toctree: Base Structures
+    :template: class.rst
+
     CommonDataMethods
 
 Unstructured Elements
 ---------------------
-.. currentmodule:: subsurface.structs.unstructured_elements
+.. currentmodule:: subsurface
 .. autosummary::
     :toctree: Unstructured Elements
     :template: class.rst
@@ -31,7 +38,7 @@ Unstructured Elements
 
 Structured Elements
 -------------------
-.. currentmodule:: subsurface.structs.structured_elements
+.. currentmodule:: subsurface
 .. autosummary::
     :toctree: Structured Elements
     :template: class.rst
@@ -41,7 +48,7 @@ Structured Elements
 
 Read Well Data
 --------------
-.. currentmodule:: subsurface.io.wells
+.. currentmodule:: subsurface.io
 .. autosummary::
     :toctree: Read well data
     :template: base.rst
@@ -51,7 +58,7 @@ Read Well Data
 
 Read Topographic Data
 ---------------------
-.. currentmodule:: subsurface.io.topography
+.. currentmodule:: subsurface.io
 .. autosummary::
     :toctree: Read topographic data
     :template: base.rst
@@ -62,7 +69,7 @@ Read Topographic Data
 Read Profiles
 -------------
 
-.. currentmodule:: subsurface.io.profiles
+.. currentmodule:: subsurface.io
 .. autosummary::
     :toctree: Read profiles
     :template: base.rst
@@ -85,7 +92,7 @@ Read Surface
 
 Plot
 ----
-.. currentmodule:: subsurface.visualization.to_pyvista
+.. currentmodule:: subsurface.visualization
 .. autosummary::
     :toctree: Visualization
     :template: base.rst

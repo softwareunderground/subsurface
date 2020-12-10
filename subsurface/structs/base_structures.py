@@ -73,7 +73,8 @@ class UnstructuredData(CommonDataMethods):
 
     Notes:
         Depending on the shape of `edge` the following unstructured elements can
-         be created:
+        be created:
+
         - cells NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -> *Point cloud*.
           E.g. Outcrop scan with lidar
         - cells NDArray[(Any, 2), IntX] -> *Lines*. E.g. Borehole
@@ -82,7 +83,6 @@ class UnstructuredData(CommonDataMethods):
            - -> *tetrahedron*
            - -> *quadrilateral (or tetragon)* UNSUPPORTED?
         - cells NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
-
     """
     data: xr.Dataset
 

@@ -24,7 +24,7 @@ def pv_plot(meshes: list,
             plotter_kwargs: dict = None,
             add_mesh_kwargs: dict = None,
             background_plotter=False):
-    """
+    """Function to plot meshes in vtk using pyvista
 
     Args:
         meshes (List[pv.PolyData]):
