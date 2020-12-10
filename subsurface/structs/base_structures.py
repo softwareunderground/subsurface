@@ -72,14 +72,15 @@ class UnstructuredData(CommonDataMethods):
          arg is specially thought for loading data from disk
 
     Notes:
-        Depending on the shape of `edge` the following unstructured elements can be create:
+        Depending on the shape of `edge` the following unstructured elements can
+         be created:
         - cells NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -> *Point cloud*.
-         E.g. Outcrop scan with lidar
+          E.g. Outcrop scan with lidar
         - cells NDArray[(Any, 2), IntX] -> *Lines*. E.g. Borehole
         - cells NDArray[(Any, 3), IntX] -> *Mesh*. E.g surface-DEM Topography
         - cells NDArray[(Any, 4), IntX]
-            - -> *tetrahedron*
-            - -> *quadrilateral (or tetragon)* UNSUPPORTED?
+           - -> *tetrahedron*
+           - -> *quadrilateral (or tetragon)* UNSUPPORTED?
         - cells NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
 
     """
@@ -287,7 +288,7 @@ class StructuredData(CommonDataMethods):
     Args:
         data (xr.Dataset, xr.DataArray, np.ndarray): object containing
          structured data, i.e. data that can be stored in multidimensional
-          numpy array. The preferred type to pass as data is directly a
+         numpy array. The preferred type to pass as data is directly a
          xr.Dataset to be sure all the attributes are set and named as the user
          wants.
         data_array_name (str): If data is a numpy array or xarray DataArray, data_name
@@ -296,8 +297,7 @@ class StructuredData(CommonDataMethods):
          the xarray dimension. These dimensions are 'x', 'y' and 'z'
 
     Attributes:
-        data (xr.Dataset)
-
+        data (xarray.Dataset)
     """
 
     data: xr.Dataset

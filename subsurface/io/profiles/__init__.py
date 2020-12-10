@@ -117,7 +117,7 @@ def traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx, uv=None):
     return base_args
 
 
-def line_set_from_trace(path_to_trace, idx=None):
+def lineset_from_trace(path_to_trace, idx=None):
     traces = gpd.read_file(path_to_trace)
     traces = _select_traces_by_index(idx, traces)
 

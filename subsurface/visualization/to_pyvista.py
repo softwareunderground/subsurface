@@ -47,7 +47,8 @@ def pv_plot(meshes: list,
             raise ImportError(
                 'You need to install pyvistaqt for using this plotter.')
     else:
-        p = pv.Plotter(**plotter_kwargs, off_screen=image_2d)
+        off_screen = True if image_2d is True else None
+        p = pv.Plotter(**plotter_kwargs, off_screen=off_screen)
 
     if ve is not None:
         p.set_scale(zscale=ve)

@@ -1,6 +1,7 @@
 from subsurface.structs.base_structures import UnstructuredData
 from subsurface.io.wells.welly_reader import read_to_welly
 from subsurface.io.wells.well_files_reader import read_collar
+from subsurface.io.wells.wells_utils import add_tops_from_base_and_altitude_in_place
 
 
 def borehole_location_to_unstruct(collar_file, read_collar_kwargs=None):
@@ -31,32 +32,32 @@ def read_wells_to_unstruct(backend='welly', n_points=1000,
          welly object
 
     Examples:
-        unstructured_data = read_wells_to_unstruct(
-            collar_file=data_path.joinpath('borehole_collar.xlsx'),
-                        read_collar_kwargs={'usecols': [0, 1, 2, 4]},
-                        survey_file=data_path.joinpath('borehole_survey.xlsx'),
-                        read_survey_kwargs={
-                            'columns_map': {'DEPTH': 'md', 'INCLINATION': 'inc',
-                                            'DIRECTION': 'azi'},
-                            'index_map': {'ELV-01': 'foo', 'ELV-02': 'bar'}
-                        },
-                        lith_file=data_path.joinpath('borehole_lith.xlsx'),
-                        read_lith_kwargs={
-                            'index_col': 'SITE_ID',
-                            'columns_map': {'DEPTH_FROM': 'top',
-                                            'DEPTH_TO': 'base',
-                                            'LITHOLOGY': 'component lith',
-                                            'SITE_ID': 'description'}
-                        },
-                        attrib_file=[data_path.joinpath('borehole_assays.xlsx'),
-                                     data_path.joinpath('borehole_density.xlsx')],
-                        read_attributes_kwargs={
-                            'drop_cols': ['TO', 'LITOLOGIA'],
-                            'columns_map': [
-                                {'FROM': 'basis'},
-                                {'DEPTH_TO': 'basis'}
-                            ]
-                        }
+        >>> unstructured_data = read_wells_to_unstruct(
+                collar_file=data_path.joinpath('borehole_collar.xlsx'),
+                read_collar_kwargs={'usecols': [0, 1, 2, 4]},
+                survey_file=data_path.joinpath('borehole_survey.xlsx'),
+                read_survey_kwargs={
+                    'columns_map': {'DEPTH': 'md', 'INCLINATION': 'inc',
+                                    'DIRECTION': 'azi'},
+                    'index_map': {'ELV-01': 'foo', 'ELV-02': 'bar'}
+                },
+                lith_file=data_path.joinpath('borehole_lith.xlsx'),
+                read_lith_kwargs={
+                    'index_col': 'SITE_ID',
+                    'columns_map': {'DEPTH_FROM': 'top',
+                                    'DEPTH_TO': 'base',
+                                    'LITHOLOGY': 'component lith',
+                                    'SITE_ID': 'description'}
+                },
+                attrib_file=[data_path.joinpath('borehole_assays.xlsx'),
+                             data_path.joinpath('borehole_density.xlsx')],
+                read_attributes_kwargs={
+                    'drop_cols': ['TO', 'LITOLOGIA'],
+                    'columns_map': [
+                        {'FROM': 'basis'},
+                        {'DEPTH_TO': 'basis'}
+                    ]
+                }
             )
     """
     if backend == 'welly':

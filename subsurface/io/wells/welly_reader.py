@@ -243,7 +243,7 @@ class WellyToSubsurface:
         missed_wells = []
         for w in self.p.get_wells():
             if w.location.position is None:
-                warnings.warn('At least one of the wells do not have'
+                warnings.warn('At least one of the wells do not have ' 
                               'assigned a survey. Borehole name: ' + w.name)
                 missed_wells.append(w.name)
                 continue

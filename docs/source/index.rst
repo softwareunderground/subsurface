@@ -33,7 +33,6 @@ Contents:
    getting_started/index
    tutorials/index
    examples/index
-   integrations/index
 
 .. toctree::
    :maxdepth: 2

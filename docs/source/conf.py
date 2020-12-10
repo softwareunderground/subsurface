@@ -76,6 +76,7 @@ intersphinx_mapping = {
     'pyvista': ('https://docs.pyvista.org/', None),
     'sphinx': ('http://www.sphinx-doc.org/en/stable', None),
     'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
+    'xarray': ('http://xarray.pydata.org/en/stable/', None)
 }
 
 napoleon_google_docstring = True

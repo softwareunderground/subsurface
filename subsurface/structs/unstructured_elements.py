@@ -70,7 +70,7 @@ class TriSurf(Common):
     Args:
         mesh (UnstructuredData): Base object for unstructured data.
          data.cells  represent the point indices for each triangle
-          in the mesh. Each column corresponds to a triangle edge.
+         in the mesh. Each column corresponds to a triangle edge.
         texture (StructuredData): 2D StructuredData with data to be mapped
          on the mesh
 

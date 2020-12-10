@@ -3,7 +3,7 @@ import pytest
 
 from subsurface import UnstructuredData, TriSurf, StructuredData
 from subsurface.io.profiles import create_mesh_from_trace, \
-    create_tri_surf_from_traces_texture, line_set_from_trace
+    create_tri_surf_from_traces_texture, lineset_from_trace
 from subsurface.visualization import to_pyvista_mesh, pv_plot
 import imageio
 import numpy as np
@@ -82,5 +82,5 @@ def test_tri_surf_from_traces_and_png_uv(data_path):
 
 
 def test_line_set_from_trace(data_path):
-    m = line_set_from_trace(data_path + '/profiles/Traces.shp')
+    m = lineset_from_trace(data_path + '/profiles/Traces.shp')
     pv_plot(m, image_2d=True)

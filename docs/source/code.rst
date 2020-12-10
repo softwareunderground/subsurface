@@ -16,6 +16,73 @@ Subsurface Base Structures
     StructuredData
     CommonDataMethods
 
+Unstructured Elements
+---------------------
+.. currentmodule:: subsurface.structs.unstructured_elements
+.. autosummary::
+    :toctree: Unstructured Elements
+    :template: class.rst
+
+    PointSet
+    LineSet
+    TriSurf
+    TetraMesh
+
+
+Structured Elements
+-------------------
+.. currentmodule:: subsurface.structs.structured_elements
+.. autosummary::
+    :toctree: Structured Elements
+    :template: class.rst
+
+    StructuredGrid
+    StructuredSurface
+
+Read Well Data
+--------------
+.. currentmodule:: subsurface.io.wells
+.. autosummary::
+    :toctree: Read well data
+    :template: base.rst
+
+    read_wells_to_unstruct
+    borehole_location_to_unstruct
+
+Read Topographic Data
+---------------------
+.. currentmodule:: subsurface.io.topography
+.. autosummary::
+    :toctree: Read topographic data
+    :template: base.rst
+
+    read_unstructured_topography
+    read_structured_topography
+
+Read Profiles
+-------------
+
+.. currentmodule:: subsurface.io.profiles
+.. autosummary::
+    :toctree: Read profiles
+    :template: base.rst
+
+    lineset_from_trace
+    create_mesh_from_trace
+    create_tri_surf_from_traces_texture
+
+Read Surface
+------------
+.. currentmodule:: subsurface.io.mesh.surface_reader
+.. autosummary::
+    :toctree: Surface reader
+    :template: base.rst
+
+    csv_to_unstruct_args
+    dxf_to_vertex_edges
+    get_attributes_from_df
+    get_cells_from_df
+
 Plot
 ----
 .. currentmodule:: subsurface.visualization.to_pyvista
@@ -24,4 +91,9 @@ Plot
     :template: base.rst
 
     pv_plot
+    to_pyvista_points
+    to_pyvista_line
     to_pyvista_mesh
+    to_pyvista_mesh_and_texture
+    to_pyvista_tetra
+    update_grid_attribute
