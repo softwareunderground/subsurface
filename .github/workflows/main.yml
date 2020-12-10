@@ -30,18 +30,9 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.7'
-    - run: |
-        PIP_CACHE_PATH=$(pip cache dir)
-        echo "##vso[task.setvariable variable=PIP_CACHE_PATH]$PIP_CACHE_PATH"
-        PYVISTA_VERSION= '2.7.3'
-        echo "##vso[task.setvariable variable=PYVISTA_VERSION]$PYVISTA_VERSION"
-        displayName: 'Store pip cache path and pyvista version'
 
     - name: Cache pip
       uses: actions/cache@v2
-      with:
-        key: 'PIP_WHEEL_CACHE | $(Agent.OS) | "$(python.version)" | "$(PYVISTA_VERSION)"'
-        path: $(PIP_CACHE_PATH)
 
     - uses: actions/checkout@v2
     - name: Install dependencies
