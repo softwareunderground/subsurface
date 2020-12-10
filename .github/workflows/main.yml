@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: subsurface CI
 
 # Controls when the action will run. 
 on:
@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  pytest:
     env:
       DISPLAY: ':99.0'
       PYVISTA_OFF_SCREEN: 'True'
@@ -37,10 +37,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r optional_requirements.txt
-    - name: Set up headless disply
-      run: |
-        git clone --depth 1 git://github.com/pyvista/gl-ci-helpers.git
-        source ./gl-ci-helpers/travis/setup_headless_display.sh
     - name: Test with pytest
       run: |
         git clone --depth 1 git://github.com/pyvista/gl-ci-helpers.git
