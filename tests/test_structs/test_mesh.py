@@ -14,7 +14,7 @@ def test_point_set_init(point_set):
     # Test check of number of cells:
     data = UnstructuredData(
         vertex=np.random.rand(n, 3),
-        edges=np.random.rand(n, 3),
+        cells=np.random.rand(n, 3),
         attributes=pd.DataFrame({'foo': np.arange(n)})
     )
 
@@ -30,7 +30,7 @@ def test_tri_surf_init(tri_surf):
 
     # Test Fixture
     mesh = tri_surf
-    assert mesh.data.n_points == 5
+    assert mesh.mesh.n_points == 5
     assert mesh.n_triangles == 3
 
 
