@@ -1,7 +1,7 @@
 from typing import Optional, List
 
 from subsurface.interfaces.to_rex.common import file_header_size, encode
-from subsurface.interfaces.to_rex.data_struct import RexMesh, RexMaterial
+from subsurface.interfaces.to_rex.data_struct import RexMesh, RexMaterial, RexLineSet
 from subsurface.interfaces.to_rex.material_encoder import material_encode
 from subsurface.interfaces.to_rex.mesh_encoder import mesh_encode
 

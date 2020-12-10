@@ -1,3 +1,5 @@
+import os
+
 import pytest
 import numpy as np
 
@@ -29,9 +31,9 @@ def test_w_mesh_data_type(unstruct, save=False):
 
     rex_bytes = numpy_to_rex([rex_mesh])
     if save:
-        write_rex_file(rex_bytes, './solutions/one_mesh')
+        write_rex_file(rex_bytes, os.path.abspath(os.path.dirname(__file__)+ '/solutions/one_mesh'))
 
-    right_solution = read_rex_file('./solutions/one_mesh.rex')
+    right_solution = read_rex_file(os.path.abspath(os.path.dirname(__file__)+'/solutions/one_mesh.rex'))
     assert rex_bytes == right_solution
 
 
@@ -60,9 +62,9 @@ def test_w_mesh_data_type_two_sides(unstruct, save=True):
     rex_bytes = numpy_to_rex(rex_meshes=[rex_mesh, rex_mesh_backside])
 
     if save:
-        write_rex_file(rex_bytes, './solutions/one_mesh_backside')
+        write_rex_file(rex_bytes, os.path.abspath(os.path.dirname(__file__)+'./solutions/one_mesh_backside'))
 
-    right_solution = read_rex_file('./solutions/one_mesh_backside.rex')
+    right_solution = read_rex_file(os.path.abspath(os.path.dirname(__file__)+'./solutions/one_mesh_backside.rex'))
     assert rex_bytes == right_solution
 
 
@@ -70,7 +72,7 @@ def test_w_material_data_type(unstruct, save=True):
     rex_material = RexMaterial(1, 0, 0, 1, 0, 0, 1, 0, 0)
     rex_bytes = numpy_to_rex(rex_material=[rex_material])
     if save:
-        write_rex_file(rex_bytes, './solutions/one_material')
+        write_rex_file(rex_bytes, os.path.abspath(os.path.dirname(__file__)+'/solutions/one_material'))
 
-    right_solution = read_rex_file('./solutions/one_material.rex')
+    right_solution = read_rex_file(os.path.abspath(os.path.dirname(__file__)+'/solutions/one_material.rex'))
     assert rex_bytes == right_solution

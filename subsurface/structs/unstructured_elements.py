@@ -70,7 +70,7 @@ class TriSurf(Common):
     Args:
         mesh (UnstructuredData): Base object for unstructured data.
          data.cells  represent the point indices for each triangle
-          in the mesh. Each column corresponds to a triangle edge.
+         in the mesh. Each column corresponds to a triangle edge.
         texture (StructuredData): 2D StructuredData with data to be mapped
          on the mesh
 
@@ -135,14 +135,15 @@ class LineSet(Common):
                  radius: float = 1
                  ):
 
-        if data.cells is None:
+        self.data = data
+        self.radius = radius
+
+        if data.cells is None or data.cells.shape[1] < 2:
             self.generate_default_cells()
 
         elif data.cells.shape[1] != 2:
             raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 2), IntX]')
-        self.data = data
-        self.radius = radius
 
         # TODO: these must all be integer dtypes!
 
@@ -173,7 +174,9 @@ class TetraMesh(Common):
 
     This dataset defines cell connectivity between points to create
     tetrahedrons. This is volumetric.
+
     Args:
+
         data (UnstructuredData): Base object for unstructured data.
 
          data.cells represent the indices of the points for each

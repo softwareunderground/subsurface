@@ -61,7 +61,7 @@ class RexMaterial:
     ks_texture_ID: int = 9223372036854775807
     kd_texture_ID: int = 9223372036854775807
 
-    ns: float = 0.1,  # specular exponent
+    ns: float = 0.1  # specular exponent
     alpha: float = 1
 
 
