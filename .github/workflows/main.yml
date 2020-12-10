@@ -37,10 +37,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r optional_requirements.txt
-    - name: Test with pytest
+    - name: Set up headless disply
       run: |
         git clone --depth 1 git://github.com/pyvista/gl-ci-helpers.git
         source ./gl-ci-helpers/travis/setup_headless_display.sh
+    - name: Test with pytest
+      run: |
         pip install pytest
         pip install pytest-cov
         pytest
