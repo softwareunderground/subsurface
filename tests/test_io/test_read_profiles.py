@@ -39,7 +39,7 @@ def test_read_trace_to_unstruct(data_path):
 
     s = to_pyvista_mesh(ts)
 
-    pv_plot([s], image_2d=False)
+    pv_plot([s], image_2d=True)
 
 
 def test_tri_surf_from_traces_and_png(data_path):

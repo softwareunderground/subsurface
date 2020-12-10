@@ -54,7 +54,7 @@ def get_images() -> List[str]:
 def test_converted_to_structured_data(get_structured_data):
     for x in get_structured_data:
         assert isinstance(x, StructuredData)
-        x.data['data'].plot()
+        x.default_dataset.plot()
         plt.show()
 
 
@@ -76,8 +76,7 @@ def test_pyvista_grid(get_structured_data, get_images):
         print(surf)
 
         surf.texture_map_to_plane(inplace=True)
-
-        surf.plot(texture=tex)
+        pv_plot([surf], image_2d=True)
 
         # use Trisurf with Structured Data for texture and UnstructuredData for geometry
 
@@ -102,7 +101,7 @@ def test_read_segy_to_struct_data_imageio(get_structured_data, get_images):
         )
 
         s = to_pyvista_mesh(ts)
-        pv_plot([s], image_2d=False)
+        pv_plot([s], image_2d=True)
 
 
 def test_plot_segy_as_struct_data_with_coords_dict(get_structured_data, get_images):
@@ -127,4 +126,4 @@ def test_plot_segy_as_struct_data_with_coords_dict(get_structured_data, get_imag
         )
 
         s = to_pyvista_mesh(ts)
-        pv_plot([s], image_2d=False)
+        pv_plot([s], image_2d=True)

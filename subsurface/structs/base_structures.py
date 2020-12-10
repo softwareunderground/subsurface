@@ -348,6 +348,10 @@ class StructuredData(CommonDataMethods):
     def values(self):
         return self.data[self.data_array_name].values
 
+    @property
+    def default_dataset(self):
+        return self.data[self.data_array_name]
+
     def to_binary(self, order='F'):
         bytearray_le = self._to_bytearray(order)
         header = self._set_binary_header()
