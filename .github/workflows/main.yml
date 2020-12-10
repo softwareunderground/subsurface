@@ -20,10 +20,16 @@ jobs:
     env:
       DISPLAY: ':99.0'
       PYVISTA_OFF_SCREEN: 'True'
+      ALLOW_PLOTTING: true
+      SHELLOPTS: 'errexit:pipefail'
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     steps:
+    - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
     - run: |
         PIP_CACHE_PATH=$(pip cache dir)
         echo "##vso[task.setvariable variable=PIP_CACHE_PATH]$PIP_CACHE_PATH"
@@ -38,10 +44,6 @@ jobs:
         path: $(PIP_CACHE_PATH)
 
     - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.7'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
