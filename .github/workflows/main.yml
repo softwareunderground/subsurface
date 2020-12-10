@@ -31,9 +31,6 @@ jobs:
       with:
         python-version: '3.7'
 
-    - name: Cache pip
-      uses: actions/cache@v2
-
     - uses: actions/checkout@v2
     - name: Install dependencies
       run: |
