@@ -171,3 +171,65 @@ ss.visualization.pv_plot(
     ve=5
 )
 
+
+# %%md
+# Read Profiles
+# -------------
+
+# %%
+
+profiles_traces = ss.io.profiles.lineset_from_trace(
+    data_path + '/Profiles_cropped/Profile_PyVista.shp',
+    idx=range(13)
+)
+
+# %%
+profiles_trisurf_list, profiles_mesh_list = ss.io.profiles.create_tri_surf_from_traces_texture(
+    data_path + '/Profiles_cropped/Profile_PyVista.shp',
+    path_to_texture=[
+        data_path + '/Profiles_cropped/profile001.png',
+        data_path + '/Profiles_cropped/profile002.png',
+        data_path + '/Profiles_cropped/profile003.png',
+        data_path + '/Profiles_cropped/profile004.png',
+        data_path + '/Profiles_cropped/profile005.png',
+        data_path + '/Profiles_cropped/profile006.png',
+        data_path + '/Profiles_cropped/profile007.png',
+        data_path + '/Profiles_cropped/profile008.png',
+        data_path + '/Profiles_cropped/profile009.png',
+        data_path + '/Profiles_cropped/profile010.png',
+        data_path + '/Profiles_cropped/profile011.png',
+        data_path + '/Profiles_cropped/profile012.png',
+        data_path + '/Profiles_cropped/profile013.png',
+    ],
+    idx=range(13),
+    return_mesh=True,
+    return_uv=True
+)
+
+# %%
+ss.visualization.pv_plot(
+    profiles_mesh_list,
+    image_2d=False,
+    ve=5
+)
+
+# %%md
+# GemPy Mesh
+# ----------
+
+# %%
+# UnstructuredData
+gempy_unstructured_data = ss.io.read_unstruct(data_path + '/meshes.nc')
+
+# Element
+trisurf_gempy = ss.TriSurf(gempy_unstructured_data)
+
+# Pyvista mesh
+gempy_mesh = ss.visualization.to_pyvista_mesh(trisurf_gempy)
+
+# %%
+ss.visualization.pv_plot(
+    [gempy_mesh],
+    image_2d=False,
+    ve=5
+)
