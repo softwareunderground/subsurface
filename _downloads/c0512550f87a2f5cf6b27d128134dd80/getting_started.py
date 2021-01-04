@@ -87,3 +87,40 @@ wells_unstructured_data = ss.io.read_wells_to_unstruct(
 
 # %%
 wells_unstructured_data
+
+# %%md
+# From UnstructuredData we can create geometric objects such a lines, points, meshes,
+# etc. In the case of boreholes `subsurface.LineSet` is the most suitable geometric
+# representation.
+
+# %%
+wells_element = ss.LineSet(wells_unstructured_data)
+
+# %%
+# All elements in subsurface have their direct link to a pyvista mesh. This
+# transformation can be done by the functions `to_pyvista_...`.
+
+# Pyvista mesh
+wells_mesh = ss.visualization.to_pyvista_line(wells_element, radius=50)
+
+# Plotting
+ss.visualization.pv_plot(
+    [wells_mesh],
+    image_2d=False,
+    ve=5
+)
+
+# %%md
+# We can do the same for point data, for example the borehole location.
+
+# %%
+
+# UnstructuredData
+borehole_location_struct = ss.io.borehole_location_to_unstruct(
+    collar_file=data_path + '/wells.csv',
+    read_collar_kwargs={
+        'usecols': ['Index', 'X', 'Y', 'Altitude'],
+        'header': 0
+    }
+)
+borehole_location_struct
