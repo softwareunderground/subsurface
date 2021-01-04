@@ -1,4 +1,3 @@
-#import shapely as shapely
 from typing import List, Union
 
 import pytest
@@ -55,7 +54,7 @@ def test_converted_to_structured_data(get_structured_data):
     for x in get_structured_data:
         assert isinstance(x, StructuredData)
         x.default_dataset.plot()
-        plt.show()
+        plt.show(block=False)
 
 
 def test_pyvista_grid(get_structured_data, get_images):

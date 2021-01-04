@@ -17,13 +17,13 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   pytest:
+    runs-on: ubuntu-latest
     env:
       DISPLAY: ':99.0'
       PYVISTA_OFF_SCREEN: 'True'
       ALLOW_PLOTTING: true
       SHELLOPTS: 'errexit:pipefail'
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
 
     steps:
     - name: Set up Python
@@ -52,8 +52,21 @@ jobs:
         pytest
   docs:
     runs-on: ubuntu-latest
+    env:
+      DISPLAY: ':99.0'
+      PYVISTA_OFF_SCREEN: 'True'
+      ALLOW_PLOTTING: true
+      SHELLOPTS: 'errexit:pipefail'
+
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Headless Display
+        run: |
+          sudo apt-get install python-qt4 libgl1-mesa-glx
+          sudo apt-get install -y xvfb
+          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+          sleep 3
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
