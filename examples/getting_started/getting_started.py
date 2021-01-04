@@ -240,18 +240,39 @@ ss.visualization.pv_plot(
 # -----------------
 
 # %%
-meshes_list = ([*profiles_mesh_list, *profiles_traces, gempy_mesh,
-                topo_mesh, borehole_loc_mesh, wells_mesh
-                ])
+# meshes_list = ([*profiles_mesh_list, *profiles_traces, gempy_mesh,
+#                 topo_mesh, borehole_loc_mesh, wells_mesh
+#                 ])
 # %%
 # Plot mesh
 
 # %%
 # sphinx_gallery_thumbnail_number = 6
-ss.visualization.pv_plot(
-    meshes_list,
-    image_2d=False,
-    ve=5
-)
+# ss.visualization.pv_plot(
+#     meshes_list,
+#     image_2d=False,
+#     ve=5
+# )
 
+# %%
+# Export to binary
+# ----------------
+
+# %%
+ss.interfaces.base_structs_to_binary_file(data_path + '/gempy_base',
+                                          gempy_unstructured_data)
+ss.interfaces.base_structs_to_binary_file(data_path + '/wells',
+                                          wells_unstructured_data)
+ss.interfaces.base_structs_to_binary_file(data_path + '/topo',
+                                          topo_structured_data)
+ss.interfaces.base_structs_to_binary_file(data_path + '/collars',
+                                          borehole_location_struct)
+
+for e, tri_surf in enumerate(profiles_trisurf_list):
+    ss.interfaces.base_structs_to_binary_file(data_path + f'/profile_{e}_mesh',
+                                              tri_surf.mesh)
+    ss.interfaces.base_structs_to_binary_file(
+        data_path + f'/profile_{e}_texture_C',
+        tri_surf.texture,
+        order='C')
 
