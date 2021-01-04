@@ -266,13 +266,13 @@ def test_excel_to_subsurface():
                                              'SITE_ID': 'description'})
 
     s.plot()
-    plt.show()
+    plt.show(block=False)
 
 
 def test_striplog():
     s = Striplog.from_csv(data_path.joinpath('striplog_integration/alpha_strip.tops'))
     s.plot()
-    plt.show()
+    plt.show(block=False)
     print(s)
 
 
@@ -289,7 +289,7 @@ def test_striplog_2():
                                              'SITE_ID': 'description'})
 
     s.plot()
-    plt.show()
+    plt.show(block=False)
     print(s)
 
 
