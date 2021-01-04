@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>subsurface.structs.unstructured_elements &#8212; subsurface 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-rendered-html.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for subsurface.structs.unstructured_elements</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;These are classes that are point based and managed via Pandas DataFrames.</span>
+
+<span class="sd">All data is tracked within internal DataFrames that we validate.</span>
+
+<span class="sd">This is for holding general &quot;mesh&quot;-like data structures: point clouds,</span>
+<span class="sd">linesets, triangulated surfaces, tetrahedralized volumes, octree grids, etc.</span>
+
+<span class="sd">Regularly gridded dataset will NOT be managed by these classes but will use</span>
+<span class="sd">``xarray`` under the hood.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">.base_structures</span> <span class="kn">import</span> <span class="n">UnstructuredData</span><span class="p">,</span> <span class="n">StructuredData</span>
+<span class="kn">from</span> <span class="nn">.common</span> <span class="kn">import</span> <span class="n">Common</span>
+<span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">PyVistaImportError</span>
+
+
+<div class="viewcode-block" id="PointSet"><a class="viewcode-back" href="../../../Unstructured%20Elements/subsurface.PointSet.html#subsurface.PointSet">[docs]</a><span class="k">class</span> <span class="nc">PointSet</span><span class="p">(</span><span class="n">Common</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class for pointset based data structures.</span>
+
+<span class="sd">    This class uses UnstructuredData.vertex as cloud of points and the</span>
+<span class="sd">    associated attributes. UnstructuredData.cells are not used.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (UnstructuredData): Base object for unstructured data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PointSet.__init__"><a class="viewcode-back" href="../../../Unstructured%20Elements/subsurface.PointSet.html#subsurface.PointSet.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">data</span><span class="p">:</span> <span class="n">UnstructuredData</span>
+                 <span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;data.cells must be of the format&#39;</span>
+                                 <span class="s1">&#39;NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX]&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fetch the points/vertices dataframe.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vertex</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vertex</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">point_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fetch the scalar data associated with the vertices.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">attributes</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">point_data_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fetch the point data as a dictionary of numpy arrays.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">attributes_to_dict</span></div>
+
+
+<div class="viewcode-block" id="TriSurf"><a class="viewcode-back" href="../../../Unstructured%20Elements/subsurface.TriSurf.html#subsurface.TriSurf">[docs]</a><span class="k">class</span> <span class="nc">TriSurf</span><span class="p">(</span><span class="n">Common</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;PointSet with triangle cells.</span>
+
+<span class="sd">    This dataset defines cell/element connectivity between points to create</span>
+<span class="sd">    triangulated surface.</span>
+
+<span class="sd">    Uses UnstructuredData.cells for the face connectivity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mesh (UnstructuredData): Base object for unstructured data.</span>
+<span class="sd">         data.cells  represent the point indices for each triangle</span>
+<span class="sd">         in the mesh. Each column corresponds to a triangle edge.</span>
+<span class="sd">        texture (StructuredData): 2D StructuredData with data to be mapped</span>
+<span class="sd">         on the mesh</span>
+
+<span class="sd">    Keyword Args:</span>
+<span class="sd">        texture_origin : tuple(float)</span>
+<span class="sd">            Length 3 iterable of floats defining the XYZ coordinates of the</span>
+<span class="sd">            BOTTOM LEFT CORNER of the plane</span>
+
+<span class="sd">        texture_point_u : tuple(float)</span>
+<span class="sd">            Length 3 iterable of floats defining the XYZ coordinates of the</span>
+<span class="sd">            BOTTOM RIGHT CORNER of the plane</span>
+
+<span class="sd">        texture_point_v : tuple(float)</span>
+<span class="sd">            Length 3 iterable of floats defining the XYZ coordinates of the</span>
+<span class="sd">            TOP LEFT CORNER of the plane</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TriSurf.__init__"><a class="viewcode-back" href="../../../Unstructured%20Elements/subsurface.TriSurf.html#subsurface.TriSurf.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">mesh</span><span class="p">:</span> <span class="n">UnstructuredData</span><span class="p">,</span>
+                 <span class="n">texture</span><span class="p">:</span> <span class="n">StructuredData</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span>
+                 <span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">mesh</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;data.cells must be of the format&#39;</span>
+                                 <span class="s1">&#39;NDArray[(Any, 3), IntX]&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span> <span class="o">=</span> <span class="n">mesh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">texture_origin</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;texture_origin&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">texture_point_u</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;texture_point_u&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">texture_point_v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;texture_point_v&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">triangles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">cells</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_triangles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="LineSet"><a class="viewcode-back" href="../../../Unstructured%20Elements/subsurface.LineSet.html#subsurface.LineSet">[docs]</a><span class="k">class</span> <span class="nc">LineSet</span><span class="p">(</span><span class="n">Common</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;PointSet with line cells.</span>
+
+<span class="sd">    This dataset defines cell connectivity between points to create</span>
+<span class="sd">    line segments.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (UnstructuredData): Base object for unstructured data.</span>
+
+<span class="sd">         data.cells represent the indices of the end points for each</span>
+<span class="sd">         line segment in the mesh. Each column corresponds to a line</span>
+<span class="sd">         segment. If not specified, the vertices are connected in order,</span>
+<span class="sd">         equivalent to ``segments=[[0, 1], [1, 2], [2, 3], ...]``</span>
+
+<span class="sd">        radius (float): Thickness of the line set</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LineSet.__init__"><a class="viewcode-back" href="../../../Unstructured%20Elements/subsurface.LineSet.html#subsurface.LineSet.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">data</span><span class="p">:</span> <span class="n">UnstructuredData</span><span class="p">,</span>
+                 <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span>
+                 <span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">cells</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generate_default_cells</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;data.cells must be of the format&#39;</span>
+                                 <span class="s1">&#39;NDArray[(Any, 2), IntX]&#39;</span><span class="p">)</span></div>
+
+        <span class="c1"># TODO: these must all be integer dtypes!</span>
+
+<div class="viewcode-block" id="LineSet.generate_default_cells"><a class="viewcode-back" href="../../../Unstructured%20Elements/subsurface.LineSet.html#subsurface.LineSet.generate_default_cells">[docs]</a>    <span class="k">def</span> <span class="nf">generate_default_cells</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Method to generate cells based on the order of the vertex. This</span>
+<span class="sd">        only works if the LineSet only represents one single line</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray[(Any, 2), IntX]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">n_points</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int_</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">n_points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cells</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cells</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">segments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cells</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TetraMesh"><a class="viewcode-back" href="../../../Unstructured%20Elements/subsurface.TetraMesh.html#subsurface.TetraMesh">[docs]</a><span class="k">class</span> <span class="nc">TetraMesh</span><span class="p">(</span><span class="n">Common</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;PointSet with tetrahedron cells.</span>
+
+<span class="sd">    This dataset defines cell connectivity between points to create</span>
+<span class="sd">    tetrahedrons. This is volumetric.</span>
+
+<span class="sd">    Args:</span>
+
+<span class="sd">        data (UnstructuredData): Base object for unstructured data.</span>
+
+<span class="sd">         data.cells represent the indices of the points for each</span>
+<span class="sd">         tetrahedron in the mesh. Each column corresponds to a tetrahedron.</span>
+<span class="sd">         Every tetrahedron is defined by the four points; where the first</span>
+<span class="sd">         three (0,1,2) are the base of the tetrahedron which, using the</span>
+<span class="sd">         right hand rule, forms a triangle whose normal points in the</span>
+<span class="sd">         direction of the fourth point.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TetraMesh.__init__"><a class="viewcode-back" href="../../../Unstructured%20Elements/subsurface.TetraMesh.html#subsurface.TetraMesh.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">data</span><span class="p">:</span> <span class="n">UnstructuredData</span>
+                 <span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;data.cells must be of the format&#39;</span>
+                                 <span class="s1">&#39;NDArray[(Any, 4), IntX]&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tetrahedrals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cells</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_tetrahedrals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tetrahedrals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/./logos/subsurface_place_holder.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">subsurface</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=softwareunderground&repo=subsurface&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/softwareunderground/subsurface">
+    <img
+        alt="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+        src="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019-2021, The subsurface developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

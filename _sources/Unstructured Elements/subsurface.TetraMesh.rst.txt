@@ -1,0 +1,39 @@
+﻿subsurface.TetraMesh
+====================
+
+.. currentmodule:: subsurface
+
+
+.. autoclass:: TetraMesh
+   :no-undoc-members:
+
+   
+   .. rubric:: Examples using TetraMesh
+   .. include:: ../gen_modules/backreferences/subsurface.TetraMesh.examples
+   .. raw:: html
+
+       <div class="sphx-glr-clear"></div>
+   
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+   
+      ~TetraMesh.__init__
+      ~TetraMesh.to_pyvista
+      ~TetraMesh.validate
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TetraMesh.n_tetrahedrals
+      ~TetraMesh.tetrahedrals
+   
+   
+
+

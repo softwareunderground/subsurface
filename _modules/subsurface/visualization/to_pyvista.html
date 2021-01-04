@@ -11,11 +11,11 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-rendered-html.css" />
     <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
    
@@ -35,7 +35,7 @@
           <div class="body" role="main">
             
   <h1>Source code for subsurface.visualization.to_pyvista</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">subsurface.structs</span> <span class="kn">import</span> <span class="n">PointSet</span><span class="p">,</span> <span class="n">TriSurf</span><span class="p">,</span> <span class="n">LineSet</span><span class="p">,</span> <span class="n">TetraMesh</span><span class="p">,</span> <span class="n">StructuredGrid</span>
 <span class="kn">from</span> <span class="nn">subsurface.structs.common</span> <span class="kn">import</span> <span class="n">Common</span>
@@ -47,30 +47,53 @@
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">()</span>
 
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyvistaqt</span> <span class="kn">import</span> <span class="n">BackgroundPlotter</span>
 
-<div class="viewcode-block" id="pv_plot"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.to_pyvista.pv_plot.html#subsurface.visualization.to_pyvista.pv_plot">[docs]</a><span class="k">def</span> <span class="nf">pv_plot</span><span class="p">(</span><span class="n">meshes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="n">background_plotter_imported</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">background_plotter_imported</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="pv_plot"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.pv_plot.html#subsurface.visualization.pv_plot">[docs]</a><span class="k">def</span> <span class="nf">pv_plot</span><span class="p">(</span><span class="n">meshes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
             <span class="n">image_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">texture</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">ve</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">plotter_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">add_mesh_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+            <span class="n">add_mesh_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">background_plotter</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function to plot meshes in vtk using pyvista</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        meshes (List[pv.PolyData]):</span>
 <span class="sd">        image_2d (bool): If True convert plot to matplotlib imshow. This helps for visualizing</span>
 <span class="sd">         the plot in IDEs</span>
+<span class="sd">        ve (float): vertical exaggeration</span>
 <span class="sd">        plotter_kwargs (dict): pyvista.Plotter kwargs</span>
 <span class="sd">        add_mesh_kwargs (dict): pyvista.add_mesh kwargs</span>
-
+<span class="sd">        background_plotter (bool): if true and pyvistaqt installed use pyvista</span>
+<span class="sd">         backgroung plotter.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">plotter_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span> <span class="k">if</span> <span class="n">plotter_kwargs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">plotter_kwargs</span>
     <span class="n">add_mesh_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span> <span class="k">if</span> <span class="n">add_mesh_kwargs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">add_mesh_kwargs</span>
 
-    <span class="n">p</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plotter</span><span class="p">(</span><span class="o">**</span><span class="n">plotter_kwargs</span><span class="p">,</span> <span class="n">off_screen</span><span class="o">=</span><span class="n">image_2d</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">background_plotter</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">background_plotter_imported</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">BackgroundPlotter</span><span class="p">(</span><span class="o">**</span><span class="n">plotter_kwargs</span><span class="p">,</span> <span class="n">off_screen</span><span class="o">=</span><span class="n">image_2d</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="s1">&#39;You need to install pyvistaqt for using this plotter.&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">off_screen</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">image_2d</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plotter</span><span class="p">(</span><span class="o">**</span><span class="n">plotter_kwargs</span><span class="p">,</span> <span class="n">off_screen</span><span class="o">=</span><span class="n">off_screen</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ve</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">set_scale</span><span class="p">(</span><span class="n">zscale</span><span class="o">=</span><span class="n">ve</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">meshes</span><span class="p">:</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="o">**</span><span class="n">add_mesh_kwargs</span><span class="p">)</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">show_bounds</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">image_2d</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -83,12 +106,12 @@
         <span class="n">img</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">screenshot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">fig</span></div>
 
 
-<span class="k">def</span> <span class="nf">to_pyvista_points</span><span class="p">(</span><span class="n">point_set</span><span class="p">:</span> <span class="n">PointSet</span><span class="p">):</span>
+<div class="viewcode-block" id="to_pyvista_points"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.to_pyvista_points.html#subsurface.visualization.to_pyvista_points">[docs]</a><span class="k">def</span> <span class="nf">to_pyvista_points</span><span class="p">(</span><span class="n">point_set</span><span class="p">:</span> <span class="n">PointSet</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create pyvista.PolyData from PointSet</span>
 
 <span class="sd">    Args:</span>
@@ -100,11 +123,15 @@
     <span class="n">poly</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">(</span><span class="n">point_set</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vertex</span><span class="p">)</span>
     <span class="n">poly</span><span class="o">.</span><span class="n">point_arrays</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">point_set</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">attributes_to_dict</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">poly</span>
+    <span class="k">return</span> <span class="n">poly</span></div>
 
 
-<div class="viewcode-block" id="to_pyvista_mesh"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.to_pyvista.to_pyvista_mesh.html#subsurface.visualization.to_pyvista.to_pyvista_mesh">[docs]</a><span class="k">def</span> <span class="nf">to_pyvista_mesh</span><span class="p">(</span><span class="n">unstructured_element</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TriSurf</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">:</span>
+<div class="viewcode-block" id="to_pyvista_mesh"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.to_pyvista_mesh.html#subsurface.visualization.to_pyvista_mesh">[docs]</a><span class="k">def</span> <span class="nf">to_pyvista_mesh</span><span class="p">(</span><span class="n">unstructured_element</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TriSurf</span><span class="p">],</span>
+                    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Create planar surface PolyData from unstructured element such as TriSurf</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        mesh texture</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nve</span> <span class="o">=</span> <span class="n">unstructured_element</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">n_vertex_per_element</span>
     <span class="n">vertices</span> <span class="o">=</span> <span class="n">unstructured_element</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">vertex</span>
@@ -114,20 +141,38 @@
     <span class="n">mesh</span><span class="o">.</span><span class="n">cell_arrays</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">attributes_to_dict</span><span class="p">)</span>
     <span class="n">mesh</span><span class="o">.</span><span class="n">point_arrays</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">points_attributes</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">mesh</span><span class="o">.</span><span class="n">texture_map_to_plane</span><span class="p">(</span>
-            <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">origin</span><span class="o">=</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture_origin</span><span class="p">,</span>
-            <span class="n">point_u</span><span class="o">=</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture_point_u</span><span class="p">,</span>
-            <span class="n">point_v</span><span class="o">=</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture_point_v</span>
-        <span class="p">)</span>
-        <span class="n">tex</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">numpy_to_texture</span><span class="p">(</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-        <span class="n">mesh</span><span class="o">.</span><span class="n">_textures</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">tex</span><span class="p">}</span>
-
     <span class="k">return</span> <span class="n">mesh</span></div>
 
 
-<span class="k">def</span> <span class="nf">to_pyvista_line</span><span class="p">(</span><span class="n">line_set</span><span class="p">:</span> <span class="n">LineSet</span><span class="p">,</span> <span class="n">as_tube</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="to_pyvista_mesh_and_texture"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.to_pyvista_mesh_and_texture.html#subsurface.visualization.to_pyvista_mesh_and_texture">[docs]</a><span class="k">def</span> <span class="nf">to_pyvista_mesh_and_texture</span><span class="p">(</span>
+        <span class="n">unstructured_element</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TriSurf</span><span class="p">],</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> \
+        <span class="n">Tuple</span><span class="p">[</span><span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Create planar surface PolyData from unstructured element such as TriSurf</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        mesh texture</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mesh</span> <span class="o">=</span> <span class="n">to_pyvista_mesh</span><span class="p">(</span><span class="n">unstructured_element</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unstructured_element needs texture data to be mapped.&#39;</span><span class="p">)</span>
+
+    <span class="n">mesh</span><span class="o">.</span><span class="n">texture_map_to_plane</span><span class="p">(</span>
+        <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">origin</span><span class="o">=</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture_origin</span><span class="p">,</span>
+        <span class="n">point_u</span><span class="o">=</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture_point_u</span><span class="p">,</span>
+        <span class="n">point_v</span><span class="o">=</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture_point_v</span>
+    <span class="p">)</span>
+    <span class="n">tex</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">numpy_to_texture</span><span class="p">(</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">mesh</span><span class="o">.</span><span class="n">_textures</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">tex</span><span class="p">}</span>
+
+    <span class="kn">from</span> <span class="nn">vtkmodules.util.numpy_support</span> <span class="kn">import</span> <span class="n">vtk_to_numpy</span>
+    <span class="n">uv</span> <span class="o">=</span> <span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">GetPointData</span><span class="p">()</span><span class="o">.</span><span class="n">GetTCoords</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">mesh</span><span class="p">,</span> <span class="n">uv</span></div>
+
+
+<div class="viewcode-block" id="to_pyvista_line"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.to_pyvista_line.html#subsurface.visualization.to_pyvista_line">[docs]</a><span class="k">def</span> <span class="nf">to_pyvista_line</span><span class="p">(</span><span class="n">line_set</span><span class="p">:</span> <span class="n">LineSet</span><span class="p">,</span> <span class="n">as_tube</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">spline</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_interp_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create pyvista PolyData for 1D lines</span>
 
@@ -156,10 +201,10 @@
     <span class="k">if</span> <span class="n">as_tube</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">mesh</span><span class="o">.</span><span class="n">tube</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">mesh</span>
+        <span class="k">return</span> <span class="n">mesh</span></div>
 
 
-<span class="k">def</span> <span class="nf">to_pyvista_tetra</span><span class="p">(</span><span class="n">tetra_mesh</span><span class="p">:</span> <span class="n">TetraMesh</span><span class="p">):</span>
+<div class="viewcode-block" id="to_pyvista_tetra"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.to_pyvista_tetra.html#subsurface.visualization.to_pyvista_tetra">[docs]</a><span class="k">def</span> <span class="nf">to_pyvista_tetra</span><span class="p">(</span><span class="n">tetra_mesh</span><span class="p">:</span> <span class="n">TetraMesh</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create pyvista.UnstructuredGrid&quot;&quot;&quot;</span>
     <span class="n">vertices</span> <span class="o">=</span> <span class="n">tetra_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vertex</span>
     <span class="n">tets</span> <span class="o">=</span> <span class="n">tetra_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cells</span>
@@ -168,24 +213,70 @@
     <span class="n">ctypes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">vtk</span><span class="o">.</span><span class="n">VTK_TETRA</span><span class="p">,</span> <span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
     <span class="n">mesh</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">UnstructuredGrid</span><span class="p">(</span><span class="n">cells</span><span class="p">,</span> <span class="n">ctypes</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>
     <span class="n">mesh</span><span class="o">.</span><span class="n">cell_arrays</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tetra_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">attributes_to_dict</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">mesh</span>
+    <span class="k">return</span> <span class="n">mesh</span></div>
 
 
-<span class="k">def</span> <span class="nf">to_pyvista_grid</span><span class="p">(</span><span class="n">structured_grid</span><span class="p">:</span> <span class="n">StructuredGrid</span><span class="p">,</span> <span class="n">attribute</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="n">ndim</span> <span class="o">=</span> <span class="n">_n_cartesian_coord</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="n">structured_grid</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">to_pyvista_grid</span><span class="p">(</span><span class="n">structured_grid</span><span class="p">:</span> <span class="n">StructuredGrid</span><span class="p">,</span>
+                    <span class="n">data_set_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">attribute_slice</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">data_order</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;F&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">meshgrid</span> <span class="o">=</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">meshgrid_2d</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<span class="sd">    Args:</span>
+<span class="sd">        structured_grid:</span>
+<span class="sd">        data_set_name:</span>
+<span class="sd">        attribute_slice: dictionary to select which 3D array will be displayed as color</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">attribute_slice</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">attribute_slice</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">data_set_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data_set_name</span> <span class="o">=</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">data_array_name</span>
+
+    <span class="n">cart_dims</span> <span class="o">=</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">cartesian_dimensions</span>
+    <span class="n">data_dims</span> <span class="o">=</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">data_set_name</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span>
+            <span class="o">**</span><span class="n">attribute_slice</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">if</span> <span class="n">cart_dims</span> <span class="o">&lt;</span> <span class="n">data_dims</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Data dimension and cartesian dimensions must match.&#39;</span>
+                             <span class="s1">&#39;Possibly there are not valid dimension name in the&#39;</span>
+                             <span class="s1">&#39;xarray.DataArray. These are X Y Z x y z&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">data_dims</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">meshgrid</span> <span class="o">=</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">meshgrid_2d</span><span class="p">(</span><span class="n">data_set_name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">data_dims</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
         <span class="n">meshgrid</span> <span class="o">=</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">meshgrid_3d</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;The DataArray does not have valid dimensionality.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;The DataArray does not have valid dimensionality. &#39;</span>
+                             <span class="s1">&#39;Possibly there are not valid dimension name in the&#39;</span>
+                             <span class="s1">&#39;xarray.DataArray. These are X Y Z x y z&#39;</span><span class="p">)</span>
 
     <span class="n">mesh</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">StructuredGrid</span><span class="p">(</span><span class="o">*</span><span class="n">meshgrid</span><span class="p">)</span>
-    <span class="n">mesh</span><span class="o">.</span><span class="n">point_arrays</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-        <span class="p">{</span><span class="n">attribute</span><span class="p">:</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">ravel</span><span class="p">()})</span>
+    <span class="n">update_grid_attribute</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">structured_grid</span><span class="p">,</span> <span class="n">data_order</span><span class="p">,</span>
+                          <span class="n">attribute_slice</span><span class="p">,</span> <span class="n">data_set_name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">mesh</span>
+
+
+<div class="viewcode-block" id="update_grid_attribute"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.update_grid_attribute.html#subsurface.visualization.update_grid_attribute">[docs]</a><span class="k">def</span> <span class="nf">update_grid_attribute</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">structured_grid</span><span class="p">,</span>
+                          <span class="n">data_order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">,</span>
+                          <span class="n">attribute_slice</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">data_set_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">attribute_slice</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">attribute_slice</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">data_set_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data_set_name</span> <span class="o">=</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">data_array_name</span>
+
+    <span class="n">mesh</span><span class="o">.</span><span class="n">point_arrays</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">data_set_name</span><span class="p">:</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">data_set_name</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span>
+            <span class="o">**</span><span class="n">attribute_slice</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">data_order</span><span class="p">)})</span>
+
+    <span class="k">return</span> <span class="n">mesh</span></div>
 
 
 <span class="k">def</span> <span class="nf">_n_cartesian_coord</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="n">structured_grid</span><span class="p">):</span>
@@ -242,9 +333,9 @@
 </ul>
 <p class="caption"><span class="caption-text">Getting started</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Placeholder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Placeholder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Placeholder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Reference</span></p>
 <ul>
@@ -283,10 +374,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019-2020, The subsurface developers.
+      &copy;2019-2021, The subsurface developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

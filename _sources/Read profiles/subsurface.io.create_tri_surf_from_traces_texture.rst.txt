@@ -1,0 +1,11 @@
+﻿subsurface.io.create\_tri\_surf\_from\_traces\_texture
+======================================================
+
+.. currentmodule:: subsurface.io
+
+.. autofunction:: create_tri_surf_from_traces_texture
+
+.. include:: ../gen_modules/backreferences/subsurface.io.create_tri_surf_from_traces_texture.examples
+.. raw:: html
+
+   <div class="sphx-glr-clear"></div>

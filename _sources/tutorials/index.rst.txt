@@ -4,8 +4,8 @@
 
 .. _sphx_glr_tutorials:
 
-Placeholder
-===========
+Tutorials
+=========
 
 .. raw:: html
 

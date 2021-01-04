@@ -11,11 +11,11 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-rendered-html.css" />
     <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
    
@@ -38,15 +38,15 @@
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 
 
-<div class="viewcode-block" id="CommonDataMethods"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.structs.base_structures.CommonDataMethods.html#subsurface.structs.base_structures.CommonDataMethods">[docs]</a><span class="k">class</span> <span class="nc">CommonDataMethods</span><span class="p">:</span>
-<div class="viewcode-block" id="CommonDataMethods.__init__"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.structs.base_structures.CommonDataMethods.html#subsurface.structs.base_structures.CommonDataMethods.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CommonDataMethods"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.structs.base_structures.CommonDataMethods.html#subsurface.CommonDataMethods">[docs]</a><span class="k">class</span> <span class="nc">CommonDataMethods</span><span class="p">:</span>
+<div class="viewcode-block" id="CommonDataMethods.__init__"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.structs.base_structures.CommonDataMethods.html#subsurface.CommonDataMethods.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span></div>
 
     <span class="nd">@staticmethod</span>
@@ -65,7 +65,7 @@
             <span class="n">name</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_path_and_name</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CommonDataMethods.replace_outliers"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.structs.base_structures.CommonDataMethods.html#subsurface.structs.base_structures.CommonDataMethods.replace_outliers">[docs]</a>    <span class="k">def</span> <span class="nf">replace_outliers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">perc</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">replace_for</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CommonDataMethods.replace_outliers"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.structs.base_structures.CommonDataMethods.html#subsurface.CommonDataMethods.replace_outliers">[docs]</a>    <span class="k">def</span> <span class="nf">replace_outliers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">perc</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">replace_for</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;@Edoardo Guerreiro https://stackoverflow.com/questions/60816533/</span>
 <span class="sd">         is-there-a-built-in-function-in-xarray-to-remove-outliers-from-a-dataset&quot;&quot;&quot;</span>
 
@@ -90,7 +90,7 @@
         <span class="k">return</span> <span class="n">data</span></div></div>
 
 
-<div class="viewcode-block" id="UnstructuredData"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.structs.base_structures.UnstructuredData.html#subsurface.structs.base_structures.UnstructuredData">[docs]</a><span class="nd">@dataclass</span>
+<div class="viewcode-block" id="UnstructuredData"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">UnstructuredData</span><span class="p">(</span><span class="n">CommonDataMethods</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Primary structure definition for unstructured data</span>
 
@@ -99,8 +99,9 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        vertex (np.ndarray): NDArray[(Any, 3), FloatX]: XYZ point data</span>
-<span class="sd">        cells (np.ndarray): NDArray[(Any, ...), IntX]: Combination of vertex that create</span>
-<span class="sd">            different geometric elements</span>
+<span class="sd">        cells (np.ndarray, str[&#39;points&#39;, &#39;line&#39;]): NDArray[(Any, ...), IntX]:</span>
+<span class="sd">         Combination of vertex that create different geometric elements. If</span>
+<span class="sd">         str use default values for either points or lines</span>
 <span class="sd">        attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number associated to an element</span>
 <span class="sd">        points_attributes (pd.DataFrame): NDArray[(Any, ...), FloatX]: Number</span>
 <span class="sd">         associated to points</span>
@@ -108,21 +109,22 @@
 <span class="sd">         arg is specially thought for loading data from disk</span>
 
 <span class="sd">    Notes:</span>
-<span class="sd">        Depending on the shape of `edge` the following unstructured elements can be create:</span>
+<span class="sd">        Depending on the shape of `edge` the following unstructured elements can</span>
+<span class="sd">        be created:</span>
+
 <span class="sd">        - cells NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -&gt; *Point cloud*.</span>
-<span class="sd">         E.g. Outcrop scan with lidar</span>
+<span class="sd">          E.g. Outcrop scan with lidar</span>
 <span class="sd">        - cells NDArray[(Any, 2), IntX] -&gt; *Lines*. E.g. Borehole</span>
 <span class="sd">        - cells NDArray[(Any, 3), IntX] -&gt; *Mesh*. E.g surface-DEM Topography</span>
 <span class="sd">        - cells NDArray[(Any, 4), IntX]</span>
-<span class="sd">            - -&gt; *tetrahedron*</span>
-<span class="sd">            - -&gt; *quadrilateral (or tetragon)* UNSUPPORTED?</span>
+<span class="sd">           - -&gt; *tetrahedron*</span>
+<span class="sd">           - -&gt; *quadrilateral (or tetragon)* UNSUPPORTED?</span>
 <span class="sd">        - cells NDArray[(Any, 8), IntX] -&gt; *Hexahedron: Unstructured grid/Prisms*</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span>
 
-<div class="viewcode-block" id="UnstructuredData.__init__"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.structs.base_structures.UnstructuredData.html#subsurface.structs.base_structures.UnstructuredData.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">cells</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="UnstructuredData.__init__"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">cells</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">attributes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
                      <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">points_attributes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -153,8 +155,14 @@
         <span class="n">v</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">,</span> <span class="s1">&#39;XYZ&#39;</span><span class="p">],</span>
                          <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;XYZ&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">]})</span>
         <span class="n">xarray_dict</span><span class="p">[</span><span class="s1">&#39;vertex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
-        <span class="k">if</span> <span class="n">edges</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">edges</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">edges</span> <span class="o">==</span> <span class="s1">&#39;points&#39;</span><span class="p">:</span>
             <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">elif</span> <span class="n">edges</span> <span class="o">==</span> <span class="s1">&#39;lines&#39;</span><span class="p">:</span>
+            <span class="n">n_vertex</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_vertex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int_</span><span class="p">)</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_vertex</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int_</span><span class="p">)</span>
+            <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
         <span class="n">e</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="s1">&#39;nodes&#39;</span><span class="p">])</span>
         <span class="n">xarray_dict</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
         <span class="n">xarray_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_attributes_data_array</span><span class="p">(</span>
@@ -283,8 +291,8 @@
         <span class="n">c</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;v&#39;</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="n">e</span><span class="p">})</span>
         <span class="k">return</span> <span class="n">c</span>
 
-    <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">bytearray_le</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_bytearray</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">):</span>
+        <span class="n">bytearray_le</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_bytearray</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_binary_header</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">bytearray_le</span><span class="p">,</span> <span class="n">header</span>
@@ -300,45 +308,48 @@
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">header</span>
 
-    <span class="k">def</span> <span class="nf">_to_bytearray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">vertex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
-        <span class="n">cells</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
-        <span class="n">cell_attribute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
-        <span class="n">vertex_attribute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_attributes</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_to_bytearray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+        <span class="n">vertex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+        <span class="n">cells</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+        <span class="n">cell_attribute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+        <span class="n">vertex_attribute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_attributes</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(</span>
+            <span class="n">order</span><span class="p">)</span>
         <span class="n">bytearray_le</span> <span class="o">=</span> <span class="n">vertex</span> <span class="o">+</span> <span class="n">cells</span> <span class="o">+</span> <span class="n">cell_attribute</span> <span class="o">+</span> <span class="n">vertex_attribute</span>
         <span class="k">return</span> <span class="n">bytearray_le</span></div>
 
 
-<div class="viewcode-block" id="StructuredData"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.structs.base_structures.StructuredData.html#subsurface.structs.base_structures.StructuredData">[docs]</a><span class="nd">@dataclass</span>
+<div class="viewcode-block" id="StructuredData"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.StructuredData.html#subsurface.StructuredData">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">StructuredData</span><span class="p">(</span><span class="n">CommonDataMethods</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Primary structure definition for structured data</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        data (xr.Dataset, xr.DataArray, np.ndarray): object containing</span>
 <span class="sd">         structured data, i.e. data that can be stored in multidimensional</span>
-<span class="sd">          numpy array. The preferred type to pass as data is directly a</span>
+<span class="sd">         numpy array. The preferred type to pass as data is directly a</span>
 <span class="sd">         xr.Dataset to be sure all the attributes are set and named as the user</span>
 <span class="sd">         wants.</span>
-<span class="sd">        data_name (str): If data is a numpy array or xarray DataArray, data_name</span>
+<span class="sd">        data_array_name (str): If data is a numpy array or xarray DataArray, data_name</span>
 <span class="sd">         provides the name for the xarray data variable</span>
 <span class="sd">        coords (dict): If data is a numpy array coords provides the values for</span>
 <span class="sd">         the xarray dimension. These dimensions are &#39;x&#39;, &#39;y&#39; and &#39;z&#39;</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        data (xr.Dataset)</span>
-
+<span class="sd">        data (xarray.Dataset)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span>
 
-<div class="viewcode-block" id="StructuredData.__init__"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.structs.base_structures.StructuredData.html#subsurface.structs.base_structures.StructuredData.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="StructuredData.__init__"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.StructuredData.html#subsurface.StructuredData.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">]],</span>
-            <span class="n">data_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">,</span>
+                        <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">]],</span>
+            <span class="n">data_array_name</span><span class="o">=</span><span class="s1">&#39;data_array&#39;</span><span class="p">,</span>
             <span class="n">coords</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">coords_names</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_name</span> <span class="o">=</span> <span class="n">data_name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_array_name</span> <span class="o">=</span> <span class="n">data_array_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coord_names</span> <span class="o">=</span> <span class="n">coords_names</span>
 
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
@@ -349,18 +360,22 @@
                 <span class="n">coords</span><span class="o">=</span><span class="n">coords</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="n">data_name</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="n">data_array_name</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span>
-                    <span class="p">{</span><span class="n">data_name</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">)},</span>
-                    <span class="n">coords</span><span class="o">=</span><span class="n">coords</span>
-                <span class="p">)</span>
-            <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span>
-                    <span class="p">{</span><span class="n">data_name</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">)},</span>
-                    <span class="n">coords</span><span class="o">=</span><span class="n">coords</span>
-                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">coords_names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">coord_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">coord_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">coord_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;dim&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">ndim</span><span class="p">)]</span>
+
+            <span class="c1"># if they are more than 3 we do not know the dimension name but it should</span>
+            <span class="c1"># valid:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span>
+                <span class="p">{</span><span class="n">data_array_name</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coord_names</span><span class="p">,</span> <span class="n">data</span><span class="p">)},</span>
+                <span class="n">coords</span><span class="o">=</span><span class="n">coords</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
                 <span class="s1">&#39;data must be either xarray.Dataset, xarray.DataArray,&#39;</span>
@@ -368,10 +383,14 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_name</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_array_name</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-    <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">bytearray_le</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_bytearray</span><span class="p">()</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">default_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_array_name</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">):</span>
+        <span class="n">bytearray_le</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_bytearray</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_binary_header</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">bytearray_le</span><span class="p">,</span> <span class="n">header</span>
@@ -382,8 +401,8 @@
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">header</span>
 
-    <span class="k">def</span> <span class="nf">_to_bytearray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_to_bytearray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="n">bytearray_le</span> <span class="o">=</span> <span class="n">data</span>
         <span class="k">return</span> <span class="n">bytearray_le</span></div>
 </pre></div>
@@ -436,9 +455,9 @@
 </ul>
 <p class="caption"><span class="caption-text">Getting started</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Placeholder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Placeholder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Placeholder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Reference</span></p>
 <ul>
@@ -477,10 +496,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019-2020, The subsurface developers.
+      &copy;2019-2021, The subsurface developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

@@ -1,0 +1,32 @@
+﻿subsurface.StructuredSurface
+============================
+
+.. currentmodule:: subsurface
+
+
+.. autoclass:: StructuredSurface
+   :no-undoc-members:
+
+   
+   .. rubric:: Examples using StructuredSurface
+   .. include:: ../gen_modules/backreferences/subsurface.StructuredSurface.examples
+   .. raw:: html
+
+       <div class="sphx-glr-clear"></div>
+   
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+   
+      ~StructuredSurface.__init__
+      ~StructuredSurface.to_pyvista
+      ~StructuredSurface.validate
+   
+   
+
+   
+   
+   
+
+

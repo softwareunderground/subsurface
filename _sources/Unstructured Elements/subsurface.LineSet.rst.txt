@@ -1,0 +1,40 @@
+﻿subsurface.LineSet
+==================
+
+.. currentmodule:: subsurface
+
+
+.. autoclass:: LineSet
+   :no-undoc-members:
+
+   
+   .. rubric:: Examples using LineSet
+   .. include:: ../gen_modules/backreferences/subsurface.LineSet.examples
+   .. raw:: html
+
+       <div class="sphx-glr-clear"></div>
+   
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+   
+      ~LineSet.__init__
+      ~LineSet.generate_default_cells
+      ~LineSet.to_pyvista
+      ~LineSet.validate
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LineSet.n_segments
+      ~LineSet.segments
+   
+   
+
+

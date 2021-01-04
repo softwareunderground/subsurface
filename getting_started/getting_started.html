@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Getting started &#8212; subsurface 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorials" href="../tutorials/index.html" />
+    <link rel="prev" title="Getting Started" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-getting-started-getting-started-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="getting-started">
+<span id="sphx-glr-getting-started-getting-started-py"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>Authors: Miguel de la Varga and Alexander Juestel</p>
+<p>This example how to read into subsurface structures a bunch of different
+data such as:</p>
+<ul class="simple">
+<li><p>well data -&gt; from csv all in one single file</p></li>
+<li><p>topography -&gt; from tif</p></li>
+<li><p>Cross sections with textures from trace -&gt; shp, png</p></li>
+<li><p>Exported gempy model from netcdf</p></li>
+</ul>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">subsurface</span> <span class="k">as</span> <span class="nn">ss</span>
+<span class="kn">import</span> <span class="nn">pooch</span>
+</pre></div>
+</div>
+<div class="section" id="read-wells">
+<h2>Read wells:<a class="headerlink" href="#read-wells" title="Permalink to this headline">¶</a></h2>
+<p>We can read well data - using welly as backend. First we need to have the
+data in the right format for digesting.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pulling data example</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_file</span></a> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
+    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/cgre-aachen/gempy_data/raw/master/&quot;</span>
+        <span class="s2">&quot;data/subsurface/example1.zip&quot;</span><span class="p">,</span>
+    <span class="n">known_hash</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_file</span></a><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<a href="https://docs.python.org/3/library/shutil.html#shutil.unpack_archive" title="shutil.unpack_archive" class="sphx-glr-backref-module-shutil sphx-glr-backref-type-py-function"><span class="n">shutil</span><span class="o">.</span><span class="n">unpack_archive</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_file</span></a><span class="p">,</span> <span class="n">extract_dir</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_file</span></a><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+
+<span class="c1"># Read original file</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ori_wells</span></a> <span class="o">=</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv" title="pandas.read_csv" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-function"><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add top and base columns</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_fixed</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">wells</span><span class="o">.</span><span class="n">add_tops_from_base_and_altitude_in_place</span><span class="p">(</span>
+    <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ori_wells</span></a><span class="p">,</span>
+    <span class="s1">&#39;Index&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Z&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Altitude&#39;</span>
+<span class="p">)</span>
+
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_fixed</span></a><span class="p">[</span><span class="s1">&#39;md&#39;</span><span class="p">]</span> <span class="o">=</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_fixed</span></a><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv" title="pandas.DataFrame.to_csv" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method"><span class="n">wells_fixed</span><span class="o">.</span><span class="n">to_csv</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">)</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_fixed</span></a>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Downloading data from &#39;https://github.com/cgre-aachen/gempy_data/raw/master/data/subsurface/example1.zip&#39; to file &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip&#39;.
+SHA256 hash of downloaded file: fb79a63eeb874cf0cdca557106c62c67eace23811db5935e57c3448fed7f8978
+Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>Unnamed: 0.1</th>
+      <th>Unnamed: 0.1.1</th>
+      <th>Index</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th>Altitude</th>
+      <th>Depth</th>
+      <th>formation</th>
+      <th>base</th>
+      <th>top</th>
+      <th>_top_abs</th>
+      <th>md</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>GD0001</td>
+      <td>32428405.75</td>
+      <td>5784686.57</td>
+      <td>131.8</td>
+      <td>132.0</td>
+      <td>59.0</td>
+      <td>Quaternary</td>
+      <td>0.2</td>
+      <td>0.0</td>
+      <td>132.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>GD0001</td>
+      <td>32428405.75</td>
+      <td>5784686.57</td>
+      <td>119.2</td>
+      <td>132.0</td>
+      <td>59.0</td>
+      <td>MittlererBuntsandsteinGP</td>
+      <td>12.8</td>
+      <td>0.2</td>
+      <td>132.2</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>GD0001</td>
+      <td>32428405.75</td>
+      <td>5784686.57</td>
+      <td>86.8</td>
+      <td>132.0</td>
+      <td>59.0</td>
+      <td>Zechstein</td>
+      <td>45.2</td>
+      <td>12.8</td>
+      <td>144.8</td>
+      <td>12.8</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>GD0001</td>
+      <td>32428405.75</td>
+      <td>5784686.57</td>
+      <td>84.0</td>
+      <td>132.0</td>
+      <td>59.0</td>
+      <td>UntererKeuperGP</td>
+      <td>48.0</td>
+      <td>45.2</td>
+      <td>177.2</td>
+      <td>45.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>GD0001</td>
+      <td>32428405.75</td>
+      <td>5784686.57</td>
+      <td>73.0</td>
+      <td>132.0</td>
+      <td>59.0</td>
+      <td>UnterJura</td>
+      <td>59.0</td>
+      <td>48.0</td>
+      <td>180.0</td>
+      <td>48.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2793</th>
+      <td>2793</td>
+      <td>2793</td>
+      <td>2860</td>
+      <td>GD1145</td>
+      <td>32416535.22</td>
+      <td>5771551.96</td>
+      <td>-1910.0</td>
+      <td>50.0</td>
+      <td>2007.0</td>
+      <td>BochumFM</td>
+      <td>1960.0</td>
+      <td>1810.0</td>
+      <td>1860.0</td>
+      <td>1810.0</td>
+    </tr>
+    <tr>
+      <th>2794</th>
+      <td>2794</td>
+      <td>2794</td>
+      <td>2861</td>
+      <td>GD1145</td>
+      <td>32416535.22</td>
+      <td>5771551.96</td>
+      <td>-1957.0</td>
+      <td>50.0</td>
+      <td>2007.0</td>
+      <td>Carboniferous</td>
+      <td>2007.0</td>
+      <td>1960.0</td>
+      <td>2010.0</td>
+      <td>1960.0</td>
+    </tr>
+    <tr>
+      <th>2795</th>
+      <td>2795</td>
+      <td>2795</td>
+      <td>2862</td>
+      <td>GD1146</td>
+      <td>32407713.16</td>
+      <td>5742143.75</td>
+      <td>59.5</td>
+      <td>60.0</td>
+      <td>1135.0</td>
+      <td>Quaternary</td>
+      <td>0.5</td>
+      <td>0.0</td>
+      <td>60.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2796</th>
+      <td>2796</td>
+      <td>2796</td>
+      <td>2863</td>
+      <td>GD1146</td>
+      <td>32407713.16</td>
+      <td>5742143.75</td>
+      <td>-865.0</td>
+      <td>60.0</td>
+      <td>1135.0</td>
+      <td>UnterSantonium</td>
+      <td>925.0</td>
+      <td>0.5</td>
+      <td>60.5</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <th>2797</th>
+      <td>2797</td>
+      <td>2797</td>
+      <td>2864</td>
+      <td>GD1146</td>
+      <td>32407713.16</td>
+      <td>5742143.75</td>
+      <td>-1075.0</td>
+      <td>60.0</td>
+      <td>1135.0</td>
+      <td>UnterTuronium</td>
+      <td>1135.0</td>
+      <td>925.0</td>
+      <td>985.0</td>
+      <td>925.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>2798 rows × 14 columns</p>
+</div>
+</div>
+<br />
+<br /><p>Now we can read the csv files into subsurface.UnstructuredData</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_unstructured_data</span></a> <span class="o">=</span> <a href="../Read well data/subsurface.io.read_wells_to_unstruct.html#subsurface.io.read_wells_to_unstruct" title="subsurface.io.read_wells_to_unstruct" class="sphx-glr-backref-module-subsurface-io sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_wells_to_unstruct</span></a><span class="p">(</span>
+    <span class="n">collar_file</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">,</span>
+    <span class="n">read_collar_kwargs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;usecols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;Altitude&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="n">survey_file</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">,</span>
+    <span class="n">read_survey_kwargs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;index_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Index&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;usecols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;md&#39;</span><span class="p">]</span>  <span class="c1"># if incl and azi not given -&gt; well vertical</span>
+    <span class="p">},</span>
+    <span class="n">lith_file</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">,</span>
+    <span class="n">read_lith_kwargs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;index_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Index&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;usecols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span> <span class="s1">&#39;formation&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;columns_map&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;top&#39;</span><span class="p">:</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;formation&#39;</span><span class="p">:</span> <span class="s1">&#39;component lith&#39;</span><span class="p">,</span>
+                        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/subsurface/subsurface/subsurface/io/wells/well_files_reader.py:113: UserWarning: inc and/or azi columns are not present in the file. The boreholes will be straight.
+  warnings.warn(&#39;inc and/or azi columns are not present in the file.&#39;
+The following striplog failed being processed:  [&#39;GD0041&#39;, &#39;GD0080&#39;, &#39;GD0092&#39;, &#39;GD0136&#39;, &#39;GD0211&#39;, &#39;GD0225&#39;, &#39;GD0235&#39;, &#39;GD0236&#39;, &#39;GD0304&#39;, &#39;GD0305&#39;, &#39;GD0308&#39;, &#39;GD0377&#39;, &#39;GD0399&#39;, &#39;GD0419&#39;, &#39;GD0439&#39;, &#39;GD0464&#39;, &#39;GD0487&#39;, &#39;GD0504&#39;, &#39;GD0505&#39;, &#39;GD0526&#39;, &#39;GD0529&#39;, &#39;GD0597&#39;, &#39;GD0611&#39;, &#39;GD0622&#39;, &#39;GD0632&#39;, &#39;GD0733&#39;, &#39;GD0760&#39;, &#39;GD0937&#39;, &#39;GD0942&#39;, &#39;GD0981&#39;, &#39;GD1016&#39;]
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0464
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0211
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0760
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD1016
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0305
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0041
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0981
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0308
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0733
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0136
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0377
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0632
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0942
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0504
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0597
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0529
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0304
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0092
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0419
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0505
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0526
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0399
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0439
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0487
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0225
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0611
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0236
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0937
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0080
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0235
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0622
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+The following boreholes failed being processed:  [&#39;GD0464&#39;, &#39;GD0211&#39;, &#39;GD0760&#39;, &#39;GD1016&#39;, &#39;GD0305&#39;, &#39;GD0041&#39;, &#39;GD0981&#39;, &#39;GD0308&#39;, &#39;GD0733&#39;, &#39;GD0136&#39;, &#39;GD0377&#39;, &#39;GD0632&#39;, &#39;GD0942&#39;, &#39;GD0504&#39;, &#39;GD0597&#39;, &#39;GD0529&#39;, &#39;GD0304&#39;, &#39;GD0092&#39;, &#39;GD0419&#39;, &#39;GD0505&#39;, &#39;GD0526&#39;, &#39;GD0399&#39;, &#39;GD0439&#39;, &#39;GD0487&#39;, &#39;GD0225&#39;, &#39;GD0611&#39;, &#39;GD0236&#39;, &#39;GD0937&#39;, &#39;GD0080&#39;, &#39;GD0235&#39;, &#39;GD0622&#39;, &#39;GD0464&#39;, &#39;GD0211&#39;, &#39;GD0622&#39;, &#39;GD0419&#39;, &#39;GD0760&#39;, &#39;GD1016&#39;, &#39;GD0439&#39;, &#39;GD0305&#39;, &#39;GD0041&#39;, &#39;GD0981&#39;, &#39;GD0308&#39;, &#39;GD0733&#39;, &#39;GD0136&#39;, &#39;GD0377&#39;, &#39;GD0632&#39;, &#39;GD0942&#39;, &#39;GD0504&#39;, &#39;GD0597&#39;, &#39;GD0529&#39;, &#39;GD0304&#39;, &#39;GD0092&#39;, &#39;GD0505&#39;, &#39;GD0526&#39;, &#39;GD0487&#39;, &#39;GD0399&#39;, &#39;GD0225&#39;, &#39;GD0611&#39;, &#39;GD0937&#39;, &#39;GD0236&#39;, &#39;GD0080&#39;, &#39;GD0235&#39;]
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  27.668 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-getting-started-getting-started-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/c0512550f87a2f5cf6b27d128134dd80/getting_started.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">getting_started.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/b1702212ee04f26b3df920305792c9bb/getting_started.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">getting_started.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/./logos/subsurface_place_holder.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">subsurface</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=softwareunderground&repo=subsurface&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/softwareunderground/subsurface">
+    <img
+        alt="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+        src="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting started</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code.html">Code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Getting Started</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Getting Started</a></li>
+      <li>Next: <a href="../tutorials/index.html" title="next chapter">Tutorials</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019-2021, The subsurface developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/getting_started/getting_started.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,11 @@
+﻿subsurface.io.mesh.surface\_reader.csv\_to\_unstruct\_args
+==========================================================
+
+.. currentmodule:: subsurface.io.mesh.surface_reader
+
+.. autofunction:: csv_to_unstruct_args
+
+.. include:: ../gen_modules/backreferences/subsurface.io.mesh.surface_reader.csv_to_unstruct_args.examples
+.. raw:: html
+
+   <div class="sphx-glr-clear"></div>

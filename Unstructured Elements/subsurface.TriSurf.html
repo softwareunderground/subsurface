@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>subsurface.TriSurf &#8212; subsurface 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="subsurface.TetraMesh" href="subsurface.TetraMesh.html" />
+    <link rel="prev" title="subsurface.LineSet" href="subsurface.LineSet.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="subsurface-trisurf">
+<h1>subsurface.TriSurf<a class="headerlink" href="#subsurface-trisurf" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="subsurface.TriSurf">
+<em class="property">class </em><code class="sig-prename descclassname">subsurface.</code><code class="sig-name descname">TriSurf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mesh</span><span class="p">:</span> <span class="n">subsurface.structs.base_structures.UnstructuredData</span></em>, <em class="sig-param"><span class="n">texture</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>subsurface.structs.base_structures.StructuredData<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/unstructured_elements.html#TriSurf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.TriSurf" title="Permalink to this definition">¶</a></dt>
+<dd><p>PointSet with triangle cells.</p>
+<p>This dataset defines cell/element connectivity between points to create
+triangulated surface.</p>
+<p>Uses UnstructuredData.cells for the face connectivity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mesh</strong> (<a class="reference internal" href="../Base%20Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData"><em>UnstructuredData</em></a>) – Base object for unstructured data.
+data.cells  represent the point indices for each triangle
+in the mesh. Each column corresponds to a triangle edge.</p></li>
+<li><p><strong>texture</strong> (<a class="reference internal" href="../Base%20Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData"><em>StructuredData</em></a>) – 2D StructuredData with data to be mapped
+on the mesh</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>texture_origin</strong> – tuple(float)
+Length 3 iterable of floats defining the XYZ coordinates of the
+BOTTOM LEFT CORNER of the plane</p></li>
+<li><p><strong>texture_point_u</strong> – tuple(float)
+Length 3 iterable of floats defining the XYZ coordinates of the
+BOTTOM RIGHT CORNER of the plane</p></li>
+<li><p><strong>texture_point_v</strong> – tuple(float)
+Length 3 iterable of floats defining the XYZ coordinates of the
+TOP LEFT CORNER of the plane</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples using TriSurf</p>
+<div class="sphx-glr-clear"></div><p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.TriSurf.__init__" title="subsurface.TriSurf.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(mesh[, texture])</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pyvista</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_triangles</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">triangles</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="subsurface.TriSurf.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mesh</span><span class="p">:</span> <span class="n">subsurface.structs.base_structures.UnstructuredData</span></em>, <em class="sig-param"><span class="n">texture</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>subsurface.structs.base_structures.StructuredData<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/unstructured_elements.html#TriSurf.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.TriSurf.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/./logos/subsurface_place_holder.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">subsurface</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=softwareunderground&repo=subsurface&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/softwareunderground/subsurface">
+    <img
+        alt="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+        src="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../code.html">Code</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../code.html#subsurface-base-structures">Subsurface Base Structures</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../code.html#unstructured-elements">Unstructured Elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code.html#structured-elements">Structured Elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code.html#read-well-data">Read Well Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code.html#read-topographic-data">Read Topographic Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code.html#read-profiles">Read Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code.html#read-surface">Read Surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code.html#plot">Plot</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../code.html">Code</a><ul>
+      <li>Previous: <a href="subsurface.LineSet.html" title="previous chapter">subsurface.LineSet</a></li>
+      <li>Next: <a href="subsurface.TetraMesh.html" title="next chapter">subsurface.TetraMesh</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019-2021, The subsurface developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/Unstructured Elements/subsurface.TriSurf.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

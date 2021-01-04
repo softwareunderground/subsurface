@@ -1,0 +1,39 @@
+﻿subsurface.TriSurf
+==================
+
+.. currentmodule:: subsurface
+
+
+.. autoclass:: TriSurf
+   :no-undoc-members:
+
+   
+   .. rubric:: Examples using TriSurf
+   .. include:: ../gen_modules/backreferences/subsurface.TriSurf.examples
+   .. raw:: html
+
+       <div class="sphx-glr-clear"></div>
+   
+   
+   
+   .. rubric:: Methods
+   .. autosummary::
+   
+      ~TriSurf.__init__
+      ~TriSurf.to_pyvista
+      ~TriSurf.validate
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TriSurf.n_triangles
+      ~TriSurf.triangles
+   
+   
+
+
