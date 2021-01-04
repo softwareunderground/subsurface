@@ -61,17 +61,17 @@ def pv_plot(meshes: list,
     if image_2d is False:
         return p.show()
 
-    else:
-        try:
-            import matplotlib.pyplot as plt
-        except ImportError:
-            raise ImportError('Matplotlib is necessary for generating a 2D image.')
-        img = p.show(screenshot=True)
-        fig = plt.imshow(img[1])
-        plt.axis('off')
-        plt.show()
-        p.close()
-        return fig
+    # else:
+    #     try:
+    #         import matplotlib.pyplot as plt
+    #     except ImportError:
+    #         raise ImportError('Matplotlib is necessary for generating a 2D image.')
+    #     img = p.show(screenshot=True)
+    #     fig = plt.imshow(img[1])
+    #     plt.axis('off')
+    #     plt.show()
+    #     p.close()
+    #     return fig
 
 
 def to_pyvista_points(point_set: PointSet):
