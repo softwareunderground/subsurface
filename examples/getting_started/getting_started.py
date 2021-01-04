@@ -142,3 +142,32 @@ ss.visualization.pv_plot(
     ve=5
 )
 
+
+# %%md
+# Read Topography
+# ---------------
+
+# %%
+
+# StructuredData
+topo_structured_data = ss.io.read_structured_topography(data_path + '/DEM50.tif')
+topo_structured_data
+# %%
+# Remove outliers
+topo_structured_data.replace_outliers('topography', 0.98)
+
+# Element
+topo_element = ss.structs.StructuredGrid(topo_structured_data)
+topo_element
+
+# Pyvista mesh
+topo_mesh = ss.visualization.to_pyvista_grid(topo_element, 'topography',
+                                             data_order='C')
+
+# %%
+ss.visualization.pv_plot(
+    [topo_mesh],
+    image_2d=False,
+    ve=5
+)
+
