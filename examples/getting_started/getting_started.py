@@ -233,3 +233,25 @@ ss.visualization.pv_plot(
     image_2d=False,
     ve=5
 )
+
+
+# %%
+# Plot all together
+# -----------------
+
+# %%
+meshes_list = ([*profiles_mesh_list, *profiles_traces, gempy_mesh,
+                topo_mesh, borehole_loc_mesh, wells_mesh
+                ])
+# %%
+# Plot mesh
+
+# %%
+# sphinx_gallery_thumbnail_number = 6
+ss.visualization.pv_plot(
+    meshes_list,
+    image_2d=False,
+    ve=5
+)
+
+
