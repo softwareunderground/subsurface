@@ -13,3 +13,4 @@ git+https://github.com/Leguark/welly.git
 git+https://github.com/Leguark/striplog.git
 imageio
 pooch
+netcdf4
