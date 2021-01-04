@@ -51,7 +51,8 @@ def test_read_wells_to_unstruct():
         }
     )
 
-    unstructured_data.to_netcdf(file='../data/wells.nc')
+    if True:
+        unstructured_data.to_netcdf(file='../data/wells.nc')
 
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
