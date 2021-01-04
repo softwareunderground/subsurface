@@ -130,11 +130,3 @@ def test_plot_attributes_pyvista(get_unstructured_data_with_attribute):
     ts = TriSurf(get_unstructured_data_with_attribute)
     s = to_pyvista_mesh(ts)
     pv_plot([s], image_2d=True)
-
-
-@pytest.mark.skip(reason='Unused')
-def test_error():
-    with pytest.raises(VertexMissingError,
-                       match="""The columns have to be specified where surface_reader can expect vertices."""):
-        fp = input_path + "/less_land_surface_vertices.csv"
-        surface_reader.read_2d_mesh(fp)
