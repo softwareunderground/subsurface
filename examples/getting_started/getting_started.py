@@ -124,3 +124,21 @@ borehole_location_struct = ss.io.borehole_location_to_unstruct(
     }
 )
 borehole_location_struct
+
+# %%
+# Element
+borehole_location_point_set = ss.PointSet(borehole_location_struct)
+borehole_location_point_set
+
+# %%
+# Pyvista mesh
+borehole_loc_mesh = ss.visualization.to_pyvista_points(borehole_location_point_set)
+borehole_loc_mesh
+
+# %%
+ss.visualization.pv_plot(
+    [borehole_loc_mesh],
+    image_2d=False,
+    ve=5
+)
+

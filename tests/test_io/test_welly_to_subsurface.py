@@ -51,7 +51,7 @@ def test_read_wells_to_unstruct():
         }
     )
 
-    if True:
+    if False:
         unstructured_data.to_netcdf(file='../data/wells.nc')
 
     element = LineSet(unstructured_data)
