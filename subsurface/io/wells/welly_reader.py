@@ -190,7 +190,8 @@ class WellyToSubsurface:
 
         return self.p
 
-    def trajectory(self, datum=None, elev=True, points=1000, **kwargs):
+    # TODO: Unused?
+    def _trajectory(self, datum=None, elev=True, points=1000, **kwargs):
         """
         Get regularly sampled well trajectory. Assumes there is a position
         log already, e.g. resulting from calling `add_deviation()` on a

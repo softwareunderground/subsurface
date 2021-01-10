@@ -51,17 +51,19 @@ def read_collar(file_or_buffer, **kwargs) -> pd.DataFrame:
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or \
-            type(file_or_buffer) == io.BytesIO:
+    elif type(file_or_buffer) == str or \
+            type(file_or_buffer) == pathlib.PosixPath:
+        file_or_buffer = pathlib.Path(file_or_buffer)
+        file_format = file_or_buffer.suffix
+        reader = _get_reader(file_format)
+        d = reader(file_or_buffer,
+                   usecols=cols,
+                   header=header,
+                   index_col=index_col, **kwargs)
 
-        # Parse file
-        if type(file_or_buffer) is not io.BytesIO:
-            file_or_buffer = pathlib.Path(file_or_buffer)
-            file_format = file_or_buffer.suffix
-            reader = _get_reader(file_format)
-        else:
-            reader = _get_reader('.csv')
-
+    elif type(file_or_buffer) == io.BytesIO or \
+            type(file_or_buffer) == io.StringIO:
+        reader = _get_reader('.csv')
         d = reader(file_or_buffer,
                    usecols=cols,
                    header=header,
@@ -84,15 +86,18 @@ def read_survey(file_or_buffer, index_map=None, columns_map=None, **kwargs):
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or \
-            type(file_or_buffer) == io.BytesIO:
-        if type(file_or_buffer) is not io.BytesIO:
-            file_or_buffer = pathlib.Path(file_or_buffer)
-            file_format = file_or_buffer.suffix
-            reader = _get_reader(file_format)
-        else:
-            reader = _get_reader('.csv')
+    elif type(file_or_buffer) == str or \
+            type(file_or_buffer) == pathlib.PosixPath:
+        file_or_buffer = pathlib.Path(file_or_buffer)
+        file_format = file_or_buffer.suffix
+        reader = _get_reader(file_format)
         d = reader(file_or_buffer, index_col=index_col, **kwargs)
+
+    elif type(file_or_buffer) == io.BytesIO or \
+            type(file_or_buffer) == io.StringIO:
+        reader = _get_reader('.csv')
+        d = reader(file_or_buffer, index_col=index_col, **kwargs)
+
     elif type(file_or_buffer) == dict:
         reader = _get_reader('dict')
         d = reader(file_or_buffer)
@@ -133,17 +138,19 @@ def read_lith(file_or_buffer, columns_map=None, **kwargs):
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or \
-            type(file_or_buffer) == io.BytesIO:
-        if type(file_or_buffer) is not io.BytesIO:
-            file_or_buffer = pathlib.Path(file_or_buffer)
-            file_format = file_or_buffer.suffix
-            reader = _get_reader(file_format)
-        else:
-            reader = _get_reader('.csv')
+    elif type(file_or_buffer) == str or\
+            type(file_or_buffer) == pathlib.PosixPath:
+        file_or_buffer = pathlib.Path(file_or_buffer)
+        file_format = file_or_buffer.suffix
+        reader = _get_reader(file_format)
+        d = reader(file_or_buffer, index_col=index_col, **kwargs)
+    elif type(file_or_buffer) == io.BytesIO or \
+            type(file_or_buffer) == io.StringIO:
 
+        reader = _get_reader('.csv')
         d = reader(file_or_buffer, index_col=index_col, **kwargs)
     elif type(file_or_buffer) == dict:
+
         reader = _get_reader('dict')
         d = reader(file_or_buffer)
     else:
@@ -175,17 +182,21 @@ def read_attributes(file_or_buffer, columns_map=None,
     is_json = kwargs.pop('is_json', False)
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
-    elif type(file_or_buffer) == str or type(file_or_buffer) == pathlib.PosixPath or \
-            type(file_or_buffer) == io.BytesIO:
-        if type(file_or_buffer) is not io.BytesIO:
-            file_or_buffer = pathlib.Path(file_or_buffer)
-            file_format = file_or_buffer.suffix
-            reader = _get_reader(file_format)
-        else:
-            reader = _get_reader('.csv')
-
+    elif type(file_or_buffer) == str or\
+            type(file_or_buffer) == pathlib.PosixPath:
+        file_or_buffer = pathlib.Path(file_or_buffer)
+        file_format = file_or_buffer.suffix
+        reader = _get_reader(file_format)
         index_col = kwargs.pop('index_col', 0)
         d = reader(file_or_buffer, index_col=index_col, **kwargs)
+
+    elif type(file_or_buffer) == io.BytesIO or \
+            type(file_or_buffer) == io.StringIO:
+
+        reader = _get_reader('.csv')
+        index_col = kwargs.pop('index_col', 0)
+        d = reader(file_or_buffer, index_col=index_col, **kwargs)
+
     elif type(file_or_buffer) == dict:
         reader = _get_reader('dict')
         d = reader(file_or_buffer)

@@ -1,14 +1,37 @@
+from io import StringIO
+from typing import Union
+
 from subsurface.structs.base_structures import UnstructuredData
 from subsurface.io.wells.welly_reader import read_to_welly
 from subsurface.io.wells.well_files_reader import read_collar
 from subsurface.io.wells.wells_utils import add_tops_from_base_and_altitude_in_place
+import xarray as xr
+import numpy as np
 
 
-def borehole_location_to_unstruct(collar_file, read_collar_kwargs=None):
+def borehole_location_to_unstruct(
+        collar_file: Union[str, StringIO],
+        read_collar_kwargs: dict = None,
+        add_number_segments: bool = True) -> UnstructuredData:
+    attributes = None
+
     if read_collar_kwargs is None:
         read_collar_kwargs = dict()
     collars = read_collar(collar_file, **read_collar_kwargs)
-    ud = UnstructuredData(vertex=collars.values.astype('float32'))
+
+    if add_number_segments is True:
+        number_of_segments = collars.index.value_counts(sort=False).values
+        attributes = {"wells_collection_attrib": \
+                          xr.DataArray(number_of_segments.reshape(-1, 1),
+                                       dims=['cell', 'attribute'],
+                                       coords={'attribute': ['number_segments']})
+                      }
+    # Remove duplicates
+    collars = collars[~collars.index.duplicated()]
+
+    ud = UnstructuredData(
+        vertex=collars[['x', 'y', 'altitude']].values.astype('float32'),
+        attributes=attributes)
 
     return ud
 
