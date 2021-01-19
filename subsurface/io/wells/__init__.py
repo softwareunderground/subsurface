@@ -7,31 +7,33 @@ from subsurface.io.wells.well_files_reader import read_collar
 from subsurface.io.wells.wells_utils import add_tops_from_base_and_altitude_in_place
 import xarray as xr
 import numpy as np
-
+import pandas as pd
 
 def borehole_location_to_unstruct(
         collar_file: Union[str, StringIO],
         read_collar_kwargs: dict = None,
         add_number_segments: bool = True) -> UnstructuredData:
-    attributes = None
+
 
     if read_collar_kwargs is None:
         read_collar_kwargs = dict()
+
     collars = read_collar(collar_file, **read_collar_kwargs)
+    collars_attributes = pd.DataFrame()
+
+    # Remove duplicates
+    collars_single_well = collars[~collars.index.duplicated()]
+    wells_names = collars_single_well.index
+
+    collars_attributes['well_id'] = np.arange(wells_names.size)
 
     if add_number_segments is True:
         number_of_segments = collars.index.value_counts(sort=False).values
-        attributes = {"wells_collection_attrib": \
-                          xr.DataArray(number_of_segments.reshape(-1, 1),
-                                       dims=['cell', 'attribute'],
-                                       coords={'attribute': ['number_segments']})
-                      }
-    # Remove duplicates
-    collars = collars[~collars.index.duplicated()]
+        collars_attributes['number_segments'] = number_of_segments
 
     ud = UnstructuredData(
-        vertex=collars[['x', 'y', 'altitude']].values.astype('float32'),
-        attributes=attributes)
+        vertex=collars_single_well[['x', 'y', 'altitude']].values.astype('float32'),
+        attributes=collars_attributes.astype('float32')) # TODO: This should be int16!
 
     return ud
 

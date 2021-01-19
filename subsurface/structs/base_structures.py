@@ -261,21 +261,24 @@ class UnstructuredData(CommonDataMethods):
         return bytearray_le, header
 
     def _set_binary_header(self):
+
         header = {
             "vertex_shape": self.vertex.shape,
             "cell_shape": self.cells.shape,
             "cell_attr_shape": self.attributes.shape,
             "vertex_attr_shape": self.points_attributes.shape,
             "cell_attr_names": self.attributes.columns.to_list(),
+            "cell_attr_types": self.attributes.dtypes.astype(str).to_list(),
             "vertex_attr_names": self.points_attributes.columns.to_list(),
+            "vertex_attr_types": self.attributes.dtypes.astype(str).to_list()
         }
         return header
 
     def _to_bytearray(self, order):
         vertex = self.vertex.astype('float32').tobytes(order)
         cells = self.cells.astype('int32').tobytes(order)
-        cell_attribute = self.attributes.values.astype('float32').tobytes(order)
-        vertex_attribute = self.points_attributes.values.astype('float32').tobytes(
+        cell_attribute = self.attributes.values.tobytes(order)
+        vertex_attribute = self.points_attributes.values.tobytes(
             order)
         bytearray_le = vertex + cells + cell_attribute + vertex_attribute
         return bytearray_le
