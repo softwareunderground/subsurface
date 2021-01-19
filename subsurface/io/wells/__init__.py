@@ -9,12 +9,11 @@ import xarray as xr
 import numpy as np
 import pandas as pd
 
+
 def borehole_location_to_unstruct(
         collar_file: Union[str, StringIO],
         read_collar_kwargs: dict = None,
         add_number_segments: bool = True) -> UnstructuredData:
-
-
     if read_collar_kwargs is None:
         read_collar_kwargs = dict()
 
@@ -33,7 +32,12 @@ def borehole_location_to_unstruct(
 
     ud = UnstructuredData(
         vertex=collars_single_well[['x', 'y', 'altitude']].values.astype('float32'),
-        attributes=collars_attributes.astype('float32')) # TODO: This should be int16!
+        attributes=collars_attributes.astype('float32'),
+        xarray_attributes={
+            "wells_id": collars_attributes['well_id'].values.tolist(),
+            "wells_names": wells_names.values.tolist()
+        }
+    )  # TODO: This should be int16!
 
     return ud
 

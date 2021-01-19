@@ -84,15 +84,17 @@ class UnstructuredData(CommonDataMethods):
            - -> *quadrilateral (or tetragon)* UNSUPPORTED?
         - cells NDArray[(Any, 8), IntX] -> *Hexahedron: Unstructured grid/Prisms*
     """
-    data: xr.Dataset
 
-    def __init__(self, vertex: np.ndarray = None,
+    def __init__(self,
+                 vertex: np.ndarray = None,
                  cells: Union[np.ndarray, str] = None,
-                 attributes: Optional[
-                     Union[pd.DataFrame, Dict[str, xr.DataArray]]] = None,
+                 attributes: Optional[Union[pd.DataFrame, Dict[str, xr.DataArray]]] = None,
                  points_attributes: Optional[pd.DataFrame] = None,
                  coords=None,
-                 ds=None):
+                 ds=None,
+                 xarray_attributes: Optional[dict] = None):
+
+        super().__init__()
         self.attributes_name = 'attributes'
         self.points_attributes_name = 'points_attributes'
 
@@ -100,8 +102,8 @@ class UnstructuredData(CommonDataMethods):
             raise AttributeError('Either vertex or ds must be passed.')
 
         if ds is None:
-            ds = self._create_dataset_from_numpy(attributes, coords, cells,
-                                                 points_attributes, vertex)
+            ds = self._create_dataset_from_numpy(vertex, cells, attributes, points_attributes,
+                                                 coords, xarray_attributes)
         self.data = ds
 
         try:
@@ -111,13 +113,14 @@ class UnstructuredData(CommonDataMethods):
 
         self._validate()
 
-    def _create_dataset_from_numpy(self, attributes, coords, edges,
-                                   points_attributes, vertex):
-
+    def _create_dataset_from_numpy(self, vertex, edges, attributes, points_attributes,
+                                   coords, xarray_attributes):
+        # ---- vertex DataArray
         xarray_dict = dict()
         v = xr.DataArray(vertex, dims=['points', 'XYZ'],
                          coords={'XYZ': ['X', 'Y', 'Z']})
         xarray_dict['vertex'] = v
+        # ---- edges/cells DataArray
         if edges is None or edges == 'points':
             edges = np.atleast_2d(v.coords['points']).T
         elif edges == 'lines':
@@ -128,6 +131,8 @@ class UnstructuredData(CommonDataMethods):
 
         e = xr.DataArray(edges, dims=['cell', 'nodes'])
         xarray_dict['cells'] = e
+        # ---- Attr DataArray
+
         xarray_dict = self.set_attributes_data_array(
             attributes,
             edges.shape[0],
@@ -135,6 +140,7 @@ class UnstructuredData(CommonDataMethods):
             dims=['cell', 'attribute'],
             attributes_type=self.attributes_name
         )
+        # ---- Point Attr DataArray
         xarray_dict = self.set_attributes_data_array(
             points_attributes,
             vertex.shape[0],
@@ -142,7 +148,8 @@ class UnstructuredData(CommonDataMethods):
             dims=['points', 'points_attribute'],
             attributes_type=self.points_attributes_name
         )
-        ds = xr.Dataset(xarray_dict, coords=coords)
+
+        ds = xr.Dataset(xarray_dict, coords=coords, attrs=xarray_attributes)
         return ds
 
     def _validate(self):
@@ -270,7 +277,8 @@ class UnstructuredData(CommonDataMethods):
             "cell_attr_names": self.attributes.columns.to_list(),
             "cell_attr_types": self.attributes.dtypes.astype(str).to_list(),
             "vertex_attr_names": self.points_attributes.columns.to_list(),
-            "vertex_attr_types": self.attributes.dtypes.astype(str).to_list()
+            "vertex_attr_types": self.attributes.dtypes.astype(str).to_list(),
+            "xarray_attrs": self.data.attrs
         }
         return header
 
