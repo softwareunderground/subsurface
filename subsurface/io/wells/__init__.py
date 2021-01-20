@@ -24,8 +24,6 @@ def borehole_location_to_unstruct(
     collars_single_well = collars[~collars.index.duplicated()]
     wells_names = collars_single_well.index
 
-    collars_attributes['well_id'] = np.arange(wells_names.size)
-
     if add_number_segments is True:
         number_of_segments = collars.index.value_counts(sort=False).values
         collars_attributes['number_segments'] = number_of_segments
@@ -34,7 +32,6 @@ def borehole_location_to_unstruct(
         vertex=collars_single_well[['x', 'y', 'altitude']].values.astype('float32'),
         attributes=collars_attributes.astype('float32'),
         xarray_attributes={
-            "wells_id": collars_attributes['well_id'].values.tolist(),
             "wells_names": wells_names.values.tolist()
         }
     )  # TODO: This should be int16!
