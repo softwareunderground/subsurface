@@ -285,8 +285,8 @@ class UnstructuredData(CommonDataMethods):
     def _to_bytearray(self, order):
         vertex = self.vertex.astype('float32').tobytes(order)
         cells = self.cells.astype('int32').tobytes(order)
-        cell_attribute = self.attributes.values.tobytes(order)
-        vertex_attribute = self.points_attributes.values.tobytes(
+        cell_attribute = self.attributes.values.astype('float32').tobytes(order)
+        vertex_attribute = self.points_attributes.values.astype('float32').tobytes(
             order)
         bytearray_le = vertex + cells + cell_attribute + vertex_attribute
         return bytearray_le
