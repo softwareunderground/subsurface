@@ -217,7 +217,7 @@ class WellyToSubsurface:
 
     def to_subsurface(self,
                       elev=True,
-                      n_points=250,
+                      n_points=50,
                       return_element=False,
                       convert_lith=True,
                       **kwargs):

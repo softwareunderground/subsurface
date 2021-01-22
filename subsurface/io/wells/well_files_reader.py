@@ -51,8 +51,7 @@ def read_collar(file_or_buffer, **kwargs) -> pd.DataFrame:
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or \
-            type(file_or_buffer) == pathlib.PosixPath:
+    elif type(file_or_buffer) == str or isinstance(file_or_buffer, pathlib.PurePath):
         file_or_buffer = pathlib.Path(file_or_buffer)
         file_format = file_or_buffer.suffix
         reader = _get_reader(file_format)
@@ -86,8 +85,8 @@ def read_survey(file_or_buffer, index_map=None, columns_map=None, **kwargs):
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or \
-            type(file_or_buffer) == pathlib.PosixPath:
+    elif type(file_or_buffer) == str or isinstance(file_or_buffer, pathlib.PurePath):
+
         file_or_buffer = pathlib.Path(file_or_buffer)
         file_format = file_or_buffer.suffix
         reader = _get_reader(file_format)
@@ -138,8 +137,7 @@ def read_lith(file_or_buffer, columns_map=None, **kwargs):
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
 
-    elif type(file_or_buffer) == str or\
-            type(file_or_buffer) == pathlib.PosixPath:
+    elif type(file_or_buffer) == str or isinstance(file_or_buffer, pathlib.PurePath):
         file_or_buffer = pathlib.Path(file_or_buffer)
         file_format = file_or_buffer.suffix
         reader = _get_reader(file_format)
@@ -182,8 +180,7 @@ def read_attributes(file_or_buffer, columns_map=None,
     is_json = kwargs.pop('is_json', False)
     if is_json is True:
         d = pd.read_json(file_or_buffer, orient='split')
-    elif type(file_or_buffer) == str or\
-            type(file_or_buffer) == pathlib.PosixPath:
+    elif type(file_or_buffer) == str or isinstance(file_or_buffer, pathlib.PurePath):
         file_or_buffer = pathlib.Path(file_or_buffer)
         file_format = file_or_buffer.suffix
         reader = _get_reader(file_format)
