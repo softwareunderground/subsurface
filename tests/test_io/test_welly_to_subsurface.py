@@ -272,9 +272,29 @@ def test_excel_to_subsurface():
 
 def test_striplog():
     s = Striplog.from_csv(data_path.joinpath('striplog_integration/alpha_strip.tops'))
+    s.components[0] = {'lith': 'overburden',
+                       "colour": 'blue'}
+
     s.plot()
     plt.show(block=False)
     print(s)
+    return s
+
+
+def test_striplog_to_log():
+    from striplog import Component
+    s = test_striplog()
+    table_input = []
+    for i in range(6):
+        table_input.append(Component({'lith': i}))
+    table_input.append(Component({"lith": "miguel",
+                                  "colour": "red"}))
+    s_log, basis, table = s.to_log(return_meta=True, table=table_input)
+    c = welly.Curve(s_log)
+    c.plot()
+
+    plt.show(block=False)
+    print(table)
 
 
 def test_striplog_2():

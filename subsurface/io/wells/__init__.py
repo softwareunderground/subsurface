@@ -87,8 +87,9 @@ def read_wells_to_unstruct(backend='welly', n_points=1000,
             )
     """
     if backend == 'welly':
+        table = kwargs.pop("table", None)
         wts = read_to_welly(**kwargs)
-        unstruct = wts.to_subsurface(n_points=n_points)
+        unstruct = wts.to_subsurface(n_points=n_points, table=table)
         s = (unstruct, wts.p) if return_welly is True else unstruct
 
     else:

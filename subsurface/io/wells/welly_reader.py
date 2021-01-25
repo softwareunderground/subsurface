@@ -220,6 +220,7 @@ class WellyToSubsurface:
                       n_points=50,
                       return_element=False,
                       convert_lith=True,
+                      table=None,
                       **kwargs):
         """Method to convert well data to `subsurface.UnstructuredData`
 
@@ -231,6 +232,8 @@ class WellyToSubsurface:
              well.
             return_element (bool): if True return a `subsurface.LineSet` instead
             convert_lith (bool): if True convert lith from stiplog to curve
+            table (List[Striplog.Component]): List of components to map lithologies
+             to value.
             **kwargs:
                 `Well.location.trajectory` kwargs
 
@@ -271,8 +274,10 @@ class WellyToSubsurface:
                 try:
                     start, stop, step_size = self._calculate_basis_parameters(w,
                                                                               n_points - 1)
-                    s_log, basis, table = w.data['lith'].to_log(step_size, start,
+                    s_log, basis, _table = w.data['lith'].to_log(step_size,
+                                                                start,
                                                                 stop,
+                                                                table=table,
                                                                 return_meta=True)
 
                     w.data['lith_log'] = Curve(s_log, basis)
