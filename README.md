@@ -10,7 +10,7 @@ DataHub for geoscientific data in Python. Two main purposes:
     + Visualization
 
 ## Data Levels:
-The difference between data levels is **not** which data they stored but which data they **parse and understand**. The rationale for this is to be able to pass along any object along while keeping the I/O in subsurface.
+The difference between data levels is **not** which data they store but which data they **parse and understand**. The rationale for this is to be able to pass along any object while keeping the I/O in subsurface.
 
 **Human**
 
