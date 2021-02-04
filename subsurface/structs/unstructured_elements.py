@@ -13,7 +13,7 @@ Regularly gridded dataset will NOT be managed by these classes but will use
 import numpy as np
 import pandas as pd
 
-from .base_structures import UnstructuredData
+from .base_structures import UnstructuredData, StructuredData
 from .common import Common
 from .errors import PyVistaImportError
 
@@ -68,30 +68,49 @@ class TriSurf(Common):
     Uses UnstructuredData.cells for the face connectivity.
 
     Args:
-        data (UnstructuredData): Base object for unstructured data.
-
+        mesh (UnstructuredData): Base object for unstructured data.
          data.cells  represent the point indices for each triangle
-         cell in the mesh. Each column corresponds to a triangle cell.
+         in the mesh. Each column corresponds to a triangle edge.
+        texture (StructuredData): 2D StructuredData with data to be mapped
+         on the mesh
 
+    Keyword Args:
+        texture_origin : tuple(float)
+            Length 3 iterable of floats defining the XYZ coordinates of the
+            BOTTOM LEFT CORNER of the plane
+
+        texture_point_u : tuple(float)
+            Length 3 iterable of floats defining the XYZ coordinates of the
+            BOTTOM RIGHT CORNER of the plane
+
+        texture_point_v : tuple(float)
+            Length 3 iterable of floats defining the XYZ coordinates of the
+            TOP LEFT CORNER of the plane
     """
 
     def __init__(self,
-                 data: UnstructuredData
+                 mesh: UnstructuredData,
+                 texture: StructuredData = None,
+                 **kwargs
                  ):
 
-        if data.cells.shape[1] != 3:
+        if mesh.cells.shape[1] != 3:
             raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 3), IntX]')
 
-        self.data = data
+        self.mesh = mesh
+        self.texture = texture
+        self.texture_origin = kwargs.get('texture_origin', None)
+        self.texture_point_u = kwargs.get('texture_point_u', None)
+        self.texture_point_v = kwargs.get('texture_point_v', None)
 
     @property
     def triangles(self):
-        return self.data.cells
+        return self.mesh.cells
 
     @property
     def n_triangles(self):
-        return self.data.cells.shape[0]
+        return self.mesh.cells.shape[0]
 
 
 class LineSet(Common):
@@ -116,14 +135,15 @@ class LineSet(Common):
                  radius: float = 1
                  ):
 
-        if data.cells is None:
+        self.data = data
+        self.radius = radius
+
+        if data.cells is None or data.cells.shape[1] < 2:
             self.generate_default_cells()
 
         elif data.cells.shape[1] != 2:
             raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 2), IntX]')
-        self.data = data
-        self.radius = radius
 
         # TODO: these must all be integer dtypes!
 
@@ -154,7 +174,9 @@ class TetraMesh(Common):
 
     This dataset defines cell connectivity between points to create
     tetrahedrons. This is volumetric.
+
     Args:
+
         data (UnstructuredData): Base object for unstructured data.
 
          data.cells represent the indices of the points for each

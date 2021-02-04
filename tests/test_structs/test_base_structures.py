@@ -1,9 +1,12 @@
 import pytest
+from subsurface import TriSurf, StructuredGrid
+from subsurface.io import read_unstruct, read_struct, read_structured_topography
 
 from subsurface.structs.base_structures import UnstructuredData, StructuredData
 import numpy as np
 import pandas as pd
 import xarray as xr
+from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
 
 
 def test_unstructured_data():
@@ -16,7 +19,7 @@ def test_unstructured_data():
     foo = UnstructuredData(np.ones((5, 3)), np.ones((4, 3)))
     print(foo)
 
-    #Failed validation
+    # Failed validation
     with pytest.raises(ValueError):
         foo = UnstructuredData(np.ones((5, 3)), np.ones((4, 3)),
                                pd.DataFrame({'foo': np.arange(1)}))
@@ -29,12 +32,13 @@ def test_unstructured_data_no_cells():
 
 
 def test_unstructured_data_no_cells_no_attributes():
-    attributes = {'notAttributeName': xr.DataArray(pd.DataFrame({'foo': np.arange(4)}))}
+    attributes = {
+        'notAttributeName': xr.DataArray(pd.DataFrame({'foo': np.arange(4)}))}
 
     with pytest.raises(KeyError):
         foo = UnstructuredData(
             vertex=np.ones((5, 3)),
-            edges=np.ones((4, 3)),
+            cells=np.ones((4, 3)),
             attributes=attributes
 
         )
@@ -47,7 +51,7 @@ def test_unstructured_data_no_cells_no_attributes():
 
     foo = UnstructuredData(
         vertex=np.ones((5, 3)),
-        edges=np.ones((4, 3)),
+        cells=np.ones((4, 3)),
         attributes=attributes2
     )
 
@@ -117,3 +121,29 @@ def test_xarray():
 
     s3 = xr.Dataset({'foo': (['x', 'y', 'z'], xx)})
     print(s3)
+
+
+def test_read_unstruct(data_path):
+    us = read_unstruct(data_path + '/interpolator_meshes.nc')
+    trisurf = TriSurf(us)
+    s = to_pyvista_mesh(trisurf)
+    pv_plot([s], image_2d=True)
+
+
+def test_read_struct(data_path):
+    s = read_struct(data_path + '/interpolator_regular_grid.nc')
+    sg = StructuredGrid(s)
+    s = to_pyvista_grid(sg,
+                        data_set_name='block_matrix',
+                        attribute_slice={'Properties': 'id',
+                                         'Features': 'Default series'})
+
+    pv_plot([s], image_2d=True)
+
+
+def test_remove_outliers(data_path):
+    topo_path = data_path + '/topo/dtm_rp.tif'
+    struct = read_structured_topography(topo_path)
+    struct.replace_outliers('topography', 0.99)
+    print(struct.data['topography'])
+    print(struct.data['topography'].min())

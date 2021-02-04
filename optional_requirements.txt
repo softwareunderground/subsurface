@@ -1,5 +1,16 @@
 segyio
-pytest
-matplotlib
-pyvista
-xlrd # For reading xlsx
+matplotlib~=3.3.3
+pyvista~=0.27.3
+xlrd~=1.2 # For reading xlsx
+geopandas~=0.8.1
+rasterio~=1.1.8
+imageio~=2.9.0
+scipy~=1.5.4
+shapely~=1.7.1
+requests~=2.25.0
+ezdxf
+git+https://github.com/Leguark/welly.git
+git+https://github.com/Leguark/striplog.git
+imageio
+pooch
+netcdf4

@@ -3,9 +3,9 @@ import pytest
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from subsurface.io import WellyToSubsurface
-from subsurface.io.basic_structs_io import read_wells_to_unstruct
-from subsurface.io.wells.wells_reader import read_to_welly, read_collar, read_survey
+from subsurface.io import WellyToSubsurface, read_to_welly
+from subsurface.io.wells import read_wells_to_unstruct
+from subsurface.io.wells.well_files_reader import read_collar, read_survey
 from subsurface.structs import LineSet
 import subsurface
 import pathlib
@@ -51,7 +51,8 @@ def test_read_wells_to_unstruct():
         }
     )
 
-    unstructured_data.to_netcdf()
+    if False:
+        unstructured_data.to_netcdf(file='../data/wells.nc')
 
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
@@ -79,7 +80,7 @@ def test_create_welly_to_subsurface():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
     # Plot gold
-    pyvista_mesh.set_active_scalar('Au (g/t)')
+    pyvista_mesh.set_active_scalars('Au (g/t)')
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
@@ -175,8 +176,8 @@ def test_read_to_welly_xlsx():
 
     wts = read_to_welly(collar_file=data_path.joinpath('borehole_collar.xlsx'))
     print('\n', wts)
-    with pytest.raises(AttributeError, match=r".*one of the wells.*"):
-        unstructured_data = wts.to_subsurface()
+    # with pytest.raises(AttributeError, match=r".*one of the wells.*"):
+    #     unstructured_data = wts.to_subsurface()
 
     wts = read_to_welly(collar_file=data_path.joinpath('borehole_collar.xlsx'),
                         read_collar_kwargs={'usecols': [0, 1, 2, 4]},
@@ -243,7 +244,7 @@ def test_read_to_welly_xlsx():
     print('\n', unstructured_data)
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
-    pyvista_mesh.set_active_scalar('Au (g/t)')
+    pyvista_mesh.set_active_scalars('Au (g/t)')
     # Plot default LITH
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
@@ -266,14 +267,34 @@ def test_excel_to_subsurface():
                                              'SITE_ID': 'description'})
 
     s.plot()
-    plt.show()
+    plt.show(block=False)
 
 
 def test_striplog():
     s = Striplog.from_csv(data_path.joinpath('striplog_integration/alpha_strip.tops'))
+    s.components[0] = {'lith': 'overburden',
+                       "colour": 'blue'}
+
     s.plot()
-    plt.show()
+    plt.show(block=False)
     print(s)
+    return s
+
+
+def test_striplog_to_log():
+    from striplog import Component
+    s = test_striplog()
+    table_input = []
+    for i in range(6):
+        table_input.append(Component({'lith': i}))
+    table_input.append(Component({"lith": "miguel",
+                                  "colour": "red"}))
+    s_log, basis, table = s.to_log(return_meta=True, table=table_input)
+    c = welly.Curve(s_log)
+    c.plot()
+
+    plt.show(block=False)
+    print(table)
 
 
 def test_striplog_2():
@@ -289,7 +310,7 @@ def test_striplog_2():
                                              'SITE_ID': 'description'})
 
     s.plot()
-    plt.show()
+    plt.show(block=False)
     print(s)
 
 
