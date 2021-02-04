@@ -1,7 +1,7 @@
 Data Structures
 ===============
 
-This subpackage intend to function as wrapper for `pandas.Dataframe` and
+This subpackage intends to function as a wrapper for `pandas.Dataframe` and
 `xarray`.
 
 These are the ones which should be compatible between libraries - without the
