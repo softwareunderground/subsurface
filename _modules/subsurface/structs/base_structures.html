@@ -121,15 +121,17 @@
 <span class="sd">           - -&gt; *quadrilateral (or tetragon)* UNSUPPORTED?</span>
 <span class="sd">        - cells NDArray[(Any, 8), IntX] -&gt; *Hexahedron: Unstructured grid/Prisms*</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span>
 
-<div class="viewcode-block" id="UnstructuredData.__init__"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="UnstructuredData.__init__"><a class="viewcode-back" href="../../../Base%20Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">vertex</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">cells</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">attributes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
-                     <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">attributes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">points_attributes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">coords</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">ds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                 <span class="n">ds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">xarray_attributes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attributes_name</span> <span class="o">=</span> <span class="s1">&#39;attributes&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">points_attributes_name</span> <span class="o">=</span> <span class="s1">&#39;points_attributes&#39;</span>
 
@@ -137,8 +139,8 @@
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Either vertex or ds must be passed.&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataset_from_numpy</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">cells</span><span class="p">,</span>
-                                                 <span class="n">points_attributes</span><span class="p">,</span> <span class="n">vertex</span><span class="p">)</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataset_from_numpy</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">cells</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">points_attributes</span><span class="p">,</span>
+                                                 <span class="n">coords</span><span class="p">,</span> <span class="n">xarray_attributes</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">ds</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -148,13 +150,14 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_create_dataset_from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span>
-                                   <span class="n">points_attributes</span><span class="p">,</span> <span class="n">vertex</span><span class="p">):</span>
-
+    <span class="k">def</span> <span class="nf">_create_dataset_from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">points_attributes</span><span class="p">,</span>
+                                   <span class="n">coords</span><span class="p">,</span> <span class="n">xarray_attributes</span><span class="p">):</span>
+        <span class="c1"># ---- vertex DataArray</span>
         <span class="n">xarray_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">v</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">,</span> <span class="s1">&#39;XYZ&#39;</span><span class="p">],</span>
                          <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;XYZ&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">]})</span>
         <span class="n">xarray_dict</span><span class="p">[</span><span class="s1">&#39;vertex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="c1"># ---- edges/cells DataArray</span>
         <span class="k">if</span> <span class="n">edges</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">edges</span> <span class="o">==</span> <span class="s1">&#39;points&#39;</span><span class="p">:</span>
             <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
         <span class="k">elif</span> <span class="n">edges</span> <span class="o">==</span> <span class="s1">&#39;lines&#39;</span><span class="p">:</span>
@@ -165,6 +168,8 @@
 
         <span class="n">e</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="s1">&#39;nodes&#39;</span><span class="p">])</span>
         <span class="n">xarray_dict</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+        <span class="c1"># ---- Attr DataArray</span>
+
         <span class="n">xarray_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_attributes_data_array</span><span class="p">(</span>
             <span class="n">attributes</span><span class="p">,</span>
             <span class="n">edges</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
@@ -172,6 +177,7 @@
             <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="s1">&#39;attribute&#39;</span><span class="p">],</span>
             <span class="n">attributes_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attributes_name</span>
         <span class="p">)</span>
+        <span class="c1"># ---- Point Attr DataArray</span>
         <span class="n">xarray_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_attributes_data_array</span><span class="p">(</span>
             <span class="n">points_attributes</span><span class="p">,</span>
             <span class="n">vertex</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
@@ -179,7 +185,8 @@
             <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">,</span> <span class="s1">&#39;points_attribute&#39;</span><span class="p">],</span>
             <span class="n">attributes_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">points_attributes_name</span>
         <span class="p">)</span>
-        <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">xarray_dict</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">)</span>
+
+        <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">xarray_dict</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">xarray_attributes</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ds</span>
 
     <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -298,13 +305,17 @@
         <span class="k">return</span> <span class="n">bytearray_le</span><span class="p">,</span> <span class="n">header</span>
 
     <span class="k">def</span> <span class="nf">_set_binary_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
         <span class="n">header</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;vertex_shape&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
             <span class="s2">&quot;cell_shape&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
             <span class="s2">&quot;cell_attr_shape&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
             <span class="s2">&quot;vertex_attr_shape&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_attributes</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
             <span class="s2">&quot;cell_attr_names&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+            <span class="s2">&quot;cell_attr_types&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
             <span class="s2">&quot;vertex_attr_names&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_attributes</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+            <span class="s2">&quot;vertex_attr_types&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+            <span class="s2">&quot;xarray_attrs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">attrs</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">header</span>
 
@@ -499,7 +510,7 @@
       &copy;2019-2021, The subsurface developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

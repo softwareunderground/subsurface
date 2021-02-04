@@ -102,6 +102,18 @@ data in the right format for digesting.
     Downloading data from 'https://github.com/cgre-aachen/gempy_data/raw/master/data/subsurface/example1.zip' to file '/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip'.
     SHA256 hash of downloaded file: fb79a63eeb874cf0cdca557106c62c67eace23811db5935e57c3448fed7f8978
     Use this value as the 'known_hash' argument of 'pooch.retrieve' to ensure that the file hasn't changed if it is downloaded again in the future.
+    /opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/pandas/core/indexing.py:966: SettingWithCopyWarning: 
+    A value is trying to be set on a copy of a slice from a DataFrame.
+    Try using .loc[row_indexer,col_indexer] = value instead
+
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+      self.obj[item] = s
+    /home/runner/work/subsurface/subsurface/examples/getting_started/getting_started.py:56: SettingWithCopyWarning: 
+    A value is trying to be set on a copy of a slice from a DataFrame.
+    Try using .loc[row_indexer,col_indexer] = value instead
+
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+      wells_fixed['md'] = wells_fixed['top']
 
 
 .. raw:: html
@@ -331,7 +343,7 @@ data in the right format for digesting.
         </tr>
       </tbody>
     </table>
-    <p>2798 rows × 14 columns</p>
+    <p>2787 rows × 14 columns</p>
     </div>
     </div>
     <br />
@@ -379,72 +391,94 @@ Now we can read the csv files into subsurface.UnstructuredData
 
  .. code-block:: none
 
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/well_files_reader.py:113: UserWarning: inc and/or azi columns are not present in the file. The boreholes will be straight.
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/well_files_reader.py:125: UserWarning: inc and/or azi columns are not present in the file. The boreholes will be straight.
       warnings.warn('inc and/or azi columns are not present in the file.'
-    The following striplog failed being processed:  ['GD0041', 'GD0080', 'GD0092', 'GD0136', 'GD0211', 'GD0225', 'GD0235', 'GD0236', 'GD0304', 'GD0305', 'GD0308', 'GD0377', 'GD0399', 'GD0419', 'GD0439', 'GD0464', 'GD0487', 'GD0504', 'GD0505', 'GD0526', 'GD0529', 'GD0597', 'GD0611', 'GD0622', 'GD0632', 'GD0733', 'GD0760', 'GD0937', 'GD0942', 'GD0981', 'GD1016']
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0308
+    The following striplog failed being processed:  ['GD0041', 'GD0080', 'GD0092', 'GD0136', 'GD0211', 'GD0225', 'GD0235', 'GD0236', 'GD0304', 'GD0305', 'GD0308', 'GD0377', 'GD0399', 'GD0419', 'GD0439', 'GD0464', 'GD0487', 'GD0504', 'GD0505', 'GD0526', 'GD0529', 'GD0573', 'GD0597', 'GD0611', 'GD0617', 'GD0622', 'GD0632', 'GD0715', 'GD0733', 'GD0760', 'GD0766', 'GD0813', 'GD0816', 'GD0843', 'GD0845', 'GD0858', 'GD0937', 'GD0942', 'GD0948', 'GD0981', 'GD1007', 'GD1016']
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0399
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0225
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0845
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0632
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0942
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0505
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0843
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0211
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0505
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0981
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0981
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0733
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0948
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0464
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0225
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0597
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0760
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0760
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD1007
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0399
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0464
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0236
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0211
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0937
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0622
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0305
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0526
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0611
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0504
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0377
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0617
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0041
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0439
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0526
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0573
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0136
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0766
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0529
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0611
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0622
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD1016
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0439
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0937
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0304
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0632
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0942
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0304
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0235
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0858
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0092
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0092
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0504
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0136
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0080
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0419
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD1016
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0080
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0487
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0733
       'assigned a survey. Borehole name: ' + w.name)
-    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:247: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0419
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0236
       'assigned a survey. Borehole name: ' + w.name)
-    The following boreholes failed being processed:  ['GD0308', 'GD0225', 'GD0632', 'GD0505', 'GD0211', 'GD0981', 'GD0733', 'GD0464', 'GD0597', 'GD0760', 'GD0399', 'GD0236', 'GD0937', 'GD0305', 'GD0611', 'GD0377', 'GD0041', 'GD0526', 'GD0136', 'GD0529', 'GD0622', 'GD0439', 'GD0304', 'GD0942', 'GD0235', 'GD0092', 'GD0504', 'GD0080', 'GD1016', 'GD0487', 'GD0419', 'GD0308', 'GD0225', 'GD0632', 'GD0505', 'GD0211', 'GD0981', 'GD0733', 'GD0464', 'GD0597', 'GD0760', 'GD0399', 'GD0236', 'GD0235', 'GD0937', 'GD0305', 'GD0611', 'GD0377', 'GD0041', 'GD0526', 'GD0136', 'GD0529', 'GD0622', 'GD0439', 'GD0304', 'GD0942', 'GD0092', 'GD0504', 'GD0080', 'GD1016', 'GD0487', 'GD0419']
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0529
+      'assigned a survey. Borehole name: ' + w.name)
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0305
+      'assigned a survey. Borehole name: ' + w.name)
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0816
+      'assigned a survey. Borehole name: ' + w.name)
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0308
+      'assigned a survey. Borehole name: ' + w.name)
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0041
+      'assigned a survey. Borehole name: ' + w.name)
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0235
+      'assigned a survey. Borehole name: ' + w.name)
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0377
+      'assigned a survey. Borehole name: ' + w.name)
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0597
+      'assigned a survey. Borehole name: ' + w.name)
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0715
+      'assigned a survey. Borehole name: ' + w.name)
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0487
+      'assigned a survey. Borehole name: ' + w.name)
+    /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0813
+      'assigned a survey. Borehole name: ' + w.name)
+    The following boreholes failed being processed:  ['GD0399', 'GD0845', 'GD0942', 'GD0843', 'GD0505', 'GD0981', 'GD0948', 'GD0225', 'GD0760', 'GD1007', 'GD0464', 'GD0211', 'GD0622', 'GD0526', 'GD0504', 'GD0617', 'GD0439', 'GD0573', 'GD0766', 'GD0611', 'GD1016', 'GD0937', 'GD0632', 'GD0304', 'GD0858', 'GD0092', 'GD0136', 'GD0419', 'GD0080', 'GD0733', 'GD0236', 'GD0529', 'GD0305', 'GD0816', 'GD0308', 'GD0041', 'GD0235', 'GD0377', 'GD0597', 'GD0715', 'GD0487', 'GD0813', 'GD0399', 'GD0845', 'GD0942', 'GD0843', 'GD0505', 'GD0981', 'GD0948', 'GD0225', 'GD0760', 'GD1007', 'GD0464', 'GD0211', 'GD0622', 'GD0526', 'GD0504', 'GD0617', 'GD0439', 'GD0573', 'GD0766', 'GD0611', 'GD1016', 'GD0937', 'GD0632', 'GD0304', 'GD0858', 'GD0092', 'GD0136', 'GD0419', 'GD0080', 'GD0733', 'GD0236', 'GD0529', 'GD0305', 'GD0816', 'GD0308', 'GD0041', 'GD0235', 'GD0377', 'GD0597', 'GD0715', 'GD0487', 'GD0813']
 
 
 
@@ -466,21 +500,7 @@ Now we can read the csv files into subsurface.UnstructuredData
  .. code-block:: none
 
 
-    UnstructuredData(data=<xarray.Dataset>
-    Dimensions:            (XYZ: 3, attribute: 1, cell: 1111887, nodes: 2, points: 1113000, points_attribute: 0)
-    Coordinates:
-      * points             (points) int64 0 1 2 3 ... 1112997 1112998 1112999
-      * XYZ                (XYZ) <U1 'X' 'Y' 'Z'
-      * attribute          (attribute) object 'lith_log'
-      * points_attribute   (points_attribute) int64 
-        UWI                (cell) object 'GD0679' 'GD0679' ... 'GD0170' 'GD0170'
-        Depth              (cell) float64 0.01086 0.03258 0.0543 ... 1.997 1.999
-    Dimensions without coordinates: cell, nodes
-    Data variables:
-        vertex             (points, XYZ) float64 3.242e+07 5.782e+06 ... 80.0
-        cells              (cell, nodes) int64 0 1 1 2 ... 1112998 1112998 1112999
-        attributes         (cell, attribute) int64 1 1 1 1 1 1 1 1 ... 2 2 2 2 2 2 2
-        points_attributes  (points, points_attribute) float64 )
+    UnstructuredData()
 
 
 
@@ -548,7 +568,7 @@ transformation can be done by the functions `to_pyvista_...`.
 
 We can do the same for point data, for example the borehole location.
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-128
+.. GENERATED FROM PYTHON SOURCE LINES 117-131
 
 .. code-block:: python3
 
@@ -558,7 +578,10 @@ We can do the same for point data, for example the borehole location.
         collar_file=data_path + '/wells.csv',
         read_collar_kwargs={
             'usecols': ['Index', 'X', 'Y', 'Altitude'],
-            'header': 0
+            'header': 0,
+            'columns_map': {
+                'X': 'x', 'Y': 'y', 'Altitude': 'altitude'
+            }
         }
     )
     borehole_location_struct
@@ -574,28 +597,15 @@ We can do the same for point data, for example the borehole location.
  .. code-block:: none
 
 
-    UnstructuredData(data=<xarray.Dataset>
-    Dimensions:            (XYZ: 3, attribute: 0, cell: 2798, nodes: 1, points: 2798, points_attribute: 0)
-    Coordinates:
-      * points             (points) int64 0 1 2 3 4 5 ... 2793 2794 2795 2796 2797
-      * XYZ                (XYZ) <U1 'X' 'Y' 'Z'
-      * attribute          (attribute) int64 
-      * points_attribute   (points_attribute) int64 
-        cell_              (cell) int64 0 1 2 3 4 5 ... 2793 2794 2795 2796 2797
-    Dimensions without coordinates: cell, nodes
-    Data variables:
-        vertex             (points, XYZ) float32 3.243e+07 5.785e+06 ... 60.0
-        cells              (cell, nodes) int64 0 1 2 3 4 ... 2794 2795 2796 2797
-        attributes         (cell, attribute) float64 
-        points_attributes  (points, points_attribute) float64 )
+    UnstructuredData()
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-130
+.. GENERATED FROM PYTHON SOURCE LINES 132-133
 
 Element
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-133
+.. GENERATED FROM PYTHON SOURCE LINES 133-136
 
 .. code-block:: python3
 
@@ -613,15 +623,15 @@ Element
  .. code-block:: none
 
 
-    <subsurface.structs.unstructured_elements.PointSet object at 0x7f618c2d3390>
+    <subsurface.structs.unstructured_elements.PointSet object at 0x7f225c7594d0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 134-135
+.. GENERATED FROM PYTHON SOURCE LINES 137-138
 
 Pyvista mesh
 
-.. GENERATED FROM PYTHON SOURCE LINES 135-138
+.. GENERATED FROM PYTHON SOURCE LINES 138-141
 
 .. code-block:: python3
 
@@ -636,23 +646,29 @@ Pyvista mesh
 .. raw:: html
 
     <div class="output_subarea output_html rendered_html output_result">
-
+    <table><tr><th>Header</th><th>Data Arrays</th></tr><tr><td>
     <table>
     <tr><th>PolyData</th><th>Information</th></tr>
-    <tr><td>N Cells</td><td>2798</td></tr>
-    <tr><td>N Points</td><td>2798</td></tr>
+    <tr><td>N Cells</td><td>1144</td></tr>
+    <tr><td>N Points</td><td>1144</td></tr>
     <tr><td>X Bounds</td><td>3.238e+07, 3.243e+07</td></tr>
     <tr><td>Y Bounds</td><td>5.735e+06, 5.785e+06</td></tr>
     <tr><td>Z Bounds</td><td>3.500e+01, 2.304e+02</td></tr>
-    <tr><td>N Arrays</td><td>0</td></tr>
+    <tr><td>N Arrays</td><td>1</td></tr>
     </table>
 
+    </td><td>
+    <table>
+    <tr><th>Name</th><th>Field</th><th>Type</th><th>N Comp</th><th>Min</th><th>Max</th></tr>
+    <tr><td><b>number_segments</b></td><td>Points</td><td>float64</td><td>1</td><td>1.000e+00</td><td>1.900e+01</td></tr>
+    </table>
 
+    </td></tr> </table>
     </div>
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 139-146
+.. GENERATED FROM PYTHON SOURCE LINES 142-149
 
 .. code-block:: python3
 
@@ -684,12 +700,12 @@ Pyvista mesh
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 147-149
+.. GENERATED FROM PYTHON SOURCE LINES 150-152
 
 Read Topography
 ---------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 151-155
+.. GENERATED FROM PYTHON SOURCE LINES 154-158
 
 .. code-block:: python3
 
@@ -718,11 +734,11 @@ Read Topography
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 156-157
+.. GENERATED FROM PYTHON SOURCE LINES 159-160
 
 Remove outliers
 
-.. GENERATED FROM PYTHON SOURCE LINES 157-167
+.. GENERATED FROM PYTHON SOURCE LINES 160-170
 
 .. code-block:: python3
 
@@ -763,7 +779,7 @@ Remove outliers
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 168-175
+.. GENERATED FROM PYTHON SOURCE LINES 171-178
 
 .. code-block:: python3
 
@@ -795,12 +811,12 @@ Remove outliers
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 176-178
+.. GENERATED FROM PYTHON SOURCE LINES 179-181
 
 Read Profiles
 -------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 180-186
+.. GENERATED FROM PYTHON SOURCE LINES 183-189
 
 .. code-block:: python3
 
@@ -817,7 +833,7 @@ Read Profiles
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 187-209
+.. GENERATED FROM PYTHON SOURCE LINES 190-212
 
 .. code-block:: python3
 
@@ -850,7 +866,7 @@ Read Profiles
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 210-216
+.. GENERATED FROM PYTHON SOURCE LINES 213-219
 
 .. code-block:: python3
 
@@ -881,16 +897,16 @@ Read Profiles
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 217-219
+.. GENERATED FROM PYTHON SOURCE LINES 220-222
 
 GemPy Mesh
 ----------
 
-.. GENERATED FROM PYTHON SOURCE LINES 221-222
+.. GENERATED FROM PYTHON SOURCE LINES 224-225
 
 UnstructuredData
 
-.. GENERATED FROM PYTHON SOURCE LINES 222-230
+.. GENERATED FROM PYTHON SOURCE LINES 225-233
 
 .. code-block:: python3
 
@@ -909,7 +925,7 @@ UnstructuredData
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 231-238
+.. GENERATED FROM PYTHON SOURCE LINES 234-241
 
 .. code-block:: python3
 
@@ -941,34 +957,16 @@ UnstructuredData
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 239-241
-
-Plot all together
------------------
-
-.. GENERATED FROM PYTHON SOURCE LINES 243-248
-
-meshes_list = ([*profiles_mesh_list, *profiles_traces, gempy_mesh,
-                topo_mesh, borehole_loc_mesh, wells_mesh
-                ])
-%%
-Plot mesh
-
-.. GENERATED FROM PYTHON SOURCE LINES 250-256
+.. GENERATED FROM PYTHON SOURCE LINES 242-243
 
 sphinx_gallery_thumbnail_number = 6
-ss.visualization.pv_plot(
-    meshes_list,
-    image_2d=False,
-    ve=5
-)
 
-.. GENERATED FROM PYTHON SOURCE LINES 258-260
+.. GENERATED FROM PYTHON SOURCE LINES 246-248
 
 Export to binary
 ----------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 262-279
+.. GENERATED FROM PYTHON SOURCE LINES 250-267
 
 .. code-block:: python3
 
@@ -999,7 +997,7 @@ Export to binary
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 3 minutes  10.440 seconds)
+   **Total running time of the script:** ( 3 minutes  35.283 seconds)
 
 
 .. _sphx_glr_download_getting_started_getting_started.py:

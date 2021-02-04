@@ -35,17 +35,43 @@
           <div class="body" role="main">
             
   <h1>Source code for subsurface.io.wells</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">subsurface.structs.base_structures</span> <span class="kn">import</span> <span class="n">UnstructuredData</span>
+<span></span><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">subsurface.structs.base_structures</span> <span class="kn">import</span> <span class="n">UnstructuredData</span>
 <span class="kn">from</span> <span class="nn">subsurface.io.wells.welly_reader</span> <span class="kn">import</span> <span class="n">read_to_welly</span>
 <span class="kn">from</span> <span class="nn">subsurface.io.wells.well_files_reader</span> <span class="kn">import</span> <span class="n">read_collar</span>
 <span class="kn">from</span> <span class="nn">subsurface.io.wells.wells_utils</span> <span class="kn">import</span> <span class="n">add_tops_from_base_and_altitude_in_place</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
-<div class="viewcode-block" id="borehole_location_to_unstruct"><a class="viewcode-back" href="../../../Read%20well%20data/subsurface.io.borehole_location_to_unstruct.html#subsurface.io.borehole_location_to_unstruct">[docs]</a><span class="k">def</span> <span class="nf">borehole_location_to_unstruct</span><span class="p">(</span><span class="n">collar_file</span><span class="p">,</span> <span class="n">read_collar_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="borehole_location_to_unstruct"><a class="viewcode-back" href="../../../Read%20well%20data/subsurface.io.borehole_location_to_unstruct.html#subsurface.io.borehole_location_to_unstruct">[docs]</a><span class="k">def</span> <span class="nf">borehole_location_to_unstruct</span><span class="p">(</span>
+        <span class="n">collar_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StringIO</span><span class="p">],</span>
+        <span class="n">read_collar_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">add_number_segments</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UnstructuredData</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">read_collar_kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">read_collar_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
     <span class="n">collars</span> <span class="o">=</span> <span class="n">read_collar</span><span class="p">(</span><span class="n">collar_file</span><span class="p">,</span> <span class="o">**</span><span class="n">read_collar_kwargs</span><span class="p">)</span>
-    <span class="n">ud</span> <span class="o">=</span> <span class="n">UnstructuredData</span><span class="p">(</span><span class="n">vertex</span><span class="o">=</span><span class="n">collars</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">))</span>
+    <span class="n">collars_attributes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+    <span class="c1"># Remove duplicates</span>
+    <span class="n">collars_single_well</span> <span class="o">=</span> <span class="n">collars</span><span class="p">[</span><span class="o">~</span><span class="n">collars</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
+    <span class="n">wells_names</span> <span class="o">=</span> <span class="n">collars_single_well</span><span class="o">.</span><span class="n">index</span>
+
+    <span class="k">if</span> <span class="n">add_number_segments</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">number_of_segments</span> <span class="o">=</span> <span class="n">collars</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">collars_attributes</span><span class="p">[</span><span class="s1">&#39;number_segments&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">number_of_segments</span>
+
+    <span class="n">ud</span> <span class="o">=</span> <span class="n">UnstructuredData</span><span class="p">(</span>
+        <span class="n">vertex</span><span class="o">=</span><span class="n">collars_single_well</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;altitude&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+        <span class="n">attributes</span><span class="o">=</span><span class="n">collars_attributes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+        <span class="n">xarray_attributes</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;wells_names&quot;</span><span class="p">:</span> <span class="n">wells_names</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">)</span>  <span class="c1"># TODO: This should be int16!</span>
 
     <span class="k">return</span> <span class="n">ud</span></div>
 
@@ -98,8 +124,9 @@
 <span class="sd">            )</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">backend</span> <span class="o">==</span> <span class="s1">&#39;welly&#39;</span><span class="p">:</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">wts</span> <span class="o">=</span> <span class="n">read_to_welly</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">unstruct</span> <span class="o">=</span> <span class="n">wts</span><span class="o">.</span><span class="n">to_subsurface</span><span class="p">(</span><span class="n">n_points</span><span class="o">=</span><span class="n">n_points</span><span class="p">)</span>
+        <span class="n">unstruct</span> <span class="o">=</span> <span class="n">wts</span><span class="o">.</span><span class="n">to_subsurface</span><span class="p">(</span><span class="n">n_points</span><span class="o">=</span><span class="n">n_points</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">table</span><span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">unstruct</span><span class="p">,</span> <span class="n">wts</span><span class="o">.</span><span class="n">p</span><span class="p">)</span> <span class="k">if</span> <span class="n">return_welly</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="n">unstruct</span>
 
     <span class="k">else</span><span class="p">:</span>
@@ -200,7 +227,7 @@
       &copy;2019-2021, The subsurface developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

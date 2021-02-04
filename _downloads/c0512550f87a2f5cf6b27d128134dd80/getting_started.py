@@ -120,7 +120,10 @@ borehole_location_struct = ss.io.borehole_location_to_unstruct(
     collar_file=data_path + '/wells.csv',
     read_collar_kwargs={
         'usecols': ['Index', 'X', 'Y', 'Altitude'],
-        'header': 0
+        'header': 0,
+        'columns_map': {
+            'X': 'x', 'Y': 'y', 'Altitude': 'altitude'
+        }
     }
 )
 borehole_location_struct
@@ -236,23 +239,8 @@ ss.visualization.pv_plot(
 
 
 # %%
-# Plot all together
-# -----------------
-
-# %%
-# meshes_list = ([*profiles_mesh_list, *profiles_traces, gempy_mesh,
-#                 topo_mesh, borehole_loc_mesh, wells_mesh
-#                 ])
-# %%
-# Plot mesh
-
-# %%
 # sphinx_gallery_thumbnail_number = 6
-# ss.visualization.pv_plot(
-#     meshes_list,
-#     image_2d=False,
-#     ve=5
-# )
+
 
 # %%
 # Export to binary
