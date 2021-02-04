@@ -7,7 +7,7 @@ import pytest
 import numpy as np
 
 from subsurface import UnstructuredData, TriSurf, StructuredData
-from subsurface.io.profiles import create_mesh_from_trace
+from subsurface.io.profiles.profiles_core import create_mesh_from_trace
 from subsurface.visualization import to_pyvista_mesh, pv_plot, \
     to_pyvista_mesh_and_texture
 

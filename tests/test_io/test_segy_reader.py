@@ -6,7 +6,7 @@ import pandas as pd
 import geopandas as gpd
 from subsurface import StructuredGrid, TriSurf
 from subsurface.geological_formats import segy_reader
-from subsurface.io.profiles import create_mesh_from_trace
+from subsurface.io.profiles.profiles_core import create_mesh_from_trace
 from subsurface.structs.base_structures import StructuredData, UnstructuredData
 import matplotlib.pyplot as plt
 import numpy as np

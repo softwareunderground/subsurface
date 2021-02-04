@@ -1,42 +1,6 @@
-from io import StringIO
-from typing import Union
-
-from subsurface.structs.base_structures import UnstructuredData
 from subsurface.io.wells.welly_reader import read_to_welly
 from subsurface.io.wells.well_files_reader import read_collar
 from subsurface.io.wells.wells_utils import add_tops_from_base_and_altitude_in_place
-import xarray as xr
-import numpy as np
-import pandas as pd
-
-
-def borehole_location_to_unstruct(
-        collar_file: Union[str, StringIO],
-        read_collar_kwargs: dict = None,
-        add_number_segments: bool = True) -> UnstructuredData:
-    if read_collar_kwargs is None:
-        read_collar_kwargs = dict()
-
-    collars = read_collar(collar_file, **read_collar_kwargs)
-    collars_attributes = pd.DataFrame()
-
-    # Remove duplicates
-    collars_single_well = collars[~collars.index.duplicated()]
-    wells_names = collars_single_well.index
-
-    if add_number_segments is True:
-        number_of_segments = collars.index.value_counts(sort=False).values
-        collars_attributes['number_segments'] = number_of_segments
-
-    ud = UnstructuredData(
-        vertex=collars_single_well[['x', 'y', 'altitude']].values.astype('float32'),
-        attributes=collars_attributes.astype('float32'),
-        xarray_attributes={
-            "wells_names": wells_names.values.tolist()
-        }
-    )  # TODO: This should be int16!
-
-    return ud
 
 
 def read_wells_to_unstruct(backend='welly', n_points=1000,

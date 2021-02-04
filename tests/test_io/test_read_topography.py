@@ -1,8 +1,7 @@
 import pytest
 
 from subsurface import TriSurf, StructuredGrid
-from subsurface.io.topography import read_structured_topography, \
-    read_unstructured_topography
+from subsurface.io import read_structured_topography, read_unstructured_topography
 from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
 
 

@@ -1,6 +1,6 @@
 import pandas as pd
 from subsurface.structs.base_structures import UnstructuredData
-from subsurface.utils import get_extension
+from subsurface.utils.utils_core import get_extension
 import numpy as np
 from scipy.spatial.qhull import Delaunay
 

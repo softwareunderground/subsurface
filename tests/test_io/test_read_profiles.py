@@ -2,7 +2,7 @@ import geopandas as gpd
 import pytest
 
 from subsurface import UnstructuredData, TriSurf, StructuredData
-from subsurface.io.profiles import create_mesh_from_trace, \
+from subsurface.io.profiles.profiles_core import create_mesh_from_trace, \
     create_tri_surf_from_traces_texture, lineset_from_trace
 from subsurface.visualization import to_pyvista_mesh, pv_plot
 import imageio

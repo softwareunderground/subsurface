@@ -1,6 +1,6 @@
 import pytest
 from subsurface import TriSurf, StructuredGrid
-from subsurface.io import read_unstruct, read_struct
+from subsurface.io import read_unstruct, read_struct, read_structured_topography
 
 from subsurface.structs.base_structures import UnstructuredData, StructuredData
 import numpy as np
@@ -143,7 +143,6 @@ def test_read_struct(data_path):
 
 def test_remove_outliers(data_path):
     topo_path = data_path + '/topo/dtm_rp.tif'
-    from subsurface.io.topography import read_structured_topography
     struct = read_structured_topography(topo_path)
     struct.replace_outliers('topography', 0.99)
     print(struct.data['topography'])
