@@ -63,6 +63,11 @@ data such as:</p>
 <p>We can read well data - using welly as backend. First we need to have the
 data in the right format for digesting.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pulling data example</span>
+<span class="kn">import</span> <span class="nn">subsurface.interfaces.to_liquid_earth</span>
+<span class="kn">import</span> <span class="nn">subsurface.io.profiles.profiles_core</span>
+<span class="kn">import</span> <span class="nn">subsurface.io.topography.topo_core</span>
+<span class="kn">import</span> <span class="nn">subsurface.io.wells.wells_interface</span>
+
 <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_file</span></a> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
     <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/cgre-aachen/gempy_data/raw/master/&quot;</span>
         <span class="s2">&quot;data/subsurface/example1.zip&quot;</span><span class="p">,</span>
@@ -98,7 +103,7 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   self.obj[item] = s
-/home/runner/work/subsurface/subsurface/examples/getting_started/getting_started.py:56: SettingWithCopyWarning:
+/home/runner/work/subsurface/subsurface/examples/getting_started/getting_started.py:61: SettingWithCopyWarning:
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -364,91 +369,91 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/subsurface/subsurface/subsurface/io/wells/well_files_reader.py:125: UserWarning: inc and/or azi columns are not present in the file. The boreholes will be straight.
   warnings.warn(&#39;inc and/or azi columns are not present in the file.&#39;
 The following striplog failed being processed:  [&#39;GD0041&#39;, &#39;GD0080&#39;, &#39;GD0092&#39;, &#39;GD0136&#39;, &#39;GD0211&#39;, &#39;GD0225&#39;, &#39;GD0235&#39;, &#39;GD0236&#39;, &#39;GD0304&#39;, &#39;GD0305&#39;, &#39;GD0308&#39;, &#39;GD0377&#39;, &#39;GD0399&#39;, &#39;GD0419&#39;, &#39;GD0439&#39;, &#39;GD0464&#39;, &#39;GD0487&#39;, &#39;GD0504&#39;, &#39;GD0505&#39;, &#39;GD0526&#39;, &#39;GD0529&#39;, &#39;GD0573&#39;, &#39;GD0597&#39;, &#39;GD0611&#39;, &#39;GD0617&#39;, &#39;GD0622&#39;, &#39;GD0632&#39;, &#39;GD0715&#39;, &#39;GD0733&#39;, &#39;GD0760&#39;, &#39;GD0766&#39;, &#39;GD0813&#39;, &#39;GD0816&#39;, &#39;GD0843&#39;, &#39;GD0845&#39;, &#39;GD0858&#39;, &#39;GD0937&#39;, &#39;GD0942&#39;, &#39;GD0948&#39;, &#39;GD0981&#39;, &#39;GD1007&#39;, &#39;GD1016&#39;]
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0399
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
 /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0845
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0942
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0843
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0505
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0981
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0948
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0225
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0760
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD1007
   &#39;assigned a survey. Borehole name: &#39; + w.name)
 /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0464
   &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0211
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0597
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD1007
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0377
   &#39;assigned a survey. Borehole name: &#39; + w.name)
 /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0622
   &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0526
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0236
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0211
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0399
   &#39;assigned a survey. Borehole name: &#39; + w.name)
 /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0504
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0617
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0439
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0573
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0766
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0611
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD1016
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0937
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0632
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0304
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0858
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0092
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0136
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0419
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0080
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0733
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0236
   &#39;assigned a survey. Borehole name: &#39; + w.name)
 /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0529
   &#39;assigned a survey. Borehole name: &#39; + w.name)
 /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0305
   &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0816
-  &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0308
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0948
   &#39;assigned a survey. Borehole name: &#39; + w.name)
 /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0041
   &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0235
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0858
   &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0377
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD1016
   &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0597
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0573
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0760
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0733
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0611
   &#39;assigned a survey. Borehole name: &#39; + w.name)
 /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0715
   &#39;assigned a survey. Borehole name: &#39; + w.name)
-/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0487
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0235
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0419
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0617
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0632
   &#39;assigned a survey. Borehole name: &#39; + w.name)
 /home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0813
   &#39;assigned a survey. Borehole name: &#39; + w.name)
-The following boreholes failed being processed:  [&#39;GD0399&#39;, &#39;GD0845&#39;, &#39;GD0942&#39;, &#39;GD0843&#39;, &#39;GD0505&#39;, &#39;GD0981&#39;, &#39;GD0948&#39;, &#39;GD0225&#39;, &#39;GD0760&#39;, &#39;GD1007&#39;, &#39;GD0464&#39;, &#39;GD0211&#39;, &#39;GD0622&#39;, &#39;GD0526&#39;, &#39;GD0504&#39;, &#39;GD0617&#39;, &#39;GD0439&#39;, &#39;GD0573&#39;, &#39;GD0766&#39;, &#39;GD0611&#39;, &#39;GD1016&#39;, &#39;GD0937&#39;, &#39;GD0632&#39;, &#39;GD0304&#39;, &#39;GD0858&#39;, &#39;GD0092&#39;, &#39;GD0136&#39;, &#39;GD0419&#39;, &#39;GD0080&#39;, &#39;GD0733&#39;, &#39;GD0236&#39;, &#39;GD0529&#39;, &#39;GD0305&#39;, &#39;GD0816&#39;, &#39;GD0308&#39;, &#39;GD0041&#39;, &#39;GD0235&#39;, &#39;GD0377&#39;, &#39;GD0597&#39;, &#39;GD0715&#39;, &#39;GD0487&#39;, &#39;GD0813&#39;, &#39;GD0399&#39;, &#39;GD0845&#39;, &#39;GD0942&#39;, &#39;GD0843&#39;, &#39;GD0505&#39;, &#39;GD0981&#39;, &#39;GD0948&#39;, &#39;GD0225&#39;, &#39;GD0760&#39;, &#39;GD1007&#39;, &#39;GD0464&#39;, &#39;GD0211&#39;, &#39;GD0622&#39;, &#39;GD0526&#39;, &#39;GD0504&#39;, &#39;GD0617&#39;, &#39;GD0439&#39;, &#39;GD0573&#39;, &#39;GD0766&#39;, &#39;GD0611&#39;, &#39;GD1016&#39;, &#39;GD0937&#39;, &#39;GD0632&#39;, &#39;GD0304&#39;, &#39;GD0858&#39;, &#39;GD0092&#39;, &#39;GD0136&#39;, &#39;GD0419&#39;, &#39;GD0080&#39;, &#39;GD0733&#39;, &#39;GD0236&#39;, &#39;GD0529&#39;, &#39;GD0305&#39;, &#39;GD0816&#39;, &#39;GD0308&#39;, &#39;GD0041&#39;, &#39;GD0235&#39;, &#39;GD0377&#39;, &#39;GD0597&#39;, &#39;GD0715&#39;, &#39;GD0487&#39;, &#39;GD0813&#39;]
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0080
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0308
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0136
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0937
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0766
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0526
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0981
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0092
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0487
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0439
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0843
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0225
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0505
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0942
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0816
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+/home/runner/work/subsurface/subsurface/subsurface/io/wells/welly_reader.py:251: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: GD0304
+  &#39;assigned a survey. Borehole name: &#39; + w.name)
+The following boreholes failed being processed:  [&#39;GD0845&#39;, &#39;GD0464&#39;, &#39;GD0597&#39;, &#39;GD1007&#39;, &#39;GD0377&#39;, &#39;GD0622&#39;, &#39;GD0236&#39;, &#39;GD0211&#39;, &#39;GD0399&#39;, &#39;GD0504&#39;, &#39;GD0529&#39;, &#39;GD0305&#39;, &#39;GD0948&#39;, &#39;GD0041&#39;, &#39;GD0858&#39;, &#39;GD1016&#39;, &#39;GD0573&#39;, &#39;GD0760&#39;, &#39;GD0733&#39;, &#39;GD0611&#39;, &#39;GD0715&#39;, &#39;GD0235&#39;, &#39;GD0419&#39;, &#39;GD0617&#39;, &#39;GD0632&#39;, &#39;GD0813&#39;, &#39;GD0080&#39;, &#39;GD0308&#39;, &#39;GD0136&#39;, &#39;GD0937&#39;, &#39;GD0766&#39;, &#39;GD0526&#39;, &#39;GD0981&#39;, &#39;GD0092&#39;, &#39;GD0487&#39;, &#39;GD0439&#39;, &#39;GD0843&#39;, &#39;GD0225&#39;, &#39;GD0505&#39;, &#39;GD0942&#39;, &#39;GD0816&#39;, &#39;GD0304&#39;, &#39;GD0845&#39;, &#39;GD0464&#39;, &#39;GD0597&#39;, &#39;GD1007&#39;, &#39;GD0377&#39;, &#39;GD0622&#39;, &#39;GD0611&#39;, &#39;GD0236&#39;, &#39;GD0211&#39;, &#39;GD0399&#39;, &#39;GD0504&#39;, &#39;GD0529&#39;, &#39;GD0305&#39;, &#39;GD0948&#39;, &#39;GD0041&#39;, &#39;GD0858&#39;, &#39;GD1016&#39;, &#39;GD0573&#39;, &#39;GD0760&#39;, &#39;GD0733&#39;, &#39;GD0715&#39;, &#39;GD0235&#39;, &#39;GD0419&#39;, &#39;GD0617&#39;, &#39;GD0632&#39;, &#39;GD0813&#39;, &#39;GD0080&#39;, &#39;GD0308&#39;, &#39;GD0136&#39;, &#39;GD0937&#39;, &#39;GD0766&#39;, &#39;GD0526&#39;, &#39;GD0981&#39;, &#39;GD0092&#39;, &#39;GD0487&#39;, &#39;GD0439&#39;, &#39;GD0843&#39;, &#39;GD0225&#39;, &#39;GD0505&#39;, &#39;GD0942&#39;, &#39;GD0816&#39;, &#39;GD0304&#39;]
 </pre></div>
 </div>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_unstructured_data</span></a>
@@ -486,7 +491,7 @@ transformation can be done by the functions <cite>to_pyvista_…</cite>.</p>
 </div>
 <p>We can do the same for point data, for example the borehole location.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># UnstructuredData</span>
-<a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">borehole_location_struct</span></a> <span class="o">=</span> <a href="../Read well data/subsurface.io.borehole_location_to_unstruct.html#subsurface.io.borehole_location_to_unstruct" title="subsurface.io.borehole_location_to_unstruct" class="sphx-glr-backref-module-subsurface-io sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">borehole_location_to_unstruct</span></a><span class="p">(</span>
+<a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">borehole_location_struct</span></a> <span class="o">=</span> <span class="n">subsurface</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">wells</span><span class="o">.</span><span class="n">wells_interface</span><span class="o">.</span><span class="n">borehole_location_to_unstruct</span><span class="p">(</span>
     <span class="n">collar_file</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">,</span>
     <span class="n">read_collar_kwargs</span><span class="o">=</span><span class="p">{</span>
         <span class="s1">&#39;usecols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;Altitude&#39;</span><span class="p">],</span>
@@ -509,7 +514,7 @@ transformation can be done by the functions <cite>to_pyvista_…</cite>.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;subsurface.structs.unstructured_elements.PointSet object at 0x7f225c7594d0&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;subsurface.structs.unstructured_elements.PointSet object at 0x7fef9bd58490&gt;
 </pre></div>
 </div>
 <p>Pyvista mesh</p>
@@ -556,7 +561,7 @@ transformation can be done by the functions <cite>to_pyvista_…</cite>.</p>
 <div class="section" id="read-topography">
 <h2>Read Topography<a class="headerlink" href="#read-topography" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># StructuredData</span>
-<a href="../Base Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topo_structured_data</span></a> <span class="o">=</span> <a href="../Read topographic data/subsurface.io.read_structured_topography.html#subsurface.io.read_structured_topography" title="subsurface.io.read_structured_topography" class="sphx-glr-backref-module-subsurface-io sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_structured_topography</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/DEM50.tif&#39;</span><span class="p">)</span>
+<a href="../Base Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topo_structured_data</span></a> <span class="o">=</span> <span class="n">subsurface</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">topography</span><span class="o">.</span><span class="n">topo_core</span><span class="o">.</span><span class="n">read_structured_topography</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/DEM50.tif&#39;</span><span class="p">)</span>
 <a href="../Base Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topo_structured_data</span></a>
 </pre></div>
 </div>
@@ -615,13 +620,13 @@ Coordinates:
 </div>
 <div class="section" id="read-profiles">
 <h2>Read Profiles<a class="headerlink" href="#read-profiles" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">profiles_traces</span></a> <span class="o">=</span> <a href="../Read profiles/subsurface.io.lineset_from_trace.html#subsurface.io.lineset_from_trace" title="subsurface.io.lineset_from_trace" class="sphx-glr-backref-module-subsurface-io sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">lineset_from_trace</span></a><span class="p">(</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">profiles_traces</span></a> <span class="o">=</span> <span class="n">subsurface</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">profiles_core</span><span class="o">.</span><span class="n">lineset_from_trace</span><span class="p">(</span>
     <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/Profile_PyVista.shp&#39;</span><span class="p">,</span>
     <span class="n">idx</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">profiles_trisurf_list</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">profiles_mesh_list</span></a> <span class="o">=</span> <a href="../Read profiles/subsurface.io.create_tri_surf_from_traces_texture.html#subsurface.io.create_tri_surf_from_traces_texture" title="subsurface.io.create_tri_surf_from_traces_texture" class="sphx-glr-backref-module-subsurface-io sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">create_tri_surf_from_traces_texture</span></a><span class="p">(</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">profiles_trisurf_list</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">profiles_mesh_list</span></a> <span class="o">=</span> <span class="n">subsurface</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">profiles_core</span><span class="o">.</span><span class="n">create_tri_surf_from_traces_texture</span><span class="p">(</span>
     <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/Profile_PyVista.shp&#39;</span><span class="p">,</span>
     <span class="n">path_to_texture</span><span class="o">=</span><span class="p">[</span>
         <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile001.png&#39;</span><span class="p">,</span>
@@ -689,25 +694,25 @@ Coordinates:
 </div>
 <div class="section" id="export-to-binary">
 <h2>Export to binary<a class="headerlink" href="#export-to-binary" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/gempy_base&#39;</span><span class="p">,</span>
-                                          <a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gempy_unstructured_data</span></a><span class="p">)</span>
-<span class="n">ss</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/wells&#39;</span><span class="p">,</span>
-                                          <a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_unstructured_data</span></a><span class="p">)</span>
-<span class="n">ss</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/topo&#39;</span><span class="p">,</span>
-                                          <a href="../Base Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topo_structured_data</span></a><span class="p">)</span>
-<span class="n">ss</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/collars&#39;</span><span class="p">,</span>
-                                          <a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">borehole_location_struct</span></a><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">subsurface</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/gempy_base&#39;</span><span class="p">,</span>
+                                                            <a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gempy_unstructured_data</span></a><span class="p">)</span>
+<span class="n">subsurface</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/wells&#39;</span><span class="p">,</span>
+                                                            <a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_unstructured_data</span></a><span class="p">)</span>
+<span class="n">subsurface</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/topo&#39;</span><span class="p">,</span>
+                                                            <a href="../Base Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topo_structured_data</span></a><span class="p">)</span>
+<span class="n">subsurface</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="s1">&#39;/collars&#39;</span><span class="p">,</span>
+                                                            <a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">borehole_location_struct</span></a><span class="p">)</span>
 
 <span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">e</span></a><span class="p">,</span> <a href="../Unstructured Elements/subsurface.TriSurf.html#subsurface.TriSurf" title="subsurface.TriSurf" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tri_surf</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">profiles_trisurf_list</span></a><span class="p">):</span>
-    <span class="n">ss</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/profile_</span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">e</span></a><span class="si">}</span><span class="s1">_mesh&#39;</span><span class="p">,</span>
-                                              <a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tri_surf</span><span class="o">.</span><span class="n">mesh</span></a><span class="p">)</span>
-    <span class="n">ss</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span>
+    <span class="n">subsurface</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/profile_</span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">e</span></a><span class="si">}</span><span class="s1">_mesh&#39;</span><span class="p">,</span>
+                                                                <a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tri_surf</span><span class="o">.</span><span class="n">mesh</span></a><span class="p">)</span>
+    <span class="n">subsurface</span><span class="o">.</span><span class="n">interfaces</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span>
         <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_path</span></a> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/profile_</span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">e</span></a><span class="si">}</span><span class="s1">_texture_C&#39;</span><span class="p">,</span>
         <a href="../Base Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tri_surf</span><span class="o">.</span><span class="n">texture</span></a><span class="p">,</span>
         <span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 3 minutes  35.283 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 3 minutes  20.320 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-getting-started-getting-started-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/c0512550f87a2f5cf6b27d128134dd80/getting_started.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">getting_started.py</span></code></a></p>
