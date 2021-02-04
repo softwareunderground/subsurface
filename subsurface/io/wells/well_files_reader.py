@@ -46,6 +46,8 @@ def read_collar(file_or_buffer, **kwargs) -> pd.DataFrame:
     cols = kwargs.pop('usecols', [0, 1, 2, 3])
     index_col = kwargs.pop('index_col', 0)
     is_json = kwargs.pop('is_json', False)
+    index_map = kwargs.pop('index_map', None)
+    columns_map = kwargs.pop('columns_map', None)
 
     # Check file_or_buffer type
     if is_json is True:
@@ -74,6 +76,12 @@ def read_collar(file_or_buffer, **kwargs) -> pd.DataFrame:
 
     else:
         raise AttributeError('file_or_buffer must be either a path or a dict')
+
+    if index_map is not None:
+        d.index = d.index.map(index_map)
+
+    if columns_map is not None:
+        d.columns = d.columns.map(columns_map)
 
     return d
 

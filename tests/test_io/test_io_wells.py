@@ -6,10 +6,14 @@ import pandas as pd
 
 def test_borehole_location_to_unstruct(data_path):
     us = borehole_location_to_unstruct(
-        data_path+'/borehole/borehole_collar.xlsx', {})
+        data_path+'/borehole/borehole_collar.xlsx', {
+            'columns_map': {1: 'x',
+                            2: 'y',
+                            3: 'altitude',
+                            }
+        })
     point_set = PointSet(us)
     s = to_pyvista_points(point_set)
-    #pv_plot([s], image_2d=True)
 
 
 def test_generate_tops(data_path):
@@ -18,12 +22,8 @@ def test_generate_tops(data_path):
     Z_shift = d.groupby('Index')['_'].shift(1)
     Z_0 = Z_shift.fillna(0)
     v = Z_0 + d['Altitude']
-    # diff = v.groupby('Index').Z.diff()
-    # diff_0 = diff.fillna(0) + d['Altitude']
-    # print(diff_0)
-    print(v)
+
     d['top'] = v
-    print(d)
 
 
 
