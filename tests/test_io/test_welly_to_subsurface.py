@@ -3,9 +3,8 @@ import pytest
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from subsurface.io import WellyToSubsurface, read_to_welly
-from subsurface.io.wells import read_wells_to_unstruct
-from subsurface.io.wells.well_files_reader import read_collar, read_survey
+from subsurface.reader import WellyToSubsurface, read_to_welly, read_wells_to_unstruct
+from subsurface.reader.wells.well_files_reader import read_collar, read_survey
 from subsurface.structs import LineSet
 import subsurface
 import pathlib
@@ -136,7 +135,7 @@ def test_read_borehole_stateless():
                         index=dict_survey['index'],
                         columns=dict_survey['columns'])
 
-    wts = subsurface.io.pandas_to_welly(
+    wts = subsurface.reader.pandas_to_welly(
         collar_df=c_df,
         survey_df=s_df,
     )

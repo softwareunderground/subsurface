@@ -1,7 +1,7 @@
 import pytest
 from subsurface import TriSurf, StructuredGrid
-from subsurface.io import read_structured_topography
-from subsurface.io.read_netcdf import read_unstruct, read_struct
+from subsurface.reader import read_structured_topography
+from subsurface.reader.read_netcdf import read_unstruct, read_struct
 
 from subsurface.structs.base_structures import UnstructuredData, StructuredData
 import numpy as np

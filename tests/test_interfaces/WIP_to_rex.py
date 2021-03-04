@@ -6,7 +6,7 @@ import numpy as np
 from subsurface.interfaces.to_rex.data_struct import RexMaterial
 from subsurface.interfaces.to_rex.to_rex import RexMesh, numpy_to_rex, \
     write_rex_file, read_rex_file
-from subsurface.io.read_netcdf import read_unstruct, read_struct
+from subsurface.reader.read_netcdf import read_unstruct, read_struct
 
 
 @pytest.fixture(scope='module')

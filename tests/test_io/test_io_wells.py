@@ -1,5 +1,5 @@
 from subsurface import PointSet
-from subsurface.io import borehole_location_to_unstruct
+from subsurface.reader import borehole_location_to_unstruct
 from subsurface.visualization import to_pyvista_points, pv_plot
 import pandas as pd
 

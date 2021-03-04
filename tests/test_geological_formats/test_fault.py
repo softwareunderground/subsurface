@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from subsurface.io.faults import faults
+from subsurface.reader.faults import faults
 from subsurface.geological_formats.fault import FaultSticks
 import os
 

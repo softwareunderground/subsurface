@@ -1,6 +1,4 @@
-from subsurface.io.wells.welly_reader import read_to_welly
-from subsurface.io.wells.well_files_reader import read_collar
-from subsurface.io.wells.wells_utils import add_tops_from_base_and_altitude_in_place
+from subsurface.reader import read_to_welly
 
 
 def read_wells_to_unstruct(backend='welly', n_points=1000,
@@ -15,7 +13,7 @@ def read_wells_to_unstruct(backend='welly', n_points=1000,
         return_welly (bool): If True return also the welly project object.
 
         **kwargs:
-         `subsurface.io.wells.read_wells` args
+         `subsurface.reader.wells.read_wells` args
 
     Returns:
         `subsurface.UnstructuredData`:  if `return_welly` also the

@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 from pyvista import UnstructuredGrid
 
-from subsurface.io.mesh import surface_reader
+from subsurface.reader.mesh import surface_reader
 from subsurface.structs import TetraMesh, TriSurf
 from subsurface.structs.base_structures import UnstructuredData
 import os

@@ -4,7 +4,7 @@ from typing import Iterable, Union, List, Optional
 
 import warnings
 
-from subsurface.io.wells.well_files_reader import read_borehole_files
+from subsurface.reader.wells.well_files_reader import read_borehole_files
 from subsurface.structs import LineSet
 import numpy as np
 import pandas as pd

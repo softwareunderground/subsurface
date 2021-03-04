@@ -4,7 +4,7 @@ from typing import Union
 import pandas as pd
 
 from subsurface.structs import UnstructuredData
-from subsurface.io.wells import read_collar
+from subsurface.reader.wells import read_collar
 
 
 def borehole_location_to_unstruct(

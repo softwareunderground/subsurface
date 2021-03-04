@@ -1,7 +1,7 @@
 import numpy as np
 
 from subsurface.structs import StructuredData, UnstructuredData
-from subsurface.io.mesh.surface_reader import read_2d_mesh
+from subsurface.reader.mesh.surface_reader import read_2d_mesh
 from subsurface.utils.utils_core import get_extension
 
 

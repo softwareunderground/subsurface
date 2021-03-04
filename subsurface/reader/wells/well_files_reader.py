@@ -5,7 +5,7 @@ from typing import Optional, Union, List
 
 import pandas as pd
 
-from subsurface.io.wells.wells_utils import add_tops_from_base_and_altitude_in_place
+from subsurface.reader.wells.wells_utils import add_tops_from_base_and_altitude_in_place
 
 
 def _dict_reader(dict_):
