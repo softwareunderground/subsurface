@@ -70,15 +70,10 @@ wells_fixed
 # %%
 wells_unstructured_data = subsurface.reader.wells.wells_api.read_wells_to_unstruct(
     collar_file=data_path + '/wells.csv',
-    read_collar_kwargs={
-        'usecols': ['Index', 'X', 'Y', 'Altitude'],
-        'header': 0
-    },
+    read_collar_kwargs={'usecols': ['Index', 'X', 'Y', 'Altitude'], 'header': 0},
     survey_file=data_path + '/wells.csv',
-    read_survey_kwargs={
-        'index_col': 'Index',
-        'usecols': ['Index', 'md']  # if incl and azi not given -> well vertical
-    },
+    # if incl and azi not given -> well vertical
+    read_survey_kwargs={'index_col': 'Index', 'usecols': ['Index', 'md']},
     lith_file=data_path + '/wells.csv',
     read_lith_kwargs={
         'index_col': 'Index',
@@ -90,7 +85,6 @@ wells_unstructured_data = subsurface.reader.wells.wells_api.read_wells_to_unstru
     }
 
 )
-
 
 # %%
 wells_unstructured_data
@@ -146,12 +140,7 @@ borehole_loc_mesh = ss.visualization.to_pyvista_points(borehole_location_point_s
 borehole_loc_mesh
 
 # %%
-ss.visualization.pv_plot(
-    [borehole_loc_mesh],
-    image_2d=False,
-    ve=5
-)
-
+ss.visualization.pv_plot([borehole_loc_mesh], image_2d=False, ve=5)
 
 # %%md
 # Read Topography
@@ -175,12 +164,7 @@ topo_mesh = ss.visualization.to_pyvista_grid(topo_element, 'topography',
                                              data_order='C')
 
 # %%
-ss.visualization.pv_plot(
-    [topo_mesh],
-    image_2d=False,
-    ve=5
-)
-
+ss.visualization.pv_plot([topo_mesh], image_2d=False, ve=5)
 
 # %%md
 # Read Profiles
@@ -217,11 +201,7 @@ profiles_trisurf_list, profiles_mesh_list = subsurface.reader.profiles.profiles_
 )
 
 # %%
-ss.visualization.pv_plot(
-    profiles_mesh_list,
-    image_2d=False,
-    ve=5
-)
+ss.visualization.pv_plot(profiles_mesh_list, image_2d=False, ve=5)
 
 # %%md
 # GemPy Mesh
@@ -243,7 +223,6 @@ ss.visualization.pv_plot(
     image_2d=False,
     ve=5
 )
-
 
 # %%
 # sphinx_gallery_thumbnail_number = 6
@@ -270,4 +249,3 @@ for e, tri_surf in enumerate(profiles_trisurf_list):
         data_path + f'/profile_{e}_texture_C',
         tri_surf.texture,
         order='C')
-

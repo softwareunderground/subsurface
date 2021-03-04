@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Union, Dict
+from typing import Dict, List
 
 import numpy as np
 import xarray as xr
@@ -9,8 +9,11 @@ import xarray as xr
 class StructuredData:
     """Primary structure definition for structured data
 
+       Check out other constructors: `StructuredData.from_numpy`,
+        `StructuredData.from_data_array` and `StructuredData.from_dict`
+
     Args:
-        data (xr.Dataset, xr.DataArray, np.ndarray): object containing
+        data (xr.Dataset): object containing
          structured data, i.e. data that can be stored in multidimensional
          numpy array. The preferred type to pass as data is directly a
          xr.Dataset to be sure all the attributes are set and named as the user
@@ -26,47 +29,36 @@ class StructuredData:
 
     data: xr.Dataset
 
-    def __init__(
-            self,
-            data: Union[np.ndarray, xr.DataArray,
-                        xr.Dataset, Dict[str, xr.DataArray]],
-            data_array_name='data_array',
-            coords: dict = None,
-            coords_names=None
-    ):
+    def __init__(self, data_set: xr.Dataset, data_array_name="data_array"):
+        if type(data_set) is not xr.Dataset:
+            raise ValueError(
+                "data_set must be a xarray.Dataset. See `from_numpy`, `from_data_array`"
+                " and `from_dict` for other constructors ")
 
         self.data_array_name = data_array_name
-        self.coord_names = coords_names
+        self.data = data_set
 
-        if type(data) == xr.Dataset:
-            self.data = data
+    @classmethod
+    def from_numpy(cls, array: np.ndarray, coords: dict = None, data_array_name: str = "data_array",
+                   coords_names: List[str] = None):
+        if coords_names is None:
+            if array.ndim == 2:
+                cls.coord_names = ['x', 'y']
+            elif array.ndim == 3:
+                cls.coord_names = ['x', 'y', 'z']
+            else:
+                cls.coord_names = ['dim' + str(i) for i in range(array.ndim)]
+        # if they are more than 3 we do not know the dimension name but it should
+        # valid:
+        return cls(xr.Dataset({data_array_name: (cls.coord_names, array)}, coords=coords), data_array_name)
 
-        elif type(data) == dict:
-            self.data = xr.Dataset(
-                data_vars=data,
-                coords=coords
-            )
-        elif type(data) == xr.DataArray:
-            self.data = xr.Dataset({data_array_name: data})
-        elif type(data) == np.ndarray:
-            if coords_names is None:
-                if data.ndim == 2:
-                    self.coord_names = ['x', 'y']
-                elif data.ndim == 3:
-                    self.coord_names = ['x', 'y', 'z']
-                else:
-                    self.coord_names = ['dim' + str(i) for i in range(data.ndim)]
+    @classmethod
+    def from_data_array(cls, data_array: xr.DataArray, data_array_name: str = "data_array"):
+        return cls(xr.Dataset({data_array_name: data_array}), data_array_name)
 
-            # if they are more than 3 we do not know the dimension name but it should
-            # valid:
-            self.data = xr.Dataset(
-                {data_array_name: (self.coord_names, data)},
-                coords=coords
-            )
-        else:
-            raise AttributeError(
-                'data must be either xarray.Dataset, xarray.DataArray,'
-                'or numpy.ndarray')
+    @classmethod
+    def from_dict(cls, data_dict: Dict[str, xr.DataArray], coords: Dict[str, str] = None):
+        return cls(xr.Dataset(data_vars=data_dict, coords=coords))
 
     @property
     def values(self):
@@ -83,9 +75,7 @@ class StructuredData:
         return bytearray_le, header
 
     def _set_binary_header(self):
-        header = {
-            "data_shape": self.values.shape,
-        }
+        header = {"data_shape": self.values.shape}
         return header
 
     def _to_bytearray(self, order):

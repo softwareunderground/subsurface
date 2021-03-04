@@ -17,7 +17,7 @@ def test_read_trace_to_unstruct(data_path):
     unstruct = UnstructuredData(v, e)
 
     cross = imageio.imread(data_path + '/profiles/Profil1_cropped.png')
-    struct = StructuredData(np.array(cross))
+    struct = StructuredData.from_numpy(np.array(cross))
 
     origin = [traces.loc[0, 'geometry'].xy[0][0],
               traces.loc[0, 'geometry'].xy[1][0],

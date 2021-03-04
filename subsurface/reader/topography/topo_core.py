@@ -33,8 +33,8 @@ def rasterio_dataset_to_structured_data(dataset):
             shape[1]
         )
     }
-    structured_data = StructuredData(data=data, data_array_name='topography',
-                                     coords=coords)
+    structured_data = StructuredData.from_numpy(data, data_array_name='topography',
+                                                coords=coords)
     return structured_data
 
 

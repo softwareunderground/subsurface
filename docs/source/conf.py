@@ -22,7 +22,6 @@ import os
 import sys
 import warnings
 
-import sphinx_gallery
 from sphinx_gallery.sorting import FileNameSortKey
 import pyvista
 import numpy as np

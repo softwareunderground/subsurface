@@ -10,4 +10,4 @@ def read_unstruct(path, **kwargs):
 
 def read_struct(path, **kwargs):
     ds = xr.open_dataset(path, **kwargs)
-    return StructuredData(data=ds)
+    return StructuredData(ds)

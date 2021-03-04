@@ -77,11 +77,11 @@ def test_structured_data(struc_data):
     # StructuredData from DataArray
     b0 = xr.DataArray(xx, coords={'x': x_coord, 'y': y_coord, 'z': z_coord},
                       dims=['x', 'y', 'z'])
-    b = StructuredData(b0)
+    b = StructuredData.from_data_array(b0)
     print(b)
 
     # StructuredData from np.array
-    c = StructuredData(xx)
+    c = StructuredData.from_numpy(xx)
     print(c)
 
 

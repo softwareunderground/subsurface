@@ -105,27 +105,24 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf],
     return mesh
 
 
-def to_pyvista_mesh_and_texture(
-        unstructured_element: Union[TriSurf],
-        ) -> \
-        Tuple[pv.PolyData, Optional[np.array]]:
+def to_pyvista_mesh_and_texture(triangular_surface: Union[TriSurf], ) -> Tuple[pv.PolyData, Optional[np.array]]:
     """Create planar surface PolyData from unstructured element such as TriSurf
 
     Returns:
         mesh texture
     """
-    mesh = to_pyvista_mesh(unstructured_element)
+    mesh = to_pyvista_mesh(triangular_surface)
 
-    if unstructured_element.texture is None:
+    if triangular_surface.texture is None:
         raise ValueError('unstructured_element needs texture data to be mapped.')
 
     mesh.texture_map_to_plane(
         inplace=True,
-        origin=unstructured_element.texture_origin,
-        point_u=unstructured_element.texture_point_u,
-        point_v=unstructured_element.texture_point_v
+        origin=triangular_surface.texture_origin,
+        point_u=triangular_surface.texture_point_u,
+        point_v=triangular_surface.texture_point_v
     )
-    tex = pv.numpy_to_texture(unstructured_element.texture.values)
+    tex = pv.numpy_to_texture(triangular_surface.texture.values)
     mesh._textures = {0: tex}
 
     from vtkmodules.util.numpy_support import vtk_to_numpy
@@ -199,8 +196,8 @@ def to_pyvista_grid(structured_grid: StructuredGrid,
 
     cart_dims = structured_grid.cartesian_dimensions
     data_dims = structured_grid.ds.data[data_set_name].sel(
-            **attribute_slice
-        ).ndim
+        **attribute_slice
+    ).ndim
     if cart_dims < data_dims:
         raise AttributeError('Data dimension and cartesian dimensions must match.'
                              'Possibly there are not valid dimension name in the'

@@ -1,5 +1,6 @@
 import subsurface.reader
 import subsurface.interfaces
+import subsurface.writer
 from subsurface.structs import *
 from ._version import __version__
 
