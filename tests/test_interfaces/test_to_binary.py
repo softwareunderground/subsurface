@@ -1,6 +1,6 @@
 import imageio
 import pytest
-from subsurface.io import read_unstruct
+from subsurface.io.read_netcdf import read_unstruct
 import json
 import geopandas as gpd
 import pytest

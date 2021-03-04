@@ -35,6 +35,7 @@ import pooch
 # Pulling data example
 import subsurface.interfaces.to_liquid_earth
 import subsurface.io.profiles.profiles_core
+import subsurface.io.read_netcdf
 import subsurface.io.topography.topo_core
 import subsurface.io.wells.wells_interface
 
@@ -227,7 +228,7 @@ ss.visualization.pv_plot(
 
 # %%
 # UnstructuredData
-gempy_unstructured_data = ss.io.read_unstruct(data_path + '/meshes.nc')
+gempy_unstructured_data = subsurface.io.read_netcdf.read_unstruct(data_path + '/meshes.nc')
 
 # Element
 trisurf_gempy = ss.TriSurf(gempy_unstructured_data)
