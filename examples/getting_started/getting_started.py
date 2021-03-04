@@ -6,7 +6,7 @@ Getting started
 # %%md
 # Authors: Miguel de la Varga and Alexander Juestel
 #
-# This example how to read into subsurface structures a bunch of different
+# This example shows how to read into subsurface structures a bunch of different
 # data such as:
 #
 # - well data -> from csv all in one single file
@@ -27,7 +27,7 @@ import pooch
 # %%
 # Read wells:
 # -----------
-# We can read well data - using welly as backend. First we need to have the
+# We can read well data - using welly as the backend. First we need to have the
 # data in the right format for digesting.
 
 # %%
