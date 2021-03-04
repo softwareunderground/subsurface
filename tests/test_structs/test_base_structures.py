@@ -7,6 +7,8 @@ from subsurface.structs.base_structures import UnstructuredData, StructuredData
 import numpy as np
 import pandas as pd
 import xarray as xr
+
+from subsurface.structs.base_structures.CommonDataUtils import replace_outliers
 from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
 
 
@@ -145,6 +147,6 @@ def test_read_struct(data_path):
 def test_remove_outliers(data_path):
     topo_path = data_path + '/topo/dtm_rp.tif'
     struct = read_structured_topography(topo_path)
-    struct.replace_outliers('topography', 0.99)
+    replace_outliers(struct, 'topography', 0.99)
     print(struct.data['topography'])
     print(struct.data['topography'].min())

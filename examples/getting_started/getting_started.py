@@ -38,6 +38,7 @@ import subsurface.reader.read_netcdf
 import subsurface.reader.topography.topo_core
 import subsurface.reader.wells.wells_api
 import subsurface.reader.wells.wells_interface
+from subsurface.structs.base_structures.CommonDataUtils import replace_outliers
 
 model_file = pooch.retrieve(
     url="https://github.com/cgre-aachen/gempy_data/raw/master/"
@@ -163,7 +164,7 @@ topo_structured_data = subsurface.reader.topography.topo_core.read_structured_to
 topo_structured_data
 # %%
 # Remove outliers
-topo_structured_data.replace_outliers('topography', 0.98)
+replace_outliers(topo_structured_data, 'topography', 0.98)
 
 # Element
 topo_element = ss.structs.StructuredGrid(topo_structured_data)

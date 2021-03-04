@@ -11,14 +11,10 @@ Regularly gridded dataset will NOT be managed by these classes but will use
 """
 
 import numpy as np
-import pandas as pd
-
 from .base_structures import UnstructuredData, StructuredData
-from .common import Common
-from .errors import PyVistaImportError
 
 
-class PointSet(Common):
+class PointSet:
     """Class for pointset based data structures.
 
     This class uses UnstructuredData.vertex as cloud of points and the
@@ -29,10 +25,7 @@ class PointSet(Common):
 
     """
 
-    def __init__(self,
-                 data: UnstructuredData
-                 ):
-
+    def __init__(self, data: UnstructuredData):
         if data.cells.shape[1] > 1:
             raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX]')
@@ -59,7 +52,7 @@ class PointSet(Common):
         return self.data.attributes_to_dict
 
 
-class TriSurf(Common):
+class TriSurf:
     """PointSet with triangle cells.
 
     This dataset defines cell/element connectivity between points to create
@@ -93,7 +86,6 @@ class TriSurf(Common):
                  texture: StructuredData = None,
                  **kwargs
                  ):
-
         if mesh.cells.shape[1] != 3:
             raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 3), IntX]')
@@ -113,7 +105,7 @@ class TriSurf(Common):
         return self.mesh.cells.shape[0]
 
 
-class LineSet(Common):
+class LineSet:
     """PointSet with line cells.
 
     This dataset defines cell connectivity between points to create
@@ -130,10 +122,7 @@ class LineSet(Common):
         radius (float): Thickness of the line set
     """
 
-    def __init__(self,
-                 data: UnstructuredData,
-                 radius: float = 1
-                 ):
+    def __init__(self, data: UnstructuredData, radius: float = 1):
 
         self.data = data
         self.radius = radius
@@ -169,7 +158,7 @@ class LineSet(Common):
         return self.segments.shape[0]
 
 
-class TetraMesh(Common):
+class TetraMesh:
     """PointSet with tetrahedron cells.
 
     This dataset defines cell connectivity between points to create
@@ -188,14 +177,10 @@ class TetraMesh(Common):
 
     """
 
-    def __init__(self,
-                 data: UnstructuredData
-                 ):
-
+    def __init__(self, data: UnstructuredData):
         if data.cells.shape[1] != 4:
             raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 4), IntX]')
-
         self.data = data
 
     @property
@@ -205,5 +190,3 @@ class TetraMesh(Common):
     @property
     def n_tetrahedrals(self):
         return self.tetrahedrals.shape[0]
-
-

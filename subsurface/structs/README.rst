@@ -7,4 +7,8 @@ This subpackage intends to function as a wrapper for `pandas.Dataframe` and
 These are the ones which should be compatible between libraries - without the
 attributes and metadata necessarily.
 
-We will start by mirroring `pyvista` data structures
+There are two levels of data structures:
+- Base structures: Wrapper around xarray
+- Elements: Composed of at least 1 base structured. Mirrors `pyvista` data structures
+
+

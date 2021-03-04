@@ -1,7 +1,7 @@
 from typing import List
 
-from subsurface.writer.to_rex import file_header_size, encode
-from subsurface.writer.to_rex import RexMesh, RexMaterial, RexLineSet
+from subsurface.writer.to_rex.common import file_header_size, encode
+from subsurface.writer.to_rex.data_struct import RexLineSet, RexMesh, RexMaterial
 from subsurface.writer.to_rex.material_encoder import material_encode
 from subsurface.writer.to_rex.mesh_encoder import mesh_encode
 

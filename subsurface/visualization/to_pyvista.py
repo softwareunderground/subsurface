@@ -1,8 +1,6 @@
 from typing import Union, Tuple, Optional
 
 from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
-from subsurface.structs.common import Common
-from subsurface.structs.errors import PyVistaImportError
 import numpy as np
 
 try:

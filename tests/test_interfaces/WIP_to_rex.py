@@ -3,7 +3,7 @@ import os
 import pytest
 import numpy as np
 
-from subsurface.writer.to_rex import RexMaterial
+from subsurface.writer.to_rex.data_struct import RexMaterial
 from subsurface.writer.to_rex.to_rex import RexMesh, numpy_to_rex, \
     write_rex_file, read_rex_file
 from subsurface.reader.read_netcdf import read_unstruct, read_struct

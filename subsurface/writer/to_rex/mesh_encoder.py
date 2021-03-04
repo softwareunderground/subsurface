@@ -1,6 +1,6 @@
-from subsurface.writer.to_rex import mesh_header_size, encode, \
-    write_data_block_header
-from subsurface.writer.to_rex import RexMesh
+from subsurface.writer.to_rex.common import mesh_header_size, \
+    write_data_block_header, encode
+from subsurface.writer.to_rex.data_struct import RexMesh
 
 
 def mesh_encode(rex_mesh: RexMesh, data_id: int):

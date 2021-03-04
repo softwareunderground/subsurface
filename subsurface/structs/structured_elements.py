@@ -2,13 +2,11 @@
 
 """
 
-import xarray as xr
 import numpy as np
-from .common import Common
 from .base_structures import StructuredData
 
 
-class OctreeMesh(Common):
+class OctreeMesh:
     """
     TODO: implement as Dom discussed with data frames to track the levels.
     """
@@ -17,7 +15,7 @@ class OctreeMesh(Common):
         raise NotImplementedError
 
 
-class StructuredSurface(Common):
+class StructuredSurface:
     def __init__(self, structured_data: StructuredData):
         # TODO check structured_data has two coordinates
         self.ds = structured_data
@@ -25,7 +23,7 @@ class StructuredSurface(Common):
     # Add pyvista methods of gridded data
 
 
-class StructuredGrid():
+class StructuredGrid:
     # TODO check structured_data has three coordinates
     """Container for curvilinear mesh grids.
 
