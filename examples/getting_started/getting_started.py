@@ -33,7 +33,6 @@ import pooch
 # %%
 
 # Pulling data example
-import subsurface.interfaces.to_liquid_earth
 import subsurface.reader.profiles.profiles_core
 import subsurface.reader.read_netcdf
 import subsurface.reader.topography.topo_core
@@ -254,19 +253,19 @@ ss.visualization.pv_plot(
 # ----------------
 
 # %%
-subsurface.interfaces.to_binary.base_structs_to_binary_file(data_path + '/gempy_base',
-                                                            gempy_unstructured_data)
-subsurface.interfaces.to_binary.base_structs_to_binary_file(data_path + '/wells',
-                                                            wells_unstructured_data)
-subsurface.interfaces.to_binary.base_structs_to_binary_file(data_path + '/topo',
-                                                            topo_structured_data)
-subsurface.interfaces.to_binary.base_structs_to_binary_file(data_path + '/collars',
-                                                            borehole_location_struct)
+subsurface.writer.to_binary.base_structs_to_binary_file(data_path + '/gempy_base',
+                                                        gempy_unstructured_data)
+subsurface.writer.to_binary.base_structs_to_binary_file(data_path + '/wells',
+                                                        wells_unstructured_data)
+subsurface.writer.to_binary.base_structs_to_binary_file(data_path + '/topo',
+                                                        topo_structured_data)
+subsurface.writer.to_binary.base_structs_to_binary_file(data_path + '/collars',
+                                                        borehole_location_struct)
 
 for e, tri_surf in enumerate(profiles_trisurf_list):
-    subsurface.interfaces.to_binary.base_structs_to_binary_file(data_path + f'/profile_{e}_mesh',
-                                                                tri_surf.mesh)
-    subsurface.interfaces.to_binary.base_structs_to_binary_file(
+    subsurface.writer.to_binary.base_structs_to_binary_file(data_path + f'/profile_{e}_mesh',
+                                                            tri_surf.mesh)
+    subsurface.writer.to_binary.base_structs_to_binary_file(
         data_path + f'/profile_{e}_texture_C',
         tri_surf.texture,
         order='C')

@@ -1,5 +1,5 @@
-from subsurface.interfaces.to_rex.common import write_data_block_header, encode
-from subsurface.interfaces.to_rex.data_struct import RexMaterial
+from subsurface.writer.to_rex import write_data_block_header, encode
+from subsurface.writer.to_rex import RexMaterial
 
 
 def material_encode(rex_material: RexMaterial, data_id: int):
