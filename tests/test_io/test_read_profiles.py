@@ -14,7 +14,7 @@ def test_read_trace_to_unstruct(data_path):
     v, e = create_mesh_from_trace(traces.loc[0, 'geometry'], traces.loc[0, 'zmax'],
                                   traces.loc[0, 'zmin'])
 
-    unstruct = UnstructuredData(v, e)
+    unstruct = UnstructuredData.from_array(v, e)
 
     cross = imageio.imread(data_path + '/profiles/Profil1_cropped.png')
     struct = StructuredData.from_numpy(np.array(cross))

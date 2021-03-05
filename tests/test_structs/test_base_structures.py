@@ -8,43 +8,38 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
-from subsurface.structs.base_structures.CommonDataUtils import replace_outliers
+from subsurface.structs.base_structures.common_data_utils import replace_outliers
 from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
 
 
 def test_unstructured_data():
     # Normal constructor
-    foo = UnstructuredData(np.ones((5, 3)), np.ones((4, 3)),
-                           pd.DataFrame({'foo': np.arange(4)}))
+    foo = UnstructuredData.from_array(np.ones((5, 3)), np.ones((4, 3)),
+                                      pd.DataFrame({'foo': np.arange(4)}))
     print(foo)
 
     # No attributes
-    foo = UnstructuredData(np.ones((5, 3)), np.ones((4, 3)))
+    foo = UnstructuredData.from_array(np.ones((5, 3)), np.ones((4, 3)))
     print(foo)
 
     # Failed validation
     with pytest.raises(ValueError):
-        foo = UnstructuredData(np.ones((5, 3)), np.ones((4, 3)),
-                               pd.DataFrame({'foo': np.arange(1)}))
+        foo = UnstructuredData.from_array(np.ones((5, 3)), np.ones((4, 3)),
+                                          pd.DataFrame({'foo': np.arange(1)}))
         print(foo)
 
 
 def test_unstructured_data_no_cells():
-    foo = UnstructuredData(np.ones((5, 3)))
+    foo = UnstructuredData.from_array(np.ones((5, 3)), cells="points")
     print(foo)
 
 
 def test_unstructured_data_no_cells_no_attributes():
-    attributes = {
-        'notAttributeName': xr.DataArray(pd.DataFrame({'foo': np.arange(4)}))}
+    attributes = {'notAttributeName': xr.DataArray(pd.DataFrame({'foo': np.arange(4)}))}
 
     with pytest.raises(KeyError):
-        foo = UnstructuredData(
-            vertex=np.ones((5, 3)),
-            cells=np.ones((4, 3)),
-            attributes=attributes
-
-        )
+        foo = UnstructuredData.from_array(vertex=np.ones((5, 3)), cells=np.ones((4, 3)),
+                                          attributes=attributes)
 
     attributes2 = {
         'notAttributeName': xr.DataArray(
@@ -52,11 +47,8 @@ def test_unstructured_data_no_cells_no_attributes():
             dims=['cell', 'attribute']
         )}
 
-    foo = UnstructuredData(
-        vertex=np.ones((5, 3)),
-        cells=np.ones((4, 3)),
-        attributes=attributes2
-    )
+    foo = UnstructuredData.from_array(vertex=np.ones((5, 3)), cells=np.ones((4, 3)),
+                                                attributes=attributes2)
 
     print(foo)
 

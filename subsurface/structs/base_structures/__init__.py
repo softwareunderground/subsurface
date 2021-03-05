@@ -1,2 +1,2 @@
-from .UnstructuredData import UnstructuredData
-from .StructuredData import StructuredData
+from .unstructured_data import UnstructuredData
+from .structured_data import StructuredData

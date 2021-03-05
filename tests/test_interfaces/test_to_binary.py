@@ -40,7 +40,7 @@ def test_profile_to_binary(data_path):
     v, e = create_mesh_from_trace(traces.loc[0, 'geometry'], traces.loc[0, 'zmax'],
                                   traces.loc[0, 'zmin'])
 
-    unstruct_temp = UnstructuredData(v, e)
+    unstruct_temp = UnstructuredData.from_array(v, e)
 
     cross = imageio.imread(data_path + '/profiles/Profil1_cropped.png')
     struct = StructuredData.from_numpy(np.array(cross))
@@ -71,9 +71,7 @@ def test_profile_to_binary(data_path):
     _, uv = to_pyvista_mesh_and_texture(ts)
     import pandas as pd
 
-    unstruct = UnstructuredData(v, e,
-                                points_attributes=pd.DataFrame(uv,
-                                                               columns=['u', 'v']))
+    unstruct = UnstructuredData.from_array(v, e, points_attributes=pd.DataFrame(uv, columns=['u', 'v']))
     mesh_binary, mesh_header = unstruct.to_binary()
 
     with open('mesh_uv.json', 'w') as outfile:

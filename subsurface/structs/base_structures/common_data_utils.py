@@ -1,8 +1,8 @@
 import os
 from typing import Union
 
-from subsurface.structs.base_structures.StructuredData import StructuredData
-from subsurface.structs.base_structures.UnstructuredData import UnstructuredData
+from subsurface.structs.base_structures.structured_data import StructuredData
+from subsurface.structs.base_structures.unstructured_data import UnstructuredData
 
 
 def replace_outliers(base_data: Union[StructuredData, UnstructuredData], dim=0, perc=0.99, replace_for=None):

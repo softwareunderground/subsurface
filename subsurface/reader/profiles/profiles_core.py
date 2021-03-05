@@ -89,7 +89,7 @@ def traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx, uv=None):
         else:
             uv_item = None
 
-        unstruct = subsurface.UnstructuredData(v, e, points_attributes=uv_item)
+        unstruct = subsurface.UnstructuredData.from_array(v, e, points_attributes=uv_item)
 
         import imageio
         cross = imageio.imread(path_to_texture[index])
@@ -115,7 +115,7 @@ def lineset_from_trace(path_to_trace, idx=None):
         s = len(row['geometry'].coords.xy[0])
         vertex = np.array((*row['geometry'].coords.xy,
                            np.zeros(s))).T
-        unstruct = subsurface.UnstructuredData(vertex, 'lines')
+        unstruct = subsurface.UnstructuredData.from_array(vertex, 'lines')
         ls = subsurface.LineSet(unstruct)
         mesh_list.append(to_pyvista_line(ls, radius=10))
 

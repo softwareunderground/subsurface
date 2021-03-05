@@ -41,7 +41,7 @@ def read_2d_mesh(path_to_file: str,
     else:
         raise NotImplementedError('The extension given cannot be read yet')
 
-    ud = UnstructuredData(vertex, cells, **attr_dicts)
+    ud = UnstructuredData.from_array(vertex, cells, **attr_dicts)
     return ud
 
 

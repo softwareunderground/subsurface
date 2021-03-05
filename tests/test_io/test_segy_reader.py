@@ -91,7 +91,7 @@ def test_read_segy_to_struct_data_imageio(get_structured_data, get_images):
         cells = b.reshape(-1, 4)[:, 1:]
         print('cells', cells)
         struct = StructuredData.from_numpy(np.array(imageio.imread(image)))
-        unstruct = UnstructuredData(vertex, cells)
+        unstruct = UnstructuredData.from_array(vertex, cells)
         ts = TriSurf(
             mesh=unstruct,
             texture=struct
@@ -111,7 +111,7 @@ def test_plot_segy_as_struct_data_with_coords_dict(get_structured_data, get_imag
 
         struct = StructuredData.from_numpy(np.array(imageio.imread(image)))
         print(struct) # normalize to number of samples
-        unstruct = UnstructuredData(v, e)
+        unstruct = UnstructuredData.from_array(v, e)
 
         origin = [float(coords['x'][0]), float(coords['y'][0]), zmin]
         point_u = [float(coords['x'][-1]), float(coords['y'][-1]), zmin]

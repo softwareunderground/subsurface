@@ -38,7 +38,7 @@ import subsurface.reader.read_netcdf
 import subsurface.reader.topography.topo_core
 import subsurface.reader.wells.wells_api
 import subsurface.reader.wells.wells_interface
-from subsurface.structs.base_structures.CommonDataUtils import replace_outliers
+from subsurface.structs.base_structures.common_data_utils import replace_outliers
 
 model_file = pooch.retrieve(
     url="https://github.com/cgre-aachen/gempy_data/raw/master/"

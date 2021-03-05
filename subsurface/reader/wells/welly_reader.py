@@ -247,7 +247,7 @@ class WellyToSubsurface:
         missed_wells = []
         for w in self.p.get_wells():
             if w.location.position is None:
-                warnings.warn('At least one of the wells do not have ' 
+                warnings.warn('At least one of the wells do not have '
                               'assigned a survey. Borehole name: ' + w.name)
                 missed_wells.append(w.name)
                 continue
@@ -275,10 +275,10 @@ class WellyToSubsurface:
                     start, stop, step_size = self._calculate_basis_parameters(w,
                                                                               n_points - 1)
                     s_log, basis, _table = w.data['lith'].to_log(step_size,
-                                                                start,
-                                                                stop,
-                                                                table=table,
-                                                                return_meta=True)
+                                                                 start,
+                                                                 stop,
+                                                                 table=table,
+                                                                 return_meta=True)
 
                     w.data['lith_log'] = Curve(s_log, basis)
                 except KeyError:
@@ -298,11 +298,7 @@ class WellyToSubsurface:
 
         print('The following boreholes failed being processed: ', missed_wells)
 
-        unstructured_data = UnstructuredData(
-            vertex,
-            cells,
-            df
-        )
+        unstructured_data = UnstructuredData.from_array(vertex, cells, df)
 
         if return_element is True:
             return LineSet(unstructured_data)
