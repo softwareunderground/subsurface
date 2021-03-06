@@ -1,15 +1,18 @@
+from typing import Union, Callable, List, Dict
+
 import pandas as pd
+from pandas._typing import FilePathOrBuffer
+
+from subsurface.reader.readers_data import ReaderDataUnstructured, RawDataUnstructured, RawDataOptions, ReaderDataArgs
 from subsurface.structs.base_structures import UnstructuredData
 from subsurface.utils.utils_core import get_extension
 import numpy as np
+import xarray as xr
 from scipy.spatial.qhull import Delaunay
 
 
-def read_2d_mesh(path_to_file: str,
-                 columns_map: dict = None,
-                 attribute_cols: dict = None,
-                 delaunay: bool = True,
-                 **reader_kwargs) -> UnstructuredData:
+def read_2d_mesh(reader_args: ReaderDataUnstructured, raw_data_options: RawDataOptions = None,
+                 delaunay: bool = True) -> UnstructuredData:
     """
     Reads in csv files with n table columns and returns UnstructuredData object. m cells have to be in m columns named
     with the order of the points. If no cells are present default ones are generated.
@@ -22,69 +25,104 @@ def read_2d_mesh(path_to_file: str,
         columns_map (dict): Dictionary with format: {'csv_columns_name1': 'x', 'csv_columns_name2': 'y', ...}
         attribute_cols (dict ()): t-element dict with the column names as keys and the column indices as the values
         delaunay (bool): If True compute cells using vtk Dalauny algorithm.
+        swap_yz (bool): If True swap yz axis (left hand to right hand coord system).
         reader_kwargs: `pandas.read_csv` kwargs
     Returns:
         (UnstructuredData) csv with n columns stored in pandas.DataFrame of vertices with
         3 columns (3d vertices), cells of m columns forming an m-sided polygon and pandas.DataFrame of attributes with n-(m+3) columns.
 
     """
-    extension = get_extension(path_to_file)
-    attr_dicts = dict()
+    if raw_data_options is None:
+        raw_data_options = RawDataOptions()
 
-    if extension == '.csv':
-        attr_dicts, cells, vertex = csv_to_unstruct_args(attr_dicts, attribute_cols,
-                                                         columns_map, delaunay,
-                                                         path_to_file, reader_kwargs)
-    elif extension == '.dxf':
-        cells, vertex = dxf_to_vertex_edges(path_to_file)
-
+    raw_data = RawDataUnstructured()
+    raw_data.vertex = read_mesh_file_to_vertex(reader_args.reader_vertex_args)
+    if reader_args.reader_cells_args is not None:
+        raw_data.cells = read_mesh_file_to_cells(reader_args.reader_cells_args)
+    elif delaunay:
+        raw_data.cells = cells_from_delaunay(raw_data.vertex)
     else:
-        raise NotImplementedError('The extension given cannot be read yet')
+        raise ValueError("No arguments to compute cell")
+    if reader_args.reader_cells_attr_args is not None:
+        raw_data.cells_attr = read_mesh_file_to_attr(reader_args.reader_cells_attr_args)
+    if reader_args.reader_vertex_attr_args is not None:
+        raw_data.vertex_attr = read_mesh_file_to_attr(reader_args.reader_vertex_attr_args)
 
-    ud = UnstructuredData.from_array(vertex, cells, **attr_dicts)
+    if raw_data_options.swap_yz_cells: raw_data.swap_yz_col_cells()
+    ud = UnstructuredData.from_raw_data(raw_data)
     return ud
 
 
-def csv_to_unstruct_args(attr_dicts, attribute_cols, columns_map, delaunay,
-                         path_to_file, reader_kwargs):
-    # create dataframe
+def read_mesh_file_to_vertex(reader_args: ReaderDataArgs) -> np.ndarray:
+    extension = get_extension(reader_args.file_or_buffer)
+    if extension == '.csv':
+        vertex = mesh_csv_to_vertex(reader_args.file_or_buffer, reader_args.columns_map,
+                                    **reader_args.pandas_reader_kwargs)
+    elif extension == '.dxf':
+        vertex = dxf_to_vertex(reader_args.file_or_buffer)
+    else:
+        raise ValueError(f"Subsurface is not able to read the following extension: {extension}")
+    return vertex
+
+
+def read_mesh_file_to_cells(reader_args: ReaderDataArgs) -> np.ndarray:
+    extension = get_extension(reader_args.file_or_buffer)
+    if extension == '.csv':
+        cells = mesh_csv_to_cells(reader_args.file_or_buffer, reader_args.columns_map,
+                                  **reader_args.pandas_reader_kwargs)
+    else:
+        raise ValueError(f"Subsurface is not able to read the following extension: {extension}")
+    return cells
+
+
+def read_mesh_file_to_attr(reader_args: ReaderDataArgs):
+    extension = get_extension(reader_args.file_or_buffer)
+    if extension == ".csv":
+        attr = mesh_csv_to_attributes(reader_args.file_or_buffer,
+                                      reader_args.columns_map,
+                                      **reader_args.pandas_reader_kwargs)
+    else:
+        raise ValueError(f"Subsurface is not able to read the following extension: {extension}")
+    return attr
+
+
+def mesh_csv_to_vertex(path_to_file: str, columns_map: Union[None, Callable, dict, pd.Series] = None,
+                       **reader_kwargs) -> np.ndarray:
+    data = pd.read_csv(path_to_file, **reader_kwargs)
+    if columns_map is not None: map_columns_names(columns_map, data)
+    return get_vertices_from_df(data)
+
+
+def mesh_csv_to_cells(path_to_file: str, columns_map: Union[None, Callable, dict, pd.Series] = None,
+                      **reader_kwargs) -> np.ndarray:
+    data = pd.read_csv(path_to_file, **reader_kwargs)
+    if columns_map is not None: map_columns_names(columns_map, data)
+    return get_cells_from_df(data)
+
+
+def mesh_csv_to_attributes(path_to_file: str,
+                           columns_map: Union[None, Callable, dict, pd.Series] = None,
+                           **reader_kwargs) -> pd.DataFrame:
+
     data = pd.read_csv(path_to_file, **reader_kwargs)
     if columns_map is not None:
         map_columns_names(columns_map, data)
-    vertex = get_vertices_from_df(data)
-    cells = get_cells_from_df(data, delaunay, vertex)
-    if attribute_cols:
-        attr_dicts = get_attributes_from_df(attribute_cols, cells, data, vertex)
-    return attr_dicts, cells, vertex
+    return data
 
-
-def get_attributes_from_df(attribute_cols, cells, data, vertex):
-    attributes = [[x[v] for k, v in attribute_cols.items()] for x in data.values]
-    df = pd.DataFrame(attributes)
-    df.columns = [k for k, v in attribute_cols.items()]
-    # Check if is point or cell data
-    if df.shape[0] == vertex.shape[0]:
-        kwargs_ = {'points_attributes': df}
-    elif df.shape[0] == cells.shape[0]:
-        kwargs_ = {'attributes': df}
-    else:
-        raise ValueError(
-            'Attribute cols must be either of the shape of vertex or'
-            'cells.')
-    return kwargs_
-
-
-def get_cells_from_df(data, delaunay, vertex):
+def get_cells_from_df(data):
     try:
         cells = data[['e1', 'e2', 'e3']].dropna().astype('int').values
     except KeyError:
-        if delaunay is True:
-            import pyvista as pv
-            a = pv.PolyData(vertex)
-            b = a.delaunay_2d().faces
-            cells = b.reshape(-1, 4)[:, 1:]
-        else:
-            raise AttributeError('cells must be provided or computed by delaunay')
+        raise KeyError('Columns e1, e2, and e3 must be present in the data set. Use'
+                       'columns_map to map other names')
+    return cells
+
+
+def cells_from_delaunay(vertex):
+    import pyvista as pv
+    a = pv.PolyData(vertex)
+    b = a.delaunay_2d().faces
+    cells = b.reshape(-1, 4)[:, 1:]
     return cells
 
 
@@ -97,7 +135,7 @@ def get_vertices_from_df(data):
     return vertex
 
 
-def map_columns_names(columns_map, data):
+def map_columns_names(columns_map: Union[Callable, dict, pd.Series], data: pd.DataFrame):
     data.columns = data.columns.map(columns_map)
     if data.columns.isin(['x', 'y', 'z']).any() is False:
         raise AttributeError('At least x, y, z must be passed to `columns_map`')
@@ -105,10 +143,16 @@ def map_columns_names(columns_map, data):
     return data.columns
 
 
-def dxf_to_vertex_edges(path):
-    import ezdxf
+def dxf_to_vertex_edges(file_or_buffer):
+    vertex = dxf_to_vertex(file_or_buffer)
+    tri = Delaunay(vertex[:, [0, 1]])
+    faces = tri.simplices
+    return faces, vertex
 
-    dataset = ezdxf.readfile(path)
+
+def dxf_to_vertex(file_or_buffer):
+    import ezdxf
+    dataset = ezdxf.readfile(file_or_buffer)
     vertex = []
     entity = dataset.modelspace()
     for e in entity:
@@ -117,6 +161,4 @@ def dxf_to_vertex_edges(path):
         vertex.append(e[2])
     vertex = np.array(vertex)
     vertex = np.unique(vertex, axis=0)
-    tri = Delaunay(vertex[:, [0, 1]])
-    faces = tri.simplices
-    return faces, vertex
+    return vertex
