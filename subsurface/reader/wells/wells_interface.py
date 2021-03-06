@@ -28,7 +28,7 @@ def borehole_location_to_unstruct(
     ud = UnstructuredData.from_array(
         vertex=collars_single_well[['x', 'y', 'altitude']].values.astype('float32'),
         cells="points",
-        cells_attributes=collars_attributes.astype('float32'),
+        cells_attr=collars_attributes.astype('float32'),
         xarray_attributes={"wells_names": wells_names.values.tolist()})  # TODO: This should be int16!
 
     return ud

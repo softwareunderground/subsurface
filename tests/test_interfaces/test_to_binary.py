@@ -71,7 +71,7 @@ def test_profile_to_binary(data_path):
     _, uv = to_pyvista_mesh_and_texture(ts)
     import pandas as pd
 
-    unstruct = UnstructuredData.from_array(v, e, points_attributes=pd.DataFrame(uv, columns=['u', 'v']))
+    unstruct = UnstructuredData.from_array(v, e, vertex_attr=pd.DataFrame(uv, columns=['u', 'v']))
     mesh_binary, mesh_header = unstruct.to_binary()
 
     with open('mesh_uv.json', 'w') as outfile:

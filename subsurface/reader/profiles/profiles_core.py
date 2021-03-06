@@ -89,7 +89,7 @@ def traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx, uv=None):
         else:
             uv_item = None
 
-        unstruct = subsurface.UnstructuredData.from_array(v, e, points_attributes=uv_item)
+        unstruct = subsurface.UnstructuredData.from_array(v, e, vertex_attr=uv_item)
 
         import imageio
         cross = imageio.imread(path_to_texture[index])

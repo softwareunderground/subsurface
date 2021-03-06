@@ -11,7 +11,7 @@ def test_point_set_init(point_set):
     n = 100
     # Test check of number of cells:
     data = UnstructuredData.from_array(vertex=np.random.rand(n, 3), cells=np.random.rand(n, 3),
-                                       cells_attributes=pd.DataFrame({'foo': np.arange(n)}))
+                                       cells_attr=pd.DataFrame({'foo': np.arange(n)}))
 
     with pytest.raises(AttributeError, match=r'.*must be.*'):
         pointset_break = PointSet(data)
@@ -47,9 +47,3 @@ def test_curvi_mesh_init():
     xx, yy, zz = np.meshgrid(xrng, yrng, zrng)
     vertices = np.c_[xx.ravel(), yy.ravel(), zz.ravel()]
 
-    # dfv = pd.DataFrame(vertices, columns=['x', 'y', 'z'])
-    #
-    # dims = (len(xrng), len(yrng), len(zrng))
-    # mesh = ss.geometry.CurvilinearMesh(dfv, dims)
-    # assert mesh.n_points == len(vertices)
-    # assert np.allclose((xx, yy, zz), mesh.meshgrid)
