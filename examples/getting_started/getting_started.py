@@ -117,7 +117,7 @@ ss.visualization.pv_plot(
 # %%
 
 # UnstructuredData
-borehole_location_struct = subsurface.reader.wells.wells_interface.borehole_location_to_unstruct(
+borehole_location_struct = subsurface.reader.wells.wells_api.borehole_location_to_unstruct(
     collar_file=data_path + '/wells.csv',
     read_collar_kwargs={
         'usecols': ['Index', 'X', 'Y', 'Altitude'],
