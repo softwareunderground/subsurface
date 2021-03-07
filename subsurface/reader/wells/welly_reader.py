@@ -2,29 +2,25 @@ from typing import List
 
 import warnings
 
-from subsurface.reader.readers_data import ReaderWellsHelper
-from subsurface.reader.wells.pandas_to_welly import WellyToSubsurface
-from subsurface.reader.wells.well_files_reader import read_borehole_files
-from subsurface.structs import LineSet
+from subsurface.reader.wells.pandas_to_welly import WellyToSubsurfaceHelper
 import numpy as np
-import pandas as pd
 
 from subsurface.structs.base_structures import UnstructuredData
 
 try:
     from welly import Well, Location, Project, Curve
-    from striplog import Striplog
+    from striplog import Striplog, Component
 
     welly_imported = True
 except ImportError:
     welly_imported = False
 
 
-def welly_to_subsurface(wts: WellyToSubsurface,
+def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
                         elev=True,
                         n_vertex_per_well=50,
                         convert_lith=True,
-                        table=None,
+                        table: List[Component] = None,
                         **kwargs) -> UnstructuredData:
     """Method to convert well data to `subsurface.UnstructuredData`
 
@@ -55,11 +51,11 @@ def welly_to_subsurface(wts: WellyToSubsurface,
         cells, vertex, last_index = vertex_and_cells_from_welly_trajectory(
             cells, elev, kwargs, last_index, n_vertex_per_well, vertex, w)
 
-        change_curve_basis_to_n_vertex_per_well(n_vertex_per_well, w, wts)
+        change_curve_basis_to_n_vertex_per_well_inplace(n_vertex_per_well, w, wts)
 
         # Convert striplog into Curve
         if convert_lith is True and 'lith' in w.data:
-            striplog_to_curve_log(n_vertex_per_well, table, w, wts)
+            w.data['lith_log'] = striplog_to_curve_log(n_vertex_per_well, table, w, wts)
             # try:
             #
             # except KeyError:
@@ -80,24 +76,16 @@ def welly_to_subsurface(wts: WellyToSubsurface,
     print('The following boreholes failed being processed: ', missed_wells)
 
     unstructured_data = UnstructuredData.from_array(vertex, cells, df)
-
-    # if return_element is True:
-    #     return LineSet(unstructured_data)
-    # else:
     return unstructured_data
 
 
-def striplog_to_curve_log(n_vertex_per_well, table, w, wts):
+def striplog_to_curve_log(n_vertex_per_well, table, w: Well, wts: WellyToSubsurfaceHelper) -> Curve:
     start, stop, step_size = wts._calculate_basis_parameters(w, n_vertex_per_well - 1)
-    s_log, basis, _table = w.data['lith'].to_log(step_size,
-                                                 start,
-                                                 stop,
-                                                 table=table,
-                                                 return_meta=True)
-    w.data['lith_log'] = Curve(s_log, basis)
+    s_log, basis, _table = w.data['lith'].to_log(step_size, start, stop, table=table, return_meta=True)
+    return Curve(s_log, basis)
 
 
-def change_curve_basis_to_n_vertex_per_well(n_points, w, wts):
+def change_curve_basis_to_n_vertex_per_well_inplace(n_points, w, wts):
     start, stop, step_size = wts._calculate_basis_parameters(w, n_points)
     basis = np.arange(start, stop, step_size)
     w.unify_basis(keys=None, basis=basis)
@@ -127,29 +115,3 @@ def well_without_valid_survey(w: Well, missed_wells: List[str]):
                       'assigned a survey. Borehole name: {w.name}')
         missed_wells.append(w.name)
     return well_without_position
-# def pandas_to_welly(
-#         wts: WellyToSubsurface = None,
-#         collar_df: pd.DataFrame = None,
-#         survey_df: pd.DataFrame = None,
-#         lith_df: pd.DataFrame = None,
-#         attrib_dfs: List[pd.DataFrame] = None
-# ):
-#     # Init WellyToSubsurface object
-#     if wts is None: wts = WellyToSubsurface()
-#
-#     if collar_df is not None: wts.add_datum(collar_df)
-#     if survey_df is not None: wts.add_deviation(survey_df)
-#     if lith_df is not None:  wts.add_striplog(lith_df)
-#
-#     # First check if is just a path or list
-#     if attrib_dfs is not None:
-#         for e, attrib in enumerate(attrib_dfs):
-#             wts.add_assays(attrib, basis='basis')
-#     return wts
-#
-#
-# def read_to_welly(reader_wells_helper: ReaderWellsHelper, wts: WellyToSubsurface = None):
-#     dfs = read_borehole_files(reader_wells_helper)
-#     wts = pandas_to_welly(wts, **dfs)
-#
-#     return wts

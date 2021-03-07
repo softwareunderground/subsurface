@@ -2,20 +2,17 @@ from typing import Iterable, Union, List
 
 import numpy as np
 import pandas as pd
-from striplog import Striplog
-from welly import Project, Well, Location, Curve
 
 try:
     from welly import Well, Location, Project, Curve
     from striplog import Striplog
-
     welly_imported = True
 except ImportError:
     welly_imported = False
 
 
-class WellyToSubsurface:
-    def __init__(self, well_name: str = None,
+class WellyToSubsurfaceHelper:
+    def __init__(self,
                  collar_df: pd.DataFrame = None,
                  survey_df: pd.DataFrame = None,
                  lith_df: pd.DataFrame = None,
@@ -155,17 +152,8 @@ class WellyToSubsurface:
                       method='mc',
                       update_deviation=True,
                       azimuth_datum=0):
-        """
-        Add a deviation survey to this instance, and try to compute a position
-        log from it.
-
-        Args:
-            deviations (pd.DataFrame):
-            td
-            method
-            update_deviation
-            azimuth_datum
-
+        """ Add a deviation survey to this instance, and try to compute a position
+         log from it.
 
         """
         unique_borehole = np.unique(deviations.index)
@@ -182,28 +170,3 @@ class WellyToSubsurface:
                 raise ValueError('Deviations could not be calculated.')
 
         return self.p
-
-    # TODO: Unused?
-    def _trajectory(self, datum=None, elev=True, points=1000, **kwargs):
-        """
-        Get regularly sampled well trajectory. Assumes there is a position
-        log already, e.g. resulting from calling `add_deviation()` on a
-        deviation survey.
-
-        Args:
-            datum (array-like): A 3-element array with adjustments to (x, y, z).
-                For example, the x-position, y-position, and KB of the tophole
-                location. This is also known as collar of the borehole.
-            elev (bool): In general the (x, y, z) array of positions will have
-                z as TVD, which is positive down. If `elev` is True, positive
-                will be upwards.
-            points (int): The number of points in the trajectory.
-            kwargs: Will be passed to `scipy.interpolate.splprep()`.
-
-        Returns:
-            ndarray. An array with shape (`points` x 3) representing the well
-                trajectory. Columns are (x, y, z).
-        """
-        return self.well.location.trajectory(datum=datum, elev=elev,
-                                             points=points,
-                                             **kwargs)

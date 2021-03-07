@@ -1,5 +1,5 @@
 import warnings
-from typing import Optional, Union, List, Dict
+from typing import Dict
 
 import pandas as pd
 
@@ -10,57 +10,24 @@ from subsurface.reader.wells.wells_utils import add_tops_from_base_and_altitude_
 def read_borehole_files(reader_wells_helper: ReaderWellsHelper) -> Dict[str, pd.DataFrame]:
     data_frames = dict()
 
-    # if read_attributes_kwargs is None:
-    #     read_attributes_kwargs = {}
-    # if read_lith_kwargs is None:
-    #     read_lith_kwargs = {}
-    # if read_survey_kwargs is None:
-    #     read_survey_kwargs = {}
-    # if read_collar_kwargs is None:
-    #     read_collar_kwargs = {}
+    data_frames['collar_df'] = read_collar(reader_wells_helper.reader_collars_args)
 
-    # if collar_file is not None:
-    collars = read_collar(reader_wells_helper.reader_collars_args)
-    data_frames['collar_df'] = collars
-
-    # if survey_file is not None:
-    #   col_map = read_survey_kwargs.pop('columns_map', None)
-    #   idx_map = read_survey_kwargs.pop('index_map', None)
-    survey = read_survey(reader_wells_helper.reader_survey_args)
-    data_frames['survey_df'] = survey
+    data_frames['survey_df'] = read_survey(reader_wells_helper.reader_survey_args)
 
     if reader_wells_helper.reader_lith_args is not None:
-        lith = read_lith(reader_wells_helper.reader_lith_args)
-        data_frames['lith_df'] = lith
+        data_frames['lith_df'] = read_lith(reader_wells_helper.reader_lith_args)
 
-    # First check if is just a path or list
     if reader_wells_helper.reader_attr_args is not None:
-
-        # drop_cols = read_attributes_kwargs.pop('drop_cols',
-        #                                        [None] * len(attrib_file))
-        # col_map = read_attributes_kwargs.pop('columns_map',
-        #                                      [None] * len(attrib_file))
-
         attributes_ = list()
         for e in reader_wells_helper.reader_attr_args:
             attributes_.append(read_attributes(e))
-
         data_frames['attrib_dfs'] = attributes_
 
     return data_frames
 
 
 def read_collar(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
-    """
 
-    Args:
-        file_or_buffer:
-        **kwargs:
-            usecols: well_name, X, Y, Z
-
-    Returns:
-
-    """
     if reader_helper.header == 'infer': reader_helper.header = None
     if reader_helper.usecols is None: reader_helper.usecols = [0, 1, 2, 3]
     if reader_helper.index_col is False: reader_helper.index_col = 0
@@ -89,6 +56,7 @@ def read_lith(reader_helper: ReaderFilesHelper):
         - base
         - component lith
     """
+    if reader_helper.index_col is False: reader_helper.index_col = 0
 
     d = check_format_and_read_to_df(reader_helper)
     map_rows_and_cols_inplace(d, reader_helper)
@@ -98,10 +66,11 @@ def read_lith(reader_helper: ReaderFilesHelper):
 
 
 def read_attributes(reader_helper: ReaderFilesHelper)-> pd.DataFrame:
+    if reader_helper.index_col is False: reader_helper.index_col = 0
 
     d = check_format_and_read_to_df(reader_helper)
+
     if reader_helper.columns_map is not None: d.rename(reader_helper.columns_map, axis=1, inplace=True)
-    # map_rows_and_cols_inplace(d, reader_helper)
     if reader_helper.drop_cols is not None: d.drop(reader_helper.drop_cols, axis=1, inplace=True)
 
     _validate_attr_data(d)
@@ -109,7 +78,7 @@ def read_attributes(reader_helper: ReaderFilesHelper)-> pd.DataFrame:
 
 
 def check_format_and_read_to_df(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
-    if reader_helper == ".json":
+    if reader_helper.format == ".json":
         d = pd.read_json(reader_helper.file_or_buffer, orient='split')
     elif reader_helper.is_file_in_disk:
         reader = _get_reader(reader_helper.format)
@@ -117,7 +86,7 @@ def check_format_and_read_to_df(reader_helper: ReaderFilesHelper) -> pd.DataFram
     elif reader_helper.is_bytes_string:
         reader = _get_reader('.csv')
         d = reader(reader_helper.file_or_buffer, **reader_helper.pandas_reader_kwargs)
-    elif reader_helper.is_python_dict():
+    elif reader_helper.is_python_dict:
         reader = _get_reader('dict')
         d = reader(reader_helper.file_or_buffer)
     else:

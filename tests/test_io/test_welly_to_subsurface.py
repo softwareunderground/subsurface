@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 
 from subsurface.reader import read_wells_to_unstruct
 from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
-from subsurface.reader.wells.pandas_to_welly import WellyToSubsurface
-from subsurface.reader.wells.well_files_reader import read_collar, read_survey
+from subsurface.reader.wells.pandas_to_welly import WellyToSubsurfaceHelper
+from subsurface.reader.wells.well_files_reader import read_collar, read_survey, read_lith, read_attributes
 from subsurface.reader.wells.welly_reader import welly_to_subsurface
 from subsurface.structs import LineSet
 import subsurface
@@ -20,20 +20,20 @@ from striplog import Striplog
 
 
 def test_empty_project():
-    wts = WellyToSubsurface()
+    wts = WellyToSubsurfaceHelper()
     print(wts.p)
-
 
 
 def test_read_borehole_stateless():
     collar = read_collar(ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
-            usecols=[0, 1, 2, 4]))
+        file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+        usecols=[0, 1, 2, 4]))
     survey = read_survey(ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
-            columns_map={'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'},
-            index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
-        ))
+        file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
+        columns_map={'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'},
+        index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
+    ))
+
     dict_collar = collar.to_dict('split')
     dict_survey = survey.to_dict('split')
     c_df = pd.DataFrame(data=dict_collar['data'],
@@ -43,12 +43,8 @@ def test_read_borehole_stateless():
                         index=dict_survey['index'],
                         columns=dict_survey['columns'])
 
-    # wts = subsurface.reader.pandas_to_welly(
-    #     collar_df=c_df,
-    #     survey_df=s_df,
-    # )
 
-    wts = WellyToSubsurface(collar_df=c_df, survey_df=s_df)
+    wts = WellyToSubsurfaceHelper(collar_df=c_df, survey_df=s_df)
     unstruct = welly_to_subsurface(wts)
     print(unstruct)
 
@@ -56,7 +52,44 @@ def test_read_borehole_stateless():
         element = LineSet(unstruct)
         pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
         # Plot default LITH
-        subsurface.visualization.pv_plot([pyvista_mesh], image_2d=False)
+        subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
+
+
+def test_read_borehole_manual_api():
+    collar = read_collar(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+        usecols=[0, 1, 2, 4]))
+    survey = read_survey(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
+        columns_map={'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'},
+        index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
+    ))
+
+    lith = read_lith(
+        ReaderFilesHelper(
+            file_or_buffer=data_path.joinpath('borehole_lith.xlsx'),
+            index_col="SITE_ID",
+            columns_map={'DEPTH_FROM': 'top', 'DEPTH_TO': 'base',
+                         'LITHOLOGY': 'component lith', 'SITE_ID': 'description'}
+        )
+    )
+
+    attr = read_attributes(
+        ReaderFilesHelper(
+            data_path.joinpath('borehole_assays.xlsx'),
+            drop_cols=['TO'],
+            columns_map={'FROM': 'basis'}
+        )
+    )
+    wts = WellyToSubsurfaceHelper(collar_df=collar, survey_df=survey, lith_df=lith, attrib_dfs=[attr])
+    unstruct = welly_to_subsurface(wts)
+    print(unstruct)
+
+    if True:
+        element = LineSet(unstruct)
+        pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
+        # Plot default LITH
+        subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
 def test_read_wells_to_unstruct():
@@ -89,35 +122,6 @@ def test_read_wells_to_unstruct():
         ]
     )
     unstructured_data = read_wells_to_unstruct(reader_helper)
-    # unstructured_data = read_wells_to_unstruct(
-    #     collar_file=data_path.joinpath('borehole_collar.xlsx'),
-    #     read_collar_kwargs={'usecols': [0, 1, 2, 4]},
-    #     survey_file=data_path.joinpath('borehole_survey.xlsx'),
-    #     read_survey_kwargs={
-    #         'columns_map': {'DEPTH': 'md', 'INCLINATION': 'inc',
-    #                         'DIRECTION': 'azi'},
-    #         'index_map': {'ELV-01': 'foo', 'ELV-02': 'bar'}
-    #     },
-    #     lith_file=data_path.joinpath('borehole_lith.xlsx'),
-    #     read_lith_kwargs={
-    #         'index_col': 'SITE_ID',
-    #         'columns_map': {'DEPTH_FROM': 'top',
-    #                         'DEPTH_TO': 'base',
-    #                         'LITHOLOGY': 'component lith',
-    #                         'SITE_ID': 'description'}
-    #     },
-    #     attrib_file=[data_path.joinpath('borehole_assays.xlsx'),
-    #                  data_path.joinpath('borehole_density.xlsx')],
-    #     read_attributes_kwargs={
-    #         'drop_cols': ['TO', 'LITOLOGIA'],
-    #         'columns_map': [
-    #             {'FROM': 'basis'},
-    #             {'DEPTH_TO': 'basis'}
-    #         ]
-    #     }
-    #
-    # )
-
 
     if False:
         to_netcdf(file='../data/wells.nc')
@@ -129,7 +133,7 @@ def test_read_wells_to_unstruct():
 
 
 def test_create_welly_to_subsurface():
-    wts = WellyToSubsurface()
+    wts = WellyToSubsurfaceHelper()
     collars = test_read_collars()
     survey = test_read_survey()
     lith = test_read_lith()
@@ -140,7 +144,7 @@ def test_create_welly_to_subsurface():
     wts.add_striplog(lith)
     wts.add_assays(assays, basis='FROM')
 
-    unstructured_data = wts.to_subsurface(n_points=1000)
+    unstructured_data = welly_to_subsurface(wts, n_vertex_per_well=1000)
     unstructured_data.to_xarray()
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
@@ -152,33 +156,25 @@ def test_create_welly_to_subsurface():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
-def test_read_to_welly():
-    wts = read_to_welly(collar_file=data_path.joinpath('borehole_collar.xlsx'),
-                        read_collar_kwargs={'usecols': [0, 1, 2, 3]})
-    print(wts)
-
-
 def test_read_to_welly_json():
-    """Read from dict is important for json"""
+    collar = read_collar(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+        usecols=[0, 1, 2, 4]))
+    survey = read_survey(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
+        columns_map={'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'},
+        index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
+    ))
 
-    # Convert xlsx into dict. Dict has to be already cleaned
-    collar = read_collar(file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
-                         usecols=[0, 1, 2, 4])
-    survey = read_survey(file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
-                         columns_map={'DEPTH': 'md', 'INCLINATION': 'inc',
-                                      'DIRECTION': 'azi'},
-                         index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
-                         )
+    json_ = collar.to_json(orient='split')
 
-    dict_ = collar.to_json(orient='split')
-    wts = read_to_welly(collar_file=dict_,
-                        read_collar_kwargs={'is_json': True},
-                        survey_file=survey.to_json(orient='split'),
-                        read_survey_kwargs={'is_json': True}
-                        )
-
-    print('\n', wts)
-    unstructured_data = wts.welly_to_subsurface()
+    unstructured_data = read_wells_to_unstruct(
+        ReaderWellsHelper(
+            reader_collars_args=ReaderFilesHelper(json_, format='.json'),
+            reader_survey_args=ReaderFilesHelper(survey.to_json(orient='split'),
+                                                 format='.json')
+        )
+    )
     print('\n', unstructured_data)
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
@@ -191,102 +187,27 @@ def test_read_to_welly_dict():
     """Read from dict is important for json"""
 
     # Convert xlsx into dict. Dict has to be already cleaned
-    collar = read_collar(file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
-                         usecols=[0, 1, 2, 4])
-    survey = read_survey(file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
-                         columns_map={'DEPTH': 'md', 'INCLINATION': 'inc',
-                                      'DIRECTION': 'azi'},
-                         index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
-                         )
+    collar = read_collar(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+        usecols=[0, 1, 2, 4]))
+    survey = read_survey(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
+        columns_map={'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'},
+        index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
+    ))
 
     dict_ = collar.to_dict(orient='split')
-    wts = read_to_welly(collar_file=dict_,
-                        survey_file=survey.to_dict(orient='split'))
 
-    print('\n', wts)
-    unstructured_data = wts.welly_to_subsurface()
+    unstructured_data = read_wells_to_unstruct(
+        ReaderWellsHelper(
+            reader_collars_args=ReaderFilesHelper(dict_),
+            reader_survey_args=ReaderFilesHelper(survey.to_dict(orient='split'))
+        )
+    )
     print('\n', unstructured_data)
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
-    # Plot default LITH
-    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
-
-def test_read_to_welly_xlsx():
-    wts = read_to_welly()
-    print('\n', wts)
-
-    wts = read_to_welly(collar_file=data_path.joinpath('borehole_collar.xlsx'))
-    print('\n', wts)
-    # with pytest.raises(AttributeError, match=r".*one of the wells.*"):
-    #     unstructured_data = wts.to_subsurface()
-
-    wts = read_to_welly(collar_file=data_path.joinpath('borehole_collar.xlsx'),
-                        read_collar_kwargs={'usecols': [0, 1, 2, 4]},
-                        survey_file=data_path.joinpath('borehole_survey.xlsx'),
-                        read_survey_kwargs={
-                            'columns_map': {'DEPTH': 'md', 'INCLINATION': 'inc',
-                                            'DIRECTION': 'azi'},
-                            'index_map': {'ELV-01': 'foo', 'ELV-02': 'bar'}
-                        })
-    print('\n', wts)
-    unstructured_data = wts.welly_to_subsurface()
-    print('\n', unstructured_data)
-    element = LineSet(unstructured_data)
-    pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
-    # Plot default LITH
-    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
-
-    wts = read_to_welly(lith_file=data_path.joinpath('borehole_lith.xlsx'),
-                        read_lith_kwargs={
-                            'index_col': 'SITE_ID',
-                            'columns_map': {'DEPTH_FROM': 'top',
-                                            'DEPTH_TO': 'base',
-                                            'LITHOLOGY': 'component lith',
-                                            'SITE_ID': 'description'}
-                        },
-                        wts=wts  # By passing a wts object we append the data
-                        )
-    unstructured_data = wts.welly_to_subsurface()
-    print('\n', unstructured_data)
-    element = LineSet(unstructured_data)
-    pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
-    # Plot default LITH
-    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
-
-    # All in one
-    wts = read_to_welly(collar_file=data_path.joinpath('borehole_collar.xlsx'),
-                        read_collar_kwargs={'usecols': [0, 1, 2, 4]},
-                        survey_file=data_path.joinpath('borehole_survey.xlsx'),
-                        read_survey_kwargs={
-                            'columns_map': {'DEPTH': 'md', 'INCLINATION': 'inc',
-                                            'DIRECTION': 'azi'},
-                            'index_map': {'ELV-01': 'foo', 'ELV-02': 'bar'}
-                        },
-                        lith_file=data_path.joinpath('borehole_lith.xlsx'),
-                        read_lith_kwargs={
-                            'index_col': 'SITE_ID',
-                            'columns_map': {'DEPTH_FROM': 'top',
-                                            'DEPTH_TO': 'base',
-                                            'LITHOLOGY': 'component lith',
-                                            'SITE_ID': 'description'}
-                        },
-                        attrib_file=[data_path.joinpath('borehole_assays.xlsx'),
-                                     data_path.joinpath('borehole_density.xlsx')],
-                        read_attributes_kwargs={
-                            'drop_cols': ['TO', 'LITOLOGIA'],
-                            'columns_map': [
-                                {'FROM': 'basis'},
-                                {'DEPTH_TO': 'basis'}
-                            ]
-                        }
-                        )
-
-    unstructured_data = wts.welly_to_subsurface()
-    print('\n', unstructured_data)
-    element = LineSet(unstructured_data)
-    pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
-    pyvista_mesh.set_active_scalars('Au (g/t)')
     # Plot default LITH
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 

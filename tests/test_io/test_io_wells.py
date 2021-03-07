@@ -1,17 +1,17 @@
 from subsurface import PointSet
 from subsurface.reader import borehole_location_to_unstruct
+from subsurface.reader.readers_data import ReaderFilesHelper
 from subsurface.visualization import to_pyvista_points, pv_plot
 import pandas as pd
 
 
 def test_borehole_location_to_unstruct(data_path):
     us = borehole_location_to_unstruct(
-        data_path + '/borehole/borehole_collar.xlsx', {
-            'columns_map': {1: 'x',
-                            2: 'y',
-                            3: 'altitude',
-                            }
-        })
+        ReaderFilesHelper(
+            file_or_buffer=data_path + '/borehole/borehole_collar.xlsx',
+            columns_map={1: 'x', 2: 'y', 3: 'altitude' }
+        )
+    )
     point_set = PointSet(us)
     s = to_pyvista_points(point_set)
 
