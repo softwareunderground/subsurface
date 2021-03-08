@@ -218,8 +218,7 @@ class UnstructuredData:
 
     @attributes.setter
     def attributes(self, dataframe):
-        self.data[self.cells_attr_name] = xr.DataArray(dataframe,
-                                                       dims=['element', 'cell_attr'])
+        self.data[self.cells_attr_name] = xr.DataArray(dataframe, dims=['element', 'cell_attr'])
 
     @property
     def points_attributes(self):
