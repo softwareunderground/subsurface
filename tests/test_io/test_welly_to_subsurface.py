@@ -5,8 +5,11 @@ import matplotlib.pyplot as plt
 
 from subsurface.reader import read_wells_to_unstruct
 from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
+from subsurface.reader.wells import add_tops_from_base_and_altitude_in_place
 from subsurface.reader.wells.pandas_to_welly import WellyToSubsurfaceHelper
 from subsurface.reader.wells.well_files_reader import read_collar, read_survey, read_lith, read_attributes
+from subsurface.reader.wells.wells_utils import pivot_wells_df_into_segment_per_row, map_attr_to_segments, \
+    fix_wells_higher_base_than_top_inplace
 from subsurface.reader.wells.welly_reader import welly_to_subsurface
 from subsurface.structs import LineSet
 import subsurface
@@ -16,7 +19,7 @@ welly = pytest.importorskip('welly')
 xlrd = pytest.importorskip('xlrd')
 pf = pathlib.Path(__file__).parent.absolute()
 data_path = pf.joinpath('../data/borehole/')
-from striplog import Striplog
+from striplog import Striplog, Component
 
 
 def test_empty_project():
@@ -27,6 +30,7 @@ def test_empty_project():
 def test_read_borehole_stateless():
     collar = read_collar(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+        header=None,
         usecols=[0, 1, 2, 4]))
     survey = read_survey(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
@@ -43,7 +47,6 @@ def test_read_borehole_stateless():
                         index=dict_survey['index'],
                         columns=dict_survey['columns'])
 
-
     wts = WellyToSubsurfaceHelper(collar_df=c_df, survey_df=s_df)
     unstruct = welly_to_subsurface(wts)
     print(unstruct)
@@ -58,6 +61,7 @@ def test_read_borehole_stateless():
 def test_read_borehole_manual_api():
     collar = read_collar(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+        header=None,
         usecols=[0, 1, 2, 4]))
     survey = read_survey(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
@@ -96,6 +100,7 @@ def test_read_wells_to_unstruct():
     reader_helper = ReaderWellsHelper(
         reader_collars_args=ReaderFilesHelper(
             file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+            header=None,
             usecols=[0, 1, 2, 4]),
         reader_survey_args=ReaderFilesHelper(
             file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
@@ -159,6 +164,7 @@ def test_create_welly_to_subsurface():
 def test_read_to_welly_json():
     collar = read_collar(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+        header=None,
         usecols=[0, 1, 2, 4]))
     survey = read_survey(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
@@ -189,6 +195,7 @@ def test_read_to_welly_dict():
     # Convert xlsx into dict. Dict has to be already cleaned
     collar = read_collar(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
+        header=None,
         usecols=[0, 1, 2, 4]))
     survey = read_survey(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
@@ -321,3 +328,114 @@ def test_read_density():
                       index_col=0)
     d.drop('DEPTH_TO', axis=1, inplace=True)
     return d
+
+
+formations = ["topo", "etchegoin", "macoma", "chanac", "mclure",
+              "santa_margarita", "fruitvale",
+              "round_mountain", "olcese", "freeman_jewett", "vedder", "eocene",
+              "cretaceous",
+              "basement", "null"]
+
+
+def test_read_kim():
+    collar = read_collar(
+        ReaderFilesHelper(
+            file_or_buffer=data_path.joinpath('kim_ready.csv'),
+            index_col="name",
+            usecols=['x', 'y', 'altitude', "name"]
+        )
+    )
+
+    print(collar)
+
+    survey = read_survey(
+        ReaderFilesHelper(
+            file_or_buffer=data_path.joinpath('kim_ready.csv'),
+            index_col="name",
+            usecols=["name", "md"]
+        )
+    )
+
+    lith = read_lith(
+        ReaderFilesHelper(
+            file_or_buffer=data_path.joinpath('kim_ready.csv'),
+            usecols=['name', 'top', 'base', 'formation'],
+            columns_map={'top': 'top',
+                         'base': 'base',
+                         'formation': 'component lith',
+                         }
+        )
+    )
+
+    wts = WellyToSubsurfaceHelper(collar_df=collar, survey_df=survey, lith_df=lith)
+    unstruct = welly_to_subsurface(wts,
+                                   table=[Component({'lith': l}) for l in formations]
+                                   )
+    element = LineSet(unstruct)
+    pyvista_mesh = subsurface.visualization.to_pyvista_line(element, radius=50)
+
+    # Plot default LITH
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
+
+
+def test_read_kim_default_component_table():
+    collar = read_collar(
+        ReaderFilesHelper(
+            file_or_buffer=data_path.joinpath('kim_ready.csv'),
+            index_col="name",
+            usecols=['x', 'y', 'altitude', "name"]
+        )
+    )
+
+    print(collar)
+
+    survey = read_survey(
+        ReaderFilesHelper(
+            file_or_buffer=data_path.joinpath('kim_ready.csv'),
+            index_col="name",
+            usecols=["name", "md"]
+        )
+    )
+
+    lith = read_lith(
+        ReaderFilesHelper(
+            file_or_buffer=data_path.joinpath('kim_ready.csv'),
+            usecols=['name', 'top', 'base', 'formation'],
+            columns_map={'top': 'top',
+                         'base': 'base',
+                         'formation': 'component lith',
+                         }
+        )
+    )
+
+    wts = WellyToSubsurfaceHelper(collar_df=collar, survey_df=survey, lith_df=lith)
+    unstruct = welly_to_subsurface(wts)
+    element = LineSet(unstruct)
+    pyvista_mesh = subsurface.visualization.to_pyvista_line(element, radius=50)
+
+    # Plot default LITH
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
+
+
+def test_aux_operations():
+    df = pd.read_table(data_path.joinpath('doggr_jlw_vedder_final.utm.dat'),
+                       skiprows=41,
+                       header=None,
+                       sep='\t',
+                       )
+
+    df.rename(columns={1: 'x', 2: 'y', 3: 'name',
+                       4: 'num', 5: 'z', 6: 'year', 10: 'altitude'},
+              inplace=True)
+    df['name'] = df['name'] + df['num']
+
+    df_pivoted = pivot_wells_df_into_segment_per_row(df, 11, 15)
+    df_mapped = map_attr_to_segments(df_pivoted,
+                                     attr_per_segment=formations,
+                                     n_wells=df.shape[0]
+                                     )
+    print(df_pivoted)
+    df_with_tops_base = add_tops_from_base_and_altitude_in_place(df_mapped, 'name', "base", 'altitude')
+    df_fixed = fix_wells_higher_base_than_top_inplace(df_with_tops_base)
+    print(df_fixed)
+    df_fixed.to_csv(data_path.joinpath("kim_ready.csv"))

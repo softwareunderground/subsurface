@@ -24,8 +24,8 @@ class ReaderFilesHelper:
     additional_reader_kwargs: dict = field(default_factory=dict)
     file_or_buffer_type: Any = field(init=False)
 
-    index_col: str = False
-    header: Union[int, List[int]] = "infer"
+    index_col: Union[int, str] = False
+    header: Union[None, int, List[int]] = "infer"
 
     def __post_init__(self):
         if self.format is None: self.format = get_extension(self.file_or_buffer)

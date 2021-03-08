@@ -28,7 +28,6 @@ def read_borehole_files(reader_wells_helper: ReaderWellsHelper) -> Dict[str, pd.
 
 def read_collar(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
 
-    if reader_helper.header == 'infer': reader_helper.header = None
     if reader_helper.usecols is None: reader_helper.usecols = [0, 1, 2, 3]
     if reader_helper.index_col is False: reader_helper.index_col = 0
 
@@ -95,8 +94,11 @@ def check_format_and_read_to_df(reader_helper: ReaderFilesHelper) -> pd.DataFram
 
 
 def map_rows_and_cols_inplace(d: pd.DataFrame, reader_helper: ReaderFilesHelper):
-    if reader_helper.index_map is not None: d.index = d.index.map(reader_helper.index_map)
-    if reader_helper.columns_map is not None: d.columns = d.columns.map(reader_helper.columns_map)
+    if reader_helper.index_map is not None:
+        d.rename(reader_helper.index_map, axis="index", inplace=True)#d.index = d.index.map(reader_helper.index_map)
+    if reader_helper.columns_map is not None:
+        d.rename(reader_helper.columns_map, axis="columns", inplace=True)
+        #d.columns = d.columns.map(reader_helper.columns_map)
 
 
 def _get_reader(file_format):

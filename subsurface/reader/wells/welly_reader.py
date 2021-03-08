@@ -45,6 +45,7 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
 
     last_index = 0
     missed_wells = []
+
     for w in wts.p.get_wells():
         if well_without_valid_survey(w, missed_wells): continue
 
@@ -55,15 +56,8 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
 
         # Convert striplog into Curve
         if convert_lith is True and 'lith' in w.data:
+            if table is None: table = wts.lith_component_table
             w.data['lith_log'] = striplog_to_curve_log(n_vertex_per_well, table, w, wts)
-            # try:
-            #
-            # except KeyError:
-            #     warnings.warn(
-            #         f'No lith curve in this borehole {w.name}. Setting values'
-            #         'to 0')
-            #
-            #     w.data['lith_log'] = Curve(np.zeros(n_vertex_per_well - 1))
 
     try:
         df = wts.p.df()

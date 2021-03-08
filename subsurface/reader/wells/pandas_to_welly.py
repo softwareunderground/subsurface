@@ -5,7 +5,8 @@ import pandas as pd
 
 try:
     from welly import Well, Location, Project, Curve
-    from striplog import Striplog
+    from striplog import Striplog, Component
+
     welly_imported = True
 except ImportError:
     welly_imported = False
@@ -38,16 +39,13 @@ class WellyToSubsurfaceHelper:
         Everything would be a LineSet with a bunch of properties
 
         """
-        # Init empty Project
+
         if welly_imported is False:
             raise ImportError('You need to install welly to read well data.')
 
         self.p = Project([])
         self._well_names = set()
-
-        # # Init empty well
-        # self.well = Well(params={'header': {'name': well_name}})
-        # self.well.location = Location(params={'kb': 100})
+        self._unique_formations = None
 
         if collar_df is not None: self.add_datum(collar_df)
         if survey_df is not None: self.add_deviation(survey_df)
@@ -60,6 +58,14 @@ class WellyToSubsurfaceHelper:
 
     def __repr__(self):
         return self.p.__repr__()
+
+    @property
+    def lith_component_table(self):
+        return [Component({'lith': l}) for l in self._unique_formations]
+
+    @lith_component_table.setter
+    def lith_component_table(self, unique_formations):
+        self._unique_formations = unique_formations
 
     def add_wells(self, well_names: Iterable):
         new_boreholes = self._well_names.symmetric_difference(well_names)
@@ -90,6 +96,7 @@ class WellyToSubsurfaceHelper:
     def add_striplog(self, data: pd.DataFrame):
         unique_borehole = np.unique(data.index)
         self.add_wells(unique_borehole)
+        self.lith_component_table = data['component lith'].unique()
         missed_borehole = []
         for b in unique_borehole:
             w = self.p.get_well(b)
