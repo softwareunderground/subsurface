@@ -5,7 +5,8 @@ from subsurface.reader.mesh.surface_reader import read_mesh_file_to_vertex, read
 from subsurface.reader.readers_data import ReaderUnstructuredHelper, RawDataOptions, RawDataUnstructured
 
 
-def read_2d_mesh_to_unstruct(reader_args: ReaderUnstructuredHelper, raw_data_options: RawDataOptions = None,
+def read_2d_mesh_to_unstruct(reader_args: ReaderUnstructuredHelper,
+                             raw_data_options: RawDataOptions = None,
                              delaunay: bool = True) -> UnstructuredData:
     """
     Reads in csv files with n table columns and returns UnstructuredData object. m cells have to be in m columns named

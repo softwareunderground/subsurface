@@ -211,6 +211,27 @@ profiles_trisurf_list, profiles_mesh_list = subsurface.reader.profiles.profiles_
 ss.visualization.pv_plot(profiles_mesh_list, image_2d=False, ve=5)
 
 
+# %%md
+# GemPy Mesh
+# ----------
+
+# %%
+# UnstructuredData
+gempy_unstructured_data = subsurface.reader.read_netcdf.read_unstruct(data_path + '/meshes.nc')
+
+# Element
+trisurf_gempy = ss.TriSurf(gempy_unstructured_data)
+
+# Pyvista mesh
+gempy_mesh = ss.visualization.to_pyvista_mesh(trisurf_gempy)
+
+# %%
+ss.visualization.pv_plot(
+    [gempy_mesh],
+    image_2d=False,
+    ve=5
+)
+
 # %%
 # sphinx_gallery_thumbnail_number = 6
 

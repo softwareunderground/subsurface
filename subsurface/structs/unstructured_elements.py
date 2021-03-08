@@ -90,8 +90,8 @@ class TriSurf:
             raise AttributeError('data.cells must be of the format'
                                  'NDArray[(Any, 3), IntX]')
 
-        self.mesh = mesh
-        self.texture = texture
+        self.mesh: UnstructuredData = mesh
+        self.texture: StructuredData = texture
         self.texture_origin = kwargs.get('texture_origin', None)
         self.texture_point_u = kwargs.get('texture_point_u', None)
         self.texture_point_v = kwargs.get('texture_point_v', None)
@@ -124,7 +124,7 @@ class LineSet:
 
     def __init__(self, data: UnstructuredData, radius: float = 1):
 
-        self.data = data
+        self.data: UnstructuredData = data
         self.radius = radius
 
         if data.cells is None or data.cells.shape[1] < 2:
@@ -146,8 +146,7 @@ class LineSet:
         """
         a = np.arange(0, self.data.n_points - 1, dtype=np.int_)
         b = np.arange(1, self.data.n_points, dtype=np.int_)
-        self.data.cells = np.vstack([a, b]).T
-        return self.data.cells
+        return np.vstack([a, b]).T
 
     @property
     def segments(self):

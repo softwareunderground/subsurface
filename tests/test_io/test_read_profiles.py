@@ -62,7 +62,7 @@ def test_tri_surf_from_traces_and_png(data_path):
 
 
 def test_tri_surf_from_traces_and_png_uv(data_path):
-    us, mesh_list = create_tri_surf_from_traces_texture(
+    tri_surf, mesh_list = create_tri_surf_from_traces_texture(
         data_path + '/profiles/Traces.shp',
         path_to_texture=[
             data_path + '/profiles/Profil1_cropped.png',
@@ -77,7 +77,7 @@ def test_tri_surf_from_traces_and_png_uv(data_path):
         return_uv=True
     )
 
-    print(us[0].mesh.data.points_attributes)
+    print(tri_surf[0].mesh.points_attributes)
     pv_plot(mesh_list, image_2d=True)
 
 

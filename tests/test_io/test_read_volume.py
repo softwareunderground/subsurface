@@ -44,7 +44,7 @@ def test_interpolate_ud_to_sd():
     sg = StructuredGrid(sd)
 
     mesh = to_pyvista_grid(sg)
-    pv_plot([mesh, ud_mesh], image_2d=False)
+    pv_plot([mesh, ud_mesh], image_2d=True)
 
 
 def test_read_volumetric_mesh():

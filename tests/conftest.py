@@ -58,7 +58,7 @@ def line_set():
     y = r * np.cos(theta)
     v = np.column_stack((x, y, z))
 
-    data = UnstructuredData.from_array(vertex=v, cells=np.random.rand(n - 1, 2),
+    data = UnstructuredData.from_array(vertex=v, cells="lines",
                                        cells_attr=pd.DataFrame({'foo': np.arange(n - 1)}))
     lineset = LineSet(data)
     lineset.generate_default_cells()
