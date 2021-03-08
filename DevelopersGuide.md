@@ -2,8 +2,8 @@ Before a release.
 ----------------
 # set version number in setup.py, also in the config file of the documentation and init of the package
 - [ ] setup.py
-- [ ] subsurface.__init__
-> Note: in the config for sphinx~ this is taken from gempy.__init__
+- [ ] subsurface._version
+> Note: in the config for sphinx~ this is taken from subsurface._version
 
 Github release
 --------------
