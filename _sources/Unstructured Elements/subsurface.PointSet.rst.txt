@@ -20,8 +20,6 @@
    .. autosummary::
    
       ~PointSet.__init__
-      ~PointSet.to_pyvista
-      ~PointSet.validate
    
    
 

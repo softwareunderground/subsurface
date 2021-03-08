@@ -20,8 +20,6 @@
    .. autosummary::
    
       ~TetraMesh.__init__
-      ~TetraMesh.to_pyvista
-      ~TetraMesh.validate
    
    
 

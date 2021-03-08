@@ -20,8 +20,6 @@
    .. autosummary::
    
       ~TriSurf.__init__
-      ~TriSurf.to_pyvista
-      ~TriSurf.validate
    
    
 

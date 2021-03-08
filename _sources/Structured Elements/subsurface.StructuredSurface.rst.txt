@@ -20,8 +20,6 @@
    .. autosummary::
    
       ~StructuredSurface.__init__
-      ~StructuredSurface.to_pyvista
-      ~StructuredSurface.validate
    
    
 

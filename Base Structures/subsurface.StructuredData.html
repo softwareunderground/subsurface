@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>subsurface.StructuredData &#8212; subsurface 0.1.0 documentation</title>
+    <title>subsurface.StructuredData &#8212; subsurface 0.2.0b1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
@@ -18,7 +18,7 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="subsurface.structs.base_structures.CommonDataMethods" href="subsurface.structs.base_structures.CommonDataMethods.html" />
+    <link rel="next" title="subsurface.PointSet" href="../Unstructured%20Elements/subsurface.PointSet.html" />
     <link rel="prev" title="subsurface.UnstructuredData" href="subsurface.UnstructuredData.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -40,34 +40,8 @@
 <h1>subsurface.StructuredData<a class="headerlink" href="#subsurface-structureddata" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="subsurface.StructuredData">
-<em class="property">class </em><code class="sig-prename descclassname">subsurface.</code><code class="sig-name descname">StructuredData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">Union<span class="p">[</span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)">numpy.ndarray</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">, </span>xarray.core.dataset.Dataset<span class="p">, </span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">data_array_name</span><span class="o">=</span><span class="default_value">'data_array'</span></em>, <em class="sig-param"><span class="n">coords</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coords_names</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures.html#StructuredData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.StructuredData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Primary structure definition for structured data</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>xr.Dataset</em><em>, </em><em>xr.DataArray</em><em>, </em><em>np.ndarray</em>) – object containing
-structured data, i.e. data that can be stored in multidimensional
-numpy array. The preferred type to pass as data is directly a
-xr.Dataset to be sure all the attributes are set and named as the user
-wants.</p></li>
-<li><p><strong>data_array_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – If data is a numpy array or xarray DataArray, data_name
-provides the name for the xarray data variable</p></li>
-<li><p><strong>coords</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – If data is a numpy array coords provides the values for
-the xarray dimension. These dimensions are ‘x’, ‘y’ and ‘z’</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt id="subsurface.StructuredData.data">
-<code class="sig-name descname">data</code><a class="headerlink" href="#subsurface.StructuredData.data" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.16.3.dev0)">xarray.Dataset</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<p class="rubric">Examples using StructuredData</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">subsurface.</span></code><code class="sig-name descname"><span class="pre">StructuredData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">xarray.core.dataset.Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_array_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'data_array'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures/structured_data.html#StructuredData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.StructuredData" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Examples using StructuredData</p>
 <div class="sphx-glr-thumbcontainer" tooltip="Getting started"><div class="figure align-default" id="id1">
 <img alt="Getting started" src="../_images/sphx_glr_getting_started_thumb.png" />
 <p class="caption"><span class="caption-text"><a class="reference internal" href="../getting_started/getting_started.html#sphx-glr-getting-started-getting-started-py"><span class="std std-ref">Getting started</span></a></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
@@ -79,19 +53,19 @@ the xarray dimension. These dimensions are ‘x’, ‘y’ and ‘z’</p></li>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.StructuredData.__init__" title="subsurface.StructuredData.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(data[, data_array_name, coords, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(data[, data_array_name])</p></td>
 <td><p>Initialize self.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_path_and_name</span></code>(path[, name])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_data_array</span></code>(data_array[, data_array_name])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_outliers</span></code>([dim, perc, replace_for])</p></td>
-<td><p>&#64;Edoardo Guerreiro <a class="reference external" href="https://stackoverflow.com/questions/60816533/">https://stackoverflow.com/questions/60816533/</a> is-there-a-built-in-function-in-xarray-to-remove-outliers-from-a-dataset</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_binary</span></code>([order])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(data_dict[, coords])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_netcdf</span></code>([path, file])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_numpy</span></code>(array[, coords, data_array_name, …])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_binary</span></code>([order])</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -103,18 +77,50 @@ the xarray dimension. These dimensions are ‘x’, ‘y’ and ‘z’</p></li>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_dataset</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.StructuredData.data_array_name" title="subsurface.StructuredData.data_array_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_array_name</span></code></a></p></td>
+<td><p>Primary structure definition for structured data</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_dataset</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
-<dl class="py method">
-<dt id="subsurface.StructuredData.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">Union<span class="p">[</span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)">numpy.ndarray</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">, </span>xarray.core.dataset.Dataset<span class="p">, </span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">data_array_name</span><span class="o">=</span><span class="default_value">'data_array'</span></em>, <em class="sig-param"><span class="n">coords</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coords_names</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures.html#StructuredData.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.StructuredData.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dl class="py attribute">
+<dt id="subsurface.StructuredData.data_array_name">
+<code class="sig-name descname"><span class="pre">data_array_name</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">'data_array'</span></em><a class="headerlink" href="#subsurface.StructuredData.data_array_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Primary structure definition for structured data</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Check out other constructors: <cite>StructuredData.from_numpy</cite>,</dt><dd><p><cite>StructuredData.from_data_array</cite> and <cite>StructuredData.from_dict</cite></p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>xr.Dataset</em>) – object containing
+structured data, i.e. data that can be stored in multidimensional
+numpy array. The preferred type to pass as data is directly a
+xr.Dataset to be sure all the attributes are set and named as the user
+wants.</p></li>
+<li><p><strong>data_array_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – If data is a numpy array or xarray DataArray, data_name
+provides the name for the xarray data variable</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="subsurface.StructuredData.data">
+<code class="sig-name descname"><span class="pre">data</span></code><a class="headerlink" href="#subsurface.StructuredData.data" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.17.1.dev0)">xarray.Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </dd></dl>
@@ -195,7 +201,7 @@ the xarray dimension. These dimensions are ‘x’, ‘y’ and ‘z’</p></li>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../code.html">Code</a><ul>
       <li>Previous: <a href="subsurface.UnstructuredData.html" title="previous chapter">subsurface.UnstructuredData</a></li>
-      <li>Next: <a href="subsurface.structs.base_structures.CommonDataMethods.html" title="next chapter">subsurface.structs.base_structures.CommonDataMethods</a></li>
+      <li>Next: <a href="../Unstructured%20Elements/subsurface.PointSet.html" title="next chapter">subsurface.PointSet</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -226,7 +232,7 @@ the xarray dimension. These dimensions are ‘x’, ‘y’ and ‘z’</p></li>
       &copy;2019-2021, The subsurface developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

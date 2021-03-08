@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Code &#8212; subsurface 0.1.0 documentation</title>
+    <title>Code &#8212; subsurface 0.2.0b1 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
@@ -48,11 +48,11 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="Base%20Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnstructuredData</span></code></a>(vertex, cells, …[, …])</p></td>
-<td><p>Primary structure definition for unstructured data</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="Base%20Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnstructuredData</span></code></a>(data, cells_attr_name, …)</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="Base%20Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StructuredData</span></code></a>(data, …[, data_array_name, …])</p></td>
-<td><p>Primary structure definition for structured data</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="Base%20Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StructuredData</span></code></a>(data, data_array_name)</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -62,9 +62,6 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="Base%20Structures/subsurface.structs.base_structures.CommonDataMethods.html#subsurface.structs.base_structures.CommonDataMethods" title="subsurface.structs.base_structures.CommonDataMethods"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CommonDataMethods</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -116,12 +113,6 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="Read%20well%20data/subsurface.io.read_wells_to_unstruct.html#subsurface.io.read_wells_to_unstruct" title="subsurface.io.read_wells_to_unstruct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_wells_to_unstruct</span></code></a>([backend, n_points, …])</p></td>
-<td><p>Read from csv files (or excel) to <cite>subsurface.Unstructured</cite> object.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="Read%20well%20data/subsurface.io.borehole_location_to_unstruct.html#subsurface.io.borehole_location_to_unstruct" title="subsurface.io.borehole_location_to_unstruct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">borehole_location_to_unstruct</span></code></a>(collar_file[, …])</p></td>
-<td><p></p></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -133,12 +124,6 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="Read%20topographic%20data/subsurface.io.read_unstructured_topography.html#subsurface.io.read_unstructured_topography" title="subsurface.io.read_unstructured_topography"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_unstructured_topography</span></code></a>(path)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="Read%20topographic%20data/subsurface.io.read_structured_topography.html#subsurface.io.read_structured_topography" title="subsurface.io.read_structured_topography"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_structured_topography</span></code></a>(path)</p></td>
-<td><p></p></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -161,18 +146,6 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="Surface%20reader/subsurface.io.mesh.surface_reader.csv_to_unstruct_args.html#subsurface.io.mesh.surface_reader.csv_to_unstruct_args" title="subsurface.io.mesh.surface_reader.csv_to_unstruct_args"><code class="xref py py-obj docutils literal notranslate"><span class="pre">csv_to_unstruct_args</span></code></a>(attr_dicts, …)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="Surface%20reader/subsurface.io.mesh.surface_reader.dxf_to_vertex_edges.html#subsurface.io.mesh.surface_reader.dxf_to_vertex_edges" title="subsurface.io.mesh.surface_reader.dxf_to_vertex_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dxf_to_vertex_edges</span></code></a>(path)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="Surface%20reader/subsurface.io.mesh.surface_reader.get_attributes_from_df.html#subsurface.io.mesh.surface_reader.get_attributes_from_df" title="subsurface.io.mesh.surface_reader.get_attributes_from_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_attributes_from_df</span></code></a>(attribute_cols, …)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="Surface%20reader/subsurface.io.mesh.surface_reader.get_cells_from_df.html#subsurface.io.mesh.surface_reader.get_cells_from_df" title="subsurface.io.mesh.surface_reader.get_cells_from_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cells_from_df</span></code></a>(data, delaunay, vertex)</p></td>
-<td><p></p></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -196,7 +169,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="Visualization/subsurface.visualization.to_pyvista_mesh.html#subsurface.visualization.to_pyvista_mesh" title="subsurface.visualization.to_pyvista_mesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pyvista_mesh</span></code></a>(unstructured_element)</p></td>
 <td><p>Create planar surface PolyData from unstructured element such as TriSurf</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="Visualization/subsurface.visualization.to_pyvista_mesh_and_texture.html#subsurface.visualization.to_pyvista_mesh_and_texture" title="subsurface.visualization.to_pyvista_mesh_and_texture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pyvista_mesh_and_texture</span></code></a>(unstructured_element)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="Visualization/subsurface.visualization.to_pyvista_mesh_and_texture.html#subsurface.visualization.to_pyvista_mesh_and_texture" title="subsurface.visualization.to_pyvista_mesh_and_texture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pyvista_mesh_and_texture</span></code></a>(triangular_surface)</p></td>
 <td><p>Create planar surface PolyData from unstructured element such as TriSurf</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="Visualization/subsurface.visualization.to_pyvista_tetra.html#subsurface.visualization.to_pyvista_tetra" title="subsurface.visualization.to_pyvista_tetra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pyvista_tetra</span></code></a>(tetra_mesh)</p></td>
@@ -313,7 +286,7 @@
       &copy;2019-2021, The subsurface developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

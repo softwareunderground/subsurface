@@ -21,8 +21,6 @@
    
       ~LineSet.__init__
       ~LineSet.generate_default_cells
-      ~LineSet.to_pyvista
-      ~LineSet.validate
    
    
 

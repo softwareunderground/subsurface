@@ -20,10 +20,10 @@
    .. autosummary::
    
       ~StructuredData.__init__
-      ~StructuredData.default_path_and_name
-      ~StructuredData.replace_outliers
+      ~StructuredData.from_data_array
+      ~StructuredData.from_dict
+      ~StructuredData.from_numpy
       ~StructuredData.to_binary
-      ~StructuredData.to_netcdf
    
    
 
@@ -33,6 +33,7 @@
 
    .. autosummary::
    
+      ~StructuredData.data_array_name
       ~StructuredData.default_dataset
       ~StructuredData.values
    

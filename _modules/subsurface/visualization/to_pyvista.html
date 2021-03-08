@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>subsurface.visualization.to_pyvista &#8212; subsurface 0.1.0 documentation</title>
+    <title>subsurface.visualization.to_pyvista &#8212; subsurface 0.2.0b1 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
@@ -38,8 +38,6 @@
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">subsurface.structs</span> <span class="kn">import</span> <span class="n">PointSet</span><span class="p">,</span> <span class="n">TriSurf</span><span class="p">,</span> <span class="n">LineSet</span><span class="p">,</span> <span class="n">TetraMesh</span><span class="p">,</span> <span class="n">StructuredGrid</span>
-<span class="kn">from</span> <span class="nn">subsurface.structs.common</span> <span class="kn">import</span> <span class="n">Common</span>
-<span class="kn">from</span> <span class="nn">subsurface.structs.errors</span> <span class="kn">import</span> <span class="n">PyVistaImportError</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">try</span><span class="p">:</span>
@@ -144,27 +142,24 @@
     <span class="k">return</span> <span class="n">mesh</span></div>
 
 
-<div class="viewcode-block" id="to_pyvista_mesh_and_texture"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.to_pyvista_mesh_and_texture.html#subsurface.visualization.to_pyvista_mesh_and_texture">[docs]</a><span class="k">def</span> <span class="nf">to_pyvista_mesh_and_texture</span><span class="p">(</span>
-        <span class="n">unstructured_element</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TriSurf</span><span class="p">],</span>
-        <span class="p">)</span> <span class="o">-&gt;</span> \
-        <span class="n">Tuple</span><span class="p">[</span><span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]]:</span>
+<div class="viewcode-block" id="to_pyvista_mesh_and_texture"><a class="viewcode-back" href="../../../Visualization/subsurface.visualization.to_pyvista_mesh_and_texture.html#subsurface.visualization.to_pyvista_mesh_and_texture">[docs]</a><span class="k">def</span> <span class="nf">to_pyvista_mesh_and_texture</span><span class="p">(</span><span class="n">triangular_surface</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TriSurf</span><span class="p">],</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;Create planar surface PolyData from unstructured element such as TriSurf</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        mesh texture</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">mesh</span> <span class="o">=</span> <span class="n">to_pyvista_mesh</span><span class="p">(</span><span class="n">unstructured_element</span><span class="p">)</span>
+    <span class="n">mesh</span> <span class="o">=</span> <span class="n">to_pyvista_mesh</span><span class="p">(</span><span class="n">triangular_surface</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">triangular_surface</span><span class="o">.</span><span class="n">texture</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unstructured_element needs texture data to be mapped.&#39;</span><span class="p">)</span>
 
     <span class="n">mesh</span><span class="o">.</span><span class="n">texture_map_to_plane</span><span class="p">(</span>
         <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">origin</span><span class="o">=</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture_origin</span><span class="p">,</span>
-        <span class="n">point_u</span><span class="o">=</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture_point_u</span><span class="p">,</span>
-        <span class="n">point_v</span><span class="o">=</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture_point_v</span>
+        <span class="n">origin</span><span class="o">=</span><span class="n">triangular_surface</span><span class="o">.</span><span class="n">texture_origin</span><span class="p">,</span>
+        <span class="n">point_u</span><span class="o">=</span><span class="n">triangular_surface</span><span class="o">.</span><span class="n">texture_point_u</span><span class="p">,</span>
+        <span class="n">point_v</span><span class="o">=</span><span class="n">triangular_surface</span><span class="o">.</span><span class="n">texture_point_v</span>
     <span class="p">)</span>
-    <span class="n">tex</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">numpy_to_texture</span><span class="p">(</span><span class="n">unstructured_element</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">tex</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">numpy_to_texture</span><span class="p">(</span><span class="n">triangular_surface</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
     <span class="n">mesh</span><span class="o">.</span><span class="n">_textures</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">tex</span><span class="p">}</span>
 
     <span class="kn">from</span> <span class="nn">vtkmodules.util.numpy_support</span> <span class="kn">import</span> <span class="n">vtk_to_numpy</span>
@@ -238,8 +233,8 @@
 
     <span class="n">cart_dims</span> <span class="o">=</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">cartesian_dimensions</span>
     <span class="n">data_dims</span> <span class="o">=</span> <span class="n">structured_grid</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">data_set_name</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span>
-            <span class="o">**</span><span class="n">attribute_slice</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">ndim</span>
+        <span class="o">**</span><span class="n">attribute_slice</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">ndim</span>
     <span class="k">if</span> <span class="n">cart_dims</span> <span class="o">&lt;</span> <span class="n">data_dims</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Data dimension and cartesian dimensions must match.&#39;</span>
                              <span class="s1">&#39;Possibly there are not valid dimension name in the&#39;</span>
@@ -377,7 +372,7 @@
       &copy;2019-2021, The subsurface developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

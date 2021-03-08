@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>subsurface.UnstructuredData &#8212; subsurface 0.1.0 documentation</title>
+    <title>subsurface.UnstructuredData &#8212; subsurface 0.2.0b1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
@@ -40,53 +40,8 @@
 <h1>subsurface.UnstructuredData<a class="headerlink" href="#subsurface-unstructureddata" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="subsurface.UnstructuredData">
-<em class="property">class </em><code class="sig-prename descclassname">subsurface.</code><code class="sig-name descname">UnstructuredData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vertex</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)">numpy.ndarray</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cells</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)">numpy.ndarray</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">attributes</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">points_attributes</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coords</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">xarray_attributes</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures.html#UnstructuredData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.UnstructuredData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Primary structure definition for unstructured data</p>
-<dl class="py attribute">
-<dt id="subsurface.UnstructuredData.data">
-<code class="sig-name descname">data</code><a class="headerlink" href="#subsurface.UnstructuredData.data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Data structure where we store</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><cite>xarray.Dataset</cite></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>vertex</strong> (<em>np.ndarray</em>) – NDArray[(Any, 3), FloatX]: XYZ point data</p></li>
-<li><p><strong>cells</strong> (<em>np.ndarray</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>[</em><em>'points'</em><em>, </em><em>'line'</em><em>]</em>) – NDArray[(Any, …), IntX]:
-Combination of vertex that create different geometric elements. If
-str use default values for either points or lines</p></li>
-<li><p><strong>attributes</strong> (<em>pd.DataFrame</em>) – NDArray[(Any, …), FloatX]: Number associated to an element</p></li>
-<li><p><strong>points_attributes</strong> (<em>pd.DataFrame</em>) – NDArray[(Any, …), FloatX]: Number
-associated to points</p></li>
-<li><p><strong>ds</strong> (<a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.16.3.dev0)"><em>xarray.Dataset</em></a>) – Directly a dataset with the expected structured. This
-arg is specially thought for loading data from disk</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>Depending on the shape of <cite>edge</cite> the following unstructured elements can
-be created:</p>
-<ul class="simple">
-<li><p>cells NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -&gt; <em>Point cloud</em>.
-E.g. Outcrop scan with lidar</p></li>
-<li><p>cells NDArray[(Any, 2), IntX] -&gt; <em>Lines</em>. E.g. Borehole</p></li>
-<li><p>cells NDArray[(Any, 3), IntX] -&gt; <em>Mesh</em>. E.g surface-DEM Topography</p></li>
-<li><dl class="simple">
-<dt>cells NDArray[(Any, 4), IntX]</dt><dd><ul>
-<li><p>-&gt; <em>tetrahedron</em></p></li>
-<li><p>-&gt; <em>quadrilateral (or tetragon)</em> UNSUPPORTED?</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>cells NDArray[(Any, 8), IntX] -&gt; <em>Hexahedron: Unstructured grid/Prisms</em></p></li>
-</ul>
-<p class="rubric">Examples using UnstructuredData</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">subsurface.</span></code><code class="sig-name descname"><span class="pre">UnstructuredData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">xarray.core.dataset.Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cells_attr_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'cell_attrs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_attr_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'vertex_attrs'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures/unstructured_data.html#UnstructuredData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.UnstructuredData" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Examples using UnstructuredData</p>
 <div class="sphx-glr-thumbcontainer" tooltip="Getting started"><div class="figure align-default" id="id1">
 <img alt="Getting started" src="../_images/sphx_glr_getting_started_thumb.png" />
 <p class="caption"><span class="caption-text"><a class="reference internal" href="../getting_started/getting_started.html#sphx-glr-getting-started-getting-started-py"><span class="std std-ref">Getting started</span></a></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
@@ -98,28 +53,34 @@ E.g. Outcrop scan with lidar</p></li>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.UnstructuredData.__init__" title="subsurface.UnstructuredData.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([vertex, cells, attributes, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(data[, cells_attr_name, …])</p></td>
 <td><p>Initialize self.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_path_and_name</span></code>(path[, name])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_default_cells_arg</span></code>(cells, n_vertex)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_outliers</span></code>([dim, perc, replace_for])</p></td>
-<td><p>&#64;Edoardo Guerreiro <a class="reference external" href="https://stackoverflow.com/questions/60816533/">https://stackoverflow.com/questions/60816533/</a> is-there-a-built-in-function-in-xarray-to-remove-outliers-from-a-dataset</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_attributes_data_array</span></code>(attributes, …)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_array_attributes_from_raw_data</span></code>(…)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_attributes_names_from_dicts</span></code>(attributes, …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#subsurface.UnstructuredData.from_array" title="subsurface.UnstructuredData.from_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_array</span></code></a>(vertex, cells[, cells_attr, …])</p></td>
+<td><p>Constructor of UnstructuredData from arrays or pandas DataFrames.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_data_arrays_dict</span></code>(xarray_dict[, coords, …])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_raw_data</span></code>(raw_data[, coords, …])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">raw_attributes_to_dict_data_arrays</span></code>(…)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_binary</span></code>([order])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_netcdf</span></code>([path, file])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_xarray</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_xarray</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_and_cells_arrays_to_data_array</span></code>(cells, …)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -140,30 +101,105 @@ E.g. Outcrop scan with lidar</p></li>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cells</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_elements</span></code></p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cells_attr_name</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_points</span></code></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_elements</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_vertex_per_element</span></code></p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_points</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">points_attributes</span></code></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_vertex_per_element</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">points_attributes_to_dict</span></code></p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">points_attributes</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex</span></code></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">points_attributes_to_dict</span></code></p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.UnstructuredData.vertex_attr_name" title="subsurface.UnstructuredData.vertex_attr_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_attr_name</span></code></a></p></td>
+<td><p>Primary structure definition for unstructured data</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py attribute">
+<dt id="subsurface.UnstructuredData.vertex_attr_name">
+<code class="sig-name descname"><span class="pre">vertex_attr_name</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">'vertex_attrs'</span></em><a class="headerlink" href="#subsurface.UnstructuredData.vertex_attr_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Primary structure definition for unstructured data</p>
+<dl class="py attribute">
+<dt id="subsurface.UnstructuredData.data">
+<code class="sig-name descname"><span class="pre">data</span></code><a class="headerlink" href="#subsurface.UnstructuredData.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data structure where we store</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><cite>xarray.Dataset</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ds</strong> (<a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.17.1.dev0)"><em>xarray.Dataset</em></a>) – Directly a dataset with the expected structured. This
+arg is specially thought for loading data from disk</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Depending on the shape of <cite>edge</cite> the following unstructured elements can
+be created:</p>
+<ul class="simple">
+<li><p>cells NDArray[(Any, 0), IntX] or NDArray[(Any, 1), IntX] -&gt; <em>Point cloud</em>.
+E.g. Outcrop scan with lidar</p></li>
+<li><p>cells NDArray[(Any, 2), IntX] -&gt; <em>Lines</em>. E.g. Borehole</p></li>
+<li><p>cells NDArray[(Any, 3), IntX] -&gt; <em>Mesh</em>. E.g surface-DEM Topography</p></li>
+<li><dl class="simple">
+<dt>cells NDArray[(Any, 4), IntX]</dt><dd><ul>
+<li><p>-&gt; <em>tetrahedron</em></p></li>
+<li><p>-&gt; <em>quadrilateral (or tetragon)</em> UNSUPPORTED?</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>cells NDArray[(Any, 8), IntX] -&gt; <em>Hexahedron: Unstructured grid/Prisms</em></p></li>
+</ul>
+</dd></dl>
+
 <dl class="py method">
-<dt id="subsurface.UnstructuredData.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vertex</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)">numpy.ndarray</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cells</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)">numpy.ndarray</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">attributes</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>xarray.core.dataarray.DataArray<span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">points_attributes</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coords</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">xarray_attributes</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures.html#UnstructuredData.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.UnstructuredData.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dt id="subsurface.UnstructuredData.from_array">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_array</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cells</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">lines</span><span class="p"><span class="pre">,</span> </span><span class="pre">points</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cells_attr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">xarray.core.dataarray.DataArray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_attr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">xarray.core.dataarray.DataArray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xarray_attributes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_cells_attr_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'cell_attrs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_points_attr_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'vertex_attrs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">xarray.core.dataarray.DataArray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures/unstructured_data.html#UnstructuredData.from_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.UnstructuredData.from_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor of UnstructuredData from arrays or pandas DataFrames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vertex</strong> (<em>np.ndarray</em>) – NDArray[(Any, 3), FloatX]: XYZ point data</p></li>
+<li><p><strong>cells</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Literal</em><em>[</em><em>&quot;lines&quot;</em><em>, </em><em>&quot;points&quot;</em><em>]</em><em>]</em>) – NDArray[(Any, …), IntX]:
+Combination of vertex that create different geometric elements. If
+str use default values for either points or lines</p></li>
+<li><p><strong>(</strong><strong>Union</strong><strong>[</strong><strong>None</strong> (<em>vertex_attr</em>) – Number associated to an element</p></li>
+<li><p><strong>pd.DataFrame</strong> – Number associated to an element</p></li>
+<li><p><strong>Dict</strong><strong>[</strong><strong>str</strong> – Number associated to an element</p></li>
+<li><p><strong>xr.DataArray</strong><strong>]</strong><strong>]</strong><strong>]</strong> – Number associated to an element</p></li>
+<li><p><strong>(</strong><strong>Union</strong><strong>[</strong><strong>None</strong> – Number
+associated to points</p></li>
+<li><p><strong>pd.DataFrame</strong> – Number
+associated to points</p></li>
+<li><p><strong>Dict</strong><strong>[</strong><strong>str</strong> – Number
+associated to points</p></li>
+<li><p><strong>xr.DataArray</strong><strong>]</strong><strong>]</strong><strong>]</strong> – Number
+associated to points</p></li>
+<li><p><strong>coords</strong> – </p></li>
+<li><p><strong>xarray_attributes</strong> – </p></li>
+<li><p><strong>attributes</strong> – </p></li>
+<li><p><strong>default_cells_attr_name</strong> – </p></li>
+<li><p><strong>default_points_attr_name</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
 </dd></dl>
 
 </dd></dl>
@@ -275,7 +311,7 @@ E.g. Outcrop scan with lidar</p></li>
       &copy;2019-2021, The subsurface developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>subsurface.PointSet &#8212; subsurface 0.1.0 documentation</title>
+    <title>subsurface.PointSet &#8212; subsurface 0.2.0b1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="subsurface.LineSet" href="subsurface.LineSet.html" />
-    <link rel="prev" title="subsurface.structs.base_structures.CommonDataMethods" href="../Base%20Structures/subsurface.structs.base_structures.CommonDataMethods.html" />
+    <link rel="prev" title="subsurface.StructuredData" href="../Base%20Structures/subsurface.StructuredData.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -40,7 +40,7 @@
 <h1>subsurface.PointSet<a class="headerlink" href="#subsurface-pointset" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="subsurface.PointSet">
-<em class="property">class </em><code class="sig-prename descclassname">subsurface.</code><code class="sig-name descname">PointSet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">subsurface.structs.base_structures.UnstructuredData</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/unstructured_elements.html#PointSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.PointSet" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">subsurface.</span></code><code class="sig-name descname"><span class="pre">PointSet</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">subsurface.structs.base_structures.unstructured_data.UnstructuredData</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/unstructured_elements.html#PointSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.PointSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for pointset based data structures.</p>
 <p>This class uses UnstructuredData.vertex as cloud of points and the
 associated attributes. UnstructuredData.cells are not used.</p>
@@ -63,12 +63,6 @@ associated attributes. UnstructuredData.cells are not used.</p>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.PointSet.__init__" title="subsurface.PointSet.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(data)</p></td>
 <td><p>Initialize self.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pyvista</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate</span></code>()</p></td>
-<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -95,25 +89,25 @@ associated attributes. UnstructuredData.cells are not used.</p>
 </table>
 <dl class="py method">
 <dt id="subsurface.PointSet.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">subsurface.structs.base_structures.UnstructuredData</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/unstructured_elements.html#PointSet.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subsurface.PointSet.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">subsurface.structs.base_structures.unstructured_data.UnstructuredData</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/unstructured_elements.html#PointSet.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.PointSet.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="subsurface.PointSet.points">
-<em class="property">property </em><code class="sig-name descname">points</code><a class="headerlink" href="#subsurface.PointSet.points" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">points</span></code><a class="headerlink" href="#subsurface.PointSet.points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fetch the points/vertices dataframe.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="subsurface.PointSet.point_data">
-<em class="property">property </em><code class="sig-name descname">point_data</code><a class="headerlink" href="#subsurface.PointSet.point_data" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">point_data</span></code><a class="headerlink" href="#subsurface.PointSet.point_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fetch the scalar data associated with the vertices.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="subsurface.PointSet.point_data_dict">
-<em class="property">property </em><code class="sig-name descname">point_data_dict</code><a class="headerlink" href="#subsurface.PointSet.point_data_dict" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">point_data_dict</span></code><a class="headerlink" href="#subsurface.PointSet.point_data_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fetch the point data as a dictionary of numpy arrays.</p>
 </dd></dl>
 
@@ -194,7 +188,7 @@ associated attributes. UnstructuredData.cells are not used.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../code.html">Code</a><ul>
-      <li>Previous: <a href="../Base%20Structures/subsurface.structs.base_structures.CommonDataMethods.html" title="previous chapter">subsurface.structs.base_structures.CommonDataMethods</a></li>
+      <li>Previous: <a href="../Base%20Structures/subsurface.StructuredData.html" title="previous chapter">subsurface.StructuredData</a></li>
       <li>Next: <a href="subsurface.LineSet.html" title="next chapter">subsurface.LineSet</a></li>
   </ul></li>
   </ul></li>
@@ -226,7 +220,7 @@ associated attributes. UnstructuredData.cells are not used.</p>
       &copy;2019-2021, The subsurface developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
