@@ -5,7 +5,6 @@ import pandas as pd
 from subsurface.reader.readers_data import ReaderFilesHelper
 from subsurface.utils.utils_core import get_extension
 import numpy as np
-from scipy.spatial.qhull import Delaunay
 
 
 def read_mesh_file_to_vertex(reader_args: ReaderFilesHelper) -> np.ndarray:
@@ -99,6 +98,7 @@ def map_columns_names(columns_map: Union[Callable, dict, pd.Series], data: pd.Da
 
 
 def dxf_to_vertex_edges(file_or_buffer):
+    from scipy.spatial.qhull import Delaunay
     vertex = dxf_to_vertex(file_or_buffer)
     tri = Delaunay(vertex[:, [0, 1]])
     faces = tri.simplices
