@@ -8,19 +8,19 @@ import numpy as np
 
 
 def read_mesh_file_to_vertex(reader_args: ReaderFilesHelper) -> np.ndarray:
-    extension = get_extension(reader_args.file_or_buffer)
-    if extension == '.csv':
+    if reader_args.format == '.csv':
         vertex = mesh_csv_to_vertex(reader_args.file_or_buffer, reader_args.columns_map,
                                     **reader_args.pandas_reader_kwargs)
-    elif extension == '.dxf':
+    elif reader_args.format == '.dxf':
         vertex = dxf_to_vertex(reader_args.file_or_buffer)
     else:
-        raise ValueError(f"Subsurface is not able to read the following extension: {extension}")
+        raise ValueError(f"Subsurface is not able to read the following extension: {reader_args.format}")
     return vertex
 
 
 def read_mesh_file_to_cells(reader_args: ReaderFilesHelper) -> np.ndarray:
-    extension = get_extension(reader_args.file_or_buffer)
+    extension = reader_args.format
+
     if extension == '.csv':
         cells = mesh_csv_to_cells(reader_args.file_or_buffer, reader_args.columns_map,
                                   **reader_args.pandas_reader_kwargs)
@@ -30,7 +30,7 @@ def read_mesh_file_to_cells(reader_args: ReaderFilesHelper) -> np.ndarray:
 
 
 def read_mesh_file_to_attr(reader_args: ReaderFilesHelper):
-    extension = get_extension(reader_args.file_or_buffer)
+    extension = reader_args.format
     if extension == ".csv":
         attr = mesh_csv_to_attributes(reader_args.file_or_buffer,
                                       reader_args.columns_map,
