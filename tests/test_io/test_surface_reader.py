@@ -1,12 +1,11 @@
+import os
+
 import pytest
-import pandas as pd
 
 import subsurface.reader.mesh.surfaces_api
-from subsurface.reader.mesh import surface_reader
 from subsurface.reader.readers_data import ReaderUnstructuredHelper, ReaderFilesHelper
-from subsurface.structs import TetraMesh, TriSurf
+from subsurface.structs import TriSurf
 from subsurface.structs.base_structures import UnstructuredData
-import os
 from subsurface.visualization.to_pyvista import pv_plot, to_pyvista_mesh
 
 input_path = os.path.dirname(__file__) + '/../data/surfaces'
