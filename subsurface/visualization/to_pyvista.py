@@ -57,7 +57,8 @@ def pv_plot(meshes: list,
     p.show_bounds()
 
     if image_2d is False:
-        return p.show()
+        p.show()
+        return p
 
     else:
         try:

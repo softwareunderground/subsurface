@@ -1,10 +1,13 @@
-import sys
+import warnings
 
 from .profiles import *
 
 from .topography.topo_core import read_structured_topography, read_unstructured_topography
 
-if "welly" in sys.modules and "striplog" in sys.modules:
-    from .wells.wells_api import read_wells_to_unstruct, borehole_location_to_unstruct
+from .readers_data import ReaderFilesHelper, ReaderWellsHelper, RawDataOptions
 
+try:
+    from . import wells
+except ModuleNotFoundError:
+    warnings.warn("Welly or Striplog not installed. No well reader possible.")
 

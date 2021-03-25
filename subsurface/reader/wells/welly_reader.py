@@ -7,13 +7,8 @@ import numpy as np
 
 from subsurface.structs.base_structures import UnstructuredData
 
-try:
-    from welly import Well, Location, Project, Curve
-    from striplog import Striplog, Component
-
-    welly_imported = True
-except ImportError:
-    welly_imported = False
+from welly import Well, Location, Project, Curve
+from striplog import Striplog, Component
 
 
 def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
