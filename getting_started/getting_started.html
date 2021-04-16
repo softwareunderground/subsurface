@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting started &#8212; subsurface 0.2.0b1 documentation</title>
+    <title>Getting started &#8212; subsurface 0.2.0b2 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
@@ -54,7 +54,6 @@ data such as:</p>
 </ul>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">subsurface.reader</span> <span class="kn">import</span> <span class="n">read_wells_to_unstruct</span><span class="p">,</span> <span class="n">borehole_location_to_unstruct</span>
 
 <span class="kn">import</span> <span class="nn">subsurface</span> <span class="k">as</span> <span class="nn">ss</span>
 <span class="kn">import</span> <span class="nn">pooch</span>
@@ -69,6 +68,7 @@ data in the right format for digesting.</p>
 <span class="kn">import</span> <span class="nn">subsurface.reader.read_netcdf</span>
 <span class="kn">import</span> <span class="nn">subsurface.reader.topography.topo_core</span>
 <span class="kn">import</span> <span class="nn">subsurface.reader.wells.wells_api</span>
+<span class="kn">from</span> <span class="nn">subsurface.reader.wells.wells_api</span> <span class="kn">import</span> <span class="n">read_wells_to_unstruct</span><span class="p">,</span> <span class="n">borehole_location_to_unstruct</span>
 <span class="kn">from</span> <span class="nn">subsurface.reader.readers_data</span> <span class="kn">import</span> <span class="n">ReaderWellsHelper</span><span class="p">,</span> <span class="n">ReaderFilesHelper</span>
 <span class="kn">from</span> <span class="nn">subsurface.structs.base_structures.common_data_utils</span> <span class="kn">import</span> <span class="n">replace_outliers</span>
 
@@ -101,7 +101,7 @@ data in the right format for digesting.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Downloading data from &#39;https://github.com/cgre-aachen/gempy_data/raw/master/data/subsurface/example1.zip&#39; to file &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip&#39;.
 SHA256 hash of downloaded file: fb79a63eeb874cf0cdca557106c62c67eace23811db5935e57c3448fed7f8978
 Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-/opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/site-packages/pandas/core/indexing.py:966: SettingWithCopyWarning:
+/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/pandas/core/indexing.py:966: SettingWithCopyWarning:
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -383,9 +383,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/subsurface/subsurface/subsurface/reader/wells/well_files_reader.py:132: UserWarning: inc and/or azi columns are not present in the file. The boreholes will be straight.
   warnings.warn(&#39;inc and/or azi columns are not present in the file.&#39;
 The following striplog failed being processed:  [&#39;GD0041&#39;, &#39;GD0080&#39;, &#39;GD0092&#39;, &#39;GD0136&#39;, &#39;GD0211&#39;, &#39;GD0225&#39;, &#39;GD0235&#39;, &#39;GD0236&#39;, &#39;GD0304&#39;, &#39;GD0305&#39;, &#39;GD0308&#39;, &#39;GD0377&#39;, &#39;GD0399&#39;, &#39;GD0419&#39;, &#39;GD0439&#39;, &#39;GD0464&#39;, &#39;GD0487&#39;, &#39;GD0504&#39;, &#39;GD0505&#39;, &#39;GD0526&#39;, &#39;GD0529&#39;, &#39;GD0573&#39;, &#39;GD0597&#39;, &#39;GD0611&#39;, &#39;GD0617&#39;, &#39;GD0622&#39;, &#39;GD0632&#39;, &#39;GD0715&#39;, &#39;GD0733&#39;, &#39;GD0760&#39;, &#39;GD0766&#39;, &#39;GD0813&#39;, &#39;GD0816&#39;, &#39;GD0843&#39;, &#39;GD0845&#39;, &#39;GD0858&#39;, &#39;GD0937&#39;, &#39;GD0942&#39;, &#39;GD0948&#39;, &#39;GD0981&#39;, &#39;GD1007&#39;, &#39;GD1016&#39;]
-/home/runner/work/subsurface/subsurface/subsurface/reader/wells/welly_reader.py:108: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: {w.name}
+/home/runner/work/subsurface/subsurface/subsurface/reader/wells/welly_reader.py:103: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: {w.name}
   warnings.warn(f&#39;At least one of the wells do not have &#39;
-The following boreholes failed being processed:  [&#39;GD0760&#39;, &#39;GD0225&#39;, &#39;GD0632&#39;, &#39;GD0981&#39;, &#39;GD0136&#39;, &#39;GD0235&#39;, &#39;GD0622&#39;, &#39;GD1016&#39;, &#39;GD0419&#39;, &#39;GD0304&#39;, &#39;GD0858&#39;, &#39;GD0733&#39;, &#39;GD0236&#39;, &#39;GD0504&#39;, &#39;GD0092&#39;, &#39;GD0439&#39;, &#39;GD0843&#39;, &#39;GD0948&#39;, &#39;GD0715&#39;, &#39;GD0505&#39;, &#39;GD0845&#39;, &#39;GD0211&#39;, &#39;GD0597&#39;, &#39;GD0377&#39;, &#39;GD0399&#39;, &#39;GD0080&#39;, &#39;GD1007&#39;, &#39;GD0573&#39;, &#39;GD0766&#39;, &#39;GD0487&#39;, &#39;GD0529&#39;, &#39;GD0937&#39;, &#39;GD0464&#39;, &#39;GD0813&#39;, &#39;GD0041&#39;, &#39;GD0617&#39;, &#39;GD0305&#39;, &#39;GD0308&#39;, &#39;GD0942&#39;, &#39;GD0816&#39;, &#39;GD0526&#39;, &#39;GD0611&#39;, &#39;GD0760&#39;, &#39;GD0225&#39;, &#39;GD0632&#39;, &#39;GD0981&#39;, &#39;GD0136&#39;, &#39;GD0235&#39;, &#39;GD0622&#39;, &#39;GD1016&#39;, &#39;GD0419&#39;, &#39;GD0304&#39;, &#39;GD0858&#39;, &#39;GD0733&#39;, &#39;GD0236&#39;, &#39;GD0504&#39;, &#39;GD1007&#39;, &#39;GD0092&#39;, &#39;GD0439&#39;, &#39;GD0843&#39;, &#39;GD0948&#39;, &#39;GD0715&#39;, &#39;GD0505&#39;, &#39;GD0845&#39;, &#39;GD0211&#39;, &#39;GD0597&#39;, &#39;GD0377&#39;, &#39;GD0399&#39;, &#39;GD0080&#39;, &#39;GD0573&#39;, &#39;GD0766&#39;, &#39;GD0487&#39;, &#39;GD0529&#39;, &#39;GD0937&#39;, &#39;GD0464&#39;, &#39;GD0813&#39;, &#39;GD0041&#39;, &#39;GD0617&#39;, &#39;GD0305&#39;, &#39;GD0308&#39;, &#39;GD0942&#39;, &#39;GD0816&#39;, &#39;GD0526&#39;, &#39;GD0611&#39;]
+The following boreholes failed being processed:  [&#39;GD0813&#39;, &#39;GD0766&#39;, &#39;GD0715&#39;, &#39;GD0235&#39;, &#39;GD0622&#39;, &#39;GD0487&#39;, &#39;GD0092&#39;, &#39;GD0225&#39;, &#39;GD0505&#39;, &#39;GD0041&#39;, &#39;GD0816&#39;, &#39;GD0632&#39;, &#39;GD0858&#39;, &#39;GD0937&#39;, &#39;GD0760&#39;, &#39;GD0304&#39;, &#39;GD0733&#39;, &#39;GD0597&#39;, &#39;GD0464&#39;, &#39;GD0308&#39;, &#39;GD1007&#39;, &#39;GD0439&#39;, &#39;GD0942&#39;, &#39;GD0529&#39;, &#39;GD0377&#39;, &#39;GD0845&#39;, &#39;GD0948&#39;, &#39;GD1016&#39;, &#39;GD0136&#39;, &#39;GD0843&#39;, &#39;GD0305&#39;, &#39;GD0419&#39;, &#39;GD0211&#39;, &#39;GD0399&#39;, &#39;GD0611&#39;, &#39;GD0617&#39;, &#39;GD0504&#39;, &#39;GD0981&#39;, &#39;GD0236&#39;, &#39;GD0526&#39;, &#39;GD0080&#39;, &#39;GD0573&#39;, &#39;GD0813&#39;, &#39;GD0766&#39;, &#39;GD0304&#39;, &#39;GD0715&#39;, &#39;GD0235&#39;, &#39;GD0622&#39;, &#39;GD0092&#39;, &#39;GD0225&#39;, &#39;GD0505&#39;, &#39;GD0041&#39;, &#39;GD0733&#39;, &#39;GD0816&#39;, &#39;GD0632&#39;, &#39;GD0858&#39;, &#39;GD0937&#39;, &#39;GD0760&#39;, &#39;GD0597&#39;, &#39;GD0464&#39;, &#39;GD0308&#39;, &#39;GD1007&#39;, &#39;GD0439&#39;, &#39;GD0942&#39;, &#39;GD0529&#39;, &#39;GD0377&#39;, &#39;GD0845&#39;, &#39;GD0948&#39;, &#39;GD1016&#39;, &#39;GD0136&#39;, &#39;GD0843&#39;, &#39;GD0305&#39;, &#39;GD0419&#39;, &#39;GD0211&#39;, &#39;GD0399&#39;, &#39;GD0611&#39;, &#39;GD0617&#39;, &#39;GD0504&#39;, &#39;GD0487&#39;, &#39;GD0981&#39;, &#39;GD0236&#39;, &#39;GD0526&#39;, &#39;GD0080&#39;, &#39;GD0573&#39;]
 </pre></div>
 </div>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_unstructured_data</span></a>
@@ -399,11 +399,11 @@ Coordinates:
   * XYZ           (XYZ) &lt;U1 &#39;X&#39; &#39;Y&#39; &#39;Z&#39;
   * cell_attr     (cell_attr) object &#39;lith_log&#39;
   * vertex_attr   (vertex_attr) int64
-    UWI           (cell) object &#39;GD0494&#39; &#39;GD0494&#39; &#39;GD0494&#39; ... &#39;GD0561&#39; &#39;GD0561&#39;
-    Depth         (cell) float64 0.02532 0.07595 0.1266 ... 19.85 20.11 20.37
+    UWI           (cell) object &#39;GD0142&#39; &#39;GD0142&#39; &#39;GD0142&#39; ... &#39;GD0782&#39; &#39;GD0782&#39;
+    Depth         (cell) float64 0.04114 0.1234 0.2057 ... 20.14 20.41 20.67
 Dimensions without coordinates: cell, nodes
 Data variables:
-    vertex        (points, XYZ) float64 3.24e+07 5.752e+06 ... 5.768e+06 37.0
+    vertex        (points, XYZ) float64 3.241e+07 5.759e+06 ... 5.781e+06 36.32
     cells         (cell, nodes) int64 0 1 1 2 2 ... 88157 88158 88158 88159
     cell_attrs    (cell, cell_attr) int64 1 1 1 1 1 1 1 1 1 ... 1 1 1 1 1 1 1 1
     vertex_attrs  (points, vertex_attr) float64
@@ -430,9 +430,7 @@ transformation can be done by the functions <cite>to_pyvista_…</cite>.</p>
 </div>
 <img alt="getting started" class="sphx-glr-single-img" src="../_images/sphx_glr_getting_started_001.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[(32489956.67442777, 5844982.43442777, 14401.773885523115),
- (32405001.305, 5760027.0649999995, -2589.2999999999997),
- (0.0, 0.0, 1.0)]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f8dbfab1700&gt;
 </pre></div>
 </div>
 <p>We can do the same for point data, for example the borehole location.</p>
@@ -461,7 +459,7 @@ Dimensions without coordinates: cell, nodes
 Data variables:
     vertex        (points, XYZ) float32 3.243e+07 5.785e+06 ... 5.742e+06 60.0
     cells         (cell, nodes) int64 0 1 2 3 4 5 ... 1139 1140 1141 1142 1143
-    cell_attrs    (cell, cell_attr) float32 2.0 2.0 2.0 2.0 ... 2.0 2.0 2.0 2.0
+    cell_attrs    (cell, cell_attr) float32 2.0 2.0 2.0 3.0 ... 2.0 2.0 6.0 2.0
     vertex_attrs  (points, vertex_attr) float64
 Attributes:
     wells_names:  [&#39;GD0001&#39;, &#39;GD0002&#39;, &#39;GD0003&#39;, &#39;GD0004&#39;, &#39;GD0005&#39;, &#39;GD0006&#39;...
@@ -473,7 +471,7 @@ Attributes:
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;subsurface.structs.unstructured_elements.PointSet object at 0x7fc0098418e0&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;subsurface.structs.unstructured_elements.PointSet object at 0x7f8dbf9e7490&gt;
 </pre></div>
 </div>
 <p>Pyvista mesh</p>
@@ -507,9 +505,7 @@ Attributes:
 </div>
 <img alt="getting started" class="sphx-glr-single-img" src="../_images/sphx_glr_getting_started_002.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[(32483769.583143048, 5838795.58314305, 15886.41662555813),
- (32405001.0, 5760027.0, 132.6999969482422),
- (0.0, 0.0, 1.0)]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f8dbf9e1d90&gt;
 </pre></div>
 </div>
 </div>
@@ -563,9 +559,7 @@ Coordinates:
 </div>
 <img alt="getting started" class="sphx-glr-single-img" src="../_images/sphx_glr_getting_started_003.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[(32621907.82089342, 5941907.820893423, 38595.81417868456),
- (32430000.0, 5750000.0, 214.25),
- (0.0, 0.0, 1.0)]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f8dbfc87f40&gt;
 </pre></div>
 </div>
 </div>
@@ -605,9 +599,7 @@ Coordinates:
 </div>
 <img alt="getting started" class="sphx-glr-single-img" src="../_images/sphx_glr_getting_started_004.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[(32668180.43444929, 6019088.693250661, 46797.056207662594),
- (32411695.153410975, 5762603.412212348, -4500.0),
- (0.0, 0.0, 1.0)]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f8dbfdf7f40&gt;
 </pre></div>
 </div>
 </div>
@@ -637,9 +629,7 @@ Coordinates:
 </div>
 <img alt="getting started" class="sphx-glr-single-img" src="../_images/sphx_glr_getting_started_005.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[(32643388.838186417, 5978388.838186416, 45927.767637283105),
- (32410000.0, 5745000.0, -750.0),
- (0.0, 0.0, 1.0)]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f8dbfde7f10&gt;
 </pre></div>
 </div>
 <p>sphinx_gallery_thumbnail_number = 6</p>
@@ -662,7 +652,7 @@ Coordinates:
         <span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  40.290 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  49.347 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-getting-started-getting-started-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/c0512550f87a2f5cf6b27d128134dd80/getting_started.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">getting_started.py</span></code></a></p>
@@ -773,7 +763,7 @@ Coordinates:
       &copy;2019-2021, The subsurface developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
