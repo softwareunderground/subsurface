@@ -21,7 +21,6 @@ Getting started
 # %%
 import shutil
 import pandas as pd
-from subsurface.reader import read_wells_to_unstruct, borehole_location_to_unstruct
 
 import subsurface as ss
 import pooch
@@ -39,6 +38,7 @@ import subsurface.reader.profiles.profiles_core
 import subsurface.reader.read_netcdf
 import subsurface.reader.topography.topo_core
 import subsurface.reader.wells.wells_api
+from subsurface.reader.wells.wells_api import read_wells_to_unstruct, borehole_location_to_unstruct
 from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
 from subsurface.structs.base_structures.common_data_utils import replace_outliers
 
