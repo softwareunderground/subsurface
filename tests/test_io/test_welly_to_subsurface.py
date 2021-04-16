@@ -3,11 +3,11 @@ import pytest
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from subsurface.reader import read_wells_to_unstruct
 from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
 from subsurface.reader.wells import add_tops_from_base_and_altitude_in_place
 from subsurface.reader.wells.pandas_to_welly import WellyToSubsurfaceHelper
 from subsurface.reader.wells.well_files_reader import read_collar, read_survey, read_lith, read_attributes
+from subsurface.reader.wells.wells_api import read_wells_to_unstruct
 from subsurface.reader.wells.wells_utils import pivot_wells_df_into_segment_per_row, map_attr_to_segments, \
     fix_wells_higher_base_than_top_inplace
 from subsurface.reader.wells.welly_reader import welly_to_subsurface
