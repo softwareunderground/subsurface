@@ -21,6 +21,7 @@ from striplog import Component
 import subsurface as sb
 from subsurface.reader import ReaderFilesHelper
 from subsurface.reader.wells import read_collar, read_survey, read_lith, WellyToSubsurfaceHelper, welly_to_subsurface
+from subsurface.structs.base_structures.common_data_utils import to_netcdf
 
 base_url = "https://raw.githubusercontent.com/softwareunderground/subsurface/main/tests/data/borehole/"
 
@@ -130,6 +131,10 @@ unstruct = welly_to_subsurface(
     table=[Component({'lith': l}) for l in formations] # This is to keep the lithology ids constant across all the wells
 )
 unstruct
+
+# %%
+# We can save the data into a netcdf by simply calling
+to_netcdf(unstruct, "wells_unstructured.nc")
 
 # %% md
 # We are done. Now the well data is a `subsurface.UnstructuredData` and can be used as usual.
