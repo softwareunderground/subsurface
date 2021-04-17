@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reading Well Data into Subsurface &#8212; subsurface 0.2.0b2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="../examples/index.html" />
+    <link rel="prev" title="Tutorials" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-tutorials-reading-well-data-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="reading-well-data-into-subsurface">
+<span id="sphx-glr-tutorials-reading-well-data-py"></span><h1>Reading Well Data into Subsurface<a class="headerlink" href="#reading-well-data-into-subsurface" title="Permalink to this headline">¶</a></h1>
+<p>Authors: Miguel de la Varga and Alexander Juestel</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This example will get into detail about how we are using `welly` and `striplog` to</span>
+<span class="c1"># import borehole data.</span>
+
+<span class="c1"># We start by using pooch to download the dataset into a temp file;</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pooch</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <a href="https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict" title="dataclasses.asdict" class="sphx-glr-backref-module-dataclasses sphx-glr-backref-type-py-function"><span class="n">asdict</span></a>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">striplog</span> <span class="kn">import</span> <span class="n">Component</span>
+
+<span class="kn">import</span> <span class="nn">subsurface</span> <span class="k">as</span> <span class="nn">sb</span>
+<span class="kn">from</span> <span class="nn">subsurface.reader</span> <span class="kn">import</span> <span class="n">ReaderFilesHelper</span>
+<span class="kn">from</span> <span class="nn">subsurface.reader.wells</span> <span class="kn">import</span> <span class="n">read_collar</span><span class="p">,</span> <span class="n">read_survey</span><span class="p">,</span> <span class="n">read_lith</span><span class="p">,</span> <span class="n">WellyToSubsurfaceHelper</span><span class="p">,</span> <span class="n">welly_to_subsurface</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">base_url</span></a> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/softwareunderground/subsurface/main/tests/data/borehole/&quot;</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_hash</span></a> <span class="o">=</span> <span class="s2">&quot;efa90898bb435daa15912ca6f3e08cd3285311923a36dbc697d2aafebbafa25f&quot;</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_borehole_data_csv</span></a> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">base_url</span></a> <span class="o">+</span> <span class="s1">&#39;kim_ready.csv&#39;</span><span class="p">,</span>
+                                       <span class="n">known_hash</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_hash</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<p>This dataset consist on a csv file containing the following columns: x, y, name, num, z, year, 7,8,9, altitude, base,
+formation, top, _top_abs and md. This is a good example of how varied borehole data can be provided. We will
+need to be able to extract specific information to construct the <cite>subsurface</cite> object.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># To read csv we are using `pandas` but since `pandas.read_csv` has a lot of arguments, we have created some</span>
+<span class="c1"># helper classes to facilitate the reading of the data for this specific context. These *Helpers* are just a python</span>
+<span class="c1"># data class with a bit of funcitonality for setter and getter.</span>
+
+<span class="c1"># Also since well data sometimes is given in multiple files - for collars, asseys and surveys - we will read those</span>
+<span class="c1"># subset of the data into its own `pandas.Dataframe`. Let&#39;s start:</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">reading_collars</span> <span class="o">=</span> <span class="n">ReaderFilesHelper</span><span class="p">(</span>
+    <span class="n">file_or_buffer</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_borehole_data_csv</span></a><span class="p">,</span>  <span class="c1"># Path to file</span>
+    <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>  <span class="c1"># Column used as index</span>
+    <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;altitude&#39;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">]</span>  <span class="c1"># Specific columns for collar</span>
+<span class="p">)</span>
+
+<span class="c1"># We can see the fields from the class easily converting it to a dict</span>
+<a href="https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict" title="dataclasses.asdict" class="sphx-glr-backref-module-dataclasses sphx-glr-backref-type-py-function"><span class="n">asdict</span></a><span class="p">(</span><span class="n">reading_collars</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;file_or_buffer&#39;: &#39;/home/runner/.cache/pooch/7c2d6aa7551f31216f7236d3f9fb70a6-kim_ready.csv&#39;, &#39;usecols&#39;: [&#39;x&#39;, &#39;y&#39;, &#39;altitude&#39;, &#39;name&#39;], &#39;col_names&#39;: None, &#39;drop_cols&#39;: None, &#39;format&#39;: &#39;.csv&#39;, &#39;index_map&#39;: None, &#39;columns_map&#39;: None, &#39;additional_reader_kwargs&#39;: {}, &#39;file_or_buffer_type&#39;: &lt;class &#39;str&#39;&gt;, &#39;index_col&#39;: &#39;name&#39;, &#39;header&#39;: &#39;infer&#39;}
+</pre></div>
+</div>
+<p>The rest of fields of ReaderFilesHelper would be used for different .csv configurations. With a <cite>ReaderFilesHelper</cite>
+we can use it for specific functions to read the file into pandas:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">collar</span></a> <span class="o">=</span> <span class="n">read_collar</span><span class="p">(</span><span class="n">reading_collars</span><span class="p">)</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">collar</span></a>
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+      <th>altitude</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>KCL12</th>
+      <td>303412</td>
+      <td>3913997</td>
+      <td>108.713287</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>303412</td>
+      <td>3913997</td>
+      <td>108.713287</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>303412</td>
+      <td>3913997</td>
+      <td>108.713287</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>303412</td>
+      <td>3913997</td>
+      <td>108.713287</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>303412</td>
+      <td>3913997</td>
+      <td>108.713287</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>318982</td>
+      <td>3935253</td>
+      <td>227.418152</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>318982</td>
+      <td>3935253</td>
+      <td>227.418152</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>318982</td>
+      <td>3935253</td>
+      <td>227.418152</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>318982</td>
+      <td>3935253</td>
+      <td>227.418152</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>318982</td>
+      <td>3935253</td>
+      <td>227.418152</td>
+    </tr>
+  </tbody>
+</table>
+<p>721 rows × 3 columns</p>
+</div>
+</div>
+<br />
+<br /><p>We do the same for survey and lithologies:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">survey</span></a> <span class="o">=</span> <span class="n">read_survey</span><span class="p">(</span>
+    <span class="n">ReaderFilesHelper</span><span class="p">(</span>
+        <span class="n">file_or_buffer</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_borehole_data_csv</span></a><span class="p">,</span>
+        <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;md&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">survey</span></a>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/subsurface/subsurface/subsurface/reader/wells/well_files_reader.py:132: UserWarning: inc and/or azi columns are not present in the file. The boreholes will be straight.
+  warnings.warn(&#39;inc and/or azi columns are not present in the file.&#39;
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>md</th>
+      <th>inc</th>
+      <th>azi</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>KCL12</th>
+      <td>0.000000</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>1035.597076</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>1652.245636</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>2109.993683</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>2109.984893</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>308.885376</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>601.202972</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>753.114075</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>1197.413513</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>1623.969910</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>721 rows × 3 columns</p>
+</div>
+</div>
+<br />
+<br /><div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">lith</span></a> <span class="o">=</span> <span class="n">read_lith</span><span class="p">(</span>
+    <span class="n">ReaderFilesHelper</span><span class="p">(</span>
+        <span class="n">file_or_buffer</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_borehole_data_csv</span></a><span class="p">,</span>
+        <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span> <span class="s1">&#39;formation&#39;</span><span class="p">],</span>
+        <span class="n">columns_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;top&#39;</span><span class="p">:</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;formation&#39;</span><span class="p">:</span> <span class="s1">&#39;component lith&#39;</span><span class="p">,</span>
+                     <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">lith</span></a>
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>top</th>
+      <th>base</th>
+      <th>component lith</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>KCL12</th>
+      <td>0.000000</td>
+      <td>1035.597076</td>
+      <td>topo</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>1035.597076</td>
+      <td>1652.245636</td>
+      <td>etchegoin</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>1652.245636</td>
+      <td>2109.993683</td>
+      <td>macoma</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>2109.993683</td>
+      <td>2110.003683</td>
+      <td>mclure</td>
+    </tr>
+    <tr>
+      <th>KCL12</th>
+      <td>2109.984893</td>
+      <td>2799.027984</td>
+      <td>fruitvale</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>308.885376</td>
+      <td>601.202972</td>
+      <td>freeman_jewett</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>601.202972</td>
+      <td>753.114075</td>
+      <td>vedder</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>753.114075</td>
+      <td>1197.413513</td>
+      <td>cretaceous</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>1197.413513</td>
+      <td>1623.969910</td>
+      <td>basement</td>
+    </tr>
+    <tr>
+      <th>USLXX</th>
+      <td>1623.969910</td>
+      <td>1623.979910</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>721 rows × 3 columns</p>
+</div>
+</div>
+<br />
+<br /><p>At this point we have all the necessary data in <cite>pandas.Dataframe</cite>. However, to construct a <cite>subsurface.UnstructuredData</cite>
+object we are going to need to convert the data to the usual scheme of: <em>vertex</em>, <em>cells</em>, <em>vertex_attr</em> and <em>cells_attr</em>.
+To do this we will use <cite>welly</cite> and <cite>striplog</cite></p>
+<p>Welly is a family of classes to facilitate the loading, processing, and analysis of subsurface wells and well data,
+such as striplogs, formation tops, well log curves, and synthetic seismograms.</p>
+<p>The class WellyToSubsurfaceHelper contains the methods to create a welly project and export it to a subsurface data class.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">wts</span> <span class="o">=</span> <span class="n">WellyToSubsurfaceHelper</span><span class="p">(</span><span class="n">collar_df</span><span class="o">=</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">collar</span></a><span class="p">,</span> <span class="n">survey_df</span><span class="o">=</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">survey</span></a><span class="p">,</span> <span class="n">lith_df</span><span class="o">=</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">lith</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The following striplog failed being processed:  []
+</pre></div>
+</div>
+<p>In the field p is stored a welly project
+(<a class="reference external" href="https://github.com/agile-geoscience/welly/blob/master/tutorial/04_Project.ipynb">https://github.com/agile-geoscience/welly/blob/master/tutorial/04_Project.ipynb</a>) and we can use it to explore
+and visualize properties of each well.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">wts</span><span class="o">.</span><span class="n">p</span>
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<table><tr><th>Index</th><th>UWI</th><th>Data</th><th>Curves</th></tr><tr><td>0</td><td><strong>Del_Fortuna1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>1</td><td><strong>Mobil_Pan_Petroleum_KCL31_15</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>2</td><td><strong>11</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>3</td><td><strong>BALD_EAGLE74</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>4</td><td><strong>Gow1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>5</td><td><strong>St._Anthony1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>6</td><td><strong>Sharples_Marathon_BillingtonXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>7</td><td><strong>USLXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>8</td><td><strong>Tenneco_Rio_Bravo32</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>9</td><td><strong>DearingerXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>10</td><td><strong>Mobil_Pan_Pet_KCL86_35</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>11</td><td><strong>R.A._Shafter_A1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>12</td><td><strong>Kimberlina1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>13</td><td><strong>KCL_B45</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>14</td><td><strong>Tenneco_Sun11x_31</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>15</td><td><strong>Bergman_Trust1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>16</td><td><strong>Roe3</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>17</td><td><strong>Russell1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>18</td><td><strong>SUPERIOR_TENNECO_GAUTXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>19</td><td><strong>Davies1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>20</td><td><strong>Tenneco_Ladd_Rio_Bravo_North87</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>21</td><td><strong>S_&_D_Killingwoth_EPM1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>22</td><td><strong>CallowayXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>23</td><td><strong>KCL_A58_8</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>24</td><td><strong>RUSSELLXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>25</td><td><strong>KCL12</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>26</td><td><strong>McCulloch_Camp_et_al1_36</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>27</td><td><strong>West_Rio_Bravo1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>28</td><td><strong>Kern_AXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>29</td><td><strong>API_BartellXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>30</td><td><strong>Helbling1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>31</td><td><strong>Ingram13_73</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>32</td><td><strong>Kramer1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>33</td><td><strong>Steele_Petroleum_Co4_1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>34</td><td><strong>Union_Tribe_BXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>35</td><td><strong>Wright_Bloemer74</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>36</td><td><strong>KCL_1144</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>37</td><td><strong>Amalgamated_Happold2</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>38</td><td><strong>CURRY1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>39</td><td><strong>33XX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>40</td><td><strong>XXXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>41</td><td><strong>JewettaXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>42</td><td><strong>KerrXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>43</td><td><strong>Law_et_alXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>44</td><td><strong>Tidewater_Capital_Co.XX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>45</td><td><strong>KCL87_25</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>46</td><td><strong>MARQUIS1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>47</td><td><strong>TWIXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>48</td><td><strong>Kuhn81_15</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>49</td><td><strong>Westates44</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>50</td><td><strong>Bellevue_Deep1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>51</td><td><strong>Wiedman55_26</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>52</td><td><strong>XX32_15</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>53</td><td><strong>Famosa12_1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>54</td><td><strong>KCL_G1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>55</td><td><strong>Roberts_Cox23_1</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>56</td><td><strong>RoeXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>57</td><td><strong>Cities_Service_TennecoXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>58</td><td><strong>Golden_State_VintnersXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>59</td><td><strong>Shell_Magee_GlideXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>60</td><td><strong>KerncoXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>61</td><td><strong>TennecoXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>62</td><td><strong>Bishop_FeeXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>63</td><td><strong>PACIFIC_STATESXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>64</td><td><strong>HayesXX</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>65</td><td><strong>KCL15</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr><tr><td>66</td><td><strong>Arkelian23_26</strong></td><td>2&nbsp;curves</td><td>lith, lith_log</td></tr></table>
+</div>
+<br />
+<br /><div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">stripLog</span> <span class="o">=</span> <span class="n">wts</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;lith&#39;</span><span class="p">]</span>
+<span class="n">stripLog</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Striplog(11 Intervals, start=0.0, stop=2328.8231813)
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">stripLog</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.gcf.html#matplotlib.pyplot.gcf" title="matplotlib.pyplot.gcf" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">gcf</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="reading well data" class="sphx-glr-single-img" src="../_images/sphx_glr_reading_well_data_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 150x1500 with 1 Axes&gt;
+</pre></div>
+</div>
+<p>Once we have the <cite>WellyToSubsurfaceHelper</cite> the function <cite>welly_to_subsurface</cite> will directly convert the objet to
+<cite>subsurface.UnstructuredData</cite> – using the trajectory module of <cite>welly</cite>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">formations</span></a> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;topo&quot;</span><span class="p">,</span> <span class="s2">&quot;etchegoin&quot;</span><span class="p">,</span> <span class="s2">&quot;macoma&quot;</span><span class="p">,</span> <span class="s2">&quot;chanac&quot;</span><span class="p">,</span> <span class="s2">&quot;mclure&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;santa_margarita&quot;</span><span class="p">,</span> <span class="s2">&quot;fruitvale&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;round_mountain&quot;</span><span class="p">,</span> <span class="s2">&quot;olcese&quot;</span><span class="p">,</span> <span class="s2">&quot;freeman_jewett&quot;</span><span class="p">,</span> <span class="s2">&quot;vedder&quot;</span><span class="p">,</span> <span class="s2">&quot;eocene&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;cretaceous&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;basement&quot;</span><span class="p">,</span> <span class="s2">&quot;null&quot;</span><span class="p">]</span>
+
+<a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">unstruct</span></a> <span class="o">=</span> <span class="n">welly_to_subsurface</span><span class="p">(</span>
+    <span class="n">wts</span><span class="p">,</span>
+    <span class="n">table</span><span class="o">=</span><span class="p">[</span><span class="n">Component</span><span class="p">({</span><span class="s1">&#39;lith&#39;</span><span class="p">:</span> <span class="n">l</span><span class="p">})</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">formations</span></a><span class="p">]</span> <span class="c1"># This is to keep the lithology ids constant across all the wells</span>
+<span class="p">)</span>
+<a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">unstruct</span></a>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The following boreholes failed being processed:  []
+
+&lt;xarray.Dataset&gt;
+Dimensions:       (XYZ: 3, cell: 3283, cell_attr: 1, nodes: 2, points: 3350, vertex_attr: 0)
+Coordinates:
+  * points        (points) int64 0 1 2 3 4 5 6 ... 3344 3345 3346 3347 3348 3349
+  * XYZ           (XYZ) &lt;U1 &#39;X&#39; &#39;Y&#39; &#39;Z&#39;
+  * cell_attr     (cell_attr) object &#39;lith_log&#39;
+  * vertex_attr   (vertex_attr) int64
+    UWI           (cell) object &#39;Del_Fortuna1&#39; ... &#39;Arkelian23_26&#39;
+    Depth         (cell) float64 23.76 71.29 118.8 ... 3.056e+03 3.12e+03
+Dimensions without coordinates: cell, nodes
+Data variables:
+    vertex        (points, XYZ) float64 3.026e+05 3.947e+06 ... -3.036e+03
+    cells         (cell, nodes) int64 0 1 1 2 2 3 ... 3347 3347 3348 3348 3349
+    cell_attrs    (cell, cell_attr) int64 1 1 1 1 1 1 1 ... 13 13 13 13 13 14 14
+    vertex_attrs  (points, vertex_attr) float64
+</pre></div>
+</div>
+<p>We are done. Now the well data is a <cite>subsurface.UnstructuredData</cite> and can be used as usual.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="../Unstructured Elements/subsurface.LineSet.html#subsurface.LineSet" title="subsurface.LineSet" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element</span></a> <span class="o">=</span> <a href="../Unstructured Elements/subsurface.LineSet.html#subsurface.LineSet" title="subsurface.LineSet" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class"><span class="n">sb</span><span class="o">.</span><span class="n">LineSet</span></a><span class="p">(</span><a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">unstruct</span></a><span class="p">)</span>
+<a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pyvista_mesh</span></a> <span class="o">=</span> <a href="../Visualization/subsurface.visualization.to_pyvista_line.html#subsurface.visualization.to_pyvista_line" title="subsurface.visualization.to_pyvista_line" class="sphx-glr-backref-module-subsurface-visualization sphx-glr-backref-type-py-function"><span class="n">sb</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_line</span></a><span class="p">(</span><a href="../Unstructured Elements/subsurface.LineSet.html#subsurface.LineSet" title="subsurface.LineSet" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">element</span></a><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Plot default LITH</span>
+<a href="https://docs.pyvista.org/plotting/plotting.html#pyvista.Plotter" title="pyvista.Plotter" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">interactive_plot</span></a> <span class="o">=</span><a href="../Visualization/subsurface.visualization.pv_plot.html#subsurface.visualization.pv_plot" title="subsurface.visualization.pv_plot" class="sphx-glr-backref-module-subsurface-visualization sphx-glr-backref-type-py-function"><span class="n">sb</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span></a><span class="p">([</span><a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pyvista_mesh</span></a><span class="p">])</span>
+</pre></div>
+</div>
+<img alt="reading well data" class="sphx-glr-single-img" src="../_images/sphx_glr_reading_well_data_002.png" />
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.362 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-tutorials-reading-well-data-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/fe114a6397e442651dc3e01cef6dbca0/reading_well_data.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">reading_well_data.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/fcee9759266284fa3ad74dacce7df4ef/reading_well_data.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">reading_well_data.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/./logos/subsurface_place_holder.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">subsurface</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=softwareunderground&repo=subsurface&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/softwareunderground/subsurface">
+    <img
+        alt="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+        src="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Reading Well Data into Subsurface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code.html">Code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Tutorials</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Tutorials</a></li>
+      <li>Next: <a href="../examples/index.html" title="next chapter">Examples</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019-2021, The subsurface developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tutorials/reading_well_data.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

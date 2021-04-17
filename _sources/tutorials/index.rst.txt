@@ -7,6 +7,27 @@
 Tutorials
 =========
 
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Reading Well Data into Subsurface">
+
+.. only:: html
+
+ .. figure:: /tutorials/images/thumb/sphx_glr_reading_well_data_thumb.png
+     :alt: Reading Well Data into Subsurface
+
+     :ref:`sphx_glr_tutorials_reading_well_data.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /tutorials/reading_well_data
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>
