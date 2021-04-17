@@ -35,6 +35,12 @@ The difference between data levels is **not** which data they store but which da
 
 **Computer**
 
+## Documentation (WIP)
+
+An early version of the documentation can be found here:
+
+https://softwareunderground.github.io/subsurface/
+
 ## Installation
 
 `pip install subsurface`
