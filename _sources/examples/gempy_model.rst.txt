@@ -21,7 +21,7 @@
 Reading Simple GemPy model in Subsurface
 =================================
 
-.. GENERATED FROM PYTHON SOURCE LINES 5-22
+.. GENERATED FROM PYTHON SOURCE LINES 5-13
 
 .. code-block:: python3
 
@@ -32,6 +32,22 @@ Reading Simple GemPy model in Subsurface
     import pooch
     import subsurface as ss
     import subsurface.reader.read_netcdf
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 14-16
+
+Single surface
+--------------
+
+.. GENERATED FROM PYTHON SOURCE LINES 16-25
+
+.. code-block:: python3
 
 
     # Pull gempy model
@@ -49,7 +65,7 @@ Reading Simple GemPy model in Subsurface
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 23-26
+.. GENERATED FROM PYTHON SOURCE LINES 26-29
 
 .. code-block:: python3
 
@@ -72,7 +88,7 @@ Reading Simple GemPy model in Subsurface
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-32
+.. GENERATED FROM PYTHON SOURCE LINES 30-37
 
 .. code-block:: python3
 
@@ -81,6 +97,8 @@ Reading Simple GemPy model in Subsurface
 
     mesh = ss.visualization.to_pyvista_mesh(obj)
     ss.visualization.pv_plot([mesh])
+
+
 
 
 
@@ -97,14 +115,156 @@ Reading Simple GemPy model in Subsurface
 
     {}
 
-    <pyvista.plotting.plotting.Plotter object at 0x7fd4aeef1d90>
+    <pyvista.plotting.plotting.Plotter object at 0x7fc165bd0460>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 38-40
+
+Four Layers
+-----------
+
+.. GENERATED FROM PYTHON SOURCE LINES 40-48
+
+.. code-block:: python3
+
+
+    # Pull gempy model
+    model_files_2 = pooch.retrieve(
+        url="https://github.com/cgre-aachen/gempy_data/raw/master/data/gempy_models/Kim.zip",
+        known_hash="f530a88351ed0e38673c6937161c59a2f69df92202e14c1e5d5729ed5d72a323",
+        processor=pooch.Unzip()
+    )
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 49-51
+
+Triangular meshes
++++++++++++++++++
+
+.. GENERATED FROM PYTHON SOURCE LINES 53-59
+
+.. code-block:: python3
+
+    fname, = [i for i in model_files_2 if "meshes.nc" in i]
+    gempy_tri_mesh_unstruct =  ss.reader.read_netcdf.read_unstruct(fname)
+    tri_surf = ss.TriSurf(gempy_tri_mesh_unstruct)
+    mesh = ss.visualization.to_pyvista_mesh(tri_surf)
+    ss.visualization.pv_plot([mesh])
+
+
+
+
+.. image:: /examples/images/sphx_glr_gempy_model_002.png
+    :alt: gempy model
+    :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <pyvista.plotting.plotting.Plotter object at 0x7fc165bd05b0>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 60-62
+
+Regular grid
+++++++++++++
+
+.. GENERATED FROM PYTHON SOURCE LINES 62-67
+
+.. code-block:: python3
+
+
+    fname, = [i for i in model_files_2 if "regular_grid.nc" in i]
+    gempy_struct = ss.reader.read_netcdf.read_struct(fname)
+    regular_grid = ss.StructuredGrid(gempy_struct)
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 68-78
+
+.. code-block:: python3
+
+    pyvista_mesh = ss.visualization.to_pyvista_grid(regular_grid,
+                                                    data_set_name='property_matrix',
+                                                    attribute_slice={'Properties': 'id'}
+                                                    )
+
+    ss.visualization.pv_plot([pyvista_mesh])
+
+
+
+
+
+
+
+.. image:: /examples/images/sphx_glr_gempy_model_003.png
+    :alt: gempy model
+    :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <pyvista.plotting.plotting.Plotter object at 0x7fc166029040>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 79-86
+
+.. code-block:: python3
+
+
+    pyvista_mesh = ss.visualization.to_pyvista_grid(regular_grid,
+                                                    data_set_name='block_matrix',
+                                                    attribute_slice={'Properties': 'id',
+                                                                     'Features': 'Default series'})
+
+    ss.visualization.pv_plot([pyvista_mesh])
+
+
+
+.. image:: /examples/images/sphx_glr_gempy_model_004.png
+    :alt: gempy model
+    :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <pyvista.plotting.plotting.Plotter object at 0x7fc1659c12e0>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.455 seconds)
+   **Total running time of the script:** ( 0 minutes  4.595 seconds)
 
 
 .. _sphx_glr_download_examples_gempy_model.py:

@@ -49,9 +49,11 @@ to download the full example code</p>
 <span class="kn">import</span> <span class="nn">pooch</span>
 <span class="kn">import</span> <span class="nn">subsurface</span> <span class="k">as</span> <span class="nn">ss</span>
 <span class="kn">import</span> <span class="nn">subsurface.reader.read_netcdf</span>
-
-
-<span class="c1"># Pull gempy model</span>
+</pre></div>
+</div>
+<div class="section" id="single-surface">
+<h2>Single surface<a class="headerlink" href="#single-surface" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pull gempy model</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_files</span></a> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
     <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/cgre-aachen/gempy_data/raw/master/&quot;</span>
         <span class="s2">&quot;data/subsurface/example1.zip&quot;</span><span class="p">,</span>
@@ -80,10 +82,69 @@ to download the full example code</p>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{}
 
-&lt;pyvista.plotting.plotting.Plotter object at 0x7fd4aeef1d90&gt;
+&lt;pyvista.plotting.plotting.Plotter object at 0x7fc165bd0460&gt;
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.455 seconds)</p>
+</div>
+<div class="section" id="four-layers">
+<h2>Four Layers<a class="headerlink" href="#four-layers" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pull gempy model</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_files_2</span></a> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
+    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/cgre-aachen/gempy_data/raw/master/data/gempy_models/Kim.zip&quot;</span><span class="p">,</span>
+    <span class="n">known_hash</span><span class="o">=</span><span class="s2">&quot;f530a88351ed0e38673c6937161c59a2f69df92202e14c1e5d5729ed5d72a323&quot;</span><span class="p">,</span>
+    <span class="n">processor</span><span class="o">=</span><span class="n">pooch</span><span class="o">.</span><span class="n">Unzip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="triangular-meshes">
+<h3>Triangular meshes<a class="headerlink" href="#triangular-meshes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a><span class="p">,</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_files_2</span></a> <span class="k">if</span> <span class="s2">&quot;meshes.nc&quot;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>
+<a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gempy_tri_mesh_unstruct</span></a> <span class="o">=</span>  <span class="n">ss</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_netcdf</span><span class="o">.</span><span class="n">read_unstruct</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a><span class="p">)</span>
+<a href="../Unstructured Elements/subsurface.TriSurf.html#subsurface.TriSurf" title="subsurface.TriSurf" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tri_surf</span></a> <span class="o">=</span> <a href="../Unstructured Elements/subsurface.TriSurf.html#subsurface.TriSurf" title="subsurface.TriSurf" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class"><span class="n">ss</span><span class="o">.</span><span class="n">TriSurf</span></a><span class="p">(</span><a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gempy_tri_mesh_unstruct</span></a><span class="p">)</span>
+<a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mesh</span></a> <span class="o">=</span> <a href="../Visualization/subsurface.visualization.to_pyvista_mesh.html#subsurface.visualization.to_pyvista_mesh" title="subsurface.visualization.to_pyvista_mesh" class="sphx-glr-backref-module-subsurface-visualization sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_mesh</span></a><span class="p">(</span><a href="../Unstructured Elements/subsurface.TriSurf.html#subsurface.TriSurf" title="subsurface.TriSurf" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tri_surf</span></a><span class="p">)</span>
+<a href="../Visualization/subsurface.visualization.pv_plot.html#subsurface.visualization.pv_plot" title="subsurface.visualization.pv_plot" class="sphx-glr-backref-module-subsurface-visualization sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span></a><span class="p">([</span><a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mesh</span></a><span class="p">])</span>
+</pre></div>
+</div>
+<img alt="gempy model" class="sphx-glr-single-img" src="../_images/sphx_glr_gempy_model_002.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7fc165bd05b0&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="regular-grid">
+<h3>Regular grid<a class="headerlink" href="#regular-grid" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a><span class="p">,</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_files_2</span></a> <span class="k">if</span> <span class="s2">&quot;regular_grid.nc&quot;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>
+<a href="../Base Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gempy_struct</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_netcdf</span><span class="o">.</span><span class="n">read_struct</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a><span class="p">)</span>
+<a href="../Structured Elements/subsurface.StructuredGrid.html#subsurface.StructuredGrid" title="subsurface.StructuredGrid" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">regular_grid</span></a> <span class="o">=</span> <a href="../Structured Elements/subsurface.StructuredGrid.html#subsurface.StructuredGrid" title="subsurface.StructuredGrid" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class"><span class="n">ss</span><span class="o">.</span><span class="n">StructuredGrid</span></a><span class="p">(</span><a href="../Base Structures/subsurface.StructuredData.html#subsurface.StructuredData" title="subsurface.StructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gempy_struct</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="pyvista.StructuredGrid" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pyvista_mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_grid</span><span class="p">(</span><a href="../Structured Elements/subsurface.StructuredGrid.html#subsurface.StructuredGrid" title="subsurface.StructuredGrid" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">regular_grid</span></a><span class="p">,</span>
+                                                <span class="n">data_set_name</span><span class="o">=</span><span class="s1">&#39;property_matrix&#39;</span><span class="p">,</span>
+                                                <span class="n">attribute_slice</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Properties&#39;</span><span class="p">:</span> <span class="s1">&#39;id&#39;</span><span class="p">}</span>
+                                                <span class="p">)</span>
+
+<a href="../Visualization/subsurface.visualization.pv_plot.html#subsurface.visualization.pv_plot" title="subsurface.visualization.pv_plot" class="sphx-glr-backref-module-subsurface-visualization sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span></a><span class="p">([</span><a href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="pyvista.StructuredGrid" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pyvista_mesh</span></a><span class="p">])</span>
+</pre></div>
+</div>
+<img alt="gempy model" class="sphx-glr-single-img" src="../_images/sphx_glr_gempy_model_003.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7fc166029040&gt;
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="pyvista.StructuredGrid" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pyvista_mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_grid</span><span class="p">(</span><a href="../Structured Elements/subsurface.StructuredGrid.html#subsurface.StructuredGrid" title="subsurface.StructuredGrid" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">regular_grid</span></a><span class="p">,</span>
+                                                <span class="n">data_set_name</span><span class="o">=</span><span class="s1">&#39;block_matrix&#39;</span><span class="p">,</span>
+                                                <span class="n">attribute_slice</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Properties&#39;</span><span class="p">:</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span>
+                                                                 <span class="s1">&#39;Features&#39;</span><span class="p">:</span> <span class="s1">&#39;Default series&#39;</span><span class="p">})</span>
+
+<a href="../Visualization/subsurface.visualization.pv_plot.html#subsurface.visualization.pv_plot" title="subsurface.visualization.pv_plot" class="sphx-glr-backref-module-subsurface-visualization sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span></a><span class="p">([</span><a href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="pyvista.StructuredGrid" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pyvista_mesh</span></a><span class="p">])</span>
+</pre></div>
+</div>
+<img alt="gempy model" class="sphx-glr-single-img" src="../_images/sphx_glr_gempy_model_004.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7fc1659c12e0&gt;
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  4.595 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-gempy-model-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/f80aa8f8f2625a5c7ba6d653883bca3f/gempy_model.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">gempy_model.py</span></code></a></p>
@@ -93,6 +154,8 @@ to download the full example code</p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
 </div>
 
 
