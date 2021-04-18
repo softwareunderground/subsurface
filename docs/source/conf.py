@@ -195,7 +195,7 @@ html_theme_options = {
     'github_user': 'softwareunderground',
     'github_repo': 'subsurface',
     'github_type': 'star',
-    'logo': './logos/subsurface_place_holder.png',
+    'logo': './logos/subsurface.png',
     'logo_name': True,
     'travis_button': True,
     'page_width': '1200px',

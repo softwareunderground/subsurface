@@ -14,24 +14,24 @@ The difference between data levels is **not** which data they store but which da
 
 **Human**
 
-     \=================================/'  
-      \===============================/ ' \
-       \==========geo_format=========/ '   \    -> Additional context/meta information about the data
-        \===========================/'   '   \     
-         \=======geo_object========/   '    ' \   -> Elements that represent some 
-          \=======================/  '   '    /      geological concept. E.g: faults, seismic
-           \=====================/' '   ' ' /      
-            \======element======/' ' '  ' /   -> type of geometric object: PointSet,
-             \=================/' ' ' ' /      TriSurf, LineSet, Tetramesh
-              \=primary_struct/   ''  /    - > Set of arrays that define a geometric object: 
-               \=============/ ' '  /            e.g. *StructuredData* **UnstructuredData**
-                \============/''  /  
-                 \DF/Xarray/ ' '/ -> Label numpy.arrays
-                  \=======/'' /
-                   \array/' /   -> Memory allocation
-                    \===/ /
-                     \=//
-                      '
+
+      \‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾/\
+       \= = = = = = = = = = = = = = /. \     -> Additional context/meta information about the data
+        \= = = = geo_format= = = = /. . \
+         \= = = = = = = = = = = = /. . . \   -> Elements that represent some
+          \= = = geo_object= = = /. . . . \      geological concept. E.g: faults, seismic
+           \= = = = = = = = = = /. . . . ./
+            \= = element = = = /. . . . /    -> type of geometric object: PointSet,
+             \= = = = = = = = /. . . ./         TriSurf, LineSet, Tetramesh
+              \primary_struct/. . . /        -> Set of arrays that define a geometric object:
+               \= = = = = = /. . ./             e.g. *StructuredData* **UnstructuredData**
+                \DF/Xarray /. . /            -> Label numpy.arrays
+                 \= = = = /. ./
+                  \array /. /                -> Memory allocation
+                   \= = /./
+                    \= //
+                     \/
+
 
 **Computer**
 
@@ -55,9 +55,9 @@ We are changing things. Help us figure it out!
 
 #### Original statement
 
-The goal of this project is to support other subsurface geoscience and 
-engineering projects with a set of classes for common subsurface data entities, 
-such as seismic and GPR datasets, log curves, and so on. The current plan is to 
+The goal of this project is to support other subsurface geoscience and
+engineering projects with a set of classes for common subsurface data entities,
+such as seismic and GPR datasets, log curves, and so on. The current plan is to
  use `xarray` under the hood, with `pint` for units support and `cartopy` for CRS and map support.
 
 It's early days, everything might change. Help us figure it out!
