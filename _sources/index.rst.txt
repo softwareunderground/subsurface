@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. ../logos/subsurface_place_holder.png
+.. ../logos/subsurface.png
    :width: 30%
 
 About
