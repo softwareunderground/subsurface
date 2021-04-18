@@ -115,7 +115,7 @@ Single surface
 
     {}
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f42b0dd3340>
+    <pyvista.plotting.plotting.Plotter object at 0x7f4d13de2790>
 
 
 
@@ -173,7 +173,7 @@ Triangular meshes
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f42b092d250>
+    <pyvista.plotting.plotting.Plotter object at 0x7f4d13de37f0>
 
 
 
@@ -227,7 +227,7 @@ Regular grid
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f42a1fd9d00>
+    <pyvista.plotting.plotting.Plotter object at 0x7f4d10aae9a0>
 
 
 
@@ -257,14 +257,14 @@ Regular grid
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f42a1fd9ca0>
+    <pyvista.plotting.plotting.Plotter object at 0x7f4d10aaeaf0>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.580 seconds)
+   **Total running time of the script:** ( 0 minutes  4.473 seconds)
 
 
 .. _sphx_glr_download_examples_gempy_model.py:
