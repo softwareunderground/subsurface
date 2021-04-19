@@ -5,8 +5,8 @@
 
 Computation times
 =================
-**00:04.402** total execution time for **examples** files:
+**00:05.223** total execution time for **examples** files:
 
 +--------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_gempy_model.py` (``gempy_model.py``) | 00:04.402 | 0.0 MB |
+| :ref:`sphx_glr_examples_gempy_model.py` (``gempy_model.py``) | 00:05.223 | 0.0 MB |
 +--------------------------------------------------------------+-----------+--------+
