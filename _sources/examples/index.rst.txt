@@ -7,27 +7,6 @@
 Examples
 ========
 
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="Reading Simple GemPy model in Subsurface">
-
-.. only:: html
-
- .. figure:: /examples/images/thumb/sphx_glr_gempy_model_thumb.png
-     :alt: Reading Simple GemPy model in Subsurface
-
-     :ref:`sphx_glr_examples_gempy_model.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /examples/gempy_model
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>
