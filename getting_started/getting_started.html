@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting started &#8212; subsurface 0.2.0b2 documentation</title>
+    <title>Getting started &#8212; subsurface 0.1.dev1+g2e5bd0e documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
@@ -16,6 +16,7 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tutorials" href="../tutorials/index.html" />
@@ -101,12 +102,12 @@ data in the right format for digesting.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Downloading data from &#39;https://github.com/cgre-aachen/gempy_data/raw/master/data/subsurface/example1.zip&#39; to file &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip&#39;.
 SHA256 hash of downloaded file: fb79a63eeb874cf0cdca557106c62c67eace23811db5935e57c3448fed7f8978
 Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/pandas/core/indexing.py:966: SettingWithCopyWarning:
+/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/pandas/core/indexing.py:1676: SettingWithCopyWarning:
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  self.obj[item] = s
+  self._setitem_single_column(ilocs[0], value, pi)
 /home/runner/work/subsurface/subsurface/examples/getting_started/getting_started.py:65: SettingWithCopyWarning:
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
@@ -385,7 +386,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 The following striplog failed being processed:  [&#39;GD0041&#39;, &#39;GD0080&#39;, &#39;GD0092&#39;, &#39;GD0136&#39;, &#39;GD0211&#39;, &#39;GD0225&#39;, &#39;GD0235&#39;, &#39;GD0236&#39;, &#39;GD0304&#39;, &#39;GD0305&#39;, &#39;GD0308&#39;, &#39;GD0377&#39;, &#39;GD0399&#39;, &#39;GD0419&#39;, &#39;GD0439&#39;, &#39;GD0464&#39;, &#39;GD0487&#39;, &#39;GD0504&#39;, &#39;GD0505&#39;, &#39;GD0526&#39;, &#39;GD0529&#39;, &#39;GD0573&#39;, &#39;GD0597&#39;, &#39;GD0611&#39;, &#39;GD0617&#39;, &#39;GD0622&#39;, &#39;GD0632&#39;, &#39;GD0715&#39;, &#39;GD0733&#39;, &#39;GD0760&#39;, &#39;GD0766&#39;, &#39;GD0813&#39;, &#39;GD0816&#39;, &#39;GD0843&#39;, &#39;GD0845&#39;, &#39;GD0858&#39;, &#39;GD0937&#39;, &#39;GD0942&#39;, &#39;GD0948&#39;, &#39;GD0981&#39;, &#39;GD1007&#39;, &#39;GD1016&#39;]
 /home/runner/work/subsurface/subsurface/subsurface/reader/wells/welly_reader.py:103: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: {w.name}
   warnings.warn(f&#39;At least one of the wells do not have &#39;
-The following boreholes failed being processed:  [&#39;GD0136&#39;, &#39;GD0981&#39;, &#39;GD0308&#39;, &#39;GD0304&#39;, &#39;GD0813&#39;, &#39;GD0617&#39;, &#39;GD0622&#39;, &#39;GD0573&#39;, &#39;GD0843&#39;, &#39;GD1016&#39;, &#39;GD0399&#39;, &#39;GD0041&#39;, &#39;GD0715&#39;, &#39;GD0235&#39;, &#39;GD0632&#39;, &#39;GD0937&#39;, &#39;GD0487&#39;, &#39;GD0092&#39;, &#39;GD0942&#39;, &#39;GD0504&#39;, &#39;GD0419&#39;, &#39;GD0464&#39;, &#39;GD0948&#39;, &#39;GD1007&#39;, &#39;GD0211&#39;, &#39;GD0766&#39;, &#39;GD0225&#39;, &#39;GD0597&#39;, &#39;GD0611&#39;, &#39;GD0439&#39;, &#39;GD0505&#39;, &#39;GD0529&#39;, &#39;GD0236&#39;, &#39;GD0526&#39;, &#39;GD0377&#39;, &#39;GD0305&#39;, &#39;GD0733&#39;, &#39;GD0845&#39;, &#39;GD0760&#39;, &#39;GD0080&#39;, &#39;GD0816&#39;, &#39;GD0858&#39;, &#39;GD0136&#39;, &#39;GD0981&#39;, &#39;GD0304&#39;, &#39;GD0813&#39;, &#39;GD0617&#39;, &#39;GD0622&#39;, &#39;GD0573&#39;, &#39;GD0843&#39;, &#39;GD1016&#39;, &#39;GD0399&#39;, &#39;GD0041&#39;, &#39;GD0715&#39;, &#39;GD0235&#39;, &#39;GD0632&#39;, &#39;GD0937&#39;, &#39;GD0487&#39;, &#39;GD0092&#39;, &#39;GD0942&#39;, &#39;GD0504&#39;, &#39;GD0419&#39;, &#39;GD0464&#39;, &#39;GD0948&#39;, &#39;GD1007&#39;, &#39;GD0211&#39;, &#39;GD0766&#39;, &#39;GD0225&#39;, &#39;GD0597&#39;, &#39;GD0611&#39;, &#39;GD0439&#39;, &#39;GD0505&#39;, &#39;GD0529&#39;, &#39;GD0236&#39;, &#39;GD0526&#39;, &#39;GD0377&#39;, &#39;GD0305&#39;, &#39;GD0733&#39;, &#39;GD0845&#39;, &#39;GD0760&#39;, &#39;GD0080&#39;, &#39;GD0308&#39;, &#39;GD0816&#39;, &#39;GD0858&#39;]
+The following boreholes failed being processed:  [&#39;GD0308&#39;, &#39;GD0858&#39;, &#39;GD0843&#39;, &#39;GD0813&#39;, &#39;GD0092&#39;, &#39;GD0597&#39;, &#39;GD0399&#39;, &#39;GD0235&#39;, &#39;GD0632&#39;, &#39;GD0617&#39;, &#39;GD0948&#39;, &#39;GD0504&#39;, &#39;GD0305&#39;, &#39;GD0487&#39;, &#39;GD0816&#39;, &#39;GD0611&#39;, &#39;GD0622&#39;, &#39;GD0733&#39;, &#39;GD0937&#39;, &#39;GD1016&#39;, &#39;GD0136&#39;, &#39;GD0304&#39;, &#39;GD0526&#39;, &#39;GD0080&#39;, &#39;GD0760&#39;, &#39;GD0225&#39;, &#39;GD0236&#39;, &#39;GD0439&#39;, &#39;GD0041&#39;, &#39;GD0505&#39;, &#39;GD1007&#39;, &#39;GD0211&#39;, &#39;GD0377&#39;, &#39;GD0529&#39;, &#39;GD0845&#39;, &#39;GD0419&#39;, &#39;GD0942&#39;, &#39;GD0981&#39;, &#39;GD0464&#39;, &#39;GD0573&#39;, &#39;GD0715&#39;, &#39;GD0766&#39;, &#39;GD0308&#39;, &#39;GD0858&#39;, &#39;GD0845&#39;, &#39;GD0843&#39;, &#39;GD0813&#39;, &#39;GD0092&#39;, &#39;GD0597&#39;, &#39;GD0399&#39;, &#39;GD0235&#39;, &#39;GD0632&#39;, &#39;GD0617&#39;, &#39;GD0948&#39;, &#39;GD0504&#39;, &#39;GD0305&#39;, &#39;GD0487&#39;, &#39;GD0816&#39;, &#39;GD0611&#39;, &#39;GD0622&#39;, &#39;GD0733&#39;, &#39;GD0937&#39;, &#39;GD0419&#39;, &#39;GD1016&#39;, &#39;GD0136&#39;, &#39;GD0304&#39;, &#39;GD0526&#39;, &#39;GD0080&#39;, &#39;GD0760&#39;, &#39;GD0225&#39;, &#39;GD0236&#39;, &#39;GD0439&#39;, &#39;GD0041&#39;, &#39;GD0505&#39;, &#39;GD1007&#39;, &#39;GD0211&#39;, &#39;GD0377&#39;, &#39;GD0529&#39;, &#39;GD0942&#39;, &#39;GD0981&#39;, &#39;GD0464&#39;, &#39;GD0573&#39;, &#39;GD0715&#39;, &#39;GD0766&#39;]
 </pre></div>
 </div>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><a href="../Base Structures/subsurface.UnstructuredData.html#subsurface.UnstructuredData" title="subsurface.UnstructuredData" class="sphx-glr-backref-module-subsurface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_unstructured_data</span></a>
@@ -399,13 +400,13 @@ Coordinates:
   * XYZ           (XYZ) &lt;U1 &#39;X&#39; &#39;Y&#39; &#39;Z&#39;
   * cell_attr     (cell_attr) object &#39;lith_log&#39;
   * vertex_attr   (vertex_attr) int64
-    UWI           (cell) object &#39;GD0881&#39; &#39;GD0881&#39; &#39;GD0881&#39; ... &#39;GD1058&#39; &#39;GD1058&#39;
-    Depth         (cell) float64 0.1297 0.3892 0.6487 ... 1.093e+03 1.107e+03
+    UWI           (cell) object &#39;GD1043&#39; &#39;GD1043&#39; &#39;GD1043&#39; ... &#39;GD0388&#39; &#39;GD0388&#39;
+    Depth         (cell) float64 5.854 17.56 29.27 40.98 ... 19.17 19.42 19.67
 Dimensions without coordinates: cell, nodes
 Data variables:
-    vertex        (points, XYZ) float64 3.241e+07 5.768e+06 ... -1.061e+03
+    vertex        (points, XYZ) float64 3.241e+07 5.742e+06 ... 5.755e+06 40.47
     cells         (cell, nodes) int64 0 1 1 2 2 ... 88157 88158 88158 88159
-    cell_attrs    (cell, cell_attr) int64 1 1 1 1 1 1 1 ... 25 25 25 9 19 19 19
+    cell_attrs    (cell, cell_attr) int64 12 12 12 12 12 12 12 ... 1 1 1 1 1 1 1
     vertex_attrs  (points, vertex_attr) float64
 </pre></div>
 </div>
@@ -430,7 +431,7 @@ transformation can be done by the functions <cite>to_pyvista_…</cite>.</p>
 </div>
 <img alt="getting started" class="sphx-glr-single-img" src="../_images/sphx_glr_getting_started_001.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f9e1a369130&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f97e2380d60&gt;
 </pre></div>
 </div>
 <p>We can do the same for point data, for example the borehole location.</p>
@@ -459,7 +460,7 @@ Dimensions without coordinates: cell, nodes
 Data variables:
     vertex        (points, XYZ) float32 3.243e+07 5.785e+06 ... 5.742e+06 60.0
     cells         (cell, nodes) int64 0 1 2 3 4 5 ... 1139 1140 1141 1142 1143
-    cell_attrs    (cell, cell_attr) float32 2.0 2.0 2.0 2.0 ... 2.0 2.0 2.0 8.0
+    cell_attrs    (cell, cell_attr) float32 2.0 3.0 4.0 4.0 ... 4.0 2.0 2.0 1.0
     vertex_attrs  (points, vertex_attr) float64
 Attributes:
     wells_names:  [&#39;GD0001&#39;, &#39;GD0002&#39;, &#39;GD0003&#39;, &#39;GD0004&#39;, &#39;GD0005&#39;, &#39;GD0006&#39;...
@@ -471,7 +472,7 @@ Attributes:
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;subsurface.structs.unstructured_elements.PointSet object at 0x7f9e1a369c10&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;subsurface.structs.unstructured_elements.PointSet object at 0x7f97e22b94c0&gt;
 </pre></div>
 </div>
 <p>Pyvista mesh</p>
@@ -505,7 +506,7 @@ Attributes:
 </div>
 <img alt="getting started" class="sphx-glr-single-img" src="../_images/sphx_glr_getting_started_002.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f9e1a369c40&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f97e257ea00&gt;
 </pre></div>
 </div>
 </div>
@@ -559,7 +560,7 @@ Coordinates:
 </div>
 <img alt="getting started" class="sphx-glr-single-img" src="../_images/sphx_glr_getting_started_003.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f9e1a137a00&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f97cb554760&gt;
 </pre></div>
 </div>
 </div>
@@ -599,7 +600,7 @@ Coordinates:
 </div>
 <img alt="getting started" class="sphx-glr-single-img" src="../_images/sphx_glr_getting_started_004.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f9e1a137040&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f97e22bfdf0&gt;
 </pre></div>
 </div>
 </div>
@@ -629,7 +630,7 @@ Coordinates:
 </div>
 <img alt="getting started" class="sphx-glr-single-img" src="../_images/sphx_glr_getting_started_005.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f9e19171250&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f97e24be790&gt;
 </pre></div>
 </div>
 <p>sphinx_gallery_thumbnail_number = 6</p>
@@ -652,7 +653,7 @@ Coordinates:
         <span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  53.352 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  47.088 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-getting-started-getting-started-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/c0512550f87a2f5cf6b27d128134dd80/getting_started.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">getting_started.py</span></code></a></p>
@@ -674,7 +675,7 @@ Coordinates:
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="../index.html">
-    <img class="logo" src="../_static/./logos/subsurface_place_holder.png" alt="Logo"/>
+    <img class="logo" src="../_static/./logos/subsurface.png" alt="Logo"/>
     
     <h1 class="logo logo-name">subsurface</h1>
     
