@@ -247,7 +247,7 @@ class UnstructuredData:
 
     @property
     def points_attributes_to_dict(self, orient='list'):
-        return self.points_attributes_to_dict.to_dict(orient)
+        return self.points_attributes.to_dict(orient)
 
     def to_xarray(self):
         a = xr.DataArray(self.vertex, dims=['points', 'XYZ'])

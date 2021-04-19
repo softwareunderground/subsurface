@@ -1,0 +1,11 @@
+# GLOBAL REQUIREMENTS.
+-r requirements.txt
+-r requirements_opt.txt
+
+# FOR DOCUMENTATION
+sphinx
+sphinx_gallery
+
+# FOR TESTING
+pytest
+pytest-cov

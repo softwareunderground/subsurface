@@ -1,3 +1,5 @@
+subsurface/_version.py
+
 # vscode
 .vscode/*
 
