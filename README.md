@@ -45,7 +45,7 @@ https://softwareunderground.github.io/subsurface/
 
 `pip install subsurface`
 
-Be aware that to read different formats you will require to install manually the specific dependency (e.g. welly to read well data).
+Be aware that to read different formats you will need to manually install the specific dependency (e.g. welly to read well data).
 
 ## Changes Log
 
