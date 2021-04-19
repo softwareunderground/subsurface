@@ -1,0 +1,20 @@
+# Currently xlrd 2 breaks things
+xlrd~=1.2 # For reading xlsx
+
+# There are open PR's for welly and striplog
+git+https://github.com/Leguark/welly.git
+git+https://github.com/Leguark/striplog.git
+
+segyio
+matplotlib
+pyvista
+geopandas
+rasterio
+imageio
+scipy
+shapely
+requests
+ezdxf
+pooch
+netcdf4
+scooby

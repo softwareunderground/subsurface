@@ -1,64 +1,59 @@
-# This is a basic workflow to help you get started with Actions
+name: linux
 
-name: subsurface CI
-
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ main, mig_dev, main_candidate, t21-main ]
   pull_request:
     branches: [ main, t21-main ]
+  release:
+    types:
+      - published
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   pytest:
-    runs-on: ubuntu-latest
+
+    name: ${{ matrix.case.os }} py${{ matrix.case.python-version }} ${{ matrix.case.name }}
+    runs-on: ${{ matrix.case.os }}-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu, ]  # macos, windows]  # Only Linux currently.
+        case:
+          - python-version: 3.8
+            name: basic
+            os: ubuntu
+          # - python-version: 3.9
+          #   name: basic
+          #   os: ubuntu
+
     env:
       DISPLAY: ':99.0'
       PYVISTA_OFF_SCREEN: 'True'
       ALLOW_PLOTTING: true
       SHELLOPTS: 'errexit:pipefail'
-    # The type of runner that the job will run on
+      OS: ${{ matrix.case.os }}
+      PYTHON: ${{ matrix.case.python-version }}
 
     steps:
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
 
-    - uses: actions/checkout@v2
-    - name: Setup Headless Display
-      run: |
-        sudo apt-get install libgl1-mesa-glx
-        sudo apt-get install -y xvfb
-        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-        sleep 3
+      # Cancel any previous run of the test job; [pin v0.8.0 (2021-02-13)]
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@3d86a7cc43670094ac248017207be0295edbc31d
+        with:
+          access_token: ${{ github.token }}
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install -r optional_requirements.txt
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.case.python-version }}
 
-    - name: Test with pytest
-      run: |
-        pip install pytest
-        pip install pytest-cov
-        pytest
-  docs:
-    runs-on: ubuntu-latest
-    env:
-      DISPLAY: ':99.0'
-      PYVISTA_OFF_SCREEN: 'True'
-      ALLOW_PLOTTING: true
-      SHELLOPTS: 'errexit:pipefail'
-
-    steps:
       - uses: actions/checkout@v2
       - name: Setup Headless Display
         run: |
@@ -67,24 +62,85 @@ jobs:
           Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
           sleep 3
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install -r optional_requirements.txt
-          pip install -r dev_requirements.txt
-          pip install -e .
-      - name: Generate Sphinx Docs
-        working-directory: docs/
-        run: make html
-      - name: Publish generated content to GitHub Pages
-        uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
-        with:
-          dir: docs/build/html
-          branch: gh-pages
-          token: ${{ secrets.ACCESS_TOKEN }}
+          pip install -r requirements_dev.txt
 
+      - name: Test with pytest
+        run: pytest --cov=subsurface
+
+  # # # # DEPLOY # # #
+  deploy:
+    needs: pytest
+    name: Deploy to PyPI
+    runs-on: ubuntu-latest
+    # Only from the origin repository, not forks; only main and tags.
+    if: github.repository_owner == 'softwareunderground' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Need to fetch more than the last commit so that setuptools_scm can
+          # create the correct version string. If the number of commits since
+          # the last release is greater than this, the version will still be
+          # wrong. Increase if necessary.
+          fetch-depth: 100
+          # The GitHub token is preserved by default but this job doesn't need
+          # to be able to push to GitHub.
+          persist-credentials: false
+
+      # Need the tags so that setuptools_scm can form a valid version number
+      - name: Fetch git tags
+        run: git fetch origin 'refs/tags/*:refs/tags/*'
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install wheel setuptools_scm
+          pip install -r requirements.txt
+
+      - name: Build source and wheel distributions
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # Change setuptools-scm local_scheme to "no-local-version" so the
+          # local part of the version isn't included, making the version string
+          # compatible with Test PyPI.
+          sed --in-place "s/'root'/'local_scheme':'no-local-version','root'/g" setup.py
+
+      - name: Build source and wheel distributions
+        run: |
+          # Build source and wheel packages
+          python setup.py sdist
+          python setup.py bdist_wheel
+          echo ""
+          echo "Generated files:"
+          ls -lh dist/
+
+      - name: Publish to Test PyPI
+        if: success()
+        # Hash corresponds to v1.4.1
+        uses: pypa/gh-action-pypi-publish@54b39fb9371c0b3a6f9f14bb8a67394defc7a806
+        with:
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_PASSWORD }}
+          repository_url: https://test.pypi.org/legacy/
+          # Allow existing releases on test PyPI without errors.
+          # NOT TO BE USED in PyPI!
+          skip_existing: true
+
+      - name: Publish to PyPI
+        # Only for releases
+        if: success() && github.event_name == 'release'
+        # Hash corresponds to v1.4.1
+        uses: pypa/gh-action-pypi-publish@54b39fb9371c0b3a6f9f14bb8a67394defc7a806
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_PASSWORD }}
