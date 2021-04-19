@@ -1,13 +1,16 @@
-.. Subsurface documentation master file, created by
-   sphinx-quickstart on Wed Dec 14 12:44:40 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. _subsurface-manual:
 
-.. ../logos/subsurface.png
-   :width: 30%
+########################
+subsurface Documentation
+########################
 
-About
-=====
+:Release: |version|
+:Date: |today|
+:Source: `github.com/softwareunderground/subsurface <https://github.com/softwareunderground/subsurface>`_
+
+----
+
+
 DataHub for geoscientific data in Python.
 *****************************************
 

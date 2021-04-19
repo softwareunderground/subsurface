@@ -1,5 +1,8 @@
 subsurface/_version.py
 
+# Example data files - we need to handle this better
+*.nc
+
 # vscode
 .vscode/*
 
