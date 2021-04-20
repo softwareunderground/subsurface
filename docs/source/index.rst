@@ -11,23 +11,19 @@ subsurface Documentation
 ----
 
 
-DataHub for geoscientific data in Python.
-*****************************************
 
-Overview
---------
-
-The goal of this project is to support other subsurface geoscience and
-engineering projects with a set of classes for common subsurface data entities,
-such as seismic and GPR datasets, log curves
+.. include:: ../../README.rst
+  :start-after: sphinx-inclusion-marker
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-   self
    installation
+   changelog
+   contributing
+   maintenance
 
 .. toctree::
    :maxdepth: 2
