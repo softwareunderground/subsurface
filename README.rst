@@ -80,8 +80,8 @@ https://softwareunderground.github.io/subsurface/
 
 Direct links:
 
-- `Developers-guide <https://softwareunderground.github.io/subsurface/maintenance.html`
-- `Changelog <https://softwareunderground.github.io/subsurface/changelog.html`
+- `Developers-guide <https://softwareunderground.github.io/subsurface/maintenance.html>_`
+- `Changelog <https://softwareunderground.github.io/subsurface/changelog.html>_`
 
 
 Installation
