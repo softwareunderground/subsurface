@@ -138,7 +138,6 @@ html_theme_options = {
     'github_type': 'star',
     'logo': './logos/subsurface.png',
     'logo_name': True,
-    'travis_button': True,
     'page_width': '1200px',
     'fixed_sidebar': False,
     'show_related': True,
