@@ -3,6 +3,9 @@ from typing import Optional, List
 import numpy as np
 
 
+__all__ = ['RexMesh', 'RexMaterial', 'RexLineSet']
+
+
 @dataclass
 class RexMesh:
     """Data structure that can be converted to rex binary. Represent

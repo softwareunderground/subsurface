@@ -6,6 +6,9 @@ import numpy as np
 from .base_structures import StructuredData
 
 
+__all__ = ['OctreeMesh', 'StructuredSurface', 'StructuredGrid']
+
+
 class OctreeMesh:
     """
     TODO: implement as Dom discussed with data frames to track the levels.

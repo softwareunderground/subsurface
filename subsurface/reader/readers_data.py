@@ -11,6 +11,10 @@ from pandas._typing import FilePathOrBuffer
 from subsurface.utils.utils_core import get_extension
 
 
+__all__ = ['ReaderFilesHelper', 'ReaderUnstructuredHelper',
+           'ReaderWellsHelper', 'RawDataOptions', 'RawDataUnstructured']
+
+
 @dataclass
 class ReaderFilesHelper:
     file_or_buffer: FilePathOrBuffer

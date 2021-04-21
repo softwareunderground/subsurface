@@ -12,6 +12,9 @@ except ImportError:
     welly_imported = False
 
 
+__all__ = ['WellyToSubsurfaceHelper', ]
+
+
 class WellyToSubsurfaceHelper:
     def __init__(self,
                  collar_df: pd.DataFrame = None,

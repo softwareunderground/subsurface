@@ -7,6 +7,11 @@ from subsurface.reader.readers_data import ReaderFilesHelper, ReaderWellsHelper
 from subsurface.reader.wells.wells_utils import add_tops_from_base_and_altitude_in_place
 
 
+__all__ = ['read_borehole_files', 'read_collar', 'read_survey', 'read_lith',
+           'read_attributes', 'check_format_and_read_to_df',
+           'map_rows_and_cols_inplace']
+
+
 def read_borehole_files(reader_wells_helper: ReaderWellsHelper) -> Dict[str, pd.DataFrame]:
     data_frames = dict()
 

@@ -5,6 +5,9 @@ import xarray as xr
 from subsurface import UnstructuredData, StructuredData
 
 
+__all__ = ['read_unstruct', 'read_struct']
+
+
 def read_unstruct(path, legacy=False, **kwargs):
     ds = xr.open_dataset(path, **kwargs)
 

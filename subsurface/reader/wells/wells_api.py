@@ -13,6 +13,9 @@ from subsurface.structs import UnstructuredData
 from subsurface.reader.wells import read_collar
 
 
+__all__ = ['read_wells_to_unstruct', 'borehole_location_to_unstruct']
+
+
 def read_wells_to_unstruct(reader_wells_helper: ReaderWellsHelper,
                             backend='welly', n_vertex_per_well=80,
                            table: List[Component] = None) -> UnstructuredData:

@@ -11,6 +11,9 @@ except ImportError:
 package_directory = os.path.dirname(os.path.abspath(__file__))
 
 
+__all__ = ['RexAPI', 'Rextag', 'upload_to_rexcloud']
+
+
 class RexAPI:
 
     def __init__(self, project_name, api_token=None, secret=None):
@@ -266,7 +269,7 @@ def upload_to_rexcloud(infiles : list, project_name=None, **kwargs):
 
     an ar code is plotted that can be scanned with the rexview app to show the model in vr.
     the qr code is plotted in ascii to the standard output, if the qr code is not recognizable,
-     try to revert the colors o0f the terminal output by setting reverse=False in thew show_tag() Method.
+    try to revert the colors o0f the terminal output by setting reverse=False in thew show_tag() Method.
 
     all api calls are python implementation of the Rex os api:
     https://www.rexos.org/rex-api/#tutorial-rex-project-before-you-begin

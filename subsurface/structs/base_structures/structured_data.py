@@ -5,6 +5,9 @@ import numpy as np
 import xarray as xr
 
 
+__all__ = ['StructuredData', ]
+
+
 @dataclass(frozen=True)
 class StructuredData:
     data: xr.Dataset
