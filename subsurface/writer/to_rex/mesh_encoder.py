@@ -3,6 +3,9 @@ from subsurface.writer.to_rex.common import mesh_header_size, \
 from subsurface.writer.to_rex.data_struct import RexMesh
 
 
+__all__ = ['mesh_encode', 'write_mesh_coordinates', 'write_mesh_header']
+
+
 def mesh_encode(rex_mesh: RexMesh, data_id: int):
     material_id = rex_mesh.material_id
     n_vtx_coord = rex_mesh.n_vtx

@@ -7,6 +7,13 @@ from subsurface.utils.utils_core import get_extension
 import numpy as np
 
 
+__all__ = ['read_mesh_file_to_vertex', 'read_mesh_file_to_cells',
+           'read_mesh_file_to_attr', 'mesh_csv_to_vertex', 'mesh_csv_to_cells',
+           'mesh_csv_to_attributes', 'get_cells_from_df',
+           'cells_from_delaunay', 'get_vertices_from_df', 'map_columns_names',
+           'dxf_to_vertex_edges', 'dxf_to_vertex']
+
+
 def read_mesh_file_to_vertex(reader_args: ReaderFilesHelper) -> np.ndarray:
     if reader_args.format == '.csv':
         vertex = mesh_csv_to_vertex(reader_args.file_or_buffer, reader_args.columns_map,
@@ -62,6 +69,7 @@ def mesh_csv_to_attributes(path_to_file: str,
     if columns_map is not None:
         map_columns_names(columns_map, data)
     return data
+
 
 def get_cells_from_df(data):
     try:

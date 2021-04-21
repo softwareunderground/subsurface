@@ -1,6 +1,9 @@
 import numpy as np
 
 
+__all__ = ['hex_to_rgb', ]
+
+
 def hex_to_rgb(hex: str, normalize: bool = True) -> np.ndarray:
     """Transform colors from hex to rgb"""
     hex = hex.lstrip('#')

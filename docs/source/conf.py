@@ -29,9 +29,6 @@ sys.path.insert(0, os.path.abspath('.'))
 
 # Load extensions
 extensions = [
-    # 'sphinx.ext.autodoc',
-    # 'sphinx.ext.autosummary',
-    # 'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
@@ -40,7 +37,12 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.napoleon',
     'sphinx_gallery.gen_gallery',
+    'sphinx_automodapi.automodapi',
+    'sphinx_automodapi.smart_resolver',
 ]
+autosummary_generate = True
+add_module_names = True
+numpydoc_show_class_members=False
 
 intersphinx_mapping = {
     'numpy': ('https://numpy.org/doc/stable/', None),
@@ -51,17 +53,6 @@ intersphinx_mapping = {
 }
 
 napoleon_google_docstring = True
-
-# autodoc_default_options = {
-#     'autodoc_default_flags': ['members'],
-#     'members': None,
-#     'member-order': 'bysource',
-#     'special-members': '__init__',
-#     'undoc-members': True,
-#     'exclude-members': '__weakref__'
-# }
-# autosummary_generate = True
-# autosummary_imported_members = False
 
 description = 'DataHub for geoscientific data in Python.'
 
@@ -158,3 +149,7 @@ htmlhelp_basename = 'subsurface'
 warnings.filterwarnings("ignore", category=UserWarning,
                         message='Matplotlib is currently using agg, which is a'
                                 ' non-GUI backend, so cannot show the figure.')
+
+# -- CSS fixes --
+def setup(app):
+    app.add_css_file("style.css")

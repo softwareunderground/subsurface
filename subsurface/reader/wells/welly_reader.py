@@ -11,6 +11,12 @@ from welly import Well, Location, Project, Curve
 from striplog import Striplog, Component
 
 
+__all__ = ['welly_to_subsurface', 'striplog_to_curve_log',
+           'change_curve_basis_to_n_vertex_per_well_inplace',
+           'vertex_and_cells_from_welly_trajectory',
+           'well_without_valid_survey']
+
+
 def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
                         elev=True,
                         n_vertex_per_well=50,

@@ -55,4 +55,10 @@ read/write. Currently, the ``requierements_opt.txt`` reads like:
    :hidden:
    :caption: API Reference
 
-   code
+   code-geological-formats
+   code-interfaces
+   code-reader
+   code-structs
+   code-utils
+   code-viz
+   code-writer

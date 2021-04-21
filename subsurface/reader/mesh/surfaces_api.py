@@ -4,6 +4,8 @@ from subsurface.reader.mesh.surface_reader import read_mesh_file_to_vertex, read
     cells_from_delaunay, read_mesh_file_to_attr
 from subsurface.reader.readers_data import ReaderUnstructuredHelper, RawDataOptions, RawDataUnstructured
 
+__all__ = ['read_2d_mesh_to_unstruct', ]
+
 
 def read_2d_mesh_to_unstruct(reader_args: ReaderUnstructuredHelper,
                              raw_data_options: RawDataOptions = None,

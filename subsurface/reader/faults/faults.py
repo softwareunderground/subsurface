@@ -7,6 +7,9 @@ TODO: This is legacy code waiting to be updated to the new ideas
 import pandas as pd
 
 
+__all__ = ['read_faultsticks_kingdom', 'read_faultsticks_charisma']
+
+
 def read_faultsticks_kingdom(fp: str, name=None):
     """
     Reads in Kingdom fault stick files (kingdom) exported from Petrel (tested

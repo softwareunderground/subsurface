@@ -6,6 +6,9 @@ import numpy as np
 from subsurface.structs import UnstructuredData, StructuredData
 
 
+__all__ = ['interpolate_unstructured_data_to_structured_data', ]
+
+
 def interpolate_unstructured_data_to_structured_data(ud: UnstructuredData, attr_name: str,
                                                      resolution: List[int] = None) -> StructuredData:
     if resolution is None:

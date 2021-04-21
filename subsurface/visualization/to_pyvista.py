@@ -16,6 +16,11 @@ except ImportError:
     background_plotter_imported = False
 
 
+__all__ = ['pv_plot', 'to_pyvista_points', 'to_pyvista_mesh',
+           'to_pyvista_mesh_and_texture', 'to_pyvista_line',
+           'to_pyvista_tetra', 'to_pyvista_grid', 'update_grid_attribute']
+
+
 def pv_plot(meshes: list,
             image_2d=False,
             ve=None,
