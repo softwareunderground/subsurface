@@ -1,8 +1,17 @@
+# Documentation
+docs/build/
+docs/source/api/
+docs/source/gen_modules/
+docs/source/examples/
+
 # Versioning
 subsurface/_version.py
 
-# Example data files - we need to handle this better
+# Example data files
 *.nc
+*.json
+*.le
+
 
 # vscode
 .vscode/*
