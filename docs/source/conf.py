@@ -29,9 +29,9 @@ sys.path.insert(0, os.path.abspath('.'))
 
 # Load extensions
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.doctest',
+    # 'sphinx.ext.autodoc',
+    # 'sphinx.ext.autosummary',
+    # 'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
@@ -52,16 +52,18 @@ intersphinx_mapping = {
 
 napoleon_google_docstring = True
 
-autodoc_default_options = {
-    'autodoc_default_flags': ['members'],
-    'members': None,
-    'member-order': 'bysource',
-    'special-members': '__init__',
-    'undoc-members': True,
-    'exclude-members': '__weakref__'
-}
-autosummary_generate = True
-autosummary_imported_members = False
+# autodoc_default_options = {
+#     'autodoc_default_flags': ['members'],
+#     'members': None,
+#     'member-order': 'bysource',
+#     'special-members': '__init__',
+#     'undoc-members': True,
+#     'exclude-members': '__weakref__'
+# }
+# autosummary_generate = True
+# autosummary_imported_members = False
+
+description = 'DataHub for geoscientific data in Python.'
 
 # The templates path.
 templates_path = ['_templates']
@@ -95,14 +97,10 @@ todo_include_todos = True
 sphinx_gallery_conf = {
     # path to your examples scripts
     "examples_dirs": [
-        "../../examples/getting_started",
-        "../../examples/tutorials",
-        "../../examples/examples",
+        "../../examples/",
     ],
     # path where to save gallery generated examples
     "gallery_dirs": [
-        'getting_started',
-        'tutorials',
         "examples",
     ],
     # Patter to search for example files
@@ -129,34 +127,31 @@ sphinx_gallery_conf = {
 }
 
 # -- Options for HTML output ----------------------------------------------
-html_theme = 'alabaster'
-
-# html theme options
+html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
-    'github_user': 'softwareunderground',
-    'github_repo': 'subsurface',
-    'github_type': 'star',
-    'logo': './logos/subsurface.png',
-    'logo_name': True,
-    'page_width': '1200px',
-    'fixed_sidebar': False,
-    'show_related': True,
-    'sidebar_collapse': True,
+    'logo_only': True,
+    'display_version': True,
+    'prev_next_buttons_location': 'both',
+}
+html_static_path = ['_static']
+html_logo = '_static/logos/subsurface.png'
+html_favicon = '_static/logos/favicon.ico'
+html_sidebars = {
+    '**': [
+        'about.html',
+        'navigation.html',
+        'searchbox.html',
+    ]
 }
 
-# Custom sidebar templates, maps document names to template names.
-html_sidebars = {'**': ['about.html', 'navigation.html',
-                        'relations.html',
-                        'searchbox.html',
-                        'donate.html', ]}
+html_context = {
+    'menu_links_name': 'Links',
+    'menu_links': [
+        ('<i class="fa fa-github fa-fw"></i> Source Code',
+         'https://github.com/softwareunderground/subsurface'),
+    ],
+}
 
-# Paths
-html_static_path = ['_static']
-html_favicon = '_static/logos/favicon.ico'
-
-
-html_use_modindex = True
-html_file_suffix = '.html'
 htmlhelp_basename = 'subsurface'
 
 # Remove matplotlib agg warnings from generated doc when using plt.show

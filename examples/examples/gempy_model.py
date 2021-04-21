@@ -1,6 +1,6 @@
 """
 Reading Simple GemPy model in Subsurface
-=================================
+========================================
 """
 
 import sys

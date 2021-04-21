@@ -1,31 +1,23 @@
 Maintenance
 ===========
 
-.. todo::
-
-    TODO
-
-
-
 Making a release
 ----------------
 
-- Adding release notes to CHANGELOG.rst.
-- Create a release on GitHub (add the above release notes to it). This will run
-  the tests, and then automatically deploy it to PyPI, from where conda-forge
-  will pick it up as well. If everything works fine it should be available from
-  PyPI within minutes after the tests passed, and within an hour or two from
-  conda-forge.
+1. Add release notes to ``CHANGELOG.rst``.
+2. Create a release on GitHub, add the above release notes to it.
 
+When you create a release on GitHub it will run the tests, and subsequently
+deploy the version to PyPI, from where it will also be picked up to
+conda-forge. If everything works fine it should be available from PyPI within
+minutes after the tests passed, and within an hour or two from conda-forge.
 
-Notes
------
 
 .. note::
 
    **Important.** Due to the use of ``setuptools_scm``, everything is by
-   default added to the wheel on PyPI. Documents that should not be in a
-   release have to be excluded by adding it to the ``MANIFEST.in``.
+   default added to the wheel on PyPI. Files and folders that should not be in
+   a release have to be excluded by adding it to the ``MANIFEST.in``.
 
 
 Type of commits

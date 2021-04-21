@@ -5,6 +5,8 @@
 # FOR DOCUMENTATION
 sphinx
 sphinx_gallery
+sphinx_rtd_theme
+sphinx_automodapi
 
 # FOR TESTING
 pytest
