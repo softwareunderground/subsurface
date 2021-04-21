@@ -4,7 +4,7 @@ name: linux
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ main, mig_dev, main_candidate, t21-main ]
+    branches: [ main, mig_dev, t21-main ]
   pull_request:
     branches: [ main, t21-main ]
   release:
@@ -113,7 +113,7 @@ jobs:
           # Change setuptools-scm local_scheme to "no-local-version" so the
           # local part of the version isn't included, making the version string
           # compatible with Test PyPI.
-          sed --in-place "s/'root'/'local_scheme':'no-local-version','root'/g" setup.py
+          sed --in-place 's/"root"/"local_scheme":"no-local-version","root"/g' setup.py
 
       - name: Build source and wheel distributions
         run: |
