@@ -12,9 +12,10 @@ if not sys.version_info[:2] >= (3, 7):
 
 this_directory = path.abspath(path.dirname(__file__))
 
-readme = path.join(this_directory, "README.md")
+readme = path.join(this_directory, "README.rst")
 with open(readme, "r", encoding="utf-8") as f:
     long_description = f.read()
+long_description = long_description.split('inclusion-marker')[-1]
 
 CLASSIFIERS = [
     "Development Status :: 3 - Alpha",
