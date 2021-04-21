@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>subsurface.visualization.pv_plot &#8212; subsurface 0.2.3 documentation</title>
+    <title>subsurface.visualization.pv_plot &#8212; subsurface 0.1.dev1+g37cf170 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
@@ -41,18 +41,18 @@
 <h1>subsurface.visualization.pv_plot<a class="headerlink" href="#subsurface-visualization-pv-plot" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="subsurface.visualization.pv_plot">
-<code class="sig-prename descclassname"><span class="pre">subsurface.visualization.</span></code><code class="sig-name descname"><span class="pre">pv_plot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meshes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_2d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter_kwargs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_mesh_kwargs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/visualization/to_pyvista.html#pv_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.visualization.pv_plot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">subsurface.visualization.</span></code><code class="sig-name descname"><span class="pre">pv_plot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meshes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_2d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter_kwargs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_mesh_kwargs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/visualization/to_pyvista.html#pv_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.visualization.pv_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to plot meshes in vtk using pyvista</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>meshes</strong> (<em>List</em><em>[</em><em>pv.PolyData</em><em>]</em>) – </p></li>
-<li><p><strong>image_2d</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True convert plot to matplotlib imshow. This helps for visualizing
+<li><p><strong>image_2d</strong> (<em>bool</em>) – If True convert plot to matplotlib imshow. This helps for visualizing
 the plot in IDEs</p></li>
-<li><p><strong>ve</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – vertical exaggeration</p></li>
-<li><p><strong>plotter_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – pyvista.Plotter kwargs</p></li>
-<li><p><strong>add_mesh_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – pyvista.add_mesh kwargs</p></li>
-<li><p><strong>background_plotter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – if true and pyvistaqt installed use pyvista
+<li><p><strong>ve</strong> (<em>float</em>) – vertical exaggeration</p></li>
+<li><p><strong>plotter_kwargs</strong> (<em>dict</em>) – pyvista.Plotter kwargs</p></li>
+<li><p><strong>add_mesh_kwargs</strong> (<em>dict</em>) – pyvista.add_mesh kwargs</p></li>
+<li><p><strong>background_plotter</strong> (<em>bool</em>) – if true and pyvistaqt installed use pyvista
 backgroung plotter.</p></li>
 </ul>
 </dd>
@@ -106,22 +106,11 @@ backgroung plotter.</p></li>
 
 
 
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/softwareunderground/subsurface">
-    <img
-        alt="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
-        src="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
-    />
-</a>
-</p>
-
-
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to <cite>subsurface</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance.html">Maintenance</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Getting started</span></p>
 <ul>
@@ -178,7 +167,7 @@ backgroung plotter.</p></li>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019-2021, The subsurface developers.
+      &copy;2019-2021, The softwareunderground community.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>

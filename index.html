@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About &#8212; subsurface 0.2.3 documentation</title>
+    <title>subsurface Documentation &#8212; subsurface 0.1.dev1+g37cf170 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
@@ -36,21 +36,97 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="about">
-<h1>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="datahub-for-geoscientific-data-in-python">
-<h2>DataHub for geoscientific data in Python.<a class="headerlink" href="#datahub-for-geoscientific-data-in-python" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="overview">
-<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
-<p>The goal of this project is to support other subsurface geoscience and
-engineering projects with a set of classes for common subsurface data entities,
-such as seismic and GPR datasets, log curves</p>
+  <div class="section" id="subsurface-documentation">
+<span id="subsurface-manual"></span><h1>subsurface Documentation<a class="headerlink" href="#subsurface-documentation" title="Permalink to this headline">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Release</dt>
+<dd class="field-odd"><p>0.1.dev1+g37cf170</p>
+</dd>
+<dt class="field-even">Date</dt>
+<dd class="field-even"><p>21 April 2021</p>
+</dd>
+<dt class="field-odd">Source</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/softwareunderground/subsurface">github.com/softwareunderground/subsurface</a></p>
+</dd>
+</dl>
+<hr class="docutils" />
+<div class="section" id="subsurface">
+<h2>subsurface<a class="headerlink" href="#subsurface" title="Permalink to this headline">¶</a></h2>
+<p>DataHub for geoscientific data in Python. Two main purposes:</p>
+<ul class="simple">
+<li><p>Unify geometric data into data objects (using numpy arrays as memory representation) that all the packages of the stack understand</p></li>
+<li><dl class="simple">
+<dt>Basic interactions with those data objects:</dt><dd><ul>
+<li><p>Write/Read</p></li>
+<li><p>Categorized/Meta data</p></li>
+<li><p>Visualization</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="section" id="data-levels">
+<h3>Data Levels<a class="headerlink" href="#data-levels" title="Permalink to this headline">¶</a></h3>
+<p>The difference between data levels is <strong>not</strong> which data they store but which data they <strong>parse and understand</strong>. The rationale for this is to be able to pass along any object while keeping the I/O in subsurface:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>             HUMAN
+
+\‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾/\
+ \= = = = = = = = = = = = = = /. \     -&gt; Additional context/meta information about the data
+  \= = = = geo_format= = = = /. . \
+   \= = = = = = = = = = = = /. . . \   -&gt; Elements that represent some
+    \= = = geo_object= = = /. . . . \     geological concept. E.g: faults, seismic
+     \= = = = = = = = = = /. . . . ./
+      \= = element = = = /. . . . /    -&gt; type of geometric object: PointSet,
+       \= = = = = = = = /. . . ./         TriSurf, LineSet, Tetramesh
+        \primary_struct/. . . /        -&gt; Set of arrays that define a geometric object:
+         \= = = = = = /. . ./             e.g. *StructuredData*, *UnstructuredData*
+          \DF/Xarray /. . /            -&gt; Label numpy.arrays
+           \= = = = /. ./
+            \array /. /                -&gt; Memory allocation
+             \= = /./
+              \= //
+               \/
+
+            COMPUTER
+</pre></div>
+</div>
+</div>
+<div class="section" id="documentation-wip">
+<h3>Documentation (WIP)<a class="headerlink" href="#documentation-wip" title="Permalink to this headline">¶</a></h3>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">subsurface</span></code> is still in early days; do expect things to change. We
+welcome contributions very much, please get in touch if you would like to add
+support for subsurface in your package.</p>
+<p>An early version of the documentation can be found here:</p>
+<p><a class="reference external" href="https://softwareunderground.github.io/subsurface/">https://softwareunderground.github.io/subsurface/</a></p>
+<p>Direct links:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://softwareunderground.github.io/subsurface/maintenance.html">Developers-guide</a></p></li>
+<li><p><a class="reference external" href="https://softwareunderground.github.io/subsurface/changelog.html">Changelog</a></p></li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install subsurface</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">conda install -c conda-forge subsurface</span>
+</pre></div>
+</div>
+<p>Be aware that to read different formats you will need to manually install the
+specific dependency (e.g. <code class="docutils literal notranslate"><span class="pre">welly</span></code> to read well data).</p>
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">About</a></li>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to <cite>subsurface</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintenance.html">Maintenance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#making-a-release">Making a release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#notes">Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#type-of-commits">Type of commits</a></li>
 </ul>
 </li>
 </ul>
@@ -84,13 +160,13 @@ such as seismic and GPR datasets, log curves</p>
 <h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
-</div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+</div>
 </div>
 
 
@@ -123,22 +199,11 @@ such as seismic and GPR datasets, log curves</p>
 
 
 
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/softwareunderground/subsurface">
-    <img
-        alt="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
-        src="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
-    />
-</a>
-</p>
-
-
 <h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">About</a></li>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to <cite>subsurface</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintenance.html">Maintenance</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Getting started</span></p>
 <ul>
@@ -182,7 +247,7 @@ such as seismic and GPR datasets, log curves</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019-2021, The subsurface developers.
+      &copy;2019-2021, The softwareunderground community.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>

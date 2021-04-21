@@ -5,8 +5,8 @@
 
 Computation times
 =================
-**00:01.951** total execution time for **tutorials** files:
+**00:01.852** total execution time for **tutorials** files:
 
 +---------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_tutorials_reading_well_data.py` (``reading_well_data.py``) | 00:01.951 | 0.0 MB |
+| :ref:`sphx_glr_tutorials_reading_well_data.py` (``reading_well_data.py``) | 00:01.852 | 0.0 MB |
 +---------------------------------------------------------------------------+-----------+--------+

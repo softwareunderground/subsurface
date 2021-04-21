@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>subsurface.StructuredData &#8212; subsurface 0.2.3 documentation</title>
+    <title>subsurface.StructuredData &#8212; subsurface 0.1.dev1+g37cf170 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
@@ -41,7 +41,7 @@
 <h1>subsurface.StructuredData<a class="headerlink" href="#subsurface-structureddata" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="subsurface.StructuredData">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">subsurface.</span></code><code class="sig-name descname"><span class="pre">StructuredData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">xarray.core.dataset.Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_array_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'data_array'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures/structured_data.html#StructuredData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.StructuredData" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">subsurface.</span></code><code class="sig-name descname"><span class="pre">StructuredData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">xarray.core.dataset.Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_array_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'data_array'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/structs/base_structures/structured_data.html#StructuredData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.StructuredData" title="Permalink to this definition">¶</a></dt>
 <dd><p class="rubric">Examples using StructuredData</p>
 <div class="sphx-glr-thumbcontainer" tooltip="Getting started"><div class="figure align-default" id="id1">
 <img alt="Getting started" src="../_images/sphx_glr_getting_started_thumb.png" />
@@ -95,7 +95,7 @@
 </table>
 <dl class="py attribute">
 <dt id="subsurface.StructuredData.data_array_name">
-<code class="sig-name descname"><span class="pre">data_array_name</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">'data_array'</span></em><a class="headerlink" href="#subsurface.StructuredData.data_array_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">data_array_name</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'data_array'</span></em><a class="headerlink" href="#subsurface.StructuredData.data_array_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Primary structure definition for structured data</p>
 <blockquote>
 <div><dl class="simple">
@@ -111,7 +111,7 @@ structured data, i.e. data that can be stored in multidimensional
 numpy array. The preferred type to pass as data is directly a
 xr.Dataset to be sure all the attributes are set and named as the user
 wants.</p></li>
-<li><p><strong>data_array_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – If data is a numpy array or xarray DataArray, data_name
+<li><p><strong>data_array_name</strong> (<em>str</em>) – If data is a numpy array or xarray DataArray, data_name
 provides the name for the xarray data variable</p></li>
 </ul>
 </dd>
@@ -162,22 +162,11 @@ provides the name for the xarray data variable</p></li>
 
 
 
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/softwareunderground/subsurface">
-    <img
-        alt="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
-        src="https://secure.travis-ci.org/softwareunderground/subsurface.svg?branch=master"
-    />
-</a>
-</p>
-
-
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to <cite>subsurface</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance.html">Maintenance</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Getting started</span></p>
 <ul>
@@ -234,7 +223,7 @@ provides the name for the xarray data variable</p></li>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019-2021, The subsurface developers.
+      &copy;2019-2021, The softwareunderground community.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>

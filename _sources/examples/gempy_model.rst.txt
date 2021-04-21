@@ -23,7 +23,7 @@ Reading Simple GemPy model in Subsurface
 
 .. GENERATED FROM PYTHON SOURCE LINES 5-13
 
-.. code-block:: python3
+.. code-block:: default
 
 
     import sys
@@ -47,7 +47,7 @@ Single surface
 
 .. GENERATED FROM PYTHON SOURCE LINES 16-25
 
-.. code-block:: python3
+.. code-block:: default
 
 
     # Pull gempy model
@@ -67,7 +67,7 @@ Single surface
 
 .. GENERATED FROM PYTHON SOURCE LINES 26-29
 
-.. code-block:: python3
+.. code-block:: default
 
     fname, = [i for i in model_files if "meshes.nc" in i]
     dataset = ss.reader.read_netcdf.read_unstruct(fname)
@@ -90,7 +90,7 @@ Single surface
 
 .. GENERATED FROM PYTHON SOURCE LINES 30-37
 
-.. code-block:: python3
+.. code-block:: default
 
     obj = ss.TriSurf(dataset)
     print(obj.mesh.points_attributes_to_dict)
@@ -115,7 +115,7 @@ Single surface
 
     {}
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f79d77fb0d0>
+    <pyvista.plotting.plotting.Plotter object at 0x7fc2f8354a00>
 
 
 
@@ -126,7 +126,7 @@ Four Layers
 
 .. GENERATED FROM PYTHON SOURCE LINES 40-48
 
-.. code-block:: python3
+.. code-block:: default
 
 
     # Pull gempy model
@@ -150,7 +150,7 @@ Triangular meshes
 
 .. GENERATED FROM PYTHON SOURCE LINES 53-59
 
-.. code-block:: python3
+.. code-block:: default
 
     fname, = [i for i in model_files_2 if "meshes.nc" in i]
     gempy_tri_mesh_unstruct =  ss.reader.read_netcdf.read_unstruct(fname)
@@ -173,7 +173,7 @@ Triangular meshes
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f79d67f7d60>
+    <pyvista.plotting.plotting.Plotter object at 0x7fc2f5643e50>
 
 
 
@@ -184,7 +184,7 @@ Regular grid
 
 .. GENERATED FROM PYTHON SOURCE LINES 62-67
 
-.. code-block:: python3
+.. code-block:: default
 
 
     fname, = [i for i in model_files_2 if "regular_grid.nc" in i]
@@ -200,7 +200,7 @@ Regular grid
 
 .. GENERATED FROM PYTHON SOURCE LINES 68-78
 
-.. code-block:: python3
+.. code-block:: default
 
     pyvista_mesh = ss.visualization.to_pyvista_grid(regular_grid,
                                                     data_set_name='property_matrix',
@@ -227,13 +227,13 @@ Regular grid
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f79d67f79a0>
+    <pyvista.plotting.plotting.Plotter object at 0x7fc2f5643910>
 
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 79-86
 
-.. code-block:: python3
+.. code-block:: default
 
 
     pyvista_mesh = ss.visualization.to_pyvista_grid(regular_grid,
@@ -257,14 +257,14 @@ Regular grid
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f79d77f7ee0>
+    <pyvista.plotting.plotting.Plotter object at 0x7fc2f881b970>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.159 seconds)
+   **Total running time of the script:** ( 0 minutes  4.456 seconds)
 
 
 .. _sphx_glr_download_examples_gempy_model.py:
