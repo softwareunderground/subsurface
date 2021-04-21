@@ -1,0 +1,6 @@
+welly_to_subsurface
+===================
+
+.. currentmodule:: subsurface.reader.wells.welly_reader
+
+.. autofunction:: welly_to_subsurface

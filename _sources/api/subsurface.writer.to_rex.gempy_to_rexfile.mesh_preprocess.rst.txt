@@ -1,0 +1,6 @@
+mesh_preprocess
+===============
+
+.. currentmodule:: subsurface.writer.to_rex.gempy_to_rexfile
+
+.. autofunction:: mesh_preprocess

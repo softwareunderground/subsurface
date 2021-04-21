@@ -1,0 +1,6 @@
+write_rex_file
+==============
+
+.. currentmodule:: subsurface.writer.to_rex.to_rex
+
+.. autofunction:: write_rex_file

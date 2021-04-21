@@ -1,0 +1,6 @@
+mesh_csv_to_cells
+=================
+
+.. currentmodule:: subsurface.reader.mesh.surface_reader
+
+.. autofunction:: mesh_csv_to_cells

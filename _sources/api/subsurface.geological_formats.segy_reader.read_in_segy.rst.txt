@@ -1,0 +1,6 @@
+read_in_segy
+============
+
+.. currentmodule:: subsurface.geological_formats.segy_reader
+
+.. autofunction:: read_in_segy

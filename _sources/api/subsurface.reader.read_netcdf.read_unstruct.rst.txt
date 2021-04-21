@@ -1,0 +1,6 @@
+read_unstruct
+=============
+
+.. currentmodule:: subsurface.reader.read_netcdf
+
+.. autofunction:: read_unstruct

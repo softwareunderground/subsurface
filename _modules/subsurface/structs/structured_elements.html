@@ -1,39 +1,200 @@
 
+
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>subsurface.structs.structured_elements &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>subsurface.structs.structured_elements &#8212; subsurface 0.1.dev1+g7db7eab documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/doctools.js"></script>
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>subsurface.structs.structured_elements</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for subsurface.structs.structured_elements</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;For regularly gridded datasets like rasters and tensor meshes.</span>
@@ -44,24 +205,27 @@
 <span class="kn">from</span> <span class="nn">.base_structures</span> <span class="kn">import</span> <span class="n">StructuredData</span>
 
 
-<span class="k">class</span> <span class="nc">OctreeMesh</span><span class="p">:</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;OctreeMesh&#39;</span><span class="p">,</span> <span class="s1">&#39;StructuredSurface&#39;</span><span class="p">,</span> <span class="s1">&#39;StructuredGrid&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="OctreeMesh"><a class="viewcode-back" href="../../../api/subsurface.structs.structured_elements.OctreeMesh.html#subsurface.structs.structured_elements.OctreeMesh">[docs]</a><span class="k">class</span> <span class="nc">OctreeMesh</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TODO: implement as Dom discussed with data frames to track the levels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">StructuredData</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
-<div class="viewcode-block" id="StructuredSurface"><a class="viewcode-back" href="../../../Structured%20Elements/subsurface.StructuredSurface.html#subsurface.StructuredSurface">[docs]</a><span class="k">class</span> <span class="nc">StructuredSurface</span><span class="p">:</span>
-<div class="viewcode-block" id="StructuredSurface.__init__"><a class="viewcode-back" href="../../../Structured%20Elements/subsurface.StructuredSurface.html#subsurface.StructuredSurface.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structured_data</span><span class="p">:</span> <span class="n">StructuredData</span><span class="p">):</span>
+<div class="viewcode-block" id="StructuredSurface"><a class="viewcode-back" href="../../../api/subsurface.structs.structured_elements.StructuredSurface.html#subsurface.structs.structured_elements.StructuredSurface">[docs]</a><span class="k">class</span> <span class="nc">StructuredSurface</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structured_data</span><span class="p">:</span> <span class="n">StructuredData</span><span class="p">):</span>
         <span class="c1"># TODO check structured_data has two coordinates</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ds</span> <span class="o">=</span> <span class="n">structured_data</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds</span> <span class="o">=</span> <span class="n">structured_data</span></div>
 
     <span class="c1"># Add pyvista methods of gridded data</span>
 
 
-<div class="viewcode-block" id="StructuredGrid"><a class="viewcode-back" href="../../../Structured%20Elements/subsurface.StructuredGrid.html#subsurface.StructuredGrid">[docs]</a><span class="k">class</span> <span class="nc">StructuredGrid</span><span class="p">:</span>
+<div class="viewcode-block" id="StructuredGrid"><a class="viewcode-back" href="../../../api/subsurface.structs.structured_elements.StructuredGrid.html#subsurface.structs.structured_elements.StructuredGrid">[docs]</a><span class="k">class</span> <span class="nc">StructuredGrid</span><span class="p">:</span>
     <span class="c1"># TODO check structured_data has three coordinates</span>
     <span class="sd">&quot;&quot;&quot;Container for curvilinear mesh grids.</span>
 
@@ -70,8 +234,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="StructuredGrid.__init__"><a class="viewcode-back" href="../../../Structured%20Elements/subsurface.StructuredGrid.html#subsurface.StructuredGrid.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structured_data</span><span class="p">:</span> <span class="n">StructuredData</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ds</span> <span class="o">=</span> <span class="n">structured_data</span></div>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structured_data</span><span class="p">:</span> <span class="n">StructuredData</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds</span> <span class="o">=</span> <span class="n">structured_data</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">cartesian_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -92,7 +256,7 @@
         <span class="n">grid_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">cart_coord</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">grid_3d</span>
 
-<div class="viewcode-block" id="StructuredGrid.meshgrid_2d"><a class="viewcode-back" href="../../../Structured%20Elements/subsurface.StructuredGrid.html#subsurface.StructuredGrid.meshgrid_2d">[docs]</a>    <span class="k">def</span> <span class="nf">meshgrid_2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name_coord_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="StructuredGrid.meshgrid_2d"><a class="viewcode-back" href="../../../api/subsurface.structs.structured_elements.StructuredGrid.html#subsurface.structs.structured_elements.StructuredGrid.meshgrid_2d">[docs]</a>    <span class="k">def</span> <span class="nf">meshgrid_2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name_coord_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Args:</span>
@@ -113,94 +277,47 @@
         <span class="k">return</span> <span class="n">grid_2d</span></div></div>
 </pre></div>
 
+           </div>
+           
           </div>
-          
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<p class="logo">
-  <a href="../../../index.html">
-    <img class="logo" src="../../../_static/./logos/subsurface.png" alt="Logo"/>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-    <h1 class="logo logo-name">subsurface</h1>
-    
-  </a>
-</p>
+   
 
-
-
-
-
-
-<p>
-<iframe src="https://ghbtns.com/github-btn.html?user=softwareunderground&repo=subsurface&type=star&count=true&size=large&v=2"
-  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
-</p>
-
-
-
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to <cite>subsurface</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../maintenance.html">Maintenance</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Getting started</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
-</ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Code</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../../index.html">Documentation overview</a><ul>
-  <li><a href="../../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2019-2021, The softwareunderground community.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-    </div>
-
-    
-
-    
-  </body>
+</body>
 </html>

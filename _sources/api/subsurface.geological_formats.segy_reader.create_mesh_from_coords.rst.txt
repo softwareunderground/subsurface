@@ -1,0 +1,6 @@
+create_mesh_from_coords
+=======================
+
+.. currentmodule:: subsurface.geological_formats.segy_reader
+
+.. autofunction:: create_mesh_from_coords

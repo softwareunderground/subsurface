@@ -1,0 +1,6 @@
+write_mesh_header
+=================
+
+.. currentmodule:: subsurface.writer.to_rex.mesh_encoder
+
+.. autofunction:: write_mesh_header

@@ -1,0 +1,6 @@
+write_data_block_header
+=======================
+
+.. currentmodule:: subsurface.writer.to_rex.gempy_to_rexfile
+
+.. autofunction:: write_data_block_header

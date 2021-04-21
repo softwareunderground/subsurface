@@ -1,0 +1,37 @@
+WellyToSubsurfaceHelper
+=======================
+
+.. currentmodule:: subsurface.reader.wells.pandas_to_welly
+
+.. autoclass:: WellyToSubsurfaceHelper
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~WellyToSubsurfaceHelper.lith_component_table
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~WellyToSubsurfaceHelper.add_assays
+      ~WellyToSubsurfaceHelper.add_collar
+      ~WellyToSubsurfaceHelper.add_datum
+      ~WellyToSubsurfaceHelper.add_deviation
+      ~WellyToSubsurfaceHelper.add_striplog
+      ~WellyToSubsurfaceHelper.add_wells
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: lith_component_table
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: add_assays
+   .. automethod:: add_collar
+   .. automethod:: add_datum
+   .. automethod:: add_deviation
+   .. automethod:: add_striplog
+   .. automethod:: add_wells

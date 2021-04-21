@@ -1,0 +1,6 @@
+write_material_data
+===================
+
+.. currentmodule:: subsurface.writer.to_rex.material_encoder
+
+.. autofunction:: write_material_data

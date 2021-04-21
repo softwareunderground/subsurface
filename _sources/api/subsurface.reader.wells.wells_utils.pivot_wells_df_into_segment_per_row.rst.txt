@@ -1,0 +1,6 @@
+pivot_wells_df_into_segment_per_row
+===================================
+
+.. currentmodule:: subsurface.reader.wells.wells_utils
+
+.. autofunction:: pivot_wells_df_into_segment_per_row

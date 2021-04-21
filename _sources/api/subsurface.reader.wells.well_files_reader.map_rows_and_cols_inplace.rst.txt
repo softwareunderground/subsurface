@@ -1,0 +1,6 @@
+map_rows_and_cols_inplace
+=========================
+
+.. currentmodule:: subsurface.reader.wells.well_files_reader
+
+.. autofunction:: map_rows_and_cols_inplace

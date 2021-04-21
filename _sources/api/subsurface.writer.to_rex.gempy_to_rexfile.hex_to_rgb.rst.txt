@@ -1,0 +1,6 @@
+hex_to_rgb
+==========
+
+.. currentmodule:: subsurface.writer.to_rex.gempy_to_rexfile
+
+.. autofunction:: hex_to_rgb

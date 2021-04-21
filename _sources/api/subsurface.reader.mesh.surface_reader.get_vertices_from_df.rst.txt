@@ -1,0 +1,6 @@
+get_vertices_from_df
+====================
+
+.. currentmodule:: subsurface.reader.mesh.surface_reader
+
+.. autofunction:: get_vertices_from_df

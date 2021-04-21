@@ -1,0 +1,6 @@
+to_netcdf
+=========
+
+.. currentmodule:: subsurface.structs.base_structures.common_data_utils
+
+.. autofunction:: to_netcdf

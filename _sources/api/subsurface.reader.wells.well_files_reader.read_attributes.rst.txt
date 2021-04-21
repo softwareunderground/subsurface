@@ -1,0 +1,6 @@
+read_attributes
+===============
+
+.. currentmodule:: subsurface.reader.wells.well_files_reader
+
+.. autofunction:: read_attributes

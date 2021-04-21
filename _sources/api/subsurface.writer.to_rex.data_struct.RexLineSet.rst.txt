@@ -1,0 +1,7 @@
+RexLineSet
+==========
+
+.. currentmodule:: subsurface.writer.to_rex.data_struct
+
+.. autoclass:: RexLineSet
+   :show-inheritance:

@@ -1,0 +1,31 @@
+GemPyToRex
+==========
+
+.. currentmodule:: subsurface.writer.to_rex.gempy_to_rexfile
+
+.. autoclass:: GemPyToRex
+   :show-inheritance:
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~GemPyToRex.__call__
+      ~GemPyToRex.default_values
+      ~GemPyToRex.gempy_color_to_rex_material
+      ~GemPyToRex.gempy_meshes_to_rex
+      ~GemPyToRex.grab_meshes
+      ~GemPyToRex.grab_topography
+      ~GemPyToRex.hex_to_rgb
+      ~GemPyToRex.mesh_prepare_and_encode
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: __call__
+   .. automethod:: default_values
+   .. automethod:: gempy_color_to_rex_material
+   .. automethod:: gempy_meshes_to_rex
+   .. automethod:: grab_meshes
+   .. automethod:: grab_topography
+   .. automethod:: hex_to_rgb
+   .. automethod:: mesh_prepare_and_encode

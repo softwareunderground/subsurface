@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>subsurface.writer.to_rex.common &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>subsurface.writer.to_rex.common</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for subsurface.writer.to_rex.common</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;write_data_block_header&#39;</span><span class="p">,</span> <span class="s1">&#39;encode&#39;</span><span class="p">]</span>
+
+<span class="n">rexFileHeaderSize</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">rexCoordSize</span> <span class="o">=</span> <span class="mi">22</span>
+
+<span class="n">file_header_size</span> <span class="o">=</span> <span class="mi">86</span>
+<span class="n">rexDataBlockHeaderSize</span> <span class="o">=</span> <span class="mi">16</span>
+
+<span class="n">file_header_and_data_header</span> <span class="o">=</span> <span class="mi">102</span>
+<span class="n">mesh_header_size</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">all_header_size</span> <span class="o">=</span> <span class="mi">230</span>
+
+<span class="c1"># Supported block types</span>
+<span class="c1"># typeLineSet = 0</span>
+<span class="c1"># typeText = 1</span>
+<span class="c1"># typePointList = 2</span>
+<span class="n">typeMesh</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="c1"># typeImage = 4</span>
+<span class="c1"># typeMaterial = 5</span>
+<span class="c1"># typePeopleSimulation = 6</span>
+<span class="c1"># typeUnityPackage = 7</span>
+<span class="c1"># typeSceneNode = 8</span>
+
+
+<span class="n">n_bytes</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<div class="viewcode-block" id="write_data_block_header"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.common.write_data_block_header.html#subsurface.writer.to_rex.common.write_data_block_header">[docs]</a><span class="k">def</span> <span class="nf">write_data_block_header</span><span class="p">(</span><span class="n">size_data</span><span class="p">,</span> <span class="n">data_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">version_data</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function to write a DATA BLOCK header.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        size_data: data block size (without header)</span>
+<span class="sd">        data_id: id which is used in the database</span>
+<span class="sd">        data_type (int): Type of data the data block contains:</span>
+<span class="sd">            * 0	LineSet	A list of vertices which get connected by line segments</span>
+<span class="sd">            * 1	Text	A position information and the actual text</span>
+<span class="sd">            * 2	PointList	A list of 3D points with color information (e.g. point cloud)</span>
+<span class="sd">            * 3	Mesh	A triangle mesh datastructure️</span>
+<span class="sd">            * 4	Image	A single of arbitrary format can be stored in this block</span>
+<span class="sd">            * 5	MaterialStandard	A standard (mesh) material definition</span>
+<span class="sd">            * 6	SceneNode	A wrapper around a data block which can be used in the scenegraph</span>
+<span class="sd">            * 7	Track	A track is a tracked position and orientation of an AR device</span>
+<span class="sd">        version_data: version for this data block</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">input_</span> <span class="o">=</span> <span class="p">[(</span><span class="n">data_type</span><span class="p">,</span> <span class="s1">&#39;uint16&#39;</span><span class="p">),</span>  <span class="c1"># data type</span>
+              <span class="p">(</span><span class="n">version_data</span><span class="p">,</span> <span class="s1">&#39;uint16&#39;</span><span class="p">),</span>  <span class="c1"># version for this data block</span>
+              <span class="p">(</span><span class="n">size_data</span><span class="p">,</span> <span class="s1">&#39;uint32&#39;</span><span class="p">),</span>  <span class="c1"># data block size (without header)</span>
+              <span class="p">(</span><span class="n">data_id</span><span class="p">,</span> <span class="s1">&#39;uint64&#39;</span><span class="p">)]</span>  <span class="c1"># id which is used in the database</span>
+
+    <span class="n">block_bytes</span> <span class="o">=</span> <span class="n">encode</span><span class="p">(</span><span class="n">input_</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">block_bytes</span></div>
+
+
+<div class="viewcode-block" id="encode"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.common.encode.html#subsurface.writer.to_rex.common.encode">[docs]</a><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">input_</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Encode python objects - normally Python primitives or numpy arrays - into</span>
+<span class="sd">    its correspondent byte representation</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        input_ (List[tuples]): List of tuples: (object, type)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        byte: Array of bytes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">n_bytes</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">input_</span><span class="p">:</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+        <span class="n">n_bytes</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+        <span class="n">block</span> <span class="o">+=</span> <span class="n">arr</span>
+
+    <span class="k">return</span> <span class="n">block</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

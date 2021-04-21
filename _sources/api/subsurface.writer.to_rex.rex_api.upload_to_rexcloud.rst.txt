@@ -1,0 +1,6 @@
+upload_to_rexcloud
+==================
+
+.. currentmodule:: subsurface.writer.to_rex.rex_api
+
+.. autofunction:: upload_to_rexcloud

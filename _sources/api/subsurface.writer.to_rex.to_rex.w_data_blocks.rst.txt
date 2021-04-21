@@ -1,0 +1,6 @@
+w_data_blocks
+=============
+
+.. currentmodule:: subsurface.writer.to_rex.to_rex
+
+.. autofunction:: w_data_blocks

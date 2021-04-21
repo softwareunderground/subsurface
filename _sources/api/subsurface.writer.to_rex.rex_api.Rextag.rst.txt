@@ -1,0 +1,21 @@
+Rextag
+======
+
+.. currentmodule:: subsurface.writer.to_rex.rex_api
+
+.. autoclass:: Rextag
+   :show-inheritance:
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~Rextag.create_rextag
+      ~Rextag.display_tag
+      ~Rextag.save_svg
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: create_rextag
+   .. automethod:: display_tag
+   .. automethod:: save_svg

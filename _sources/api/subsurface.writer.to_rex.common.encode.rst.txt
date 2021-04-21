@@ -1,0 +1,6 @@
+encode
+======
+
+.. currentmodule:: subsurface.writer.to_rex.common
+
+.. autofunction:: encode

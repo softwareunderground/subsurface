@@ -1,0 +1,427 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>subsurface.reader.wells.pandas_to_welly &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>subsurface.reader.wells.pandas_to_welly</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for subsurface.reader.wells.pandas_to_welly</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">welly</span> <span class="kn">import</span> <span class="n">Well</span><span class="p">,</span> <span class="n">Location</span><span class="p">,</span> <span class="n">Project</span><span class="p">,</span> <span class="n">Curve</span>
+    <span class="kn">from</span> <span class="nn">striplog</span> <span class="kn">import</span> <span class="n">Striplog</span><span class="p">,</span> <span class="n">Component</span>
+
+    <span class="n">welly_imported</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">welly_imported</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WellyToSubsurfaceHelper&#39;</span><span class="p">,</span> <span class="p">]</span>
+
+
+<div class="viewcode-block" id="WellyToSubsurfaceHelper"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.html#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper">[docs]</a><span class="k">class</span> <span class="nc">WellyToSubsurfaceHelper</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">collar_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">survey_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">lith_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">attrib_dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Class that wraps `welly` to read borehole data - las files (upcoming)</span>
+<span class="sd">         and deviations, csv, excel - and converts it into a</span>
+<span class="sd">         `subsurface.UnstructuredData`</span>
+
+<span class="sd">        This class is only meant to be extended with all the necessary functionality</span>
+<span class="sd">         to load borehole data. For extensive manipulations of the data</span>
+<span class="sd">         it should be done in `welly` itself.</span>
+
+<span class="sd">        A borehole has:</span>
+
+<span class="sd">            -  Datum (XYZ location)</span>
+
+<span class="sd">            -  Deviation</span>
+
+<span class="sd">            - Lithology: For this we are going to need striplog</span>
+
+<span class="sd">            - Logs</span>
+
+<span class="sd">        Everything would be a LineSet with a bunch of properties</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">welly_imported</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">&#39;You need to install welly to read well data.&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">Project</span><span class="p">([])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_well_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unique_formations</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">collar_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_datum</span><span class="p">(</span><span class="n">collar_df</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">survey_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_deviation</span><span class="p">(</span><span class="n">survey_df</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lith_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="bp">self</span><span class="o">.</span><span class="n">add_striplog</span><span class="p">(</span><span class="n">lith_df</span><span class="p">)</span>
+
+        <span class="c1"># First check if is just a path or list</span>
+        <span class="k">if</span> <span class="n">attrib_dfs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">e</span><span class="p">,</span> <span class="n">attrib</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">attrib_dfs</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_assays</span><span class="p">(</span><span class="n">attrib</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="s1">&#39;basis&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lith_component_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Component</span><span class="p">({</span><span class="s1">&#39;lith&#39;</span><span class="p">:</span> <span class="n">l</span><span class="p">})</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_formations</span><span class="p">]</span>
+
+    <span class="nd">@lith_component_table</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">lith_component_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unique_formations</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unique_formations</span> <span class="o">=</span> <span class="n">unique_formations</span>
+
+<div class="viewcode-block" id="WellyToSubsurfaceHelper.add_wells"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.html#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_wells">[docs]</a>    <span class="k">def</span> <span class="nf">add_wells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">well_names</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">):</span>
+        <span class="n">new_boreholes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_well_names</span><span class="o">.</span><span class="n">symmetric_difference</span><span class="p">(</span><span class="n">well_names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_well_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_well_names</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">well_names</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">new_boreholes</span><span class="p">:</span>
+            <span class="c1"># TODO: Name and uwi should be different</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">Well</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;uwi&#39;</span><span class="p">:</span> <span class="n">b</span><span class="p">}})</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">Location</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;kb&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">+=</span> <span class="n">w</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span></div>
+
+<div class="viewcode-block" id="WellyToSubsurfaceHelper.add_datum"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.html#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_datum">[docs]</a>    <span class="k">def</span> <span class="nf">add_datum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">unique_borehole</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_wells</span><span class="p">(</span><span class="n">unique_borehole</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">unique_borehole</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">get_well</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+            <span class="n">datum</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="n">b</span><span class="p">]]</span>
+            <span class="k">assert</span> <span class="n">datum</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;datum must be XYZ coord&#39;</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">datum</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span></div>
+
+<div class="viewcode-block" id="WellyToSubsurfaceHelper.add_collar"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.html#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_collar">[docs]</a>    <span class="k">def</span> <span class="nf">add_collar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alias for add_datum&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_datum</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WellyToSubsurfaceHelper.add_striplog"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.html#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_striplog">[docs]</a>    <span class="k">def</span> <span class="nf">add_striplog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">unique_borehole</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_wells</span><span class="p">(</span><span class="n">unique_borehole</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lith_component_table</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;component lith&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+        <span class="n">missed_borehole</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">unique_borehole</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">get_well</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+            <span class="n">data_dict</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="n">b</span><span class="p">]]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">)</span>
+
+            <span class="n">s</span> <span class="o">=</span> <span class="n">Striplog</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data_dict</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">n_basis</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">md</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                <span class="n">n_basis</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_basis_parameters</span><span class="p">(</span>
+                    <span class="n">w</span><span class="p">,</span>
+                    <span class="n">n_basis</span><span class="p">)</span>
+                <span class="n">s_log</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">table</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">to_log</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span>
+                                               <span class="n">return_meta</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;lith&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;lith_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Curve</span><span class="p">(</span><span class="n">s_log</span><span class="p">,</span> <span class="n">basis</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                <span class="n">missed_borehole</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The following striplog failed being processed: &#39;</span><span class="p">,</span> <span class="n">missed_borehole</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span></div>
+
+<div class="viewcode-block" id="WellyToSubsurfaceHelper.add_assays"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.html#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_assays">[docs]</a>    <span class="k">def</span> <span class="nf">add_assays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">basis</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">]):</span>
+        <span class="n">unique_borehole</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_wells</span><span class="p">(</span><span class="n">unique_borehole</span><span class="p">)</span>
+        <span class="n">assay_attributes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">assay_attributes</span> <span class="o">=</span> <span class="n">assay_attributes</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span>
+            <span class="n">basis</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">basis</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span> <span class="o">==</span> <span class="n">Iterable</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;basis must be either a string with the column name&#39;</span>
+                                 <span class="s1">&#39;or a array like object&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">unique_borehole</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">assay_attributes</span><span class="p">:</span>
+                <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">get_well</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">Curve</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">basis</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_calculate_basis_parameters</span><span class="p">(</span><span class="n">well</span><span class="p">,</span> <span class="n">n_points</span><span class="p">):</span>
+
+        <span class="n">max_</span> <span class="o">=</span> <span class="n">well</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">md</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">min_</span> <span class="o">=</span> <span class="n">well</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">md</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">step_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_</span> <span class="o">-</span> <span class="n">min_</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_points</span>
+        <span class="k">return</span> <span class="n">min_</span> <span class="o">+</span> <span class="n">step_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">max_</span> <span class="o">-</span> <span class="n">step_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">step_size</span> <span class="o">+</span> <span class="mf">1e-12</span>
+
+<div class="viewcode-block" id="WellyToSubsurfaceHelper.add_deviation"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.html#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_deviation">[docs]</a>    <span class="k">def</span> <span class="nf">add_deviation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deviations</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+                      <span class="n">td</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">method</span><span class="o">=</span><span class="s1">&#39;mc&#39;</span><span class="p">,</span>
+                      <span class="n">update_deviation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">azimuth_datum</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add a deviation survey to this instance, and try to compute a position</span>
+<span class="sd">         log from it.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">unique_borehole</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">deviations</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_wells</span><span class="p">(</span><span class="n">unique_borehole</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">unique_borehole</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">get_well</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">add_deviation</span><span class="p">(</span><span class="n">deviations</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;md&#39;</span><span class="p">,</span> <span class="s1">&#39;inc&#39;</span><span class="p">,</span> <span class="s1">&#39;azi&#39;</span><span class="p">]],</span>
+                                     <span class="n">td</span><span class="o">=</span><span class="n">td</span><span class="p">,</span>
+                                     <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                                     <span class="n">update_deviation</span><span class="o">=</span><span class="n">update_deviation</span><span class="p">,</span>
+                                     <span class="n">azimuth_datum</span><span class="o">=</span><span class="n">azimuth_datum</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Deviations could not be calculated.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+/* Customized styles */
+
+/* Sidebar header background */
+.wy-side-nav-search, .wy-nav-top {
+  background: #1DB6ED;
+}
+
+/* Sidebar header text */
+.wy-side-nav-search > div.version {
+  color: #ffffff;
+}
+
+/* Navigation headings */
+.wy-menu .caption-text {
+  color: #de4c13;
+  font-weight: bold;
+}
+
+/*
+
+- red of pyramid: #de4c13;
+- yellow of pyramid: #debc13;
+- "SWUNG" blue: #1DB6ED;
+
+*/

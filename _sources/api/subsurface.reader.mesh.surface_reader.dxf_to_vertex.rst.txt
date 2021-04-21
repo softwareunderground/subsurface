@@ -1,0 +1,6 @@
+dxf_to_vertex
+=============
+
+.. currentmodule:: subsurface.reader.mesh.surface_reader
+
+.. autofunction:: dxf_to_vertex

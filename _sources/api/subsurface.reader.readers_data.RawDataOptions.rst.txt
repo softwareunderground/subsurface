@@ -1,0 +1,17 @@
+RawDataOptions
+==============
+
+.. currentmodule:: subsurface.reader.readers_data
+
+.. autoclass:: RawDataOptions
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~RawDataOptions.swap_yz_cells
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: swap_yz_cells

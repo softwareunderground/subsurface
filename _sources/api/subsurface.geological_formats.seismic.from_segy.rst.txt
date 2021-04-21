@@ -1,0 +1,6 @@
+from_segy
+=========
+
+.. currentmodule:: subsurface.geological_formats.seismic
+
+.. autofunction:: from_segy

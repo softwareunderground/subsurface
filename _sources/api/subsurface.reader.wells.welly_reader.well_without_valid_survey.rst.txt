@@ -1,0 +1,6 @@
+well_without_valid_survey
+=========================
+
+.. currentmodule:: subsurface.reader.wells.welly_reader
+
+.. autofunction:: well_without_valid_survey

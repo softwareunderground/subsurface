@@ -1,0 +1,6 @@
+vertex_and_cells_from_welly_trajectory
+======================================
+
+.. currentmodule:: subsurface.reader.wells.welly_reader
+
+.. autofunction:: vertex_and_cells_from_welly_trajectory

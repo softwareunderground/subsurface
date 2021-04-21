@@ -1,0 +1,35 @@
+RexMesh
+=======
+
+.. currentmodule:: subsurface.writer.to_rex.data_struct
+
+.. autoclass:: RexMesh
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~RexMesh.color
+      ~RexMesh.color_ravel
+      ~RexMesh.material_id
+      ~RexMesh.n_color
+      ~RexMesh.n_triangles
+      ~RexMesh.n_vtx
+      ~RexMesh.normals
+      ~RexMesh.texture
+      ~RexMesh.tri_ravel
+      ~RexMesh.ver_ravel
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: color
+   .. autoattribute:: color_ravel
+   .. autoattribute:: material_id
+   .. autoattribute:: n_color
+   .. autoattribute:: n_triangles
+   .. autoattribute:: n_vtx
+   .. autoattribute:: normals
+   .. autoattribute:: texture
+   .. autoattribute:: tri_ravel
+   .. autoattribute:: ver_ravel

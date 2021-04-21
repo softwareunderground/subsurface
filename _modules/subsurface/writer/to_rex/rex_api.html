@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>subsurface.writer.to_rex.rex_api &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>subsurface.writer.to_rex.rex_api</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for subsurface.writer.to_rex.rex_api</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pyqrcode</span> <span class="k">as</span> <span class="nn">qr</span>
+    <span class="n">PYQRCODE_IMPORT</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">PYQRCODE_IMPORT</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">package_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RexAPI&#39;</span><span class="p">,</span> <span class="s1">&#39;Rextag&#39;</span><span class="p">,</span> <span class="s1">&#39;upload_to_rexcloud&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="RexAPI"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.RexAPI.html#subsurface.writer.to_rex.rex_api.RexAPI">[docs]</a><span class="k">class</span> <span class="nc">RexAPI</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span class="n">api_token</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Rest client to connect to the RexOS system</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            project_name:</span>
+<span class="sd">            api_token:</span>
+<span class="sd">            secret:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># saves the most current server response</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_ID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">secret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_credentials</span><span class="p">(</span><span class="n">api_token</span><span class="o">=</span><span class="n">api_token</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span><span class="n">secret</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">authorize_session</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">owner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_user_information</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_name</span> <span class="o">=</span> <span class="n">project_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_urn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_reference_link</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_reference_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_root_reference</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_reference_link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_file_resource_reference</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_file_urn</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_file_uplink</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_reference</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rextag</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="RexAPI.load_credentials"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.RexAPI.html#subsurface.writer.to_rex.rex_api.RexAPI.load_credentials">[docs]</a>    <span class="k">def</span> <span class="nf">load_credentials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">package_directory</span><span class="p">,</span> <span class="s1">&#39;RexCloud_Api_key.txt&#39;</span><span class="p">),</span>
+                         <span class="n">api_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">secret</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">api_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">secret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">login_data</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">api_token</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">secret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">login_data</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">if</span> <span class="n">api_token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">api_token</span> <span class="o">=</span> <span class="s1">&#39;REPLACE_TEXT_WITH_YOUR_API_Token&#39;</span>
+            <span class="k">if</span> <span class="n">secret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">secret</span> <span class="o">=</span> <span class="s1">&#39;REPLACE_TEXT_WITH_SECRET&#39;</span>
+
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">api_token</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span><span class="n">secret</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span><span class="s1">&#39; # put your API tokens and secrets in the lines above.</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                                  <span class="s1">&#39; # Do not track the file on git.&#39;</span><span class="p">)</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">login_data</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Cache key is not created. You need to pass as argument the REX api_token&#39;</span>
+                                     <span class="s1">&#39; and secret, or adding them in RexCloud_API_key.txt.&#39;</span>
+                                     <span class="s1">&#39; https://www.rexos.org/getting-started/&#39;</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">credential_file</span><span class="p">:</span>
+            <span class="n">token_id</span> <span class="o">=</span> <span class="n">credential_file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">secret</span> <span class="o">=</span> <span class="n">credential_file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">token_id</span><span class="p">,</span> <span class="n">secret</span></div>
+
+<div class="viewcode-block" id="RexAPI.authorize_session"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.RexAPI.html#subsurface.writer.to_rex.rex_api.RexAPI.authorize_session">[docs]</a>    <span class="k">def</span> <span class="nf">authorize_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json;charset=UTF-8&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/x-www-form-urlencoded; charset=ISO-8859-1&#39;</span><span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;grant_type&#39;</span><span class="p">:</span> <span class="s1">&#39;client_credentials&#39;</span><span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;https://rex.robotic-eyes.com/oauth/token&#39;</span><span class="p">,</span>
+                                      <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">token_ID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">secret</span><span class="p">)</span>
+                                      <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">access_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;access_token&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">access_token</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s2">&quot;something went wrong! Status code: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span> <span class="o">+</span>
+                                  <span class="s1">&#39;Probably the token or the secret is not valid. &#39;</span>
+                                  <span class="s1">&#39;https://www.rexos.org/getting-started/&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RexAPI.get_user_information"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.RexAPI.html#subsurface.writer.to_rex.rex_api.RexAPI.get_user_information">[docs]</a>    <span class="k">def</span> <span class="nf">get_user_information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">,</span> <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json;charset=UTF-8&#39;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://rex.robotic-eyes.com/api/v2/users/current&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">owner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;userId&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">owner</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;something went wrong! Status code: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="RexAPI.create_project"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.RexAPI.html#subsurface.writer.to_rex.rex_api.RexAPI.create_project">[docs]</a>    <span class="k">def</span> <span class="nf">create_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">):</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">,</span>
+            <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json;charset=UTF-8&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json;charset=UTF-8&#39;</span>
+        <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="n">project_name</span><span class="p">,</span>  <span class="s2">&quot;owner&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">owner</span><span class="p">})</span>  <span class="c1"># this call expects json!</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;https://rex.robotic-eyes.com/api/v2/projects&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
+            <span class="n">project_urn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;urn&#39;</span><span class="p">]</span>
+            <span class="n">project_link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;_links&#39;</span><span class="p">][</span><span class="s1">&#39;self&#39;</span><span class="p">][</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">project_urn</span><span class="p">,</span> <span class="n">project_link</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s2">&quot;something went wrong! Status code: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span> <span class="o">+</span>
+                                  <span class="s1">&#39;Probably project name already exists.&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RexAPI.create_root_reference"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.RexAPI.html#subsurface.writer.to_rex.rex_api.RexAPI.create_root_reference">[docs]</a>    <span class="k">def</span> <span class="nf">create_root_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">,</span>
+            <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json;charset=UTF-8&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json;charset=UTF-8&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;project&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_link</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;root reference&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;address&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s2">&quot;addressLine1&quot;</span><span class="p">:</span> <span class="s2">&quot;Sample&quot;</span><span class="p">,</span> <span class="s2">&quot;postcode&quot;</span><span class="p">:</span> <span class="s2">&quot;52072&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="s2">&quot;Aachen&quot;</span><span class="p">,</span>   <span class="s2">&quot;country&quot;</span> <span class="p">:</span> <span class="s2">&quot;Austria&quot;</span><span class="p">}}</span>
+                          <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;https://rex.robotic-eyes.com/api/v2/rexReferences&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
+            <span class="n">root_reference_link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;_links&#39;</span><span class="p">][</span><span class="s1">&#39;self&#39;</span><span class="p">][</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+            <span class="n">root_reference_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">root_reference_link</span><span class="p">,</span> <span class="n">root_reference_key</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;something went wrong! Status code: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="RexAPI.create_file_resource_reference"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.RexAPI.html#subsurface.writer.to_rex.rex_api.RexAPI.create_file_resource_reference">[docs]</a>    <span class="k">def</span> <span class="nf">create_file_resource_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">,</span>
+            <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json;charset=UTF-8&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json;charset=UTF-8&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;project&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_link</span><span class="p">,</span>
+                           <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;file ressource reference&quot;</span><span class="p">,</span>
+                           <span class="s2">&quot;rootReference&quot;</span> <span class="p">:</span> <span class="s2">&quot;false&quot;</span><span class="p">,</span>  <span class="c1">#setting root reference to false</span>
+                           <span class="s2">&quot;parentReference&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_reference_link</span><span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;https://rex.robotic-eyes.com/api/v2/rexReferences&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
+            <span class="n">file_reference_link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;_links&#39;</span><span class="p">][</span><span class="s1">&#39;self&#39;</span><span class="p">][</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">file_reference_link</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;something went wrong! Status code: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="RexAPI.create_project_file"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.RexAPI.html#subsurface.writer.to_rex.rex_api.RexAPI.create_project_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_project_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">projectname</span><span class="p">):</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span><span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">,</span>
+            <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json;charset=UTF-8&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json;charset=UTF-8&#39;</span><span class="p">,</span>
+                 <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;project&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_link</span><span class="p">,</span>
+                           <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="n">projectname</span><span class="p">,</span>
+                           <span class="s2">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;rex&quot;</span><span class="p">,</span>
+
+                           <span class="s2">&quot;rexReference&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_reference_link</span>
+                           <span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;https://rex.robotic-eyes.com/api/v2/projectFiles&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">project_file_urn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;urn&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">project_file_uplink</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;_links&#39;</span><span class="p">][</span><span class="s1">&#39;file.upload&#39;</span><span class="p">][</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">project_reference</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;rexReferenceKey&#39;</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;something went wrong! Status code: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span>
+
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="RexAPI.upload_rexfile"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.RexAPI.html#subsurface.writer.to_rex.rex_api.RexAPI.upload_rexfile">[docs]</a>    <span class="k">def</span> <span class="nf">upload_rexfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">,</span>
+            <span class="s1">&#39;contentType&#39;</span><span class="p">:</span> <span class="s1">&#39;application/octet-stream&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span> <span class="p">:</span> <span class="s1">&#39;rex&#39;</span>
+        <span class="p">}</span>
+
+        <span class="n">file</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;file&#39;</span><span class="p">:</span>  <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)),</span>
+
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_file_uplink</span><span class="p">,</span>
+                                 <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RexAPI.return_rextag"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.RexAPI.html#subsurface.writer.to_rex.rex_api.RexAPI.return_rextag">[docs]</a>    <span class="k">def</span> <span class="nf">return_rextag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rextag</span> <span class="o">=</span> <span class="n">Rextag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_reference</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rextag</span></div></div>
+
+
+<div class="viewcode-block" id="Rextag"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.Rextag.html#subsurface.writer.to_rex.rex_api.Rextag">[docs]</a><span class="k">class</span> <span class="nc">Rextag</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_reference</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rextag_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rextag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_rextag</span><span class="p">(</span><span class="n">project_reference</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rextag</span><span class="o">.</span><span class="n">terminal</span><span class="p">(</span><span class="n">module_color</span><span class="o">=</span><span class="s2">&quot;reverse&quot;</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">quiet_zone</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Rextag.create_rextag"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.Rextag.html#subsurface.writer.to_rex.rex_api.Rextag.create_rextag">[docs]</a>    <span class="k">def</span> <span class="nf">create_rextag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_reference</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">PYQRCODE_IMPORT</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">&#39;This method depends on pyqrcode and it is not possible to import.&#39;</span><span class="p">)</span>
+        <span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://rex.codes/v1/&quot;</span>
+        <span class="n">rextag_url</span> <span class="o">=</span> <span class="n">base_url</span><span class="o">+</span><span class="n">project_reference</span>
+        <span class="n">rextag</span> <span class="o">=</span> <span class="n">qr</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">rextag_url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rextag_url</span><span class="p">,</span> <span class="n">rextag</span></div>
+
+<div class="viewcode-block" id="Rextag.display_tag"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.Rextag.html#subsurface.writer.to_rex.rex_api.Rextag.display_tag">[docs]</a>    <span class="k">def</span> <span class="nf">display_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        displays the rextag to the terminal standard output as ascii.</span>
+
+<span class="sd">        you can invert the color by setting inverse=True, this is necessary if you run it in a jupyter notebook</span>
+<span class="sd">        after creation, you can save the rextag as svg using the rextag.svg method:</span>
+<span class="sd">        self.rextag.svg(&quot;project_name&quot;, scale=8)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            reverse: (boolean) inverts background and foreground color in the terminal output</span>
+
+<span class="sd">        Returns: None, prints a QR code to terminal output</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">reverse</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rextag</span><span class="o">.</span><span class="n">terminal</span><span class="p">(</span><span class="n">module_color</span><span class="o">=</span><span class="s2">&quot;reverse&quot;</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">quiet_zone</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rextag</span><span class="o">.</span><span class="n">terminal</span><span class="p">(</span><span class="n">quiet_zone</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Rextag.save_svg"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.Rextag.html#subsurface.writer.to_rex.rex_api.Rextag.save_svg">[docs]</a>    <span class="k">def</span> <span class="nf">save_svg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rextag</span><span class="o">.</span><span class="n">svg</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="upload_to_rexcloud"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.rex_api.upload_to_rexcloud.html#subsurface.writer.to_rex.rex_api.upload_to_rexcloud">[docs]</a><span class="k">def</span> <span class="nf">upload_to_rexcloud</span><span class="p">(</span><span class="n">infiles</span> <span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    wrapper around api calls to upload rexfiles of a gempy model.</span>
+
+<span class="sd">    you will need to register an account under https://app.rexos.cloud/ .</span>
+<span class="sd">    create an api key and store the key and secret in RexCloud_Api_key.txt.</span>
+
+<span class="sd">    the function will take a list of rexos input filenames and uploads them into a newly created project.</span>
+
+<span class="sd">    an ar code is plotted that can be scanned with the rexview app to show the model in vr.</span>
+<span class="sd">    the qr code is plotted in ascii to the standard output, if the qr code is not recognizable,</span>
+<span class="sd">    try to revert the colors o0f the terminal output by setting reverse=False in thew show_tag() Method.</span>
+
+<span class="sd">    all api calls are python implementation of the Rex os api:</span>
+<span class="sd">    https://www.rexos.org/rex-api/#tutorial-rex-project-before-you-begin</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        infiles: List of rexos file names</span>
+<span class="sd">        project_name: name of the project under which it appears in the rexcloud. if none is specified,</span>
+<span class="sd">        the current timestamp is used.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A Rextag Object</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">project_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">project_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+
+    <span class="n">api</span> <span class="o">=</span> <span class="n">RexAPI</span><span class="p">(</span><span class="n">project_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">infiles</span><span class="p">:</span>
+
+        <span class="n">api</span><span class="o">.</span><span class="n">create_project_file</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">api</span><span class="o">.</span><span class="n">upload_rexfile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">return_rextag</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">tag</span></div>
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

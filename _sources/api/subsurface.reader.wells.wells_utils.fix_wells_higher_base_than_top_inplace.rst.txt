@@ -1,0 +1,6 @@
+fix_wells_higher_base_than_top_inplace
+======================================
+
+.. currentmodule:: subsurface.reader.wells.wells_utils
+
+.. autofunction:: fix_wells_higher_base_than_top_inplace

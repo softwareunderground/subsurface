@@ -1,0 +1,6 @@
+get_extension
+=============
+
+.. currentmodule:: subsurface.utils.utils_core
+
+.. autofunction:: get_extension

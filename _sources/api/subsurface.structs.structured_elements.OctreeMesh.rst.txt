@@ -1,0 +1,7 @@
+OctreeMesh
+==========
+
+.. currentmodule:: subsurface.structs.structured_elements
+
+.. autoclass:: OctreeMesh
+   :show-inheritance:

@@ -1,0 +1,33 @@
+RexAPI
+======
+
+.. currentmodule:: subsurface.writer.to_rex.rex_api
+
+.. autoclass:: RexAPI
+   :show-inheritance:
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~RexAPI.authorize_session
+      ~RexAPI.create_file_resource_reference
+      ~RexAPI.create_project
+      ~RexAPI.create_project_file
+      ~RexAPI.create_root_reference
+      ~RexAPI.get_user_information
+      ~RexAPI.load_credentials
+      ~RexAPI.return_rextag
+      ~RexAPI.upload_rexfile
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: authorize_session
+   .. automethod:: create_file_resource_reference
+   .. automethod:: create_project
+   .. automethod:: create_project_file
+   .. automethod:: create_root_reference
+   .. automethod:: get_user_information
+   .. automethod:: load_credentials
+   .. automethod:: return_rextag
+   .. automethod:: upload_rexfile

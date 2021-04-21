@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>subsurface.geological_formats.seismic &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>subsurface.geological_formats.seismic</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for subsurface.geological_formats.seismic</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">TODO: This is legacy code waiting to be updated to the new ideas</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">segyio</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
+
+
+<div class="viewcode-block" id="Seismic"><a class="viewcode-back" href="../../../api/subsurface.geological_formats.seismic.Seismic.html#subsurface.geological_formats.seismic.Seismic">[docs]</a><span class="k">class</span> <span class="nc">Seismic</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Seismic data object based on xarray.DataArray.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (Array): np.ndarray of the seismic cube / section.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_shp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xarray</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_flip</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xarray</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xarray</span><span class="o">.</span><span class="n">_getitem_coord</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="c1"># preserve coordinates </span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xarray</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  <span class="c1"># parent coordinates</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">[(</span><span class="n">cp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Seismic</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xarray</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xarray</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Seismic&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_flip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Flip SEGY data to fit with numpy array orientation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (np.ndarray): Seismic data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (np.ndarray) Flipped seismic data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_shp</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_shp</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_shp</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Seismic.add_coords"><a class="viewcode-back" href="../../../api/subsurface.geological_formats.seismic.Seismic.html#subsurface.geological_formats.seismic.Seismic.add_coords">[docs]</a>    <span class="k">def</span> <span class="nf">add_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ability to easily add physical coordinates.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Seismic.to_segy"><a class="viewcode-back" href="../../../api/subsurface.geological_formats.seismic.Seismic.html#subsurface.geological_formats.seismic.Seismic.to_segy">[docs]</a>    <span class="k">def</span> <span class="nf">to_segy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Write given Seismic to SEGY file using segyio.tools.from_array().</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath (str): Filepath for SEGY file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">segyio</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xarray</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Seismic.plot_"><a class="viewcode-back" href="../../../api/subsurface.geological_formats.seismic.Seismic.html#subsurface.geological_formats.seismic.Seismic.plot_">[docs]</a>    <span class="k">def</span> <span class="nf">plot_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">_PlotMethods</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Seismic.plot"><a class="viewcode-back" href="../../../api/subsurface.geological_formats.seismic.Seismic.html#subsurface.geological_formats.seismic.Seismic.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_shp</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_plot_1d</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_shp</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">pass</span>
+            <span class="c1"># TODO: plot seismic section using imshow for correct orientation</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_shp</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">_plot_3d</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Seismic.create_pyvista_grid"><a class="viewcode-back" href="../../../api/subsurface.geological_formats.seismic.Seismic.html#subsurface.geological_formats.seismic.Seismic.create_pyvista_grid">[docs]</a>    <span class="k">def</span> <span class="nf">create_pyvista_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pv</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">UniformGrid</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Generate UniformGrid object for 3D plotting of the seismic.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            seismic (Seismic): Seismic object.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (pv.grid.UniformGrid)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">UniformGrid</span><span class="p">()</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">spacing</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># TODO: cell sizes? vertical exaggeration etc</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">cell_arrays</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+        <span class="c1"># TODO: correct orientation of cube</span>
+        <span class="k">return</span> <span class="n">grid</span></div>
+
+<div class="viewcode-block" id="Seismic.plot_3d_slices"><a class="viewcode-back" href="../../../api/subsurface.geological_formats.seismic.Seismic.html#subsurface.geological_formats.seismic.Seismic.plot_3d_slices">[docs]</a>    <span class="k">def</span> <span class="nf">plot_3d_slices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_shp</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Seismic data needs to be a 3-D volume.&quot;</span><span class="p">)</span>
+        <span class="c1"># TODO: cmap, kwarg passthrough</span>
+        <span class="n">pv</span><span class="o">.</span><span class="n">OrthogonalSlicer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_plot_1d</span><span class="p">(</span><span class="n">seismic</span><span class="p">:</span> <span class="n">Seismic</span><span class="p">,</span> <span class="n">linekwargs</span><span class="o">=</span><span class="p">{},</span> <span class="n">fillkwargs</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+    
+    <span class="n">lkwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="n">lkwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">linekwargs</span><span class="p">)</span>
+
+    <span class="n">fkwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span>
+    <span class="p">)</span>
+    <span class="n">fkwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">fillkwargs</span><span class="p">)</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">seismic</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">seismic</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">lkwargs</span><span class="p">)</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">seismic</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">x1</span><span class="p">[</span><span class="n">x1</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_betweenx</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x1</span><span class="o">=</span><span class="n">x1</span><span class="p">,</span> <span class="o">**</span><span class="n">fkwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_3d</span><span class="p">(</span><span class="n">seismic</span><span class="p">:</span> <span class="n">Seismic</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">seismic</span><span class="p">,</span> <span class="s2">&quot;grid&quot;</span><span class="p">):</span>
+        <span class="n">seismic</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">seismic</span><span class="o">.</span><span class="n">create_pyvista_grid</span><span class="p">()</span>
+
+    <span class="n">seismic</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;seismic&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_2d</span><span class="p">(</span><span class="n">seismic</span><span class="p">:</span> <span class="n">Seismic</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_hist</span><span class="p">(</span><span class="n">seismic</span><span class="p">:</span> <span class="n">Seismic</span><span class="p">):</span>
+    <span class="k">pass</span>
+        
+
+<div class="viewcode-block" id="from_segy"><a class="viewcode-back" href="../../../api/subsurface.geological_formats.seismic.from_segy.html#subsurface.geological_formats.seismic.from_segy">[docs]</a><span class="k">def</span> <span class="nf">from_segy</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Seismic</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Create a Seismic data object from a SEGY file.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        filepath (str): Filepath to the SEGY file.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Seismic: Seismic data object based on xarray.DataArray.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">segyio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">sf</span><span class="p">:</span>
+        <span class="n">sf</span><span class="o">.</span><span class="n">mmap</span><span class="p">()</span>  <span class="c1"># memory mapping</span>
+        <span class="n">xlines</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">xlines</span>
+        <span class="n">ilines</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">ilines</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">samples</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">bin</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">coords</span><span class="p">:</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;ilines&quot;</span><span class="p">,</span> <span class="n">ilines</span><span class="p">),</span> 
+            <span class="p">(</span><span class="s2">&quot;xlines&quot;</span><span class="p">,</span> <span class="n">xlines</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;samples&quot;</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+        <span class="p">]</span>
+
+    <span class="n">cube</span> <span class="o">=</span> <span class="n">segyio</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">cube</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="n">seismic</span> <span class="o">=</span> <span class="n">Seismic</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">)</span>
+    <span class="n">seismic</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span>
+    <span class="k">return</span> <span class="n">seismic</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

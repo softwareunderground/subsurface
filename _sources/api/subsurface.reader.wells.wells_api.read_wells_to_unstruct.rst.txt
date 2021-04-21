@@ -1,0 +1,6 @@
+read_wells_to_unstruct
+======================
+
+.. currentmodule:: subsurface.reader.wells.wells_api
+
+.. autofunction:: read_wells_to_unstruct

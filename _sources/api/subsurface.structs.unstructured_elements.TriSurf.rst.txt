@@ -1,0 +1,19 @@
+TriSurf
+=======
+
+.. currentmodule:: subsurface.structs.unstructured_elements
+
+.. autoclass:: TriSurf
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~TriSurf.n_triangles
+      ~TriSurf.triangles
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: n_triangles
+   .. autoattribute:: triangles

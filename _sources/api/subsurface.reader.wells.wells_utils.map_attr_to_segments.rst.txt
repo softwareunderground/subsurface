@@ -1,0 +1,6 @@
+map_attr_to_segments
+====================
+
+.. currentmodule:: subsurface.reader.wells.wells_utils
+
+.. autofunction:: map_attr_to_segments

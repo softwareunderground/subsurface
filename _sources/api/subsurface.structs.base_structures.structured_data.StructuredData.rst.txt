@@ -1,0 +1,37 @@
+StructuredData
+==============
+
+.. currentmodule:: subsurface.structs.base_structures.structured_data
+
+.. autoclass:: StructuredData
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~StructuredData.data_array_name
+      ~StructuredData.default_dataset
+      ~StructuredData.values
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~StructuredData.from_data_array
+      ~StructuredData.from_dict
+      ~StructuredData.from_numpy
+      ~StructuredData.to_binary
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: data_array_name
+   .. autoattribute:: default_dataset
+   .. autoattribute:: values
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: from_data_array
+   .. automethod:: from_dict
+   .. automethod:: from_numpy
+   .. automethod:: to_binary

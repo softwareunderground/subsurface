@@ -1,0 +1,39 @@
+ReaderFilesHelper
+=================
+
+.. currentmodule:: subsurface.reader.readers_data
+
+.. autoclass:: ReaderFilesHelper
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~ReaderFilesHelper.col_names
+      ~ReaderFilesHelper.columns_map
+      ~ReaderFilesHelper.drop_cols
+      ~ReaderFilesHelper.format
+      ~ReaderFilesHelper.header
+      ~ReaderFilesHelper.index_col
+      ~ReaderFilesHelper.index_map
+      ~ReaderFilesHelper.is_bytes_string
+      ~ReaderFilesHelper.is_file_in_disk
+      ~ReaderFilesHelper.is_python_dict
+      ~ReaderFilesHelper.pandas_reader_kwargs
+      ~ReaderFilesHelper.usecols
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: col_names
+   .. autoattribute:: columns_map
+   .. autoattribute:: drop_cols
+   .. autoattribute:: format
+   .. autoattribute:: header
+   .. autoattribute:: index_col
+   .. autoattribute:: index_map
+   .. autoattribute:: is_bytes_string
+   .. autoattribute:: is_file_in_disk
+   .. autoattribute:: is_python_dict
+   .. autoattribute:: pandas_reader_kwargs
+   .. autoattribute:: usecols

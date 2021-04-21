@@ -1,0 +1,6 @@
+mesh_encode
+===========
+
+.. currentmodule:: subsurface.writer.to_rex.mesh_encoder
+
+.. autofunction:: mesh_encode

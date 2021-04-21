@@ -1,0 +1,6 @@
+geomodel_to_rex
+===============
+
+.. currentmodule:: subsurface.writer.to_rex.gempy_to_rexfile
+
+.. autofunction:: geomodel_to_rex

@@ -1,0 +1,12 @@
+
+:orphan:
+
+.. _sphx_glr_examples_tutorials_sg_execution_times:
+
+Computation times
+=================
+**00:01.678** total execution time for **examples_tutorials** files:
+
++------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_examples_tutorials_reading_well_data.py` (``reading_well_data.py``) | 00:01.678 | 0.0 MB |
++------------------------------------------------------------------------------------+-----------+--------+

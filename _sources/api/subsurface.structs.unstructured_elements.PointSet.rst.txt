@@ -1,0 +1,23 @@
+PointSet
+========
+
+.. currentmodule:: subsurface.structs.unstructured_elements
+
+.. autoclass:: PointSet
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~PointSet.n_points
+      ~PointSet.point_data
+      ~PointSet.point_data_dict
+      ~PointSet.points
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: n_points
+   .. autoattribute:: point_data
+   .. autoattribute:: point_data_dict
+   .. autoattribute:: points

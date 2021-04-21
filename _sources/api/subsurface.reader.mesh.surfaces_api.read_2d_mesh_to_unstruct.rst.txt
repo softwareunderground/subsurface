@@ -1,0 +1,6 @@
+read_2d_mesh_to_unstruct
+========================
+
+.. currentmodule:: subsurface.reader.mesh.surfaces_api
+
+.. autofunction:: read_2d_mesh_to_unstruct

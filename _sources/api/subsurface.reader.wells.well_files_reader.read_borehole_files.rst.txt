@@ -1,0 +1,6 @@
+read_borehole_files
+===================
+
+.. currentmodule:: subsurface.reader.wells.well_files_reader
+
+.. autofunction:: read_borehole_files

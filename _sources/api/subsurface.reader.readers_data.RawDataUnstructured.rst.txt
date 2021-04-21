@@ -1,0 +1,29 @@
+RawDataUnstructured
+===================
+
+.. currentmodule:: subsurface.reader.readers_data
+
+.. autoclass:: RawDataUnstructured
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~RawDataUnstructured.cells_attr
+      ~RawDataUnstructured.vertex_attr
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~RawDataUnstructured.swap_yz_col_cells
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: cells_attr
+   .. autoattribute:: vertex_attr
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: swap_yz_col_cells

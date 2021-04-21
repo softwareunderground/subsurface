@@ -1,0 +1,6 @@
+to_pyvista_line
+===============
+
+.. currentmodule:: subsurface.visualization.to_pyvista
+
+.. autofunction:: to_pyvista_line

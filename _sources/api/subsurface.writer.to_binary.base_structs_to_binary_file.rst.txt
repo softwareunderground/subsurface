@@ -1,0 +1,6 @@
+base_structs_to_binary_file
+===========================
+
+.. currentmodule:: subsurface.writer.to_binary
+
+.. autofunction:: base_structs_to_binary_file

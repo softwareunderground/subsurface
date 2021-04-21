@@ -1,0 +1,19 @@
+ReaderWellsHelper
+=================
+
+.. currentmodule:: subsurface.reader.readers_data
+
+.. autoclass:: ReaderWellsHelper
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~ReaderWellsHelper.reader_attr_args
+      ~ReaderWellsHelper.reader_lith_args
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: reader_attr_args
+   .. autoattribute:: reader_lith_args

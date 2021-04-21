@@ -1,0 +1,6 @@
+check_format_and_read_to_df
+===========================
+
+.. currentmodule:: subsurface.reader.wells.well_files_reader
+
+.. autofunction:: check_format_and_read_to_df

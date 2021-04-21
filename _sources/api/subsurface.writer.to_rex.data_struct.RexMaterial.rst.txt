@@ -1,0 +1,43 @@
+RexMaterial
+===========
+
+.. currentmodule:: subsurface.writer.to_rex.data_struct
+
+.. autoclass:: RexMaterial
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~RexMaterial.alpha
+      ~RexMaterial.ka_blue
+      ~RexMaterial.ka_green
+      ~RexMaterial.ka_red
+      ~RexMaterial.ka_texture_ID
+      ~RexMaterial.kd_blue
+      ~RexMaterial.kd_green
+      ~RexMaterial.kd_red
+      ~RexMaterial.kd_texture_ID
+      ~RexMaterial.ks_blue
+      ~RexMaterial.ks_green
+      ~RexMaterial.ks_red
+      ~RexMaterial.ks_texture_ID
+      ~RexMaterial.ns
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: alpha
+   .. autoattribute:: ka_blue
+   .. autoattribute:: ka_green
+   .. autoattribute:: ka_red
+   .. autoattribute:: ka_texture_ID
+   .. autoattribute:: kd_blue
+   .. autoattribute:: kd_green
+   .. autoattribute:: kd_red
+   .. autoattribute:: kd_texture_ID
+   .. autoattribute:: ks_blue
+   .. autoattribute:: ks_green
+   .. autoattribute:: ks_red
+   .. autoattribute:: ks_texture_ID
+   .. autoattribute:: ns

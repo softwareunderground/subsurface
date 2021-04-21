@@ -1,0 +1,6 @@
+create_mesh_from_trace
+======================
+
+.. currentmodule:: subsurface.reader.profiles.profiles_core
+
+.. autofunction:: create_mesh_from_trace

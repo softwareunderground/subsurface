@@ -1,0 +1,17 @@
+FaultSticks
+===========
+
+.. currentmodule:: subsurface.geological_formats.fault
+
+.. autoclass:: FaultSticks
+   :show-inheritance:
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~FaultSticks.plot
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: plot

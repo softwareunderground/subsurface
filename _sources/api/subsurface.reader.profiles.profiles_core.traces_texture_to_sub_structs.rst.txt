@@ -1,0 +1,6 @@
+traces_texture_to_sub_structs
+=============================
+
+.. currentmodule:: subsurface.reader.profiles.profiles_core
+
+.. autofunction:: traces_texture_to_sub_structs

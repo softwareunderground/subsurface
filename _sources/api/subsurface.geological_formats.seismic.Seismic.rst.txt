@@ -1,0 +1,27 @@
+Seismic
+=======
+
+.. currentmodule:: subsurface.geological_formats.seismic
+
+.. autoclass:: Seismic
+   :show-inheritance:
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~Seismic.add_coords
+      ~Seismic.create_pyvista_grid
+      ~Seismic.plot
+      ~Seismic.plot_
+      ~Seismic.plot_3d_slices
+      ~Seismic.to_segy
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: add_coords
+   .. automethod:: create_pyvista_grid
+   .. automethod:: plot
+   .. automethod:: plot_
+   .. automethod:: plot_3d_slices
+   .. automethod:: to_segy

@@ -1,0 +1,6 @@
+create_tri_surf_from_traces_texture
+===================================
+
+.. currentmodule:: subsurface.reader.profiles.profiles_core
+
+.. autofunction:: create_tri_surf_from_traces_texture

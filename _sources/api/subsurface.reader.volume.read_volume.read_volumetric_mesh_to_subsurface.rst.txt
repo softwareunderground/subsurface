@@ -1,0 +1,6 @@
+read_volumetric_mesh_to_subsurface
+==================================
+
+.. currentmodule:: subsurface.reader.volume.read_volume
+
+.. autofunction:: read_volumetric_mesh_to_subsurface

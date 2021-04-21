@@ -1,0 +1,7 @@
+StructuredSurface
+=================
+
+.. currentmodule:: subsurface.structs.structured_elements
+
+.. autoclass:: StructuredSurface
+   :show-inheritance:

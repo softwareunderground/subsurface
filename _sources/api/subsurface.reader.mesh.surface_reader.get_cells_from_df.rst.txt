@@ -1,0 +1,6 @@
+get_cells_from_df
+=================
+
+.. currentmodule:: subsurface.reader.mesh.surface_reader
+
+.. autofunction:: get_cells_from_df

@@ -1,0 +1,6 @@
+base_structs_to_tri_surf
+========================
+
+.. currentmodule:: subsurface.reader.profiles.profiles_core
+
+.. autofunction:: base_structs_to_tri_surf

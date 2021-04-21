@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>subsurface.reader.wells.wells_utils &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>subsurface.reader.wells.wells_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for subsurface.reader.wells.wells_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;add_tops_from_base_and_altitude_in_place&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;fix_wells_higher_base_than_top_inplace&#39;</span><span class="p">,</span> <span class="s1">&#39;map_attr_to_segments&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;pivot_wells_df_into_segment_per_row&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="add_tops_from_base_and_altitude_in_place"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.wells_utils.add_tops_from_base_and_altitude_in_place.html#subsurface.reader.wells.wells_utils.add_tops_from_base_and_altitude_in_place">[docs]</a><span class="k">def</span> <span class="nf">add_tops_from_base_and_altitude_in_place</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">col_well_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">col_base</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                                             <span class="n">col_altitude</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">_remove_repeated_rows</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">_create_base_col</span><span class="p">(</span><span class="n">col_altitude</span><span class="p">,</span> <span class="n">col_base</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="n">_create_top_col</span><span class="p">(</span><span class="n">col_altitude</span><span class="p">,</span> <span class="n">col_well_name</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="n">_add_md_col_if_missing</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div>
+
+
+<div class="viewcode-block" id="fix_wells_higher_base_than_top_inplace"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.wells_utils.fix_wells_higher_base_than_top_inplace.html#subsurface.reader.wells.wells_utils.fix_wells_higher_base_than_top_inplace">[docs]</a><span class="k">def</span> <span class="nf">fix_wells_higher_base_than_top_inplace</span><span class="p">(</span><span class="n">df_fixed</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">top_base_error</span> <span class="o">=</span> <span class="n">df_fixed</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df_fixed</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">]</span>
+    <span class="n">df_fixed</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">][</span><span class="n">top_base_error</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_fixed</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span>
+    <span class="k">return</span> <span class="n">df_fixed</span></div>
+
+
+<div class="viewcode-block" id="map_attr_to_segments"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.wells_utils.map_attr_to_segments.html#subsurface.reader.wells.wells_utils.map_attr_to_segments">[docs]</a><span class="k">def</span> <span class="nf">map_attr_to_segments</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">attr_per_segment</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">n_wells</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">tiled_formations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">attr_per_segment</span><span class="p">,</span> <span class="p">(</span><span class="n">n_wells</span><span class="p">))</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;formation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tiled_formations</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="pivot_wells_df_into_segment_per_row"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.wells_utils.pivot_wells_df_into_segment_per_row.html#subsurface.reader.wells.wells_utils.pivot_wells_df_into_segment_per_row">[docs]</a><span class="k">def</span> <span class="nf">pivot_wells_df_into_segment_per_row</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">start_segment_cols</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_segments_per_well</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="c1"># Repeat fixed rows (collar name and so)</span>
+    <span class="n">df_fixed</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="n">start_segment_cols</span><span class="p">]</span>
+    <span class="n">df_fixed</span> <span class="o">=</span> <span class="n">df_fixed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_fixed</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">n_segments_per_well</span><span class="p">)]</span>
+
+    <span class="n">df_bottoms</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">start_segment_cols</span><span class="p">:</span><span class="n">start_segment_cols</span> <span class="o">+</span> <span class="n">n_segments_per_well</span><span class="p">]</span>
+    <span class="n">df_fixed</span><span class="p">[</span><span class="s1">&#39;base&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_bottoms</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_fixed</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_md_col_if_missing</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s2">&quot;md&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;md&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_create_top_col</span><span class="p">(</span><span class="n">col_altitude</span><span class="p">,</span> <span class="n">col_well_name</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">Z_shift</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">col_well_name</span><span class="p">)[</span><span class="s1">&#39;base&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Z_0</span> <span class="o">=</span> <span class="n">Z_shift</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">Z_0</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="n">col_altitude</span><span class="p">]</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;top&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Z_0</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;_top_abs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+
+<span class="k">def</span> <span class="nf">_create_base_col</span><span class="p">(</span><span class="n">col_altitude</span><span class="p">,</span> <span class="n">col_base</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;base&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">col_altitude</span><span class="p">]</span> <span class="o">-</span> <span class="n">d</span><span class="p">[</span><span class="n">col_base</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_remove_repeated_rows</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">repeated_rows</span> <span class="o">=</span> <span class="n">_mark_repeated_rows</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;base&#39;</span><span class="p">])</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="o">~</span><span class="n">repeated_rows</span><span class="p">]</span>  <span class="c1"># removed repeated rows</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+
+<span class="k">def</span> <span class="nf">_mark_repeated_rows</span><span class="p">(</span><span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">series</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">series</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

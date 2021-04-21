@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ReaderUnstructuredHelper &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ReaderWellsHelper" href="subsurface.reader.readers_data.ReaderWellsHelper.html" />
+    <link rel="prev" title="ReaderFilesHelper" href="subsurface.reader.readers_data.ReaderFilesHelper.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../code-reader.html">Reader</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.readers_data">subsurface.reader.readers_data Module</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../code-reader.html#classes">Classes</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="subsurface.reader.readers_data.ReaderFilesHelper.html">ReaderFilesHelper</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">ReaderUnstructuredHelper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subsurface.reader.readers_data.ReaderWellsHelper.html">ReaderWellsHelper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subsurface.reader.readers_data.RawDataOptions.html">RawDataOptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subsurface.reader.readers_data.RawDataUnstructured.html">RawDataUnstructured</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.read_netcdf">subsurface.reader.read_netcdf Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.faults.faults">subsurface.reader.faults.faults Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.mesh.surface_reader">subsurface.reader.mesh.surface_reader Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.mesh.surfaces_api">subsurface.reader.mesh.surfaces_api Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.profiles.profiles_core">subsurface.reader.profiles.profiles_core Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.topography.topo_core">subsurface.reader.topography.topo_core Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.volume.read_volume">subsurface.reader.volume.read_volume Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.volume.volume_utils">subsurface.reader.volume.volume_utils Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.wells.pandas_to_welly">subsurface.reader.wells.pandas_to_welly Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.wells.well_files_reader">subsurface.reader.wells.well_files_reader Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.wells.wells_api">subsurface.reader.wells.wells_api Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.wells.wells_utils">subsurface.reader.wells.wells_utils Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-reader.html#module-subsurface.reader.wells.welly_reader">subsurface.reader.wells.welly_reader Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../code-reader.html">Reader</a> &raquo;</li>
+        
+      <li>ReaderUnstructuredHelper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/subsurface.reader.readers_data.ReaderUnstructuredHelper.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="subsurface.reader.readers_data.ReaderWellsHelper.html" class="btn btn-neutral float-right" title="ReaderWellsHelper" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="subsurface.reader.readers_data.ReaderFilesHelper.html" class="btn btn-neutral float-left" title="ReaderFilesHelper" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="readerunstructuredhelper">
+<h1>ReaderUnstructuredHelper<a class="headerlink" href="#readerunstructuredhelper" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="subsurface.reader.readers_data.ReaderUnstructuredHelper">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">subsurface.reader.readers_data.</span></code><code class="sig-name descname"><span class="pre">ReaderUnstructuredHelper</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reader_vertex_args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="subsurface.reader.readers_data.ReaderFilesHelper.html#subsurface.reader.readers_data.ReaderFilesHelper" title="subsurface.reader.readers_data.ReaderFilesHelper"><span class="pre">subsurface.reader.readers_data.ReaderFilesHelper</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">reader_cells_args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="subsurface.reader.readers_data.ReaderFilesHelper.html#subsurface.reader.readers_data.ReaderFilesHelper" title="subsurface.reader.readers_data.ReaderFilesHelper"><span class="pre">subsurface.reader.readers_data.ReaderFilesHelper</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reader_vertex_attr_args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="subsurface.reader.readers_data.ReaderFilesHelper.html#subsurface.reader.readers_data.ReaderFilesHelper" title="subsurface.reader.readers_data.ReaderFilesHelper"><span class="pre">subsurface.reader.readers_data.ReaderFilesHelper</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reader_cells_attr_args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="subsurface.reader.readers_data.ReaderFilesHelper.html#subsurface.reader.readers_data.ReaderFilesHelper" title="subsurface.reader.readers_data.ReaderFilesHelper"><span class="pre">subsurface.reader.readers_data.ReaderFilesHelper</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/readers_data.html#ReaderUnstructuredHelper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.readers_data.ReaderUnstructuredHelper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p class="rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_cells_args" title="subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_cells_args"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reader_cells_args</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_cells_attr_args" title="subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_cells_attr_args"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reader_cells_attr_args</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_vertex_attr_args" title="subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_vertex_attr_args"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reader_vertex_attr_args</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="py attribute">
+<dt id="subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_cells_args">
+<code class="sig-name descname"><span class="pre">reader_cells_args</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="subsurface.reader.readers_data.ReaderFilesHelper.html#subsurface.reader.readers_data.ReaderFilesHelper" title="subsurface.reader.readers_data.ReaderFilesHelper"><span class="pre">subsurface.reader.readers_data.ReaderFilesHelper</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_cells_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_cells_attr_args">
+<code class="sig-name descname"><span class="pre">reader_cells_attr_args</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="subsurface.reader.readers_data.ReaderFilesHelper.html#subsurface.reader.readers_data.ReaderFilesHelper" title="subsurface.reader.readers_data.ReaderFilesHelper"><span class="pre">subsurface.reader.readers_data.ReaderFilesHelper</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_cells_attr_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_vertex_attr_args">
+<code class="sig-name descname"><span class="pre">reader_vertex_attr_args</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="subsurface.reader.readers_data.ReaderFilesHelper.html#subsurface.reader.readers_data.ReaderFilesHelper" title="subsurface.reader.readers_data.ReaderFilesHelper"><span class="pre">subsurface.reader.readers_data.ReaderFilesHelper</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderUnstructuredHelper.reader_vertex_attr_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="subsurface.reader.readers_data.ReaderWellsHelper.html" class="btn btn-neutral float-right" title="ReaderWellsHelper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="subsurface.reader.readers_data.ReaderFilesHelper.html" class="btn btn-neutral float-left" title="ReaderFilesHelper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+write_data_block_header
+=======================
+
+.. currentmodule:: subsurface.writer.to_rex.common
+
+.. autofunction:: write_data_block_header

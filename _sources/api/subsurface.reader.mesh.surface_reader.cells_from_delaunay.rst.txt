@@ -1,0 +1,6 @@
+cells_from_delaunay
+===================
+
+.. currentmodule:: subsurface.reader.mesh.surface_reader
+
+.. autofunction:: cells_from_delaunay

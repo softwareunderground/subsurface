@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>subsurface.writer.to_rex.mesh_encoder &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>subsurface.writer.to_rex.mesh_encoder</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for subsurface.writer.to_rex.mesh_encoder</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">subsurface.writer.to_rex.common</span> <span class="kn">import</span> <span class="n">mesh_header_size</span><span class="p">,</span> \
+    <span class="n">write_data_block_header</span><span class="p">,</span> <span class="n">encode</span>
+<span class="kn">from</span> <span class="nn">subsurface.writer.to_rex.data_struct</span> <span class="kn">import</span> <span class="n">RexMesh</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mesh_encode&#39;</span><span class="p">,</span> <span class="s1">&#39;write_mesh_coordinates&#39;</span><span class="p">,</span> <span class="s1">&#39;write_mesh_header&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="mesh_encode"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.mesh_encoder.mesh_encode.html#subsurface.writer.to_rex.mesh_encoder.mesh_encode">[docs]</a><span class="k">def</span> <span class="nf">mesh_encode</span><span class="p">(</span><span class="n">rex_mesh</span><span class="p">:</span> <span class="n">RexMesh</span><span class="p">,</span> <span class="n">data_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">material_id</span> <span class="o">=</span> <span class="n">rex_mesh</span><span class="o">.</span><span class="n">material_id</span>
+    <span class="n">n_vtx_coord</span> <span class="o">=</span> <span class="n">rex_mesh</span><span class="o">.</span><span class="n">n_vtx</span>
+    <span class="n">n_triangles</span> <span class="o">=</span> <span class="n">rex_mesh</span><span class="o">.</span><span class="n">n_triangles</span>
+    <span class="n">n_vtx_colors</span> <span class="o">=</span> <span class="n">rex_mesh</span><span class="o">.</span><span class="n">n_color</span>
+    <span class="n">surface_name</span> <span class="o">=</span> <span class="n">rex_mesh</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">ver_ravel</span> <span class="o">=</span> <span class="n">rex_mesh</span><span class="o">.</span><span class="n">ver_ravel</span>
+    <span class="n">tri_ravel</span> <span class="o">=</span> <span class="n">rex_mesh</span><span class="o">.</span><span class="n">tri_ravel</span>
+    <span class="n">c_r</span> <span class="o">=</span> <span class="n">rex_mesh</span><span class="o">.</span><span class="n">color_ravel</span>
+
+    <span class="c1"># Write Mesh block - header</span>
+    <span class="n">mesh_header_bytes</span> <span class="o">=</span> <span class="n">write_mesh_header</span><span class="p">(</span>
+        <span class="n">n_vtx_coord</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n_triangles</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">n_vtx_colors</span><span class="o">=</span><span class="n">n_vtx_colors</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">start_vtx_coord</span><span class="o">=</span><span class="n">mesh_header_size</span><span class="p">,</span>
+        <span class="n">start_nor_coord</span><span class="o">=</span><span class="n">mesh_header_size</span> <span class="o">+</span> <span class="n">n_vtx_coord</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">start_tex_coord</span><span class="o">=</span><span class="n">mesh_header_size</span> <span class="o">+</span> <span class="n">n_vtx_coord</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">start_vtx_colors</span><span class="o">=</span><span class="n">mesh_header_size</span> <span class="o">+</span> <span class="n">n_vtx_coord</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">start_triangles</span><span class="o">=</span><span class="n">mesh_header_size</span> <span class="o">+</span>
+                        <span class="p">((</span><span class="n">n_vtx_coord</span> <span class="o">+</span> <span class="n">n_vtx_colors</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">surface_name</span><span class="p">,</span>
+        <span class="n">material_id</span><span class="o">=</span><span class="n">material_id</span>  <span class="c1"># self.data_id + surface_df.shape[0]</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Write Mesh block - Vertex, triangles</span>
+    <span class="n">mesh_block_bytes</span> <span class="o">=</span> <span class="n">write_mesh_coordinates</span><span class="p">(</span><span class="n">ver_ravel</span><span class="p">,</span>
+                                              <span class="n">tri_ravel</span><span class="p">,</span>
+                                              <span class="n">colors</span><span class="o">=</span><span class="n">c_r</span>  <span class="c1"># When using</span>
+                                              <span class="c1"># material we can avoid this</span>
+                                              <span class="p">)</span>
+
+    <span class="c1"># Calculate the size of the mesh block</span>
+    <span class="n">mesh_block_size_no_data_block_header</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mesh_header_bytes</span><span class="p">)</span> <span class="o">+</span> \
+                                           <span class="nb">len</span><span class="p">(</span><span class="n">mesh_block_bytes</span><span class="p">)</span>  <span class="c1"># This is cte 128</span>
+
+    <span class="c1"># Write data block header for Mesh 1</span>
+    <span class="n">data_header_bytes</span> <span class="o">=</span> <span class="n">write_data_block_header</span><span class="p">(</span>
+        <span class="n">size_data</span><span class="o">=</span><span class="n">mesh_block_size_no_data_block_header</span><span class="p">,</span>
+        <span class="n">data_id</span><span class="o">=</span><span class="n">data_id</span><span class="p">,</span>
+        <span class="n">data_type</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="c1"># 3 for mesh</span>
+        <span class="n">version_data</span><span class="o">=</span><span class="mi">1</span>  <span class="c1"># Probably useful for counting</span>
+        <span class="c1"># the operation number</span>
+    <span class="p">)</span>
+
+    <span class="n">rex_bytes</span> <span class="o">=</span> <span class="n">data_header_bytes</span> <span class="o">+</span> <span class="n">mesh_header_bytes</span> <span class="o">+</span> <span class="n">mesh_block_bytes</span>
+    <span class="k">return</span> <span class="n">rex_bytes</span></div>
+
+
+<div class="viewcode-block" id="write_mesh_coordinates"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.mesh_encoder.write_mesh_coordinates.html#subsurface.writer.to_rex.mesh_encoder.write_mesh_coordinates">[docs]</a><span class="k">def</span> <span class="nf">write_mesh_coordinates</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">triangles</span><span class="p">,</span> <span class="n">normal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">texture</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Block with the coordinates of a mesh. This has to go with a header!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vertex (numpy.ndarray[float32]): Array of vertex XYZXYZ...</span>
+<span class="sd">        triangles (numpy.ndarray[int32]): This is a list of integers which form</span>
+<span class="sd">         one triangle. Please make sure that normal and texture coordinates are inline with the</span>
+<span class="sd">         vertex coordinates. One index refers to the same normal and texture position. The</span>
+<span class="sd">         triangle orientation is required to be counter-clockwise (CCW)</span>
+<span class="sd">        normal (numpy.ndarray):</span>
+<span class="sd">        texture (numpy.ndarray):</span>
+<span class="sd">        colors (numpy.ndarray):</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ver = vertex.ravel()</span>
+    <span class="c1"># tri = triangles.ravel()</span>
+    <span class="k">if</span> <span class="n">normal</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">normal</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">texture</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">texture</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">input_</span> <span class="o">=</span> <span class="p">[(</span><span class="n">vertex</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+              <span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+              <span class="p">(</span><span class="n">texture</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+              <span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+              <span class="p">(</span><span class="n">triangles</span><span class="p">,</span> <span class="s1">&#39;uint32&#39;</span><span class="p">)]</span>
+
+    <span class="n">block_bytes</span> <span class="o">=</span> <span class="n">encode</span><span class="p">(</span><span class="n">input_</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">block_bytes</span></div>
+
+
+<div class="viewcode-block" id="write_mesh_header"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.mesh_encoder.write_mesh_header.html#subsurface.writer.to_rex.mesh_encoder.write_mesh_header">[docs]</a><span class="k">def</span> <span class="nf">write_mesh_header</span><span class="p">(</span><span class="n">n_vtx_coord</span><span class="p">,</span> <span class="n">n_triangles</span><span class="p">,</span>
+                      <span class="n">start_vtx_coord</span><span class="p">,</span> <span class="n">start_nor_coord</span><span class="p">,</span> <span class="n">start_tex_coord</span><span class="p">,</span>
+                      <span class="n">start_vtx_colors</span><span class="p">,</span>
+                      <span class="n">start_triangles</span><span class="p">,</span>
+                      <span class="n">name</span><span class="p">,</span> <span class="n">material_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># material_id=9223372036854775807</span>
+                      <span class="n">n_nor_coord</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_tex_coord</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_vtx_colors</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                      <span class="n">lod</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_lod</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function to write MESH DATA BLOCK header. The header size is fixed at 128 bytes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n_vtx_coord: number of vertex coordinates</span>
+<span class="sd">        n_triangles: number of triangles</span>
+<span class="sd">        start_vtx_coord: start vertex coordinate block (relative to mesh block start)</span>
+<span class="sd">        start_nor_coord: start vertex normals block (relative to mesh block start)</span>
+<span class="sd">        start_tex_coord: start of texture coordinate block (relative to mesh block start)</span>
+<span class="sd">        start_vtx_colors: start of colors block (relative to mesh block start)</span>
+<span class="sd">        start_triangles: start triangle block for vertices (relative to mesh block start)</span>
+<span class="sd">        name (str): Name of the mesh</span>
+<span class="sd">        material_id (int):  id which refers to the corresponding material block in this file</span>
+<span class="sd">        n_nor_coord:  number of normal coordinates (can be zero)</span>
+<span class="sd">        n_tex_coord:  number of texture coordinates (can be zero)</span>
+<span class="sd">        n_vtx_colors: number of vertex colors (can be zero)</span>
+<span class="sd">        lod (int): level of detail for the given geometry</span>
+<span class="sd">        max_lod (int): maximal level of detail for given geometry</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bytes: array of bytes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Strings are immutable so there is no way to modify them in place</span>
+    <span class="n">str_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># Size of the actual name of the mesh</span>
+    <span class="n">rest_name</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">74</span> <span class="o">-</span> <span class="n">str_size</span><span class="p">)</span>  <span class="c1">#</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="n">rest_name</span>
+
+    <span class="n">input_</span> <span class="o">=</span> <span class="p">[([</span><span class="n">lod</span><span class="p">,</span> <span class="n">max_lod</span><span class="p">],</span> <span class="s1">&#39;uint16&#39;</span><span class="p">),</span>  <span class="c1"># Level of detail</span>
+              <span class="p">([</span><span class="n">n_vtx_coord</span><span class="p">,</span>  <span class="c1"># number of vertex coordinates</span>
+                <span class="n">n_nor_coord</span><span class="p">,</span>  <span class="c1"># number of normal coordinates (can be zero)</span>
+                <span class="n">n_tex_coord</span><span class="p">,</span>  <span class="c1"># number of texture coordinates (can be zero)</span>
+                <span class="n">n_vtx_colors</span><span class="p">,</span>  <span class="c1"># number of vertex colors (can be zero)</span>
+                <span class="n">n_triangles</span><span class="p">,</span>  <span class="c1"># number of triangles</span>
+                <span class="n">start_vtx_coord</span><span class="p">,</span>
+                <span class="c1"># start vertex coordinate block (relative to mesh block start)</span>
+                <span class="n">start_nor_coord</span><span class="p">,</span>
+                <span class="c1"># start vertex normals block (relative to mesh block start)</span>
+                <span class="n">start_tex_coord</span><span class="p">,</span>
+                <span class="c1"># start of texture coordinate block (relative to mesh block start)</span>
+                <span class="n">start_vtx_colors</span><span class="p">,</span>
+                <span class="c1"># start of colors block (relative to mesh block start)</span>
+                <span class="n">start_triangles</span>
+                <span class="c1"># start triangle block for vertices (relative to mesh block start)</span>
+                <span class="p">],</span>
+               <span class="s1">&#39;uint32&#39;</span><span class="p">),</span>
+              <span class="p">(</span><span class="n">material_id</span><span class="p">,</span> <span class="s1">&#39;uint64&#39;</span><span class="p">),</span>
+              <span class="c1"># id which refers to the corresponding material block in this file</span>
+              <span class="p">(</span><span class="n">str_size</span><span class="p">,</span> <span class="s1">&#39;uint16&#39;</span><span class="p">),</span>  <span class="c1"># size of the following string name</span>
+              <span class="p">(</span><span class="n">full_name</span><span class="p">,</span> <span class="s1">&#39;bytes&#39;</span><span class="p">)]</span>  <span class="c1"># name of the mesh (this is user-readable)</span>
+
+    <span class="n">block_bytes</span> <span class="o">=</span> <span class="n">encode</span><span class="p">(</span><span class="n">input_</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">block_bytes</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

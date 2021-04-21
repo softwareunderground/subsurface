@@ -1,0 +1,6 @@
+read_volumetric_mesh_attr_file
+==============================
+
+.. currentmodule:: subsurface.reader.volume.read_volume
+
+.. autofunction:: read_volumetric_mesh_attr_file

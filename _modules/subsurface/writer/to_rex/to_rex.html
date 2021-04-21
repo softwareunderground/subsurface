@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>subsurface.writer.to_rex.to_rex &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>subsurface.writer.to_rex.to_rex</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for subsurface.writer.to_rex.to_rex</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">from</span> <span class="nn">subsurface.writer.to_rex.common</span> <span class="kn">import</span> <span class="n">file_header_size</span><span class="p">,</span> <span class="n">encode</span>
+<span class="kn">from</span> <span class="nn">subsurface.writer.to_rex.data_struct</span> <span class="kn">import</span> <span class="n">RexLineSet</span><span class="p">,</span> <span class="n">RexMesh</span><span class="p">,</span> <span class="n">RexMaterial</span>
+<span class="kn">from</span> <span class="nn">subsurface.writer.to_rex.material_encoder</span> <span class="kn">import</span> <span class="n">material_encode</span>
+<span class="kn">from</span> <span class="nn">subsurface.writer.to_rex.mesh_encoder</span> <span class="kn">import</span> <span class="n">mesh_encode</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;numpy_to_rex&#39;</span><span class="p">,</span> <span class="s1">&#39;w_data_blocks&#39;</span><span class="p">,</span> <span class="s1">&#39;w_block_data_type&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;w_file_header_and_coord_system_block&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;w_file_header_and_coord_system_block&#39;</span><span class="p">,</span> <span class="s1">&#39;write_rex_file&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;read_rex_file&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="numpy_to_rex"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.to_rex.numpy_to_rex.html#subsurface.writer.to_rex.to_rex.numpy_to_rex">[docs]</a><span class="k">def</span> <span class="nf">numpy_to_rex</span><span class="p">(</span>
+        <span class="n">rex_line_set</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RexLineSet</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">rex_meshes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RexMesh</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">rex_material</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RexMaterial</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="n">rex_line_set</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">rex_line_set</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">rex_meshes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">rex_meshes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">rex_material</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">rex_material</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+    <span class="n">data_block_bytes</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+    <span class="n">byte_size</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">data_block_bytes</span><span class="p">,</span> <span class="n">data_id</span> <span class="o">=</span> <span class="n">w_data_blocks</span><span class="p">(</span><span class="n">rex_meshes</span><span class="p">,</span> <span class="n">rex_material</span><span class="p">)</span>
+
+    <span class="n">n_data_blocks</span> <span class="o">=</span> <span class="n">data_id</span>
+    <span class="n">header_and_coord_block_bytes</span> <span class="o">=</span> <span class="n">w_file_header_and_coord_system_block</span><span class="p">(</span>
+        <span class="n">n_data_blocks</span><span class="o">=</span><span class="n">n_data_blocks</span><span class="p">,</span>
+        <span class="n">size_data_blocks</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data_block_bytes</span><span class="p">),</span>
+        <span class="n">start_data</span><span class="o">=</span><span class="n">file_header_size</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">header_and_coord_block_bytes</span> <span class="o">+</span> <span class="n">data_block_bytes</span></div>
+
+
+<div class="viewcode-block" id="w_data_blocks"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.to_rex.w_data_blocks.html#subsurface.writer.to_rex.to_rex.w_data_blocks">[docs]</a><span class="k">def</span> <span class="nf">w_data_blocks</span><span class="p">(</span><span class="n">rex_meshes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RexMesh</span><span class="p">],</span> <span class="n">rex_material</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RexMaterial</span><span class="p">]):</span>
+    <span class="n">data_id</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">rmesh_bytes</span><span class="p">,</span> <span class="n">data_id</span> <span class="o">=</span> <span class="n">w_block_data_type</span><span class="p">(</span><span class="n">mesh_encode</span><span class="p">,</span> <span class="n">rex_meshes</span><span class="p">,</span> <span class="n">data_id</span><span class="p">)</span>
+    <span class="n">rmaterial_bytes</span><span class="p">,</span> <span class="n">data_id</span> <span class="o">=</span> <span class="n">w_block_data_type</span><span class="p">(</span><span class="n">material_encode</span><span class="p">,</span> <span class="n">rex_material</span><span class="p">,</span>
+                                                 <span class="n">data_id</span><span class="p">)</span>
+
+    <span class="n">blocks_bytes</span> <span class="o">=</span> <span class="n">rmesh_bytes</span> <span class="o">+</span> <span class="n">rmaterial_bytes</span>
+    <span class="k">return</span> <span class="n">blocks_bytes</span><span class="p">,</span> <span class="n">data_id</span></div>
+
+
+<div class="viewcode-block" id="w_block_data_type"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.to_rex.w_block_data_type.html#subsurface.writer.to_rex.to_rex.w_block_data_type">[docs]</a><span class="k">def</span> <span class="nf">w_block_data_type</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span> <span class="n">rex_objects</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">data_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">data_block_bytes</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">rex_obj</span> <span class="ow">in</span> <span class="n">rex_objects</span><span class="p">:</span>
+        <span class="n">data_block_bytes</span> <span class="o">+=</span> <span class="n">encoder</span><span class="p">(</span><span class="n">rex_obj</span><span class="p">,</span> <span class="n">data_id</span><span class="o">=</span><span class="n">data_id</span><span class="p">)</span>
+        <span class="n">data_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">data_block_bytes</span><span class="p">,</span> <span class="n">data_id</span></div>
+
+
+<span class="k">def</span> <span class="nf">w_file_header_and_coord_system_block</span><span class="p">():</span>
+    <span class="k">return</span>
+
+
+<div class="viewcode-block" id="w_file_header_and_coord_system_block"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.to_rex.w_file_header_and_coord_system_block.html#subsurface.writer.to_rex.to_rex.w_file_header_and_coord_system_block">[docs]</a><span class="k">def</span> <span class="nf">w_file_header_and_coord_system_block</span><span class="p">(</span><span class="n">n_data_blocks</span><span class="p">,</span> <span class="n">size_data_blocks</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                         <span class="n">start_data</span><span class="o">=</span><span class="mi">86</span><span class="p">,</span> <span class="n">srid</span><span class="o">=</span><span class="mi">3876</span><span class="p">,</span> <span class="n">offsets</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that writes the header block of a rexfile:</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n_data_blocks:</span>
+<span class="sd">        size_data_blocks:</span>
+<span class="sd">        version (int): Version of the file</span>
+<span class="sd">        start_data (int): Position where data start. This is after the header</span>
+<span class="sd">         and coordinate system. If everything works fine it should be 86</span>
+<span class="sd">        srid (int): Spatial reference system identifier (srid)</span>
+<span class="sd">        offsets:</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reserved</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span> <span class="o">*</span> <span class="mi">42</span>
+    <span class="k">if</span> <span class="n">offsets</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">offsets</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">input_</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;REX1&#39;</span><span class="p">,</span> <span class="s1">&#39;bytes&#39;</span><span class="p">),</span>  <span class="c1"># REX1</span>
+              <span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="s1">&#39;uint16&#39;</span><span class="p">),</span>  <span class="c1"># file version</span>
+              <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;uint32&#39;</span><span class="p">),</span>  <span class="c1"># CRC32</span>
+              <span class="p">(</span><span class="n">n_data_blocks</span><span class="p">,</span> <span class="s1">&#39;uint16&#39;</span><span class="p">),</span>  <span class="c1"># Number of DATA BLOCKS</span>
+              <span class="p">(</span><span class="n">start_data</span><span class="p">,</span> <span class="s1">&#39;uint16&#39;</span><span class="p">),</span>  <span class="c1"># StartData</span>
+              <span class="p">(</span><span class="n">size_data_blocks</span><span class="p">,</span> <span class="s1">&#39;uint64&#39;</span><span class="p">),</span>  <span class="c1"># Size of all data blocks</span>
+              <span class="p">(</span><span class="n">reserved</span><span class="p">,</span> <span class="s1">&#39;bytes&#39;</span><span class="p">),</span>  <span class="c1"># Reserved</span>
+              <span class="c1"># Coordinate system block</span>
+              <span class="p">(</span><span class="n">srid</span><span class="p">,</span> <span class="s1">&#39;uint32&#39;</span><span class="p">),</span>  <span class="c1"># Spatial reference system identifier (srid)</span>
+              <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;uint16&#39;</span><span class="p">),</span>  <span class="c1"># Size of the name of the used system.</span>
+              <span class="p">(</span><span class="s1">&#39;EPSG&#39;</span><span class="p">,</span> <span class="s1">&#39;bytes&#39;</span><span class="p">),</span>  <span class="c1"># name of the used system.</span>
+              <span class="p">(</span><span class="n">offsets</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">)]</span>  <span class="c1"># Global x, y, z offset</span>
+
+    <span class="n">block_bytes</span> <span class="o">=</span> <span class="n">encode</span><span class="p">(</span><span class="n">input_</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">block_bytes</span></div>
+
+
+<div class="viewcode-block" id="write_rex_file"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.to_rex.write_rex_file.html#subsurface.writer.to_rex.to_rex.write_rex_file">[docs]</a><span class="k">def</span> <span class="nf">write_rex_file</span><span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write to disk a rexfile from its binary format&quot;&quot;&quot;</span>
+
+    <span class="n">new_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.rex&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+    <span class="n">new_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="read_rex_file"><a class="viewcode-back" href="../../../../api/subsurface.writer.to_rex.to_rex.read_rex_file.html#subsurface.writer.to_rex.to_rex.read_rex_file">[docs]</a><span class="k">def</span> <span class="nf">read_rex_file</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">bytes_read</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">bytes_read</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

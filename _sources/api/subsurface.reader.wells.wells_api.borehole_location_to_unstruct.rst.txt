@@ -1,0 +1,6 @@
+borehole_location_to_unstruct
+=============================
+
+.. currentmodule:: subsurface.reader.wells.wells_api
+
+.. autofunction:: borehole_location_to_unstruct

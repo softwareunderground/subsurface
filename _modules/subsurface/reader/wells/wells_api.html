@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>subsurface.reader.wells.wells_api &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>subsurface.reader.wells.wells_api</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for subsurface.reader.wells.wells_api</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">striplog</span> <span class="kn">import</span> <span class="n">Component</span>
+
+<span class="kn">from</span> <span class="nn">subsurface.reader.wells.pandas_to_welly</span> <span class="kn">import</span> <span class="n">WellyToSubsurfaceHelper</span>
+<span class="kn">from</span> <span class="nn">subsurface.reader.wells.well_files_reader</span> <span class="kn">import</span> <span class="n">read_borehole_files</span>
+<span class="kn">from</span> <span class="nn">subsurface.reader.wells.welly_reader</span> <span class="kn">import</span> <span class="n">welly_to_subsurface</span>
+<span class="kn">from</span> <span class="nn">subsurface.reader.readers_data</span> <span class="kn">import</span> <span class="n">ReaderWellsHelper</span><span class="p">,</span> <span class="n">ReaderFilesHelper</span>
+
+<span class="kn">from</span> <span class="nn">subsurface.structs</span> <span class="kn">import</span> <span class="n">UnstructuredData</span>
+
+<span class="kn">from</span> <span class="nn">subsurface.reader.wells</span> <span class="kn">import</span> <span class="n">read_collar</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;read_wells_to_unstruct&#39;</span><span class="p">,</span> <span class="s1">&#39;borehole_location_to_unstruct&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="read_wells_to_unstruct"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.wells_api.read_wells_to_unstruct.html#subsurface.reader.wells.wells_api.read_wells_to_unstruct">[docs]</a><span class="k">def</span> <span class="nf">read_wells_to_unstruct</span><span class="p">(</span><span class="n">reader_wells_helper</span><span class="p">:</span> <span class="n">ReaderWellsHelper</span><span class="p">,</span>
+                            <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;welly&#39;</span><span class="p">,</span> <span class="n">n_vertex_per_well</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
+                           <span class="n">table</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Component</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UnstructuredData</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Read from csv files (or excel) to `subsurface.Unstructured` object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        backend (string): Which library use for reading and processing of data.</span>
+<span class="sd">         So far: welly</span>
+<span class="sd">        table (List[Striplog.Component]): List of components to map lithologies</span>
+<span class="sd">         to value.</span>
+<span class="sd">        n_vertex_per_well (int): Number of vertex used to describe the geometry of the</span>
+<span class="sd">         well.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        `subsurface.UnstructuredData`:  if `return_welly` also the</span>
+<span class="sd">         welly object</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pandas_dict</span> <span class="o">=</span> <span class="n">read_borehole_files</span><span class="p">(</span><span class="n">reader_wells_helper</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">backend</span> <span class="o">==</span> <span class="s1">&#39;welly&#39;</span><span class="p">:</span>
+        <span class="n">wts</span> <span class="o">=</span> <span class="n">WellyToSubsurfaceHelper</span><span class="p">(</span><span class="o">**</span><span class="n">pandas_dict</span><span class="p">)</span>
+        <span class="n">unstruct</span> <span class="o">=</span> <span class="n">welly_to_subsurface</span><span class="p">(</span><span class="n">wts</span><span class="p">,</span> <span class="n">n_vertex_per_well</span><span class="o">=</span><span class="n">n_vertex_per_well</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">table</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Only welly is available at the moment&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">unstruct</span></div>
+
+
+<div class="viewcode-block" id="borehole_location_to_unstruct"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.wells_api.borehole_location_to_unstruct.html#subsurface.reader.wells.wells_api.borehole_location_to_unstruct">[docs]</a><span class="k">def</span> <span class="nf">borehole_location_to_unstruct</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">:</span> <span class="n">ReaderFilesHelper</span><span class="p">,</span>
+                                  <span class="n">add_number_segments</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UnstructuredData</span><span class="p">:</span>
+
+    <span class="n">collars</span> <span class="o">=</span> <span class="n">read_collar</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">)</span>
+    <span class="n">collars_attributes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+    <span class="c1"># Remove duplicates</span>
+    <span class="n">collars_single_well</span> <span class="o">=</span> <span class="n">collars</span><span class="p">[</span><span class="o">~</span><span class="n">collars</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
+    <span class="n">wells_names</span> <span class="o">=</span> <span class="n">collars_single_well</span><span class="o">.</span><span class="n">index</span>
+
+    <span class="k">if</span> <span class="n">add_number_segments</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">number_of_segments</span> <span class="o">=</span> <span class="n">collars</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">collars_attributes</span><span class="p">[</span><span class="s1">&#39;number_segments&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">number_of_segments</span>
+
+    <span class="n">ud</span> <span class="o">=</span> <span class="n">UnstructuredData</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span>
+        <span class="n">vertex</span><span class="o">=</span><span class="n">collars_single_well</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;altitude&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+        <span class="n">cells</span><span class="o">=</span><span class="s2">&quot;points&quot;</span><span class="p">,</span>
+        <span class="n">cells_attr</span><span class="o">=</span><span class="n">collars_attributes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+        <span class="n">xarray_attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;wells_names&quot;</span><span class="p">:</span> <span class="n">wells_names</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>  <span class="c1"># TODO: This should be int16!</span>
+
+    <span class="k">return</span> <span class="n">ud</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

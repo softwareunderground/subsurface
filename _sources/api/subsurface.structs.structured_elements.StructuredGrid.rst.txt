@@ -1,0 +1,33 @@
+StructuredGrid
+==============
+
+.. currentmodule:: subsurface.structs.structured_elements
+
+.. autoclass:: StructuredGrid
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~StructuredGrid.cartesian_coords_names
+      ~StructuredGrid.cartesian_dimensions
+      ~StructuredGrid.coord
+      ~StructuredGrid.meshgrid_3d
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~StructuredGrid.meshgrid_2d
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: cartesian_coords_names
+   .. autoattribute:: cartesian_dimensions
+   .. autoattribute:: coord
+   .. autoattribute:: meshgrid_3d
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: meshgrid_2d

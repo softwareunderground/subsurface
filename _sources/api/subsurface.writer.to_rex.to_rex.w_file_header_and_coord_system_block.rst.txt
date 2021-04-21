@@ -1,0 +1,6 @@
+w_file_header_and_coord_system_block
+====================================
+
+.. currentmodule:: subsurface.writer.to_rex.to_rex
+
+.. autofunction:: w_file_header_and_coord_system_block

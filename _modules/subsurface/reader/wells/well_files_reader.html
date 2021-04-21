@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>subsurface.reader.wells.well_files_reader &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-viz.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code-writer.html">Writer</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>subsurface.reader.wells.well_files_reader</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for subsurface.reader.wells.well_files_reader</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">subsurface.reader.readers_data</span> <span class="kn">import</span> <span class="n">ReaderFilesHelper</span><span class="p">,</span> <span class="n">ReaderWellsHelper</span>
+<span class="kn">from</span> <span class="nn">subsurface.reader.wells.wells_utils</span> <span class="kn">import</span> <span class="n">add_tops_from_base_and_altitude_in_place</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;read_borehole_files&#39;</span><span class="p">,</span> <span class="s1">&#39;read_collar&#39;</span><span class="p">,</span> <span class="s1">&#39;read_survey&#39;</span><span class="p">,</span> <span class="s1">&#39;read_lith&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;read_attributes&#39;</span><span class="p">,</span> <span class="s1">&#39;check_format_and_read_to_df&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;map_rows_and_cols_inplace&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="read_borehole_files"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.well_files_reader.read_borehole_files.html#subsurface.reader.wells.well_files_reader.read_borehole_files">[docs]</a><span class="k">def</span> <span class="nf">read_borehole_files</span><span class="p">(</span><span class="n">reader_wells_helper</span><span class="p">:</span> <span class="n">ReaderWellsHelper</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+    <span class="n">data_frames</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="n">data_frames</span><span class="p">[</span><span class="s1">&#39;collar_df&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">read_collar</span><span class="p">(</span><span class="n">reader_wells_helper</span><span class="o">.</span><span class="n">reader_collars_args</span><span class="p">)</span>
+
+    <span class="n">data_frames</span><span class="p">[</span><span class="s1">&#39;survey_df&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">read_survey</span><span class="p">(</span><span class="n">reader_wells_helper</span><span class="o">.</span><span class="n">reader_survey_args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">reader_wells_helper</span><span class="o">.</span><span class="n">reader_lith_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data_frames</span><span class="p">[</span><span class="s1">&#39;lith_df&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">read_lith</span><span class="p">(</span><span class="n">reader_wells_helper</span><span class="o">.</span><span class="n">reader_lith_args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">reader_wells_helper</span><span class="o">.</span><span class="n">reader_attr_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">attributes_</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">reader_wells_helper</span><span class="o">.</span><span class="n">reader_attr_args</span><span class="p">:</span>
+            <span class="n">attributes_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_attributes</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="n">data_frames</span><span class="p">[</span><span class="s1">&#39;attrib_dfs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attributes_</span>
+
+    <span class="k">return</span> <span class="n">data_frames</span></div>
+
+
+<div class="viewcode-block" id="read_collar"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.well_files_reader.read_collar.html#subsurface.reader.wells.well_files_reader.read_collar">[docs]</a><span class="k">def</span> <span class="nf">read_collar</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">:</span> <span class="n">ReaderFilesHelper</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+
+    <span class="k">if</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">usecols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">usecols</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">index_col</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Check file_or_buffer type</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">check_format_and_read_to_df</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">)</span>
+    <span class="n">map_rows_and_cols_inplace</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">reader_helper</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">d</span></div>
+
+
+<div class="viewcode-block" id="read_survey"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.well_files_reader.read_survey.html#subsurface.reader.wells.well_files_reader.read_survey">[docs]</a><span class="k">def</span> <span class="nf">read_survey</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">:</span> <span class="n">ReaderFilesHelper</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">index_col</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">check_format_and_read_to_df</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">)</span>
+    <span class="n">map_rows_and_cols_inplace</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">reader_helper</span><span class="p">)</span>
+
+    <span class="n">d_no_singles</span> <span class="o">=</span> <span class="n">_validate_survey_data</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">d_no_singles</span></div>
+
+
+<div class="viewcode-block" id="read_lith"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.well_files_reader.read_lith.html#subsurface.reader.wells.well_files_reader.read_lith">[docs]</a><span class="k">def</span> <span class="nf">read_lith</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">:</span> <span class="n">ReaderFilesHelper</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Columns MUST contain:</span>
+<span class="sd">        - top</span>
+<span class="sd">        - base</span>
+<span class="sd">        - component lith</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">index_col</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">check_format_and_read_to_df</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">)</span>
+    <span class="n">map_rows_and_cols_inplace</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">reader_helper</span><span class="p">)</span>
+    <span class="n">lith_df</span> <span class="o">=</span> <span class="n">_validate_lith_data</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">reader_helper</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">lith_df</span></div>
+
+
+<div class="viewcode-block" id="read_attributes"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.well_files_reader.read_attributes.html#subsurface.reader.wells.well_files_reader.read_attributes">[docs]</a><span class="k">def</span> <span class="nf">read_attributes</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">:</span> <span class="n">ReaderFilesHelper</span><span class="p">)</span><span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">index_col</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">check_format_and_read_to_df</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">columns_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">columns_map</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">drop_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">drop_cols</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">_validate_attr_data</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div>
+
+
+<div class="viewcode-block" id="check_format_and_read_to_df"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.well_files_reader.check_format_and_read_to_df.html#subsurface.reader.wells.well_files_reader.check_format_and_read_to_df">[docs]</a><span class="k">def</span> <span class="nf">check_format_and_read_to_df</span><span class="p">(</span><span class="n">reader_helper</span><span class="p">:</span> <span class="n">ReaderFilesHelper</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s2">&quot;.json&quot;</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">file_or_buffer</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;split&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">is_file_in_disk</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">_get_reader</span><span class="p">(</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">reader</span><span class="p">(</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">file_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">pandas_reader_kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">is_bytes_string</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">_get_reader</span><span class="p">(</span><span class="s1">&#39;.csv&#39;</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">reader</span><span class="p">(</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">file_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">pandas_reader_kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">is_python_dict</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">_get_reader</span><span class="p">(</span><span class="s1">&#39;dict&#39;</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">reader</span><span class="p">(</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">file_or_buffer</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;file_or_buffer must be either a path or a dict&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div>
+
+
+<div class="viewcode-block" id="map_rows_and_cols_inplace"><a class="viewcode-back" href="../../../../api/subsurface.reader.wells.well_files_reader.map_rows_and_cols_inplace.html#subsurface.reader.wells.well_files_reader.map_rows_and_cols_inplace">[docs]</a><span class="k">def</span> <span class="nf">map_rows_and_cols_inplace</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">reader_helper</span><span class="p">:</span> <span class="n">ReaderFilesHelper</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">index_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">index_map</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="c1">#d.index = d.index.map(reader_helper.index_map)</span>
+    <span class="k">if</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">columns_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">reader_helper</span><span class="o">.</span><span class="n">columns_map</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="c1">#d.columns = d.columns.map(reader_helper.columns_map)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_reader</span><span class="p">(</span><span class="n">file_format</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">file_format</span> <span class="o">==</span> <span class="s1">&#39;.xlsx&#39;</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span>
+    <span class="k">elif</span> <span class="n">file_format</span> <span class="o">==</span> <span class="s1">&#39;dict&#39;</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">_dict_reader</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span>
+    <span class="k">return</span> <span class="n">reader</span>
+
+
+<span class="k">def</span> <span class="nf">_dict_reader</span><span class="p">(</span><span class="n">dict_</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dict_: data, index, columns</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span>
+                        <span class="n">columns</span><span class="o">=</span><span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;columns&#39;</span><span class="p">],</span>
+                        <span class="n">index</span><span class="o">=</span><span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">_validate_survey_data</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">d</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;md&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;md, inc, and azi columns must be present in the file.&#39;</span>
+                             <span class="s1">&#39;Use columns_map to assign column names to these fields.&#39;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;md&#39;</span><span class="p">,</span> <span class="s1">&#39;inc&#39;</span><span class="p">,</span> <span class="s1">&#39;azi&#39;</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;inc and/or azi columns are not present in the file.&#39;</span>
+                      <span class="s1">&#39; The boreholes will be straight.&#39;</span><span class="p">)</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;inc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;azi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Drop wells that contain only one value</span>
+    <span class="n">d_no_singles</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">d_no_singles</span>
+
+
+<span class="k">def</span> <span class="nf">_validate_lith_data</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">reader_helper</span><span class="p">:</span> <span class="n">ReaderFilesHelper</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">given_top</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span> <span class="s1">&#39;component lith&#39;</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">given_altitude_and_base</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;altitude&#39;</span><span class="p">,</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span> <span class="s1">&#39;component lith&#39;</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">given_altitude_and_base</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">given_top</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">add_tops_from_base_and_altitude_in_place</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">reader_helper</span><span class="o">.</span><span class="n">index_col</span><span class="p">,</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span> <span class="s1">&#39;altitude&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">given_top</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">given_altitude_and_base</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;basis column must be present in the file. Use &#39;</span>
+                         <span class="s1">&#39;columns_map to assign column names to these fields.&#39;</span><span class="p">)</span>
+    <span class="n">lith_df</span> <span class="o">=</span> <span class="n">d</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span> <span class="s1">&#39;component lith&#39;</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">lith_df</span>
+
+
+<span class="k">def</span> <span class="nf">_validate_attr_data</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;basis&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">(),</span> <span class="s1">&#39;basis column&#39;</span> \
+                                            <span class="s1">&#39;must be present in the file.&#39;</span> \
+                                            <span class="s1">&#39;Use columns_map to assign&#39;</span> \
+                                            <span class="s1">&#39;column names to these fields.&#39;</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

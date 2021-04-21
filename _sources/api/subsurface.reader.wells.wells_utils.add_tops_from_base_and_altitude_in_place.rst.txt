@@ -1,0 +1,6 @@
+add_tops_from_base_and_altitude_in_place
+========================================
+
+.. currentmodule:: subsurface.reader.wells.wells_utils
+
+.. autofunction:: add_tops_from_base_and_altitude_in_place

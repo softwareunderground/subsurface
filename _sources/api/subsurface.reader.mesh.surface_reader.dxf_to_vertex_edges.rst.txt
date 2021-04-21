@@ -1,0 +1,6 @@
+dxf_to_vertex_edges
+===================
+
+.. currentmodule:: subsurface.reader.mesh.surface_reader
+
+.. autofunction:: dxf_to_vertex_edges

@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GemPyToRex &mdash; subsurface 0.1.dev1+gbcbfdeb documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="material_encode" href="subsurface.writer.to_rex.material_encoder.material_encode.html" />
+    <link rel="prev" title="write_rex" href="subsurface.writer.to_rex.gempy_to_rexfile.write_rex.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/subsurface.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.dev1+gbcbfdeb
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Galleries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external/index.html">External Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../code-geological-formats.html">Geological Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code-interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code-reader.html">Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code-structs.html">Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code-utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code-viz.html">Visualization</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../code-writer.html">Writer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../code-writer.html#module-subsurface.writer.to_binary">subsurface.writer.to_binary Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-writer.html#module-subsurface.writer.to_rex.common">subsurface.writer.to_rex.common Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-writer.html#module-subsurface.writer.to_rex.data_struct">subsurface.writer.to_rex.data_struct Module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../code-writer.html#module-subsurface.writer.to_rex.gempy_to_rexfile">subsurface.writer.to_rex.gempy_to_rexfile Module</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../code-writer.html#id2">Functions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../code-writer.html#id3">Classes</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">GemPyToRex</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code-writer.html#module-subsurface.writer.to_rex.material_encoder">subsurface.writer.to_rex.material_encoder Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-writer.html#module-subsurface.writer.to_rex.mesh_encoder">subsurface.writer.to_rex.mesh_encoder Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-writer.html#module-subsurface.writer.to_rex.rex_api">subsurface.writer.to_rex.rex_api Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-writer.html#module-subsurface.writer.to_rex.to_rex">subsurface.writer.to_rex.to_rex Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-writer.html#module-subsurface.writer.to_rex.utils">subsurface.writer.to_rex.utils Module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/softwareunderground/subsurface"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">subsurface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../code-writer.html">Writer</a> &raquo;</li>
+        
+      <li>GemPyToRex</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="subsurface.writer.to_rex.material_encoder.material_encode.html" class="btn btn-neutral float-right" title="material_encode" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="subsurface.writer.to_rex.gempy_to_rexfile.write_rex.html" class="btn btn-neutral float-left" title="write_rex" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gempytorex">
+<h1>GemPyToRex<a class="headerlink" href="#gempytorex" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">subsurface.writer.to_rex.gempy_to_rexfile.</span></code><code class="sig-name descname"><span class="pre">GemPyToRex</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geo_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/writer/to_rex/gempy_to_rexfile.html#GemPyToRex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.__call__" title="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code></a>([geo_model, meshes, material, …])</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param meshes</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.default_values" title="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.default_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_values</span></code></a>(app)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param app</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.gempy_color_to_rex_material" title="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.gempy_color_to_rex_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gempy_color_to_rex_material</span></code></a>(surface_df[, …])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.gempy_meshes_to_rex" title="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.gempy_meshes_to_rex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gempy_meshes_to_rex</span></code></a>(surface_df[, …])</p></td>
+<td><p>Write mesh to Rexfile.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.grab_meshes" title="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.grab_meshes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grab_meshes</span></code></a>(geo_model)</p></td>
+<td><p>Check if surfaces are computed. And return a pandas.DataFrame with</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.grab_topography" title="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.grab_topography"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grab_topography</span></code></a>(geo_model)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.hex_to_rgb" title="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.hex_to_rgb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hex_to_rgb</span></code></a>(hex[, normalize])</p></td>
+<td><p>Transform colors from hex to rgb</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.mesh_prepare_and_encode" title="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.mesh_prepare_and_encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mesh_prepare_and_encode</span></code></a>(rex_bytes, …[, …])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="py method">
+<dt id="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.__call__">
+<code class="sig-name descname"><span class="pre">__call__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geo_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meshes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surfaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topography</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GemPlay'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/writer/to_rex/gempy_to_rexfile.html#GemPyToRex.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>meshes</strong> – </p></li>
+<li><p><strong>surfaces</strong> (<em>list</em>) – Subset of surfaces to send to the client</p></li>
+<li><p><strong>app</strong> (<em>str</em>) – Either RexViewer or GemPlay. Set of default values</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.default_values">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">default_values</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/writer/to_rex/gempy_to_rexfile.html#GemPyToRex.default_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.default_values" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>flip_yz, backside, vertex_color</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.gempy_color_to_rex_material">
+<code class="sig-name descname"><span class="pre">gempy_color_to_rex_material</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topography</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/writer/to_rex/gempy_to_rexfile.html#GemPyToRex.gempy_color_to_rex_material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.gempy_color_to_rex_material" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.gempy_meshes_to_rex">
+<code class="sig-name descname"><span class="pre">gempy_meshes_to_rex</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topography_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flip_yz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backside</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/writer/to_rex/gempy_to_rexfile.html#GemPyToRex.gempy_meshes_to_rex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.gempy_meshes_to_rex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write mesh to Rexfile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>surface_df</strong> – </p></li>
+<li><p><strong>topography_dict</strong> – </p></li>
+<li><p><strong>flip_yz</strong> – Fliping YZ coordinates. Rexview need this</p></li>
+<li><p><strong>backside</strong> – If True, create a second set of triangles on the backside of the mesh</p></li>
+<li><p><strong>vertex_color</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+<p class="rubric">Notes</p>
+<p>At the moment 14.07.2020 it is not possible to write normals or texture</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.grab_meshes">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">grab_meshes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geo_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/writer/to_rex/gempy_to_rexfile.html#GemPyToRex.grab_meshes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.grab_meshes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Check if surfaces are computed. And return a pandas.DataFrame with</dt><dd><p>the meshes to be converted</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>geo_model</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.grab_topography">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">grab_topography</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geo_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/writer/to_rex/gempy_to_rexfile.html#GemPyToRex.grab_topography"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.grab_topography" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.hex_to_rgb">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">hex_to_rgb</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hex</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)"><span class="pre">numpy.ndarray</span></a><a class="reference internal" href="../_modules/subsurface/writer/to_rex/gempy_to_rexfile.html#GemPyToRex.hex_to_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.hex_to_rgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform colors from hex to rgb</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.mesh_prepare_and_encode">
+<code class="sig-name descname"><span class="pre">mesh_prepare_and_encode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rex_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flip_yz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backside</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/writer/to_rex/gempy_to_rexfile.html#GemPyToRex.mesh_prepare_and_encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.writer.to_rex.gempy_to_rexfile.GemPyToRex.mesh_prepare_and_encode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="subsurface.writer.to_rex.material_encoder.material_encode.html" class="btn btn-neutral float-right" title="material_encode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="subsurface.writer.to_rex.gempy_to_rexfile.write_rex.html" class="btn btn-neutral float-left" title="write_rex" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, The softwareunderground community.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

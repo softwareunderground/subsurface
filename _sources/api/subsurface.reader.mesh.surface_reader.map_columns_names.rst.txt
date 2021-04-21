@@ -1,0 +1,6 @@
+map_columns_names
+=================
+
+.. currentmodule:: subsurface.reader.mesh.surface_reader
+
+.. autofunction:: map_columns_names

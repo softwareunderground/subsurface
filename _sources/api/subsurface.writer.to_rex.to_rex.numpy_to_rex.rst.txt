@@ -1,0 +1,6 @@
+numpy_to_rex
+============
+
+.. currentmodule:: subsurface.writer.to_rex.to_rex
+
+.. autofunction:: numpy_to_rex

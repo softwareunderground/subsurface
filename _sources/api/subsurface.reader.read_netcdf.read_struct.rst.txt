@@ -1,0 +1,6 @@
+read_struct
+===========
+
+.. currentmodule:: subsurface.reader.read_netcdf
+
+.. autofunction:: read_struct

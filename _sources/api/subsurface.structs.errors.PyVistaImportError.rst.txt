@@ -1,0 +1,6 @@
+PyVistaImportError
+==================
+
+.. currentmodule:: subsurface.structs.errors
+
+.. autoexception:: PyVistaImportError

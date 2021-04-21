@@ -1,0 +1,6 @@
+rasterio_dataset_to_structured_data
+===================================
+
+.. currentmodule:: subsurface.reader.topography.topo_core
+
+.. autofunction:: rasterio_dataset_to_structured_data

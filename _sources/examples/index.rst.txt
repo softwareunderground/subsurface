@@ -5,6 +5,18 @@
 .. _sphx_glr_examples:
 
 Examples
+********
+
+
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr_examples_examples:
+
+Examples
 ========
 
 
@@ -14,10 +26,10 @@ Examples
 
 .. only:: html
 
- .. figure:: /examples/images/thumb/sphx_glr_gempy_model_thumb.png
+ .. figure:: /examples/examples/images/thumb/sphx_glr_gempy_model_thumb.png
      :alt: Reading Simple GemPy model in Subsurface
 
-     :ref:`sphx_glr_examples_gempy_model.py`
+     :ref:`sphx_glr_examples_examples_gempy_model.py`
 
 .. raw:: html
 
@@ -27,7 +39,71 @@ Examples
 .. toctree::
    :hidden:
 
-   /examples/gempy_model
+   /examples/examples/gempy_model
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr_examples_getting_started:
+
+Getting Started
+===============
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Getting started">
+
+.. only:: html
+
+ .. figure:: /examples/getting_started/images/thumb/sphx_glr_getting_started_thumb.png
+     :alt: Getting started
+
+     :ref:`sphx_glr_examples_getting_started_getting_started.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /examples/getting_started/getting_started
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr_examples_tutorials:
+
+Tutorials
+=========
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Reading Well Data into Subsurface">
+
+.. only:: html
+
+ .. figure:: /examples/tutorials/images/thumb/sphx_glr_reading_well_data_thumb.png
+     :alt: Reading Well Data into Subsurface
+
+     :ref:`sphx_glr_examples_tutorials_reading_well_data.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /examples/tutorials/reading_well_data
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>

@@ -1,0 +1,6 @@
+striplog_to_curve_log
+=====================
+
+.. currentmodule:: subsurface.reader.wells.welly_reader
+
+.. autofunction:: striplog_to_curve_log

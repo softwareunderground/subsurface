@@ -1,0 +1,6 @@
+write_material_data
+===================
+
+.. currentmodule:: subsurface.writer.to_rex.gempy_to_rexfile
+
+.. autofunction:: write_material_data

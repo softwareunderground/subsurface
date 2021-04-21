@@ -1,0 +1,6 @@
+read_mesh_file_to_vertex
+========================
+
+.. currentmodule:: subsurface.reader.mesh.surface_reader
+
+.. autofunction:: read_mesh_file_to_vertex

@@ -1,0 +1,63 @@
+UnstructuredData
+================
+
+.. currentmodule:: subsurface.structs.base_structures.unstructured_data
+
+.. autoclass:: UnstructuredData
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~UnstructuredData.attributes
+      ~UnstructuredData.attributes_to_dict
+      ~UnstructuredData.cells
+      ~UnstructuredData.cells_attr_name
+      ~UnstructuredData.n_elements
+      ~UnstructuredData.n_points
+      ~UnstructuredData.n_vertex_per_element
+      ~UnstructuredData.points_attributes
+      ~UnstructuredData.points_attributes_to_dict
+      ~UnstructuredData.vertex
+      ~UnstructuredData.vertex_attr_name
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~UnstructuredData.create_default_cells_arg
+      ~UnstructuredData.data_array_attributes_from_raw_data
+      ~UnstructuredData.from_array
+      ~UnstructuredData.from_data_arrays_dict
+      ~UnstructuredData.from_raw_data
+      ~UnstructuredData.raw_attributes_to_dict_data_arrays
+      ~UnstructuredData.to_binary
+      ~UnstructuredData.to_xarray
+      ~UnstructuredData.vertex_and_cells_arrays_to_data_array
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: attributes
+   .. autoattribute:: attributes_to_dict
+   .. autoattribute:: cells
+   .. autoattribute:: cells_attr_name
+   .. autoattribute:: n_elements
+   .. autoattribute:: n_points
+   .. autoattribute:: n_vertex_per_element
+   .. autoattribute:: points_attributes
+   .. autoattribute:: points_attributes_to_dict
+   .. autoattribute:: vertex
+   .. autoattribute:: vertex_attr_name
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: create_default_cells_arg
+   .. automethod:: data_array_attributes_from_raw_data
+   .. automethod:: from_array
+   .. automethod:: from_data_arrays_dict
+   .. automethod:: from_raw_data
+   .. automethod:: raw_attributes_to_dict_data_arrays
+   .. automethod:: to_binary
+   .. automethod:: to_xarray
+   .. automethod:: vertex_and_cells_arrays_to_data_array

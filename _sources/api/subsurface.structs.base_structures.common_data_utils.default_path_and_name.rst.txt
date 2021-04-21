@@ -1,0 +1,6 @@
+default_path_and_name
+=====================
+
+.. currentmodule:: subsurface.structs.base_structures.common_data_utils
+
+.. autofunction:: default_path_and_name

@@ -1,0 +1,19 @@
+TetraMesh
+=========
+
+.. currentmodule:: subsurface.structs.unstructured_elements
+
+.. autoclass:: TetraMesh
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~TetraMesh.n_tetrahedrals
+      ~TetraMesh.tetrahedrals
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: n_tetrahedrals
+   .. autoattribute:: tetrahedrals

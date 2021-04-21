@@ -1,0 +1,6 @@
+replace_outliers
+================
+
+.. currentmodule:: subsurface.structs.base_structures.common_data_utils
+
+.. autofunction:: replace_outliers

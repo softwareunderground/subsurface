@@ -1,0 +1,6 @@
+material_encode
+===============
+
+.. currentmodule:: subsurface.writer.to_rex.material_encoder
+
+.. autofunction:: material_encode

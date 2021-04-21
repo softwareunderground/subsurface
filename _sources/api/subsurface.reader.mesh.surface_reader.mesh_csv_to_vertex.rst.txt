@@ -1,0 +1,6 @@
+mesh_csv_to_vertex
+==================
+
+.. currentmodule:: subsurface.reader.mesh.surface_reader
+
+.. autofunction:: mesh_csv_to_vertex

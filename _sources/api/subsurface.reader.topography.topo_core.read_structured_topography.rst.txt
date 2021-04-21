@@ -1,0 +1,6 @@
+read_structured_topography
+==========================
+
+.. currentmodule:: subsurface.reader.topography.topo_core
+
+.. autofunction:: read_structured_topography

@@ -1,0 +1,6 @@
+update_grid_attribute
+=====================
+
+.. currentmodule:: subsurface.visualization.to_pyvista
+
+.. autofunction:: update_grid_attribute

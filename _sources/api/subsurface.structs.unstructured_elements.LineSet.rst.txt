@@ -1,0 +1,29 @@
+LineSet
+=======
+
+.. currentmodule:: subsurface.structs.unstructured_elements
+
+.. autoclass:: LineSet
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~LineSet.n_segments
+      ~LineSet.segments
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+
+      ~LineSet.generate_default_cells
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: n_segments
+   .. autoattribute:: segments
+
+   .. rubric:: Methods Documentation
+
+   .. automethod:: generate_default_cells

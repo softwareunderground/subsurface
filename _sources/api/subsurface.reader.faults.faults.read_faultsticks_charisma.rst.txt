@@ -1,0 +1,6 @@
+read_faultsticks_charisma
+=========================
+
+.. currentmodule:: subsurface.reader.faults.faults
+
+.. autofunction:: read_faultsticks_charisma
