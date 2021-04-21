@@ -5,6 +5,9 @@ from subsurface.structs.base_structures.structured_data import StructuredData
 from subsurface.structs.base_structures.unstructured_data import UnstructuredData
 
 
+__all__ = ['replace_outliers', 'to_netcdf', 'default_path_and_name']
+
+
 def replace_outliers(base_data: Union[StructuredData, UnstructuredData], dim=0, perc=0.99, replace_for=None):
     """@Edoardo Guerreiro https://stackoverflow.com/questions/60816533/
      is-there-a-built-in-function-in-xarray-to-remove-outliers-from-a-dataset"""

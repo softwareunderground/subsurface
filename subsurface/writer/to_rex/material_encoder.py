@@ -2,6 +2,9 @@ from subsurface.writer.to_rex.common import write_data_block_header, encode
 from subsurface.writer.to_rex.data_struct import RexMaterial
 
 
+__all__ = ['material_encode', 'write_material_data']
+
+
 def material_encode(rex_material: RexMaterial, data_id: int):
     # Write data block header for Material
     data_header_bytes = write_data_block_header(

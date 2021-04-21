@@ -3,6 +3,11 @@ from typing import List
 import pandas as pd
 
 
+__all__ = ['add_tops_from_base_and_altitude_in_place',
+           'fix_wells_higher_base_than_top_inplace', 'map_attr_to_segments',
+           'pivot_wells_df_into_segment_per_row']
+
+
 def add_tops_from_base_and_altitude_in_place(data: pd.DataFrame, col_well_name: str, col_base: str,
                                              col_altitude: str) -> pd.DataFrame:
     d = data
@@ -34,8 +39,6 @@ def pivot_wells_df_into_segment_per_row(df: pd.DataFrame, start_segment_cols: in
     df_fixed['base'] = df_bottoms.values.reshape(-1, 1, order='C')
 
     return df_fixed
-
-
 
 
 def _add_md_col_if_missing(d):

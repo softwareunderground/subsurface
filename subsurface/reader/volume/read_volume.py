@@ -4,6 +4,11 @@ from subsurface.reader.readers_data import ReaderFilesHelper
 import pandas as pd
 
 
+__all__ = ['read_volumetric_mesh_to_subsurface',
+           'read_volumetric_mesh_coord_file',
+           'read_volumetric_mesh_attr_file']
+
+
 def read_volumetric_mesh_to_subsurface(reader_helper_coord: ReaderFilesHelper,
                                        reader_helper_attr: ReaderFilesHelper) -> UnstructuredData:
     df_coord = read_volumetric_mesh_coord_file(reader_helper_coord)

@@ -10,6 +10,13 @@ import numpy as np
 import matplotlib.colors as mcolors
 import pandas as pd
 
+
+__all__ = ['GemPyToRex', 'encode', 'write_file_header_block',
+           'write_data_block_header', 'write_mesh_header',
+           'write_mesh_coordinates', 'write_material_data', 'hex_to_rgb',
+           'geomodel_to_rex', 'mesh_preprocess', 'write_file', 'write_rex', ]
+
+
 rexFileHeaderSize = 64
 rexCoordSize = 22
 

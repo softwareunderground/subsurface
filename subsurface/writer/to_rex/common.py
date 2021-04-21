@@ -1,5 +1,7 @@
 import numpy as np
 
+__all__ = ['write_data_block_header', 'encode']
+
 rexFileHeaderSize = 64
 rexCoordSize = 22
 

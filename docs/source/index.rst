@@ -11,43 +11,54 @@ subsurface Documentation
 ----
 
 
-
 .. include:: ../../README.rst
   :start-after: sphinx-inclusion-marker
 
-Contents:
+
+Requirements
+------------
+
+The **only** requirement for ``subsurface`` is ``xarray`` (which, in turn,
+requires ``pandas`` and ``numpy``).
+
+
+Optional requirements
+---------------------
+
+There are many optional requirements, depending on the data format you want to
+read/write. Currently, the ``requierements_opt.txt`` reads like:
+
+.. include:: ../../requirements_opt.txt
+   :literal:
+
 
 .. toctree::
    :maxdepth: 2
+   :hidden:
+   :caption: User Guide
 
-   installation
+   manual
    changelog
    contributing
    maintenance
 
 .. toctree::
    :maxdepth: 2
-   :caption: Getting started
+   :hidden:
+   :caption: Galleries
 
-   getting_started/index
-   tutorials/index
    examples/index
+   external/index
 
 .. toctree::
    :maxdepth: 2
+   :hidden:
    :caption: API Reference
 
-   code
-
-
-References
-----------
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
-
-
+   code-geological-formats
+   code-interfaces
+   code-reader
+   code-structs
+   code-utils
+   code-viz
+   code-writer

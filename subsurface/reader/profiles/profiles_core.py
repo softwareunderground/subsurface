@@ -7,6 +7,11 @@ import subsurface
 from subsurface.visualization import to_pyvista_mesh_and_texture, to_pyvista_line
 
 
+__all__ = ['create_mesh_from_trace', 'create_tri_surf_from_traces_texture',
+           'base_structs_to_tri_surf', 'traces_texture_to_sub_structs',
+           'lineset_from_trace']
+
+
 def create_mesh_from_trace(linestring,
                            zmax: Union[float, int],
                            zmin: Union[float, int],

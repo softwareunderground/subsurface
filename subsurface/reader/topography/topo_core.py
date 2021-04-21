@@ -6,6 +6,10 @@ from subsurface.reader.mesh.surfaces_api import read_2d_mesh_to_unstruct
 from subsurface.utils.utils_core import get_extension
 
 
+__all__ = ['read_structured_topography', 'rasterio_dataset_to_structured_data',
+           'read_unstructured_topography']
+
+
 def read_structured_topography(path) -> StructuredData:
     import rasterio
 

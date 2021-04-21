@@ -8,6 +8,9 @@ import xarray as xr
 from subsurface.reader.readers_data import RawDataUnstructured
 
 
+__all__ = ['UnstructuredData', ]
+
+
 @dataclass(frozen=True)
 class UnstructuredData:
     data: xr.Dataset

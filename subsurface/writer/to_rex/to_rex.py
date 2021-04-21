@@ -6,6 +6,12 @@ from subsurface.writer.to_rex.material_encoder import material_encode
 from subsurface.writer.to_rex.mesh_encoder import mesh_encode
 
 
+__all__ = ['numpy_to_rex', 'w_data_blocks', 'w_block_data_type',
+           'w_file_header_and_coord_system_block',
+           'w_file_header_and_coord_system_block', 'write_rex_file',
+           'read_rex_file']
+
+
 def numpy_to_rex(
         rex_line_set: List[RexLineSet] = None,
         rex_meshes: List[RexMesh] = None,
