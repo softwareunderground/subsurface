@@ -438,4 +438,5 @@ def test_aux_operations():
     df_with_tops_base = add_tops_from_base_and_altitude_in_place(df_mapped, 'name', "base", 'altitude')
     df_fixed = fix_wells_higher_base_than_top_inplace(df_with_tops_base)
     print(df_fixed)
-    df_fixed.to_csv(data_path.joinpath("kim_ready.csv"))
+    if False:
+        df_fixed.to_csv(data_path.joinpath("kim_ready.csv"))
