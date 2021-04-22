@@ -442,7 +442,7 @@ To help loading files we can use the following helper dataclass
     The following striplog failed being processed:  ['GD0041', 'GD0080', 'GD0092', 'GD0136', 'GD0211', 'GD0225', 'GD0235', 'GD0236', 'GD0304', 'GD0305', 'GD0308', 'GD0377', 'GD0399', 'GD0419', 'GD0439', 'GD0464', 'GD0487', 'GD0504', 'GD0505', 'GD0526', 'GD0529', 'GD0573', 'GD0597', 'GD0611', 'GD0617', 'GD0622', 'GD0632', 'GD0715', 'GD0733', 'GD0760', 'GD0766', 'GD0813', 'GD0816', 'GD0843', 'GD0845', 'GD0858', 'GD0937', 'GD0942', 'GD0948', 'GD0981', 'GD1007', 'GD1016']
     /home/runner/work/subsurface/subsurface/subsurface/reader/wells/welly_reader.py:109: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: {w.name}
       warnings.warn(f'At least one of the wells do not have '
-    The following boreholes failed being processed:  ['GD0439', 'GD0843', 'GD0305', 'GD0948', 'GD0487', 'GD0632', 'GD0715', 'GD0080', 'GD0813', 'GD0617', 'GD0235', 'GD1007', 'GD0597', 'GD0377', 'GD0308', 'GD0858', 'GD0981', 'GD0136', 'GD0611', 'GD0816', 'GD0464', 'GD0760', 'GD0526', 'GD0304', 'GD0942', 'GD0092', 'GD0236', 'GD0573', 'GD0504', 'GD0937', 'GD0733', 'GD0622', 'GD0225', 'GD0041', 'GD0766', 'GD0211', 'GD0399', 'GD0505', 'GD0845', 'GD1016', 'GD0529', 'GD0419', 'GD0439', 'GD0843', 'GD0305', 'GD0948', 'GD0487', 'GD0632', 'GD0715', 'GD0080', 'GD0813', 'GD0617', 'GD0235', 'GD1007', 'GD0597', 'GD0377', 'GD0308', 'GD0858', 'GD0981', 'GD0136', 'GD0611', 'GD0816', 'GD0464', 'GD0760', 'GD0526', 'GD0304', 'GD0942', 'GD0845', 'GD0092', 'GD0766', 'GD0236', 'GD0573', 'GD0504', 'GD0937', 'GD0733', 'GD0622', 'GD0225', 'GD0041', 'GD0211', 'GD0399', 'GD0505', 'GD1016', 'GD0529', 'GD0419']
+    The following boreholes failed being processed:  ['GD0225', 'GD0399', 'GD0766', 'GD0526', 'GD1016', 'GD0136', 'GD0760', 'GD0715', 'GD0813', 'GD0504', 'GD0235', 'GD0845', 'GD0981', 'GD0733', 'GD0377', 'GD0937', 'GD0843', 'GD0632', 'GD0211', 'GD0487', 'GD0597', 'GD0622', 'GD0236', 'GD0948', 'GD0080', 'GD0942', 'GD0464', 'GD0858', 'GD0304', 'GD0573', 'GD0308', 'GD0439', 'GD0505', 'GD0305', 'GD0419', 'GD0816', 'GD0617', 'GD0529', 'GD1007', 'GD0092', 'GD0611', 'GD0041', 'GD0225', 'GD0399', 'GD0766', 'GD0526', 'GD1016', 'GD0136', 'GD0760', 'GD0715', 'GD0813', 'GD0504', 'GD0235', 'GD0845', 'GD0981', 'GD0733', 'GD0377', 'GD0937', 'GD0843', 'GD0632', 'GD0211', 'GD0487', 'GD0597', 'GD0622', 'GD0236', 'GD0948', 'GD0080', 'GD0942', 'GD0464', 'GD0858', 'GD0304', 'GD0573', 'GD0308', 'GD0439', 'GD0505', 'GD0305', 'GD0419', 'GD0816', 'GD0617', 'GD0529', 'GD1007', 'GD0092', 'GD0611', 'GD0041']
 
 
 
@@ -471,11 +471,11 @@ To help loading files we can use the following helper dataclass
       * XYZ           (XYZ) <U1 'X' 'Y' 'Z'
       * cell_attr     (cell_attr) object 'lith_log'
       * vertex_attr   (vertex_attr) int64 
-        UWI           (cell) object 'GD0881' 'GD0881' 'GD0881' ... 'GD0290' 'GD0290'
-        Depth         (cell) float64 0.1297 0.3892 0.6487 ... 2.711 2.747 2.782
+        UWI           (cell) object 'GD0737' 'GD0737' 'GD0737' ... 'GD0193' 'GD0193'
+        Depth         (cell) float64 0.1215 0.3646 0.6076 ... 2.711 2.747 2.782
     Dimensions without coordinates: cell, nodes
     Data variables:
-        vertex        (points, XYZ) float64 3.241e+07 5.768e+06 ... 5.746e+06 57.0
+        vertex        (points, XYZ) float64 3.242e+07 5.782e+06 ... 5.735e+06 75.1
         cells         (cell, nodes) int64 0 1 1 2 2 ... 88157 88158 88158 88159
         cell_attrs    (cell, cell_attr) int64 1 1 1 1 1 1 1 1 1 ... 1 1 1 1 1 1 1 1
         vertex_attrs  (points, vertex_attr) float64 
@@ -536,7 +536,7 @@ transformation can be done by the functions `to_pyvista_...`.
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f301c2d0a00>
+    <pyvista.plotting.plotting.Plotter object at 0x7f68fc40a760>
 
 
 
@@ -583,7 +583,7 @@ We can do the same for point data, for example the borehole location.
     Data variables:
         vertex        (points, XYZ) float32 3.243e+07 5.785e+06 ... 5.742e+06 60.0
         cells         (cell, nodes) int64 0 1 2 3 4 5 ... 1139 1140 1141 1142 1143
-        cell_attrs    (cell, cell_attr) float32 2.0 2.0 2.0 2.0 ... 2.0 2.0 2.0 2.0
+        cell_attrs    (cell, cell_attr) float32 2.0 2.0 5.0 2.0 ... 2.0 2.0 2.0 4.0
         vertex_attrs  (points, vertex_attr) float64 
     Attributes:
         wells_names:  ['GD0001', 'GD0002', 'GD0003', 'GD0004', 'GD0005', 'GD0006'...
@@ -612,7 +612,7 @@ Element
  .. code-block:: none
 
 
-    <subsurface.structs.unstructured_elements.PointSet object at 0x7f301c310370>
+    <subsurface.structs.unstructured_elements.PointSet object at 0x7f68fc449250>
 
 
 
@@ -678,7 +678,7 @@ Pyvista mesh
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f300c32a0a0>
+    <pyvista.plotting.plotting.Plotter object at 0x7f68e1b847f0>
 
 
 
@@ -782,7 +782,7 @@ Remove outliers
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f2ff04cdc10>
+    <pyvista.plotting.plotting.Plotter object at 0x7f68e06e8d00>
 
 
 
@@ -863,7 +863,7 @@ Read Profiles
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f300c15fbe0>
+    <pyvista.plotting.plotting.Plotter object at 0x7f68e1b452b0>
 
 
 
@@ -929,7 +929,7 @@ UnstructuredData
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f300c2de9d0>
+    <pyvista.plotting.plotting.Plotter object at 0x7f68e1db1100>
 
 
 
@@ -970,7 +970,7 @@ Export to binary
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  42.234 seconds)
+   **Total running time of the script:** ( 0 minutes  42.034 seconds)
 
 
 .. _sphx_glr_download_examples_getting_started_getting_started.py:
