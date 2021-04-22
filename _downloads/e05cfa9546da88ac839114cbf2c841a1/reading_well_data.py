@@ -25,7 +25,7 @@ from subsurface.structs.base_structures.common_data_utils import to_netcdf
 
 base_url = "https://raw.githubusercontent.com/softwareunderground/subsurface/main/tests/data/borehole/"
 
-data_hash = "efa90898bb435daa15912ca6f3e08cd3285311923a36dbc697d2aafebbafa25f"
+data_hash = "55d58e1e1ed22509579d46f736fa5f07f4428c6744bd16dbd919242d14348da7"
 raw_borehole_data_csv = pooch.retrieve(url=base_url + 'kim_ready.csv',
                                        known_hash=data_hash)
 # %% md

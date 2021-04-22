@@ -1,0 +1,76 @@
+
+External Examples
+=================
+Here are a list of longer, more technical examples of what PyVista can do!
+.. caution::
+    Please note that these examples link to external websites.
+    If any of these links are broken, please raise an issue on the repository.
+Do you have a technical processing workflow or visualization routine you
+would like to share?
+If so, please consider sharing your work here submitting a PR at
+https://github.com/pyvista and we would be glad to add it!
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Loading a segy cube into `subsurface.StructuredData`.">
+    
+.. only:: html
+
+    .. figure:: https://raw.githubusercontent.com/trhallam/segysak/main/docs/_static/logo_small.png
+       :target: https://segysak.readthedocs.io/en/latest/examples/example_subsurface.html
+       
+       Using segysak with subsurface
+       
+       
+       
+       
+       
+       
+.. raw:: html
+
+    </div>
+    
+    
+    
+.. toctree::
+   :hidden:
+   
+   
+   Using segysak with subsurface <https://segysak.readthedocs.io/en/latest/examples/example_subsurface.html>
+   
+   
+   
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Build a model from Subsurface object and export result back to subsurface">
+    
+.. only:: html
+
+    .. figure:: https://docs.gempy.org/_images/sphx_glr_gempy_subsurface_002.png
+       :target: https://docs.gempy.org/integrations/gempy_subsurface.html#sphx-glr-integrations-gempy-subsurface-py
+       
+       GemPy - Subsurface Link
+       
+       
+       
+       
+       
+       
+.. raw:: html
+
+    </div>
+    
+    
+    
+.. toctree::
+   :hidden:
+   
+   
+   GemPy - Subsurface Link <https://docs.gempy.org/integrations/gempy_subsurface.html#sphx-glr-integrations-gempy-subsurface-py>
+   
+   
+   
+
+.. raw:: html
+    <div class="sphx-glr-clear"></div>

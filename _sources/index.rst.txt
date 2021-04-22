@@ -48,7 +48,7 @@ read/write. Currently, the ``requierements_opt.txt`` reads like:
    :caption: Galleries
 
    examples/index
-   external/index
+   external/external_examples
 
 .. toctree::
    :maxdepth: 2
