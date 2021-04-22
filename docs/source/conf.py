@@ -138,6 +138,10 @@ html_sidebars = {
 html_context = {
     'menu_links_name': 'Links',
     'menu_links': [
+        ('<i class="fa fa-link fa-fw"></i> SWUNG',
+         'https://softwareunderground.org'),
+        ('<i class="fa fa-slack fa-fw"></i> Slack',
+         'https://swu.ng/slack'),
         ('<i class="fa fa-github fa-fw"></i> Source Code',
          'https://github.com/softwareunderground/subsurface'),
     ],
