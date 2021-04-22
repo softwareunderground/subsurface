@@ -3,6 +3,7 @@ docs/build/
 docs/source/api/
 docs/source/gen_modules/
 docs/source/examples/
+docs/source/external/external_examples.rst
 
 # Versioning
 subsurface/_version.py

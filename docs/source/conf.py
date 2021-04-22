@@ -8,6 +8,11 @@ from sphinx_gallery.sorting import FileNameSortKey
 import pyvista
 import numpy as np
 
+# External examples:
+sys.path.insert(0, os.path.abspath('.'))
+import make_external_gallery
+make_external_gallery.make_example_gallery()
+
 
 # -- PyVista settings -----------------------------------------------------
 
