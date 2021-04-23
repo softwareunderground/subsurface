@@ -82,14 +82,12 @@ def make_example_gallery():
         f.write("""
 External Examples
 =================
-Here are a list of longer, more technical examples of what PyVista can do!
+This is a list of packages using `subsurface` as input or output of a workflow.
+If you have your own example let us know to be added to the gallery.
 .. caution::
     Please note that these examples link to external websites.
     If any of these links are broken, please raise an issue on the repository.
-Do you have a technical processing workflow or visualization routine you
-would like to share?
-If so, please consider sharing your work here submitting a PR at
-https://github.com/pyvista and we would be glad to add it!
+
 """)
         # Reverse to put the latest items at the top
         for Example in list(articles.values())[::-1]:
