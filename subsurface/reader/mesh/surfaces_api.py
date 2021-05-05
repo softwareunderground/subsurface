@@ -1,3 +1,5 @@
+import warnings
+
 from subsurface.structs import UnstructuredData
 
 from subsurface.reader.mesh.surface_reader import read_mesh_file_to_vertex, read_mesh_file_to_cells, \
@@ -39,7 +41,8 @@ def read_2d_mesh_to_unstruct(reader_args: ReaderUnstructuredHelper,
     elif delaunay:
         raw_data.cells = cells_from_delaunay(raw_data.vertex)
     else:
-        raise ValueError("No arguments to compute cell")
+        warnings.warn("No arguments to compute cell")
+        raw_data.cells = "points"
     if reader_args.reader_cells_attr_args is not None:
         raw_data.cells_attr = read_mesh_file_to_attr(reader_args.reader_cells_attr_args)
     if reader_args.reader_vertex_attr_args is not None:
