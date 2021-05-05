@@ -125,3 +125,19 @@ def dxf_to_vertex(file_or_buffer):
     vertex = np.array(vertex)
     vertex = np.unique(vertex, axis=0)
     return vertex
+
+
+def dxf_to_mesh(file_or_buffer):
+    import ezdxf
+    dataset = ezdxf.readfile(file_or_buffer)
+    vertex = []
+    entity = dataset.modelspace()
+    for e in entity:
+        vertex.append(e[0])
+        vertex.append(e[1])
+        vertex.append(e[2])
+    vertex = np.array(vertex)
+    cells = np.arange(0, vertex.shape[0]).reshape(-1, 3)
+
+    return vertex, cells
+
