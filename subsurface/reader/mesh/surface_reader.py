@@ -127,17 +127,27 @@ def dxf_to_vertex(file_or_buffer):
     return vertex
 
 
+def map_cell_attr_strings_to_integers(cell_attr):
+    d = dict([(y,x+1) for x,y in enumerate(sorted(set(np.unique(cell_attr))))])
+    cell_attr_int = np.array([d[x] for x in cell_attr])
+    return cell_attr_int, d
+
 def dxf_to_mesh(file_or_buffer):
     import ezdxf
     dataset = ezdxf.readfile(file_or_buffer)
     vertex = []
+    cell_attr = []
     entity = dataset.modelspace()
     for e in entity:
         vertex.append(e[0])
         vertex.append(e[1])
         vertex.append(e[2])
+        cell_attr.append(e.dxf.get("layer"))
     vertex = np.array(vertex)
     cells = np.arange(0, vertex.shape[0]).reshape(-1, 3)
+    
+    cell_attr_int, cell_attr_map = map_cell_attr_strings_to_integers(cell_attr)
+    
 
-    return vertex, cells
+    return vertex, cells, cell_attr_int, cell_attr_map
 
