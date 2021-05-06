@@ -418,9 +418,12 @@ def test_read_kim_default_component_table():
 
 
 def test_read_wells():
+
+    file_name = 'wells-database-small.xlsx'
+
     collar = read_collar(
         ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath('wells-database.xlsx'),
+            file_or_buffer=data_path.joinpath(file_name),
             index_col="HOLE",
             usecols=['EAST', 'NORT', 'ELEV', "HOLE"],
             # ['x', 'y', 'altitude', "name"]
@@ -440,7 +443,7 @@ def test_read_wells():
 
     survey = read_survey(
         ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath('wells-database.xlsx'),
+            file_or_buffer=data_path.joinpath(file_name),
             index_col="HOLE",
             columns_map={'DEAT': 'md', 'INCL': 'inc', 'AZIM': 'azi'},
             usecols=["HOLE", "DEAT", "AZIM", "INCL"],
@@ -455,7 +458,7 @@ def test_read_wells():
 
     lith = read_lith(
         ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath('wells-database.xlsx'),
+            file_or_buffer=data_path.joinpath(file_name),
             usecols=['HOLE', 'DEFR', 'DETO', 'GEOL'],
             columns_map={'DEFR': 'top',
                          'DETO': 'base',
@@ -478,6 +481,10 @@ def test_read_wells():
     table = [Component({'lith': l}) for l in formations]
 
     unstruct = welly_to_subsurface(wts, table=table)
+
+    from subsurface.writer import base_structs_to_binary_file
+    base_structs_to_binary_file("dmt_wells", unstruct)
+
     element = LineSet(unstruct)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element, radius=5)
 
