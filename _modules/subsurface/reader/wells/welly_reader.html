@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>subsurface.reader.wells.welly_reader &mdash; subsurface 0.2.5.dev26+geabc9fc documentation</title>
+  <title>subsurface.reader.wells.welly_reader &mdash; subsurface 0.2.5.dev27+gf4b8928 documentation</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                0.2.5.dev26+geabc9fc
+                0.2.5.dev27+gf4b8928
               </div>
             
           
@@ -259,9 +259,16 @@
         <span class="n">change_curve_basis_to_n_vertex_per_well_inplace</span><span class="p">(</span><span class="n">n_vertex_per_well</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">wts</span><span class="p">)</span>
 
         <span class="c1"># Convert striplog into Curve</span>
-        <span class="k">if</span> <span class="n">convert_lith</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="s1">&#39;lith&#39;</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">table</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">table</span> <span class="o">=</span> <span class="n">wts</span><span class="o">.</span><span class="n">lith_component_table</span>
-            <span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;lith_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">striplog_to_curve_log</span><span class="p">(</span><span class="n">n_vertex_per_well</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">wts</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">convert_lith</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;lith&#39;</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">table</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">table</span> <span class="o">=</span> <span class="n">wts</span><span class="o">.</span><span class="n">lith_component_table</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;lith_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">striplog_to_curve_log</span><span class="p">(</span><span class="n">n_vertex_per_well</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">wts</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;lith_log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Curve</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_vertex_per_well</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;lith_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">n_vertex_per_well</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cell_attr does not match cells&quot;</span><span class="p">)</span>
+
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">wts</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
