@@ -134,7 +134,7 @@ unstruct
 
 # %%
 # We can save the data into a netcdf by simply calling
-to_netcdf(unstruct, "wells_unstructured.nc")
+to_netcdf(unstruct, "wells_unstructured_temp.nc")
 
 # %% md
 # We are done. Now the well data is a `subsurface.UnstructuredData` and can be used as usual.
