@@ -15,6 +15,7 @@ scipy
 shapely
 requests
 ezdxf
+trimesh # to fix dxf meshes
 pooch
 netcdf4
 scooby
