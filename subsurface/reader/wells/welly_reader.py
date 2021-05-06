@@ -56,9 +56,16 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
         change_curve_basis_to_n_vertex_per_well_inplace(n_vertex_per_well, w, wts)
 
         # Convert striplog into Curve
-        if convert_lith is True and 'lith' in w.data:
-            if table is None: table = wts.lith_component_table
-            w.data['lith_log'] = striplog_to_curve_log(n_vertex_per_well, table, w, wts)
+        if convert_lith is True:
+            if 'lith' in w.data:
+                if table is None: table = wts.lith_component_table
+                w.data['lith_log'] = striplog_to_curve_log(n_vertex_per_well, table, w, wts)
+            else:
+                w.data["lith_log"] = Curve(-1 * np.ones(n_vertex_per_well -1, dtype=int))
+
+            if w.data["lith_log"].shape[0] != n_vertex_per_well - 1:
+                raise ValueError("Cell_attr does not match cells")
+
 
     try:
         df = wts.p.df()

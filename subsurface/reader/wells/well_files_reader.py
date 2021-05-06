@@ -95,6 +95,9 @@ def check_format_and_read_to_df(reader_helper: ReaderFilesHelper) -> pd.DataFram
         d = reader(reader_helper.file_or_buffer)
     else:
         raise AttributeError('file_or_buffer must be either a path or a dict')
+
+    if type(d.columns) is str:  d.columns = d.columns.str.strip() # Remove spaces at the beginning and end
+    if type(d.index) is str: d.index = d.index.str.strip()  # Remove spaces at the beginning and end
     return d
 
 

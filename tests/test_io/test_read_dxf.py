@@ -8,7 +8,7 @@ from subsurface.reader.readers_data import ReaderUnstructuredHelper, ReaderFiles
 
 
 def test_read_dxf_only_vertex(data_path):
-    path = data_path + '/surfaces/shafts.dxf'
+    path = data_path + '/surfaces/shafts_small.dxf'
 
     foo = ReaderUnstructuredHelper(ReaderFilesHelper(path))
 
@@ -48,8 +48,8 @@ def test_read_dxf_into_mesh(data_path):
                            "cell_attr_map": cell_attr_map
                            },
     )
-    from subsurface.writer import base_structs_to_binary_file
-    base_structs_to_binary_file("shafts", unstruct)
+    #from subsurface.writer import base_structs_to_binary_file
+    #base_structs_to_binary_file("shafts", unstruct)
 
     ts = TriSurf(mesh=unstruct)
     s = sb_viz.to_pyvista_mesh(ts)

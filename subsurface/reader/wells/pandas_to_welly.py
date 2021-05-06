@@ -71,7 +71,8 @@ class WellyToSubsurfaceHelper:
         self._unique_formations = unique_formations
 
     def add_wells(self, well_names: Iterable):
-        new_boreholes = self._well_names.symmetric_difference(well_names)
+        new_boreholes = set(well_names).difference(self._well_names)
+
         self._well_names = self._well_names.union(well_names)
         for b in new_boreholes:
             # TODO: Name and uwi should be different
@@ -105,7 +106,7 @@ class WellyToSubsurfaceHelper:
             w = self.p.get_well(b)
             data_dict = data.loc[[b]].to_dict('list')
 
-            s = Striplog.from_dict(data_dict, points=True)
+            s = Striplog.from_dict_advanced(data_dict, points=True)
 
             try:
                 n_basis = w.location.md.shape[0]

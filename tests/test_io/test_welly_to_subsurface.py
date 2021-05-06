@@ -231,7 +231,7 @@ def test_excel_to_subsurface():
     data_dict = foo.to_dict('list')
 
     # Load striplog
-    s = Striplog.from_dict(data_dict, remap={'DEPTH_FROM': 'top',
+    s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
                                              'DEPTH_TO': 'base',
                                              'LITHOLOGY': 'component lith',
                                              'SITE_ID': 'description'})
@@ -274,7 +274,7 @@ def test_striplog_2():
     foo = data.groupby(well_name_column).get_group(well_names[0])
     data_dict = foo.to_dict('list')
 
-    s = Striplog.from_dict(data_dict, remap={'DEPTH_FROM': 'top',
+    s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
                                              'DEPTH_TO': 'base',
                                              'LITHOLOGY': 'component lith',
                                              'SITE_ID': 'description'})
@@ -412,6 +412,74 @@ def test_read_kim_default_component_table():
     unstruct = welly_to_subsurface(wts)
     element = LineSet(unstruct)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element, radius=50)
+
+    # Plot default LITH
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
+
+
+def test_read_wells():
+    collar = read_collar(
+        ReaderFilesHelper(
+            file_or_buffer=data_path.joinpath('wells-database.xlsx'),
+            index_col="HOLE",
+            usecols=['EAST', 'NORT', 'ELEV', "HOLE"],
+            # ['x', 'y', 'altitude', "name"]
+            columns_map={
+                "EAST": "x",
+                'NORT': "y",
+                "ELEV": "altitude"
+            },
+            additional_reader_kwargs=
+            {
+                "sheet_name": "collar"
+            }
+        )
+    )
+
+    print(collar)
+
+    survey = read_survey(
+        ReaderFilesHelper(
+            file_or_buffer=data_path.joinpath('wells-database.xlsx'),
+            index_col="HOLE",
+            columns_map={'DEAT': 'md', 'INCL': 'inc', 'AZIM': 'azi'},
+            usecols=["HOLE", "DEAT", "AZIM", "INCL"],
+            additional_reader_kwargs=
+            {
+                "sheet_name": "survey"
+            }
+        )
+    )
+
+    print(survey)
+
+    lith = read_lith(
+        ReaderFilesHelper(
+            file_or_buffer=data_path.joinpath('wells-database.xlsx'),
+            usecols=['HOLE', 'DEFR', 'DETO', 'GEOL'],
+            columns_map={'DEFR': 'top',
+                         'DETO': 'base',
+                         'GEOL': 'component lith',
+                         },
+            additional_reader_kwargs=
+            {
+                "sheet_name": "geology"
+            }
+        )
+    )
+
+    print(lith)
+
+    wts = WellyToSubsurfaceHelper(collar_df=collar, survey_df=survey,
+                                  lith_df=lith
+                                  )
+
+    formations = range(1, 18)
+    table = [Component({'lith': l}) for l in formations]
+
+    unstruct = welly_to_subsurface(wts, table=table)
+    element = LineSet(unstruct)
+    pyvista_mesh = subsurface.visualization.to_pyvista_line(element, radius=5)
 
     # Plot default LITH
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
