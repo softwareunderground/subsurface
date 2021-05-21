@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>ReaderFilesHelper &mdash; subsurface 0.2.5.dev31+g4406527 documentation</title>
+  <title>ReaderFilesHelper &mdash; subsurface 0.2.5.dev32+g8d84e90 documentation</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/style.css" type="text/css" />
   <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
@@ -37,6 +39,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -74,7 +77,7 @@
             
             
               <div class="version">
-                0.2.5.dev31+g4406527
+                0.2.5.dev32+g8d84e90
               </div>
             
           
@@ -244,8 +247,8 @@
   <div class="section" id="readerfileshelper">
 <h1>ReaderFilesHelper<a class="headerlink" href="#readerfileshelper" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">subsurface.reader.readers_data.</span></code><code class="sig-name descname"><span class="pre">ReaderFilesHelper</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">file_or_buffer:</span> <span class="pre">Union[ForwardRef('PathLike[str]'),</span> <span class="pre">str,</span> <span class="pre">IO[~T],</span> <span class="pre">io.RawIOBase,</span> <span class="pre">io.BufferedIOBase,</span> <span class="pre">io.TextIOBase,</span> <span class="pre">_io.TextIOWrapper,</span> <span class="pre">mmap.mmap],</span> <span class="pre">usecols:</span> <span class="pre">Union[List[str],</span> <span class="pre">List[int]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">col_names:</span> <span class="pre">List[Union[str,</span> <span class="pre">int]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">drop_cols:</span> <span class="pre">List[str]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">format:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">index_map:</span> <span class="pre">Union[NoneType,</span> <span class="pre">Callable,</span> <span class="pre">dict,</span> <span class="pre">pandas.core.series.Series]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">columns_map:</span> <span class="pre">Union[NoneType,</span> <span class="pre">Callable,</span> <span class="pre">dict,</span> <span class="pre">pandas.core.series.Series]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">additional_reader_kwargs:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">index_col:</span> <span class="pre">Union[int,</span> <span class="pre">str]</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">header:</span> <span class="pre">Union[NoneType,</span> <span class="pre">int,</span> <span class="pre">List[int]]</span> <span class="pre">=</span> <span class="pre">'infer'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/readers_data.html#ReaderFilesHelper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">subsurface.reader.readers_data.</span></span><span class="sig-name descname"><span class="pre">ReaderFilesHelper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">file_or_buffer:</span> <span class="pre">Union[ForwardRef('PathLike[str]'),</span> <span class="pre">str,</span> <span class="pre">IO[~T],</span> <span class="pre">io.RawIOBase,</span> <span class="pre">io.BufferedIOBase,</span> <span class="pre">io.TextIOBase,</span> <span class="pre">_io.TextIOWrapper,</span> <span class="pre">mmap.mmap],</span> <span class="pre">usecols:</span> <span class="pre">Union[List[str],</span> <span class="pre">List[int]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">col_names:</span> <span class="pre">List[Union[str,</span> <span class="pre">int]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">drop_cols:</span> <span class="pre">List[str]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">format:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">index_map:</span> <span class="pre">Union[NoneType,</span> <span class="pre">Callable,</span> <span class="pre">dict,</span> <span class="pre">pandas.core.series.Series]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">columns_map:</span> <span class="pre">Union[NoneType,</span> <span class="pre">Callable,</span> <span class="pre">dict,</span> <span class="pre">pandas.core.series.Series]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">additional_reader_kwargs:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">index_col:</span> <span class="pre">Union[int,</span> <span class="pre">str]</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">header:</span> <span class="pre">Union[NoneType,</span> <span class="pre">int,</span> <span class="pre">List[int]]</span> <span class="pre">=</span> <span class="pre">'infer'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/readers_data.html#ReaderFilesHelper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p class="rubric">Attributes Summary</p>
 <table class="longtable docutils align-default">
@@ -294,63 +297,63 @@
 </table>
 <p class="rubric">Attributes Documentation</p>
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.col_names">
-<code class="sig-name descname"><span class="pre">col_names</span></code><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.col_names" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.col_names">
+<span class="sig-name descname"><span class="pre">col_names</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.col_names" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.columns_map">
-<code class="sig-name descname"><span class="pre">columns_map</span></code><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Callable</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.series.Series</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.columns_map" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.columns_map">
+<span class="sig-name descname"><span class="pre">columns_map</span></span><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Callable</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.series.Series</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.columns_map" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.drop_cols">
-<code class="sig-name descname"><span class="pre">drop_cols</span></code><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.drop_cols" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.drop_cols">
+<span class="sig-name descname"><span class="pre">drop_cols</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.drop_cols" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.format">
-<code class="sig-name descname"><span class="pre">format</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.format" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.format">
+<span class="sig-name descname"><span class="pre">format</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.format" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.header">
-<code class="sig-name descname"><span class="pre">header</span></code><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">'infer'</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.header" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.header">
+<span class="sig-name descname"><span class="pre">header</span></span><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">'infer'</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.header" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.index_col">
-<code class="sig-name descname"><span class="pre">index_col</span></code><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.index_col" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.index_col">
+<span class="sig-name descname"><span class="pre">index_col</span></span><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.index_col" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.index_map">
-<code class="sig-name descname"><span class="pre">index_map</span></code><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Callable</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.series.Series</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.index_map" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.index_map">
+<span class="sig-name descname"><span class="pre">index_map</span></span><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Callable</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.series.Series</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.index_map" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.is_bytes_string">
-<code class="sig-name descname"><span class="pre">is_bytes_string</span></code><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.is_bytes_string" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.is_bytes_string">
+<span class="sig-name descname"><span class="pre">is_bytes_string</span></span><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.is_bytes_string" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.is_file_in_disk">
-<code class="sig-name descname"><span class="pre">is_file_in_disk</span></code><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.is_file_in_disk" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.is_file_in_disk">
+<span class="sig-name descname"><span class="pre">is_file_in_disk</span></span><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.is_file_in_disk" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.is_python_dict">
-<code class="sig-name descname"><span class="pre">is_python_dict</span></code><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.is_python_dict" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.is_python_dict">
+<span class="sig-name descname"><span class="pre">is_python_dict</span></span><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.is_python_dict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.pandas_reader_kwargs">
-<code class="sig-name descname"><span class="pre">pandas_reader_kwargs</span></code><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.pandas_reader_kwargs" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.pandas_reader_kwargs">
+<span class="sig-name descname"><span class="pre">pandas_reader_kwargs</span></span><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.pandas_reader_kwargs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="subsurface.reader.readers_data.ReaderFilesHelper.usecols">
-<code class="sig-name descname"><span class="pre">usecols</span></code><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.usecols" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="subsurface.reader.readers_data.ReaderFilesHelper.usecols">
+<span class="sig-name descname"><span class="pre">usecols</span></span><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#subsurface.reader.readers_data.ReaderFilesHelper.usecols" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

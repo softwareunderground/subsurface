@@ -14,6 +14,7 @@ UnstructuredData
       ~UnstructuredData.attributes_to_dict
       ~UnstructuredData.cells
       ~UnstructuredData.cells_attr_name
+      ~UnstructuredData.extent
       ~UnstructuredData.n_elements
       ~UnstructuredData.n_points
       ~UnstructuredData.n_vertex_per_element
@@ -42,6 +43,7 @@ UnstructuredData
    .. autoattribute:: attributes_to_dict
    .. autoattribute:: cells
    .. autoattribute:: cells_attr_name
+   .. autoattribute:: extent
    .. autoattribute:: n_elements
    .. autoattribute:: n_points
    .. autoattribute:: n_vertex_per_element
