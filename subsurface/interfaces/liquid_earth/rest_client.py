@@ -103,7 +103,7 @@ class LiquidEarthClient():
     def _post_update_meta_data(self, project_id: str, data_name: str, data_type: DataTypes):
 
         query_param = f"?project_id={project_id}&data_id={data_name}&data_type={data_type.value}"
-        end_point = "http://localhost:7071/api/update_project_meta" + query_param
+        end_point = "subsurface-lite/v1/update_project_meta" + query_param
 
         response = requests.post(end_point)
 
