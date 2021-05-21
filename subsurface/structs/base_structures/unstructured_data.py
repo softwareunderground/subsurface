@@ -207,7 +207,7 @@ class UnstructuredData:
             raise AttributeError('points_attributes and vertex must have the same length.')
 
     @property
-    def vertex(self):
+    def vertex(self) -> np.ndarray:
         return self.data['vertex'].values
 
     @property
@@ -251,6 +251,13 @@ class UnstructuredData:
     @property
     def points_attributes_to_dict(self, orient='list'):
         return self.points_attributes.to_dict(orient)
+
+    @property
+    def extent(self):
+        max = self.vertex.max(axis=0)
+        min = self.vertex.min(axis=0)
+        extent = np.stack((min, max), axis = 1).ravel()
+        return extent
 
     def to_xarray(self):
         a = xr.DataArray(self.vertex, dims=['points', 'XYZ'])

@@ -73,3 +73,6 @@ venv.bak/
 # Spyder project settings
 .spyderproject
 .spyproject
+
+
+.local_settings.json
