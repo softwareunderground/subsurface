@@ -1,5 +1,3 @@
-import pytest
-
 from subsurface import TriSurf, StructuredGrid
 from subsurface.reader import read_structured_topography, read_unstructured_topography
 from subsurface.structs.base_structures.common_data_utils import replace_outliers
@@ -15,6 +13,12 @@ def test_read_topography_from_dxf(data_path):
 
 
 def test_read_topography_from_tif(data_path):
+    """
+    Notes:
+        It needs rasterio/gdal
+
+
+    """
     topo_path = data_path + '/topo/dtm_rp.tif'
     struct = read_structured_topography(topo_path)
     replace_outliers(struct, 'topography', 0.99)

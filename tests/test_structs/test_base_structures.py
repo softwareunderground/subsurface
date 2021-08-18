@@ -137,6 +137,13 @@ def test_read_struct(data_path):
 
 
 def test_remove_outliers(data_path):
+    """
+     Notes:
+         It needs rasterio/gdal
+
+
+     """
+
     topo_path = data_path + '/topo/dtm_rp.tif'
     struct = read_structured_topography(topo_path)
     replace_outliers(struct, 'topography', 0.99)

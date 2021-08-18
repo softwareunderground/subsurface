@@ -87,12 +87,13 @@ class TestLiquidEarthClient:
 
         vertex, cells, cell_attr_int, cell_attr_map = dxf_to_mesh(path)
 
-        tri = trimesh.Trimesh(vertex, faces=cells)
+        tri = trimesh.Trimesh(vertex, faces=cells, face_attributes={"Shaft id": cell_attr_int})
 
         unstruct = subsurface.UnstructuredData.from_array(
             np.array(tri.vertices),
             np.array(tri.faces),
-            cells_attr=pandas.DataFrame(cell_attr_int, columns=["Shaft id"]),
+            cells_attr=pandas.DataFrame(np.array(tri.face_attributes["Shaft id"]),
+                                        columns=["Shaft id"]),
             xarray_attributes={"bounds": tri.bounds.tolist(),
                                "cell_attr_map": cell_attr_map
                                },
@@ -102,7 +103,7 @@ class TestLiquidEarthClient:
         if True:
             trisurf = subsurface.TriSurf(unstruct)
             s = subsurface.visualization.to_pyvista_mesh(trisurf)
-            subsurface.visualization.pv_plot([s], image_2d=True)
+            subsurface.visualization.pv_plot([s], image_2d=False)
 
         return unstruct
 
