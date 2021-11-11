@@ -1,6 +1,6 @@
 import json
 import uuid
-from enum import Enum, auto
+from enum import Enum
 
 import requests
 
@@ -56,8 +56,11 @@ class LiquidEarthClient():
             return response.json()
 
     def add_new_project(self, project_name, extent, project_id=None):
+
         if project_id is None:
             project_id = str(uuid.uuid4())
+        else:
+            project_id = project_id.lower()
 
         available_projects: list = self.get_available_projects()
 
@@ -101,11 +104,10 @@ class LiquidEarthClient():
             print(response.text)
 
     def _post_update_meta_data(self, project_id: str, data_name: str, data_type: DataTypes):
-
         query_param = f"?project_id={project_id}&data_id={data_name}&data_type={data_type.value}"
         end_point = "subsurface-lite/v1/update_project_meta" + query_param
 
-        response = requests.post(end_point)
+        response = requests.post(self.host + end_point, headers=self.header)
 
         if response.status_code >= 400:
             raise Exception(f"Request failed: {response.text}")
