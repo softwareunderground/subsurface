@@ -5,6 +5,7 @@ xlrd~=1.2 # For reading xlsx
 git+https://github.com/Leguark/striplog.git
 
 welly >= 0.4.8
+wellpathy
 segyio
 matplotlib
 pyvista
