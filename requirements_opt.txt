@@ -4,8 +4,7 @@ xlrd~=1.2 # For reading xlsx
 # There is an open PR for striplog
 git+https://github.com/Leguark/striplog.git
 
-welly >= 0.4.8
-wellpathy
+welly == 0.4.8
 segyio
 matplotlib
 pyvista
