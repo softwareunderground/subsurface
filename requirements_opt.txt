@@ -1,15 +1,14 @@
-# Currently xlrd 2 breaks things
-xlrd~=1.2 # For reading xlsx
+openpyxl
+
+welly == 0.4.8
 
 # There is an open PR for striplog
 git+https://github.com/Leguark/striplog.git
 
-welly == 0.4.8
 segyio
 matplotlib
 pyvista
-geopandas
-rasterio
+
 imageio
 scipy
 shapely
@@ -19,3 +18,7 @@ trimesh # to fix dxf meshes
 pooch
 netcdf4
 scooby
+
+# Geospatial libraries
+#geopandas
+#rasterio

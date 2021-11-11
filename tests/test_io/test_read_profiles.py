@@ -1,5 +1,10 @@
-import geopandas as gpd
 import pytest
+
+try:
+    import geopandas as gpd
+    GEOPANDAS_IMPORTED = True
+except ImportError:
+    GEOPANDAS_IMPORTED = False
 
 from subsurface import UnstructuredData, TriSurf, StructuredData
 from subsurface.reader.profiles.profiles_core import create_mesh_from_trace, \
@@ -9,6 +14,7 @@ import imageio
 import numpy as np
 
 
+@pytest.mark.skipif(GEOPANDAS_IMPORTED is False, reason="Geopandas is not imported" )
 def test_read_trace_to_unstruct(data_path):
     traces = gpd.read_file(data_path + '/profiles/Traces.shp')
     v, e = create_mesh_from_trace(traces.loc[0, 'geometry'], traces.loc[0, 'zmax'],

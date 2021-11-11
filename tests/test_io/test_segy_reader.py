@@ -1,12 +1,10 @@
-from typing import List, Union
+from typing import List
 
 import pytest
 import os
-import pandas as pd
-import geopandas as gpd
-from subsurface import StructuredGrid, TriSurf
+
+from subsurface import  TriSurf
 from subsurface.geological_formats import segy_reader
-from subsurface.reader.profiles.profiles_core import create_mesh_from_trace
 from subsurface.structs.base_structures import StructuredData, UnstructuredData
 import matplotlib.pyplot as plt
 import numpy as np
