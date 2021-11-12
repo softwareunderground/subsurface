@@ -44,7 +44,12 @@ extensions = [
     'sphinx_gallery.gen_gallery',
     'sphinx_automodapi.automodapi',
     'sphinx_automodapi.smart_resolver',
+    "pyvista.ext.plot_directive"
 ]
+
+linkcheck_retries = 3
+linkcheck_timeout = 500
+
 autosummary_generate = True
 add_module_names = True
 numpydoc_show_class_members=False
