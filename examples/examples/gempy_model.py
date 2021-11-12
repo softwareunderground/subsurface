@@ -22,7 +22,7 @@ model_files = pooch.retrieve(
     processor=pooch.Unzip()
 )
 
-# %%
+# # %%
 fname, = [i for i in model_files if "meshes.nc" in i]
 dataset = ss.reader.read_netcdf.read_unstruct(fname)
 
