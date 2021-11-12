@@ -3,7 +3,7 @@ Getting started
 ===============
 """
 
-# %%md
+#%%md
 # Authors: Miguel de la Varga and Alexander Juestel
 #
 # This example shows how to read into subsurface structures a bunch of different
