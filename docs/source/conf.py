@@ -19,14 +19,16 @@ make_external_gallery.make_example_gallery()
 pyvista.set_error_output_file('errors.txt')
 # Ensure that offscreen rendering is used for docs generation
 pyvista.OFF_SCREEN = True  # Not necessary - simply an insurance policy
+pyvista.BUILDING_GALLERY = True
 # Preferred plotting style for documentation
 pyvista.set_plot_theme('document')
 pyvista.rcParams['window_size'] = np.array([1024, 768]) * 2
+
 # Save figures in specified directory
-pyvista.FIGURE_PATH = os.path.join(os.path.abspath('./images/'), 'auto-generated/')
-pyvista.BUILDING_GALLERY = True
-if not os.path.exists(pyvista.FIGURE_PATH):
-    os.makedirs(pyvista.FIGURE_PATH)
+#pyvista.FIGURE_PATH = os.path.join(os.path.abspath('./images/'), 'auto-generated/')
+
+# if not os.path.exists(pyvista.FIGURE_PATH):
+#     os.makedirs(pyvista.FIGURE_PATH)
 
 sys.path.insert(0, os.path.abspath('.'))
 
@@ -44,7 +46,12 @@ extensions = [
     'sphinx_gallery.gen_gallery',
     'sphinx_automodapi.automodapi',
     'sphinx_automodapi.smart_resolver',
+    "pyvista.ext.plot_directive"
 ]
+
+linkcheck_retries = 3
+linkcheck_timeout = 500
+
 autosummary_generate = True
 add_module_names = True
 numpydoc_show_class_members=False
@@ -108,7 +115,7 @@ sphinx_gallery_conf = {
     # directory where function granular galleries are stored
     "backreferences_dir": 'gen_modules/backreferences',
     # Modules for which function level galleries are created.  In
-    "doc_module": ('subsurface', "gempy", 'numpy', 'pandas', 'matplotlib'),
+    "doc_module": ('subsurface', 'numpy', 'pandas'),
     "image_scrapers": ('pyvista', 'matplotlib'),
     'first_notebook_cell': ("%matplotlib inline\n"
                             "from pyvista import set_plot_theme\n"
@@ -119,8 +126,17 @@ sphinx_gallery_conf = {
         'numpy': 'https://numpy.org/doc/stable/'
 
     },
-
 }
+
+linkcheck_ignore = [r'https://github.com/cgre-aachen/gempy_data/raw/master/',
+                    r'https://raw.githubusercontent.com/softwareunderground/subsurface/main/tests/data/borehole/'
+                    ]
+
+linkcheck_request_header = {
+    '*': {'Accept': 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8'},
+    'https://github.com': {}
+}
+
 
 # -- Options for HTML output ----------------------------------------------
 html_theme = 'sphinx_rtd_theme'
