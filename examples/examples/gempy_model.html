@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reading Simple GemPy model in Subsurface &mdash; subsurface 0.2.7.dev22+gf6e092c documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>Reading Simple GemPy model in Subsurface &mdash; subsurface 0.2.7.dev23+g152b0f4 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../index.html"><img src="../../_static/subsurface.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.2.7.dev22+gf6e092c
+                0.2.7.dev23+g152b0f4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -57,6 +57,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#sphx-glr-examples-examples">Examples</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Reading Simple GemPy model in Subsurface</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#single-surface">Single surface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#four-layers">Four Layers</a></li>
 </ul>
 </li>
 </ul>
@@ -164,57 +165,6 @@ Unzipping contents of &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256
 
 <a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_mesh</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span><span class="p">([</span><a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mesh</span></a><span class="p">])</span>
-
-<span class="c1">#</span>
-<span class="c1"># # %% md</span>
-<span class="c1"># # Four Layers</span>
-<span class="c1"># # -----------</span>
-<span class="c1">#</span>
-<span class="c1"># # Pull gempy model</span>
-<span class="c1"># model_files_2 = pooch.retrieve(</span>
-<span class="c1">#     url=&quot;https://github.com/cgre-aachen/gempy_data/raw/master/data/gempy_models/Kim.zip&quot;,</span>
-<span class="c1">#     known_hash=&quot;f530a88351ed0e38673c6937161c59a2f69df92202e14c1e5d5729ed5d72a323&quot;,</span>
-<span class="c1">#     processor=pooch.Unzip()</span>
-<span class="c1"># )</span>
-<span class="c1">#</span>
-<span class="c1"># # %% md</span>
-<span class="c1"># # Triangular meshes</span>
-<span class="c1"># # +++++++++++++++++</span>
-<span class="c1">#</span>
-<span class="c1"># # %%</span>
-<span class="c1"># fname, = [i for i in model_files_2 if &quot;meshes.nc&quot; in i]</span>
-<span class="c1"># gempy_tri_mesh_unstruct =  ss.reader.read_netcdf.read_unstruct(fname)</span>
-<span class="c1"># tri_surf = ss.TriSurf(gempy_tri_mesh_unstruct)</span>
-<span class="c1"># mesh = ss.visualization.to_pyvista_mesh(tri_surf)</span>
-<span class="c1"># ss.visualization.pv_plot([mesh])</span>
-<span class="c1">#</span>
-<span class="c1"># # %% md</span>
-<span class="c1"># # Regular grid</span>
-<span class="c1"># # ++++++++++++</span>
-<span class="c1">#</span>
-<span class="c1"># fname, = [i for i in model_files_2 if &quot;regular_grid.nc&quot; in i]</span>
-<span class="c1"># gempy_struct = ss.reader.read_netcdf.read_struct(fname)</span>
-<span class="c1"># regular_grid = ss.StructuredGrid(gempy_struct)</span>
-<span class="c1">#</span>
-<span class="c1"># # %%</span>
-<span class="c1"># pyvista_mesh = ss.visualization.to_pyvista_grid(regular_grid,</span>
-<span class="c1">#                                                 data_set_name=&#39;property_matrix&#39;,</span>
-<span class="c1">#                                                 attribute_slice={&#39;Properties&#39;: &#39;id&#39;}</span>
-<span class="c1">#                                                 )</span>
-<span class="c1">#</span>
-<span class="c1"># ss.visualization.pv_plot([pyvista_mesh])</span>
-<span class="c1">#</span>
-<span class="c1">#</span>
-<span class="c1">#</span>
-<span class="c1">#</span>
-<span class="c1"># # %%</span>
-<span class="c1">#</span>
-<span class="c1"># pyvista_mesh = ss.visualization.to_pyvista_grid(regular_grid,</span>
-<span class="c1">#                                                 data_set_name=&#39;block_matrix&#39;,</span>
-<span class="c1">#                                                 attribute_slice={&#39;Properties&#39;: &#39;id&#39;,</span>
-<span class="c1">#                                                                  &#39;Features&#39;: &#39;Default series&#39;})</span>
-<span class="c1">#</span>
-<span class="c1"># ss.visualization.pv_plot([pyvista_mesh])</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_gempy_model_001.png" srcset="../../_images/sphx_glr_gempy_model_001.png" alt="gempy model" class = "sphx-glr-single-img"/><p class="sphx-glr-script-out">Out:</p>
@@ -224,10 +174,82 @@ Unzipping contents of &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
   warnings.warn(
 
-&lt;pyvista.plotting.plotting.Plotter object at 0x7faee9717d00&gt;
+&lt;pyvista.plotting.plotting.Plotter object at 0x7f9839bb3f10&gt;
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.239 seconds)</p>
+</div>
+<div class="section" id="four-layers">
+<h2>Four Layers<a class="headerlink" href="#four-layers" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pull gempy model</span>
+<span class="n">model_files_2</span> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
+    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/cgre-aachen/gempy_data/raw/master/data/gempy_models/Kim.zip&quot;</span><span class="p">,</span>
+    <span class="n">known_hash</span><span class="o">=</span><span class="s2">&quot;f530a88351ed0e38673c6937161c59a2f69df92202e14c1e5d5729ed5d72a323&quot;</span><span class="p">,</span>
+    <span class="n">processor</span><span class="o">=</span><span class="n">pooch</span><span class="o">.</span><span class="n">Unzip</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Downloading data from &#39;https://github.com/cgre-aachen/gempy_data/raw/master/data/gempy_models/Kim.zip&#39; to file &#39;/home/runner/.cache/pooch/823c7ed465808f92b59f69c1da6e242b-Kim.zip&#39;.
+Unzipping contents of &#39;/home/runner/.cache/pooch/823c7ed465808f92b59f69c1da6e242b-Kim.zip&#39; to &#39;/home/runner/.cache/pooch/823c7ed465808f92b59f69c1da6e242b-Kim.zip.unzip&#39;
+</pre></div>
+</div>
+<div class="section" id="triangular-meshes">
+<h3>Triangular meshes<a class="headerlink" href="#triangular-meshes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fname</span><span class="p">,</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model_files_2</span> <span class="k">if</span> <span class="s2">&quot;meshes.nc&quot;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>
+<span class="n">gempy_tri_mesh_unstruct</span> <span class="o">=</span>  <a href="../../api/subsurface.reader.read_netcdf.read_unstruct.html#subsurface.reader.read_netcdf.read_unstruct" title="subsurface.reader.read_netcdf.read_unstruct" class="sphx-glr-backref-module-subsurface-reader-read_netcdf sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_netcdf</span><span class="o">.</span><span class="n">read_unstruct</span></a><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="n">tri_surf</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">TriSurf</span><span class="p">(</span><span class="n">gempy_tri_mesh_unstruct</span><span class="p">)</span>
+<a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_mesh</span><span class="p">(</span><span class="n">tri_surf</span><span class="p">)</span>
+<span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span><span class="p">([</span><a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mesh</span></a><span class="p">])</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_gempy_model_002.png" srcset="../../_images/sphx_glr_gempy_model_002.png" alt="gempy model" class = "sphx-glr-single-img"/><p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1332: PyvistaDeprecationWarning: Use of `cell_arrays` is deprecated. Use `cell_data` instead.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+  warnings.warn(
+
+&lt;pyvista.plotting.plotting.Plotter object at 0x7f9839ba8730&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="regular-grid">
+<h3>Regular grid<a class="headerlink" href="#regular-grid" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fname</span><span class="p">,</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model_files_2</span> <span class="k">if</span> <span class="s2">&quot;regular_grid.nc&quot;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>
+<span class="n">gempy_struct</span> <span class="o">=</span> <a href="../../api/subsurface.reader.read_netcdf.read_struct.html#subsurface.reader.read_netcdf.read_struct" title="subsurface.reader.read_netcdf.read_struct" class="sphx-glr-backref-module-subsurface-reader-read_netcdf sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_netcdf</span><span class="o">.</span><span class="n">read_struct</span></a><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="n">regular_grid</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">StructuredGrid</span><span class="p">(</span><span class="n">gempy_struct</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="pyvista.StructuredGrid" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pyvista_mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_grid</span><span class="p">(</span><span class="n">regular_grid</span><span class="p">,</span>
+                                                <span class="n">data_set_name</span><span class="o">=</span><span class="s1">&#39;property_matrix&#39;</span><span class="p">,</span>
+                                                <span class="n">attribute_slice</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Properties&#39;</span><span class="p">:</span> <span class="s1">&#39;id&#39;</span><span class="p">}</span>
+                                                <span class="p">)</span>
+
+<span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span><span class="p">([</span><a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="pyvista.StructuredGrid" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pyvista_mesh</span></a><span class="p">])</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_gempy_model_003.png" srcset="../../_images/sphx_glr_gempy_model_003.png" alt="gempy model" class = "sphx-glr-single-img"/><p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+  warnings.warn(
+
+&lt;pyvista.plotting.plotting.Plotter object at 0x7f9859b6c520&gt;
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="pyvista.StructuredGrid" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pyvista_mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_grid</span><span class="p">(</span><span class="n">regular_grid</span><span class="p">,</span>
+                                                <span class="n">data_set_name</span><span class="o">=</span><span class="s1">&#39;block_matrix&#39;</span><span class="p">,</span>
+                                                <span class="n">attribute_slice</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Properties&#39;</span><span class="p">:</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span>
+                                                                 <span class="s1">&#39;Features&#39;</span><span class="p">:</span> <span class="s1">&#39;Default series&#39;</span><span class="p">})</span>
+
+<span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span><span class="p">([</span><a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="pyvista.StructuredGrid" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pyvista_mesh</span></a><span class="p">])</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_gempy_model_004.png" srcset="../../_images/sphx_glr_gempy_model_004.png" alt="gempy model" class = "sphx-glr-single-img"/><p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+  warnings.warn(
+
+&lt;pyvista.plotting.plotting.Plotter object at 0x7f9859b6ccd0&gt;
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  9.389 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-examples-gempy-model-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/df1954c565bdf5d746205b3b06dad539/gempy_model.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">gempy_model.py</span></code></a></p>
@@ -237,6 +259,7 @@ Unzipping contents of &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
 </div>
 </div>
 

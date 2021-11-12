@@ -80,7 +80,7 @@ Single surface
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-86
+.. GENERATED FROM PYTHON SOURCE LINES 30-37
 
 .. code-block:: default
 
@@ -90,56 +90,7 @@ Single surface
     mesh = ss.visualization.to_pyvista_mesh(obj)
     ss.visualization.pv_plot([mesh])
 
-    #
-    # # %% md
-    # # Four Layers
-    # # -----------
-    #
-    # # Pull gempy model
-    # model_files_2 = pooch.retrieve(
-    #     url="https://github.com/cgre-aachen/gempy_data/raw/master/data/gempy_models/Kim.zip",
-    #     known_hash="f530a88351ed0e38673c6937161c59a2f69df92202e14c1e5d5729ed5d72a323",
-    #     processor=pooch.Unzip()
-    # )
-    #
-    # # %% md
-    # # Triangular meshes
-    # # +++++++++++++++++
-    #
-    # # %%
-    # fname, = [i for i in model_files_2 if "meshes.nc" in i]
-    # gempy_tri_mesh_unstruct =  ss.reader.read_netcdf.read_unstruct(fname)
-    # tri_surf = ss.TriSurf(gempy_tri_mesh_unstruct)
-    # mesh = ss.visualization.to_pyvista_mesh(tri_surf)
-    # ss.visualization.pv_plot([mesh])
-    #
-    # # %% md
-    # # Regular grid
-    # # ++++++++++++
-    #
-    # fname, = [i for i in model_files_2 if "regular_grid.nc" in i]
-    # gempy_struct = ss.reader.read_netcdf.read_struct(fname)
-    # regular_grid = ss.StructuredGrid(gempy_struct)
-    #
-    # # %%
-    # pyvista_mesh = ss.visualization.to_pyvista_grid(regular_grid,
-    #                                                 data_set_name='property_matrix',
-    #                                                 attribute_slice={'Properties': 'id'}
-    #                                                 )
-    #
-    # ss.visualization.pv_plot([pyvista_mesh])
-    #
-    #
-    #
-    #
-    # # %%
-    #
-    # pyvista_mesh = ss.visualization.to_pyvista_grid(regular_grid,
-    #                                                 data_set_name='block_matrix',
-    #                                                 attribute_slice={'Properties': 'id',
-    #                                                                  'Features': 'Default series'})
-    #
-    # ss.visualization.pv_plot([pyvista_mesh])
+
 
 
 
@@ -161,14 +112,176 @@ Single surface
     /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
       warnings.warn(
 
-    <pyvista.plotting.plotting.Plotter object at 0x7faee9717d00>
+    <pyvista.plotting.plotting.Plotter object at 0x7f9839bb3f10>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 38-40
+
+Four Layers
+-----------
+
+.. GENERATED FROM PYTHON SOURCE LINES 40-48
+
+.. code-block:: default
+
+
+    # Pull gempy model
+    model_files_2 = pooch.retrieve(
+        url="https://github.com/cgre-aachen/gempy_data/raw/master/data/gempy_models/Kim.zip",
+        known_hash="f530a88351ed0e38673c6937161c59a2f69df92202e14c1e5d5729ed5d72a323",
+        processor=pooch.Unzip()
+    )
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    Downloading data from 'https://github.com/cgre-aachen/gempy_data/raw/master/data/gempy_models/Kim.zip' to file '/home/runner/.cache/pooch/823c7ed465808f92b59f69c1da6e242b-Kim.zip'.
+    Unzipping contents of '/home/runner/.cache/pooch/823c7ed465808f92b59f69c1da6e242b-Kim.zip' to '/home/runner/.cache/pooch/823c7ed465808f92b59f69c1da6e242b-Kim.zip.unzip'
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 49-51
+
+Triangular meshes
++++++++++++++++++
+
+.. GENERATED FROM PYTHON SOURCE LINES 53-59
+
+.. code-block:: default
+
+    fname, = [i for i in model_files_2 if "meshes.nc" in i]
+    gempy_tri_mesh_unstruct =  ss.reader.read_netcdf.read_unstruct(fname)
+    tri_surf = ss.TriSurf(gempy_tri_mesh_unstruct)
+    mesh = ss.visualization.to_pyvista_mesh(tri_surf)
+    ss.visualization.pv_plot([mesh])
+
+
+
+
+.. image-sg:: /examples/examples/images/sphx_glr_gempy_model_002.png
+   :alt: gempy model
+   :srcset: /examples/examples/images/sphx_glr_gempy_model_002.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1332: PyvistaDeprecationWarning: Use of `cell_arrays` is deprecated. Use `cell_data` instead.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+      warnings.warn(
+
+    <pyvista.plotting.plotting.Plotter object at 0x7f9839ba8730>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 60-62
+
+Regular grid
+++++++++++++
+
+.. GENERATED FROM PYTHON SOURCE LINES 62-67
+
+.. code-block:: default
+
+
+    fname, = [i for i in model_files_2 if "regular_grid.nc" in i]
+    gempy_struct = ss.reader.read_netcdf.read_struct(fname)
+    regular_grid = ss.StructuredGrid(gempy_struct)
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 68-78
+
+.. code-block:: default
+
+    pyvista_mesh = ss.visualization.to_pyvista_grid(regular_grid,
+                                                    data_set_name='property_matrix',
+                                                    attribute_slice={'Properties': 'id'}
+                                                    )
+
+    ss.visualization.pv_plot([pyvista_mesh])
+
+
+
+
+
+
+
+.. image-sg:: /examples/examples/images/sphx_glr_gempy_model_003.png
+   :alt: gempy model
+   :srcset: /examples/examples/images/sphx_glr_gempy_model_003.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+      warnings.warn(
+
+    <pyvista.plotting.plotting.Plotter object at 0x7f9859b6c520>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 79-86
+
+.. code-block:: default
+
+
+    pyvista_mesh = ss.visualization.to_pyvista_grid(regular_grid,
+                                                    data_set_name='block_matrix',
+                                                    attribute_slice={'Properties': 'id',
+                                                                     'Features': 'Default series'})
+
+    ss.visualization.pv_plot([pyvista_mesh])
+
+
+
+.. image-sg:: /examples/examples/images/sphx_glr_gempy_model_004.png
+   :alt: gempy model
+   :srcset: /examples/examples/images/sphx_glr_gempy_model_004.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+      warnings.warn(
+
+    <pyvista.plotting.plotting.Plotter object at 0x7f9859b6ccd0>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.239 seconds)
+   **Total running time of the script:** ( 0 minutes  9.389 seconds)
 
 
 .. _sphx_glr_download_examples_examples_gempy_model.py:

@@ -36,249 +36,987 @@ data such as:
 
 - Exported gempy model from netcdf
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-258
+.. GENERATED FROM PYTHON SOURCE LINES 22-28
 
-import shutil
-import pandas as pd
+.. code-block:: default
 
-import subsurface as ss
-import pooch
+    import shutil
+    import pandas as pd
 
-# %%
-# Read wells:
-# -----------
-# We can read well data - using welly as the backend. First we need to have the
-# data in the right format for digesting.
+    import subsurface as ss
+    import pooch
 
-# %%
 
-# Pulling data example
-import subsurface.reader.profiles.profiles_core
-import subsurface.reader.read_netcdf
-import subsurface.reader.topography.topo_core
-import subsurface.reader.wells.wells_api
-from subsurface.reader.wells.wells_api import read_wells_to_unstruct, borehole_location_to_unstruct
-from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
-from subsurface.structs.base_structures.common_data_utils import replace_outliers
 
-model_file = pooch.retrieve(
-    url="https://github.com/cgre-aachen/gempy_data/raw/master/"
-        "data/subsurface/example1.zip",
-    known_hash=None
-)
 
-data_path = model_file[:-4]
-shutil.unpack_archive(model_file, extract_dir=model_file[:-4])
 
-# Read original file
-ori_wells = pd.read_csv(data_path + '/wells.csv')
 
-# Add top and base columns
-wells_fixed = ss.reader.wells.add_tops_from_base_and_altitude_in_place(
-    ori_wells,
-    'Index',
-    'Z',
-    'Altitude'
-)
 
-wells_fixed['md'] = wells_fixed['top']
-wells_fixed.to_csv(data_path + '/wells.csv')
-wells_fixed
 
-# %%md
-# Now we can read the csv files into subsurface.UnstructuredData
+.. GENERATED FROM PYTHON SOURCE LINES 29-33
 
-# %%
-# To help loading files we can use the following helper dataclass
-reader_collars_helper = ReaderFilesHelper(file_or_buffer=data_path + '/wells.csv',
-                                          usecols=['Index', 'X', 'Y', 'Altitude'], header=0)
-reader_collars_helper
+Read wells:
+-----------
+We can read well data - using welly as the backend. First we need to have the
+data in the right format for digesting.
 
-# %%
-reader_wells_helper = ReaderWellsHelper(
-    reader_collars_args=reader_collars_helper,
-    reader_survey_args=ReaderFilesHelper(
-        file_or_buffer=data_path + '/wells.csv',
-        index_col="Index",
-        usecols=['Index', 'md']
-    ),
-    reader_lith_args=ReaderFilesHelper(
-        file_or_buffer=data_path + '/wells.csv',
-        index_col="Index",
-        columns_map={'top': 'top', 'base': 'base', 'formation': 'component lith'},
-        usecols=['Index', 'top', 'base', 'formation']
+.. GENERATED FROM PYTHON SOURCE LINES 35-69
+
+.. code-block:: default
+
+
+    # Pulling data example
+    import subsurface.reader.profiles.profiles_core
+    import subsurface.reader.read_netcdf
+    import subsurface.reader.topography.topo_core
+    import subsurface.reader.wells.wells_api
+    from subsurface.reader.wells.wells_api import read_wells_to_unstruct, borehole_location_to_unstruct
+    from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
+    from subsurface.structs.base_structures.common_data_utils import replace_outliers
+
+    model_file = pooch.retrieve(
+        url="https://github.com/cgre-aachen/gempy_data/raw/master/"
+            "data/subsurface/example1.zip",
+        known_hash=None
     )
-)
-reader_wells_helper
 
-# %%
-wells_unstructured_data = read_wells_to_unstruct(reader_wells_helper)
+    data_path = model_file[:-4]
+    shutil.unpack_archive(model_file, extract_dir=model_file[:-4])
 
-# %%
-wells_unstructured_data
+    # Read original file
+    ori_wells = pd.read_csv(data_path + '/wells.csv')
 
-# %%md
-# From UnstructuredData we can create geometric objects such a lines, points, meshes,
-# etc. In the case of boreholes `subsurface.LineSet` is the most suitable geometric
-# representation.
-
-# %%
-wells_element = ss.LineSet(wells_unstructured_data)
-
-# %%
-# All elements in subsurface have their direct link to a pyvista mesh. This
-# transformation can be done by the functions `to_pyvista_...`.
-
-# Pyvista mesh
-wells_mesh = ss.visualization.to_pyvista_line(wells_element, radius=50)
-
-# Plotting
-ss.visualization.pv_plot(
-    [wells_mesh],
-    image_2d=False,
-    ve=5
-)
-
-# %%md
-# We can do the same for point data, for example the borehole location.
-
-# %%
-
-# UnstructuredData
-borehole_location_struct = borehole_location_to_unstruct(
-    ReaderFilesHelper(
-        file_or_buffer=data_path + '/wells.csv',
-        usecols=['Index', 'X', 'Y', 'Altitude'],
-        header=0,
-        columns_map={'X': 'x', 'Y': 'y', 'Altitude': 'altitude'}
+    # Add top and base columns
+    wells_fixed = ss.reader.wells.add_tops_from_base_and_altitude_in_place(
+        ori_wells,
+        'Index',
+        'Z',
+        'Altitude'
     )
-)
-borehole_location_struct
 
-# %%
-# Element
-borehole_location_point_set = ss.PointSet(borehole_location_struct)
-borehole_location_point_set
-
-# %%
-# Pyvista mesh
-borehole_loc_mesh = ss.visualization.to_pyvista_points(borehole_location_point_set)
-borehole_loc_mesh
-
-# %%
-ss.visualization.pv_plot([borehole_loc_mesh], image_2d=False, ve=5)
-
-# %%md
-# Read Topography
-# ---------------
-
-# %%
-
-# StructuredData
-topo_structured_data = subsurface.reader.topography.topo_core.read_structured_topography(data_path + '/DEM50.tif')
-topo_structured_data
-# %%
-# Remove outliers
-replace_outliers(topo_structured_data, 'topography', 0.98)
-
-# Element
-topo_element = ss.structs.StructuredGrid(topo_structured_data)
-topo_element
-
-# Pyvista mesh
-topo_mesh = ss.visualization.to_pyvista_grid(topo_element, 'topography',
-                                             data_order='C')
-
-# %%
-ss.visualization.pv_plot([topo_mesh], image_2d=False, ve=5)
-
-# %%md
-# Read Profiles
-# -------------
-
-# %%
-
-profiles_traces = subsurface.reader.profiles.profiles_core.lineset_from_trace(
-    data_path + '/Profiles_cropped/Profile_PyVista.shp',
-    idx=range(13)
-)
-
-# %%
-profiles_trisurf_list, profiles_mesh_list = subsurface.reader.profiles.profiles_core.create_tri_surf_from_traces_texture(
-    data_path + '/Profiles_cropped/Profile_PyVista.shp',
-    path_to_texture=[
-        data_path + '/Profiles_cropped/profile001.png',
-        data_path + '/Profiles_cropped/profile002.png',
-        data_path + '/Profiles_cropped/profile003.png',
-        data_path + '/Profiles_cropped/profile004.png',
-        data_path + '/Profiles_cropped/profile005.png',
-        data_path + '/Profiles_cropped/profile006.png',
-        data_path + '/Profiles_cropped/profile007.png',
-        data_path + '/Profiles_cropped/profile008.png',
-        data_path + '/Profiles_cropped/profile009.png',
-        data_path + '/Profiles_cropped/profile010.png',
-        data_path + '/Profiles_cropped/profile011.png',
-        data_path + '/Profiles_cropped/profile012.png',
-        data_path + '/Profiles_cropped/profile013.png',
-    ],
-    idx=range(13),
-    return_mesh=True,
-    return_uv=True
-)
-
-# %%
-ss.visualization.pv_plot(profiles_mesh_list, image_2d=False, ve=5)
+    wells_fixed['md'] = wells_fixed['top']
+    wells_fixed.to_csv(data_path + '/wells.csv')
+    wells_fixed
 
 
-# %%md
-# GemPy Mesh
-# ----------
-
-# %%
-# UnstructuredData
-gempy_unstructured_data = subsurface.reader.read_netcdf.read_unstruct(data_path + '/meshes.nc')
-
-# Element
-trisurf_gempy = ss.TriSurf(gempy_unstructured_data)
-
-# Pyvista mesh
-gempy_mesh = ss.visualization.to_pyvista_mesh(trisurf_gempy)
-
-# %%
-ss.visualization.pv_plot(
-    [gempy_mesh],
-    image_2d=False,
-    ve=5
-)
-
-# %%
-# sphinx_gallery_thumbnail_number = 6
 
 
-# %%
-# Export to binary
-# ----------------
 
-# %%
-subsurface.writer.to_binary.base_structs_to_binary_file(data_path + '/wells',
-                                                        wells_unstructured_data)
-subsurface.writer.to_binary.base_structs_to_binary_file(data_path + '/topo',
-                                                        topo_structured_data)
-subsurface.writer.to_binary.base_structs_to_binary_file(data_path + '/collars',
-                                                        borehole_location_struct)
+.. rst-class:: sphx-glr-script-out
 
-for e, tri_surf in enumerate(profiles_trisurf_list):
-    subsurface.writer.to_binary.base_structs_to_binary_file(data_path + f'/profile_{e}_mesh',
-                                                            tri_surf.mesh)
-    subsurface.writer.to_binary.base_structs_to_binary_file(
-        data_path + f'/profile_{e}_texture_C',
-        tri_surf.texture,
-        order='C')
+ Out:
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pandas/core/indexing.py:1773: SettingWithCopyWarning: 
+    A value is trying to be set on a copy of a slice from a DataFrame.
+    Try using .loc[row_indexer,col_indexer] = value instead
+
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+      self._setitem_single_column(ilocs[0], value, pi)
+    /home/runner/work/subsurface/subsurface/examples/getting_started/getting_started.py:65: SettingWithCopyWarning: 
+    A value is trying to be set on a copy of a slice from a DataFrame.
+    Try using .loc[row_indexer,col_indexer] = value instead
+
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+      wells_fixed['md'] = wells_fixed['top']
+
+
+.. raw:: html
+
+    <div class="output_subarea output_html rendered_html output_result">
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Unnamed: 0</th>
+          <th>Unnamed: 0.1</th>
+          <th>Unnamed: 0.1.1</th>
+          <th>Index</th>
+          <th>X</th>
+          <th>Y</th>
+          <th>Z</th>
+          <th>Altitude</th>
+          <th>Depth</th>
+          <th>formation</th>
+          <th>base</th>
+          <th>top</th>
+          <th>_top_abs</th>
+          <th>md</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>GD0001</td>
+          <td>32428405.75</td>
+          <td>5784686.57</td>
+          <td>131.8</td>
+          <td>132.0</td>
+          <td>59.0</td>
+          <td>Quaternary</td>
+          <td>0.2</td>
+          <td>0.0</td>
+          <td>132.0</td>
+          <td>0.0</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>GD0001</td>
+          <td>32428405.75</td>
+          <td>5784686.57</td>
+          <td>119.2</td>
+          <td>132.0</td>
+          <td>59.0</td>
+          <td>MittlererBuntsandsteinGP</td>
+          <td>12.8</td>
+          <td>0.2</td>
+          <td>132.2</td>
+          <td>0.2</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>2</td>
+          <td>2</td>
+          <td>2</td>
+          <td>GD0001</td>
+          <td>32428405.75</td>
+          <td>5784686.57</td>
+          <td>86.8</td>
+          <td>132.0</td>
+          <td>59.0</td>
+          <td>Zechstein</td>
+          <td>45.2</td>
+          <td>12.8</td>
+          <td>144.8</td>
+          <td>12.8</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>3</td>
+          <td>3</td>
+          <td>3</td>
+          <td>GD0001</td>
+          <td>32428405.75</td>
+          <td>5784686.57</td>
+          <td>84.0</td>
+          <td>132.0</td>
+          <td>59.0</td>
+          <td>UntererKeuperGP</td>
+          <td>48.0</td>
+          <td>45.2</td>
+          <td>177.2</td>
+          <td>45.2</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>4</td>
+          <td>4</td>
+          <td>4</td>
+          <td>GD0001</td>
+          <td>32428405.75</td>
+          <td>5784686.57</td>
+          <td>73.0</td>
+          <td>132.0</td>
+          <td>59.0</td>
+          <td>UnterJura</td>
+          <td>59.0</td>
+          <td>48.0</td>
+          <td>180.0</td>
+          <td>48.0</td>
+        </tr>
+        <tr>
+          <th>...</th>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+        </tr>
+        <tr>
+          <th>2793</th>
+          <td>2793</td>
+          <td>2793</td>
+          <td>2860</td>
+          <td>GD1145</td>
+          <td>32416535.22</td>
+          <td>5771551.96</td>
+          <td>-1910.0</td>
+          <td>50.0</td>
+          <td>2007.0</td>
+          <td>BochumFM</td>
+          <td>1960.0</td>
+          <td>1810.0</td>
+          <td>1860.0</td>
+          <td>1810.0</td>
+        </tr>
+        <tr>
+          <th>2794</th>
+          <td>2794</td>
+          <td>2794</td>
+          <td>2861</td>
+          <td>GD1145</td>
+          <td>32416535.22</td>
+          <td>5771551.96</td>
+          <td>-1957.0</td>
+          <td>50.0</td>
+          <td>2007.0</td>
+          <td>Carboniferous</td>
+          <td>2007.0</td>
+          <td>1960.0</td>
+          <td>2010.0</td>
+          <td>1960.0</td>
+        </tr>
+        <tr>
+          <th>2795</th>
+          <td>2795</td>
+          <td>2795</td>
+          <td>2862</td>
+          <td>GD1146</td>
+          <td>32407713.16</td>
+          <td>5742143.75</td>
+          <td>59.5</td>
+          <td>60.0</td>
+          <td>1135.0</td>
+          <td>Quaternary</td>
+          <td>0.5</td>
+          <td>0.0</td>
+          <td>60.0</td>
+          <td>0.0</td>
+        </tr>
+        <tr>
+          <th>2796</th>
+          <td>2796</td>
+          <td>2796</td>
+          <td>2863</td>
+          <td>GD1146</td>
+          <td>32407713.16</td>
+          <td>5742143.75</td>
+          <td>-865.0</td>
+          <td>60.0</td>
+          <td>1135.0</td>
+          <td>UnterSantonium</td>
+          <td>925.0</td>
+          <td>0.5</td>
+          <td>60.5</td>
+          <td>0.5</td>
+        </tr>
+        <tr>
+          <th>2797</th>
+          <td>2797</td>
+          <td>2797</td>
+          <td>2864</td>
+          <td>GD1146</td>
+          <td>32407713.16</td>
+          <td>5742143.75</td>
+          <td>-1075.0</td>
+          <td>60.0</td>
+          <td>1135.0</td>
+          <td>UnterTuronium</td>
+          <td>1135.0</td>
+          <td>925.0</td>
+          <td>985.0</td>
+          <td>925.0</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>2787 rows × 14 columns</p>
+    </div>
+    </div>
+    <br />
+    <br />
+
+.. GENERATED FROM PYTHON SOURCE LINES 70-71
+
+Now we can read the csv files into subsurface.UnstructuredData
+
+.. GENERATED FROM PYTHON SOURCE LINES 73-74
+
+To help loading files we can use the following helper dataclass
+
+.. GENERATED FROM PYTHON SOURCE LINES 74-78
+
+.. code-block:: default
+
+    reader_collars_helper = ReaderFilesHelper(file_or_buffer=data_path + '/wells.csv',
+                                              usecols=['Index', 'X', 'Y', 'Altitude'], header=0)
+    reader_collars_helper
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    ReaderFilesHelper(file_or_buffer='/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1/wells.csv', usecols=['Index', 'X', 'Y', 'Altitude'], col_names=None, drop_cols=None, format='.csv', index_map=None, columns_map=None, additional_reader_kwargs={}, file_or_buffer_type=<class 'str'>, index_col=False, header=0)
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 79-95
+
+.. code-block:: default
+
+    reader_wells_helper = ReaderWellsHelper(
+        reader_collars_args=reader_collars_helper,
+        reader_survey_args=ReaderFilesHelper(
+            file_or_buffer=data_path + '/wells.csv',
+            index_col="Index",
+            usecols=['Index', 'md']
+        ),
+        reader_lith_args=ReaderFilesHelper(
+            file_or_buffer=data_path + '/wells.csv',
+            index_col="Index",
+            columns_map={'top': 'top', 'base': 'base', 'formation': 'component lith'},
+            usecols=['Index', 'top', 'base', 'formation']
+        )
+    )
+    reader_wells_helper
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    ReaderWellsHelper(reader_collars_args=ReaderFilesHelper(file_or_buffer='/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1/wells.csv', usecols=['Index', 'X', 'Y', 'Altitude'], col_names=None, drop_cols=None, format='.csv', index_map=None, columns_map=None, additional_reader_kwargs={}, file_or_buffer_type=<class 'str'>, index_col=False, header=0), reader_survey_args=ReaderFilesHelper(file_or_buffer='/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1/wells.csv', usecols=['Index', 'md'], col_names=None, drop_cols=None, format='.csv', index_map=None, columns_map=None, additional_reader_kwargs={}, file_or_buffer_type=<class 'str'>, index_col='Index', header='infer'), reader_lith_args=ReaderFilesHelper(file_or_buffer='/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1/wells.csv', usecols=['Index', 'top', 'base', 'formation'], col_names=None, drop_cols=None, format='.csv', index_map=None, columns_map={'top': 'top', 'base': 'base', 'formation': 'component lith'}, additional_reader_kwargs={}, file_or_buffer_type=<class 'str'>, index_col='Index', header='infer'), reader_attr_args=None)
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 96-98
+
+.. code-block:: default
+
+    wells_unstructured_data = read_wells_to_unstruct(reader_wells_helper)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /home/runner/work/subsurface/subsurface/subsurface/reader/wells/well_files_reader.py:140: UserWarning: inc and/or azi columns are not present in the file. The boreholes will be straight.
+      warnings.warn('inc and/or azi columns are not present in the file.'
+    The following striplog failed being processed:  ['GD0041', 'GD0080', 'GD0092', 'GD0136', 'GD0211', 'GD0225', 'GD0235', 'GD0236', 'GD0304', 'GD0305', 'GD0308', 'GD0377', 'GD0399', 'GD0419', 'GD0439', 'GD0464', 'GD0487', 'GD0504', 'GD0505', 'GD0526', 'GD0529', 'GD0573', 'GD0597', 'GD0611', 'GD0617', 'GD0622', 'GD0632', 'GD0715', 'GD0733', 'GD0760', 'GD0766', 'GD0813', 'GD0816', 'GD0843', 'GD0845', 'GD0858', 'GD0937', 'GD0942', 'GD0948', 'GD0981', 'GD1007', 'GD1016']
+    /home/runner/work/subsurface/subsurface/subsurface/reader/wells/welly_reader.py:116: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: {w.name}
+      warnings.warn(f'At least one of the wells do not have '
+    The following boreholes failed being processed:  ['GD0504', 'GD0858', 'GD0622', 'GD0766', 'GD0304', 'GD0813', 'GD0235', 'GD1016', 'GD0419', 'GD0760', 'GD0816', 'GD0942', 'GD0305', 'GD0092', 'GD0041', 'GD0399', 'GD0529', 'GD0733', 'GD0948', 'GD0617', 'GD0377', 'GD0464', 'GD0573', 'GD0715', 'GD0937', 'GD0225', 'GD0632', 'GD1007', 'GD0526', 'GD0505', 'GD0136', 'GD0487', 'GD0845', 'GD0439', 'GD0611', 'GD0236', 'GD0080', 'GD0597', 'GD0211', 'GD0308', 'GD0843', 'GD0981']
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 99-101
+
+.. code-block:: default
+
+    wells_unstructured_data
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <xarray.Dataset>
+    Dimensions:       (points: 88160, XYZ: 3, cell: 87058, nodes: 2, cell_attr: 1, vertex_attr: 0)
+    Coordinates:
+      * points        (points) int64 0 1 2 3 4 5 ... 88155 88156 88157 88158 88159
+      * XYZ           (XYZ) <U1 'X' 'Y' 'Z'
+      * cell_attr     (cell_attr) object 'lith_log'
+      * vertex_attr   (vertex_attr) int64 
+        UWI           (cell) object 'GD0604' 'GD0604' 'GD0604' ... 'GD0536' 'GD0536'
+        Depth         (cell) float64 0.007595 0.02278 0.03797 ... 23.82 24.13 24.44
+    Dimensions without coordinates: cell, nodes
+    Data variables:
+        vertex        (points, XYZ) float64 3.239e+07 5.768e+06 ... 5.763e+06 24.6
+        cells         (cell, nodes) int64 0 1 1 2 2 ... 88157 88158 88158 88159
+        cell_attrs    (cell, cell_attr) int64 1 1 1 1 1 1 1 1 1 ... 1 1 1 1 1 1 1 1
+        vertex_attrs  (points, vertex_attr) float64 
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 102-105
+
+From UnstructuredData we can create geometric objects such a lines, points, meshes,
+etc. In the case of boreholes `subsurface.LineSet` is the most suitable geometric
+representation.
+
+.. GENERATED FROM PYTHON SOURCE LINES 107-109
+
+.. code-block:: default
+
+    wells_element = ss.LineSet(wells_unstructured_data)
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 110-112
+
+All elements in subsurface have their direct link to a pyvista mesh. This
+transformation can be done by the functions `to_pyvista_...`.
+
+.. GENERATED FROM PYTHON SOURCE LINES 112-123
+
+.. code-block:: default
+
+
+    # Pyvista mesh
+    wells_mesh = ss.visualization.to_pyvista_line(wells_element, radius=50)
+
+    # Plotting
+    ss.visualization.pv_plot(
+        [wells_mesh],
+        image_2d=False,
+        ve=5
+    )
+
+
+
+
+.. image-sg:: /examples/getting_started/images/sphx_glr_getting_started_001.png
+   :alt: getting started
+   :srcset: /examples/getting_started/images/sphx_glr_getting_started_001.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1332: PyvistaDeprecationWarning: Use of `cell_arrays` is deprecated. Use `cell_data` instead.
+      warnings.warn(
+
+    <pyvista.plotting.plotting.Plotter object at 0x7f98598330d0>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 124-125
+
+We can do the same for point data, for example the borehole location.
+
+.. GENERATED FROM PYTHON SOURCE LINES 127-139
+
+.. code-block:: default
+
+
+    # UnstructuredData
+    borehole_location_struct = borehole_location_to_unstruct(
+        ReaderFilesHelper(
+            file_or_buffer=data_path + '/wells.csv',
+            usecols=['Index', 'X', 'Y', 'Altitude'],
+            header=0,
+            columns_map={'X': 'x', 'Y': 'y', 'Altitude': 'altitude'}
+        )
+    )
+    borehole_location_struct
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <xarray.Dataset>
+    Dimensions:       (points: 1144, XYZ: 3, cell: 1144, nodes: 1, cell_attr: 1, vertex_attr: 0)
+    Coordinates:
+      * points        (points) int64 0 1 2 3 4 5 6 ... 1138 1139 1140 1141 1142 1143
+      * XYZ           (XYZ) <U1 'X' 'Y' 'Z'
+      * cell_attr     (cell_attr) object 'number_segments'
+      * vertex_attr   (vertex_attr) int64 
+        cell_         (cell) int64 0 1 2 3 4 5 6 ... 1138 1139 1140 1141 1142 1143
+    Dimensions without coordinates: cell, nodes
+    Data variables:
+        vertex        (points, XYZ) float32 3.243e+07 5.785e+06 ... 5.742e+06 60.0
+        cells         (cell, nodes) int64 0 1 2 3 4 5 ... 1139 1140 1141 1142 1143
+        cell_attrs    (cell, cell_attr) float32 5.0 3.0 4.0 2.0 ... 9.0 11.0 9.0 3.0
+        vertex_attrs  (points, vertex_attr) float64 
+    Attributes:
+        wells_names:  ['GD0001', 'GD0002', 'GD0003', 'GD0004', 'GD0005', 'GD0006'...
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 140-141
+
+Element
+
+.. GENERATED FROM PYTHON SOURCE LINES 141-144
+
+.. code-block:: default
+
+    borehole_location_point_set = ss.PointSet(borehole_location_struct)
+    borehole_location_point_set
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <subsurface.structs.unstructured_elements.PointSet object at 0x7f9859c2ff40>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 145-146
+
+Pyvista mesh
+
+.. GENERATED FROM PYTHON SOURCE LINES 146-149
+
+.. code-block:: default
+
+    borehole_loc_mesh = ss.visualization.to_pyvista_points(borehole_location_point_set)
+    borehole_loc_mesh
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+      warnings.warn(
+
+
+.. raw:: html
+
+    <div class="output_subarea output_html rendered_html output_result">
+    <table><tr><th>Header</th><th>Data Arrays</th></tr><tr><td>
+    <table>
+    <tr><th>PolyData</th><th>Information</th></tr>
+    <tr><td>N Cells</td><td>1144</td></tr>
+    <tr><td>N Points</td><td>1144</td></tr>
+    <tr><td>X Bounds</td><td>3.238e+07, 3.243e+07</td></tr>
+    <tr><td>Y Bounds</td><td>5.735e+06, 5.785e+06</td></tr>
+    <tr><td>Z Bounds</td><td>3.500e+01, 2.304e+02</td></tr>
+    <tr><td>N Arrays</td><td>1</td></tr>
+    </table>
+
+    </td><td>
+    <table>
+    <tr><th>Name</th><th>Field</th><th>Type</th><th>N Comp</th><th>Min</th><th>Max</th></tr>
+    <tr><td><b>number_segments</b></td><td>Points</td><td>float64</td><td>1</td><td>1.000e+00</td><td>1.900e+01</td></tr>
+    </table>
+
+    </td></tr> </table>
+    </div>
+    <br />
+    <br />
+
+.. GENERATED FROM PYTHON SOURCE LINES 150-152
+
+.. code-block:: default
+
+    ss.visualization.pv_plot([borehole_loc_mesh], image_2d=False, ve=5)
+
+
+
+
+.. image-sg:: /examples/getting_started/images/sphx_glr_getting_started_002.png
+   :alt: getting started
+   :srcset: /examples/getting_started/images/sphx_glr_getting_started_002.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <pyvista.plotting.plotting.Plotter object at 0x7f98598338e0>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 153-155
+
+Read Topography
+---------------
+
+.. GENERATED FROM PYTHON SOURCE LINES 157-161
+
+.. code-block:: default
+
+
+    # StructuredData
+    topo_structured_data = subsurface.reader.topography.topo_core.read_structured_topography(data_path + '/DEM50.tif')
+    topo_structured_data
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    StructuredData(data=<xarray.Dataset>
+    Dimensions:     (x: 2000, y: 2800)
+    Coordinates:
+      * x           (x) float64 3.25e+07 3.25e+07 3.25e+07 ... 3.236e+07 3.236e+07
+      * y           (y) float64 5.7e+06 5.7e+06 5.7e+06 ... 5.8e+06 5.8e+06 5.8e+06
+    Data variables:
+        topography  (x, y) float32 0.0 0.0 0.0 0.0 0.0 0.0 ... 0.0 0.0 0.0 0.0 0.0, data_array_name='topography')
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 162-163
+
+Remove outliers
+
+.. GENERATED FROM PYTHON SOURCE LINES 163-173
+
+.. code-block:: default
+
+    replace_outliers(topo_structured_data, 'topography', 0.98)
+
+    # Element
+    topo_element = ss.structs.StructuredGrid(topo_structured_data)
+    topo_element
+
+    # Pyvista mesh
+    topo_mesh = ss.visualization.to_pyvista_grid(topo_element, 'topography',
+                                                 data_order='C')
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    <xarray.DataArray 'topography' (x: 2000, y: 2800)>
+    array([[  0.  ,   0.  ,   0.  , ...,  40.1 ,  40.09,  44.58],
+           [  0.  ,   0.  ,   0.  , ...,  40.08,  40.07,  44.21],
+           [  0.  ,   0.  ,   0.  , ...,  40.14,  44.21,  43.98],
+           ...,
+           [100.56, 102.14, 102.17, ...,   0.  ,   0.  ,   0.  ],
+           [ 99.44,  99.85,  99.77, ...,   0.  ,   0.  ,   0.  ],
+           [ 88.32,  91.76,  98.68, ...,   0.  ,   0.  ,   0.  ]],
+          dtype=float32)
+    Coordinates:
+      * x         (x) float64 3.25e+07 3.25e+07 3.25e+07 ... 3.236e+07 3.236e+07
+      * y         (y) float64 5.7e+06 5.7e+06 5.7e+06 ... 5.8e+06 5.8e+06 5.8e+06
+        quantile  float64 0.98
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+      warnings.warn(
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 174-176
+
+.. code-block:: default
+
+    ss.visualization.pv_plot([topo_mesh], image_2d=False, ve=5)
+
+
+
+
+.. image-sg:: /examples/getting_started/images/sphx_glr_getting_started_003.png
+   :alt: getting started
+   :srcset: /examples/getting_started/images/sphx_glr_getting_started_003.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <pyvista.plotting.plotting.Plotter object at 0x7f98397c8e50>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 177-179
+
+Read Profiles
+-------------
+
+.. GENERATED FROM PYTHON SOURCE LINES 181-187
+
+.. code-block:: default
+
+
+    profiles_traces = subsurface.reader.profiles.profiles_core.lineset_from_trace(
+        data_path + '/Profiles_cropped/Profile_PyVista.shp',
+        idx=range(13)
+    )
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1332: PyvistaDeprecationWarning: Use of `cell_arrays` is deprecated. Use `cell_data` instead.
+      warnings.warn(
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 188-210
+
+.. code-block:: default
+
+    profiles_trisurf_list, profiles_mesh_list = subsurface.reader.profiles.profiles_core.create_tri_surf_from_traces_texture(
+        data_path + '/Profiles_cropped/Profile_PyVista.shp',
+        path_to_texture=[
+            data_path + '/Profiles_cropped/profile001.png',
+            data_path + '/Profiles_cropped/profile002.png',
+            data_path + '/Profiles_cropped/profile003.png',
+            data_path + '/Profiles_cropped/profile004.png',
+            data_path + '/Profiles_cropped/profile005.png',
+            data_path + '/Profiles_cropped/profile006.png',
+            data_path + '/Profiles_cropped/profile007.png',
+            data_path + '/Profiles_cropped/profile008.png',
+            data_path + '/Profiles_cropped/profile009.png',
+            data_path + '/Profiles_cropped/profile010.png',
+            data_path + '/Profiles_cropped/profile011.png',
+            data_path + '/Profiles_cropped/profile012.png',
+            data_path + '/Profiles_cropped/profile013.png',
+        ],
+        idx=range(13),
+        return_mesh=True,
+        return_uv=True
+    )
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1332: PyvistaDeprecationWarning: Use of `cell_arrays` is deprecated. Use `cell_data` instead.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1332: PyvistaDeprecationWarning: Use of `cell_arrays` is deprecated. Use `cell_data` instead.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+      warnings.warn(
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 211-214
+
+.. code-block:: default
+
+    ss.visualization.pv_plot(profiles_mesh_list, image_2d=False, ve=5)
+
+
+
+
+
+.. image-sg:: /examples/getting_started/images/sphx_glr_getting_started_004.png
+   :alt: getting started
+   :srcset: /examples/getting_started/images/sphx_glr_getting_started_004.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <pyvista.plotting.plotting.Plotter object at 0x7f9859aab820>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 215-217
+
+GemPy Mesh
+----------
+
+.. GENERATED FROM PYTHON SOURCE LINES 219-220
+
+UnstructuredData
+
+.. GENERATED FROM PYTHON SOURCE LINES 220-228
+
+.. code-block:: default
+
+    gempy_unstructured_data = subsurface.reader.read_netcdf.read_unstruct(data_path + '/meshes.nc')
+
+    # Element
+    trisurf_gempy = ss.TriSurf(gempy_unstructured_data)
+
+    # Pyvista mesh
+    gempy_mesh = ss.visualization.to_pyvista_mesh(trisurf_gempy)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /home/runner/work/subsurface/subsurface/subsurface/reader/read_netcdf.py:18: UserWarning: Trying loading legacy files.
+      warnings.warn("Trying loading legacy files.")
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1332: PyvistaDeprecationWarning: Use of `cell_arrays` is deprecated. Use `cell_data` instead.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+      warnings.warn(
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 229-235
+
+.. code-block:: default
+
+    ss.visualization.pv_plot(
+        [gempy_mesh],
+        image_2d=False,
+        ve=5
+    )
+
+
+
+
+.. image-sg:: /examples/getting_started/images/sphx_glr_getting_started_005.png
+   :alt: getting started
+   :srcset: /examples/getting_started/images/sphx_glr_getting_started_005.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <pyvista.plotting.plotting.Plotter object at 0x7f98397da550>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 236-237
+
+sphinx_gallery_thumbnail_number = 6
+
+.. GENERATED FROM PYTHON SOURCE LINES 240-242
+
+Export to binary
+----------------
+
+.. GENERATED FROM PYTHON SOURCE LINES 244-258
+
+.. code-block:: default
+
+    subsurface.writer.to_binary.base_structs_to_binary_file(data_path + '/wells',
+                                                            wells_unstructured_data)
+    subsurface.writer.to_binary.base_structs_to_binary_file(data_path + '/topo',
+                                                            topo_structured_data)
+    subsurface.writer.to_binary.base_structs_to_binary_file(data_path + '/collars',
+                                                            borehole_location_struct)
+
+    for e, tri_surf in enumerate(profiles_trisurf_list):
+        subsurface.writer.to_binary.base_structs_to_binary_file(data_path + f'/profile_{e}_mesh',
+                                                                tri_surf.mesh)
+        subsurface.writer.to_binary.base_structs_to_binary_file(
+            data_path + f'/profile_{e}_texture_C',
+            tri_surf.texture,
+            order='C')
+
+
+
+
+
+
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.000 seconds)
+   **Total running time of the script:** ( 0 minutes  46.597 seconds)
 
 
 .. _sphx_glr_download_examples_getting_started_getting_started.py:
