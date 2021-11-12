@@ -161,14 +161,14 @@ Single surface
     /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
       warnings.warn(
 
-    <pyvista.plotting.plotting.Plotter object at 0x7f9f40946d90>
+    <pyvista.plotting.plotting.Plotter object at 0x7faee9717d00>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.580 seconds)
+   **Total running time of the script:** ( 0 minutes  5.239 seconds)
 
 
 .. _sphx_glr_download_examples_examples_gempy_model.py:
