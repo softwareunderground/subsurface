@@ -14,7 +14,11 @@ scipy
 shapely
 requests
 ezdxf
+
+# Importing dxf
 trimesh # to fix dxf meshes
+networkx
+
 pooch
 netcdf4
 scooby
