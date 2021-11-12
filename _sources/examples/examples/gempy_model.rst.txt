@@ -112,7 +112,7 @@ Single surface
     /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
       warnings.warn(
 
-    <pyvista.plotting.plotting.Plotter object at 0x7fb31be7a520>
+    <pyvista.plotting.plotting.Plotter object at 0x7f083c25fdc0>
 
 
 
@@ -184,7 +184,7 @@ Triangular meshes
     /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
       warnings.warn(
 
-    <pyvista.plotting.plotting.Plotter object at 0x7fb33b7f3d00>
+    <pyvista.plotting.plotting.Plotter object at 0x7f085be07130>
 
 
 
@@ -241,7 +241,7 @@ Regular grid
     /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
       warnings.warn(
 
-    <pyvista.plotting.plotting.Plotter object at 0x7fb33b4004f0>
+    <pyvista.plotting.plotting.Plotter object at 0x7f085ba0c4f0>
 
 
 
@@ -274,14 +274,14 @@ Regular grid
     /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
       warnings.warn(
 
-    <pyvista.plotting.plotting.Plotter object at 0x7fb33b400ca0>
+    <pyvista.plotting.plotting.Plotter object at 0x7f085ba0ccd0>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  11.585 seconds)
+   **Total running time of the script:** ( 0 minutes  13.673 seconds)
 
 
 .. _sphx_glr_download_examples_examples_gempy_model.py:

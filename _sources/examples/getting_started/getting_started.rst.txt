@@ -442,7 +442,7 @@ To help loading files we can use the following helper dataclass
     The following striplog failed being processed:  ['GD0041', 'GD0080', 'GD0092', 'GD0136', 'GD0211', 'GD0225', 'GD0235', 'GD0236', 'GD0304', 'GD0305', 'GD0308', 'GD0377', 'GD0399', 'GD0419', 'GD0439', 'GD0464', 'GD0487', 'GD0504', 'GD0505', 'GD0526', 'GD0529', 'GD0573', 'GD0597', 'GD0611', 'GD0617', 'GD0622', 'GD0632', 'GD0715', 'GD0733', 'GD0760', 'GD0766', 'GD0813', 'GD0816', 'GD0843', 'GD0845', 'GD0858', 'GD0937', 'GD0942', 'GD0948', 'GD0981', 'GD1007', 'GD1016']
     /home/runner/work/subsurface/subsurface/subsurface/reader/wells/welly_reader.py:116: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: {w.name}
       warnings.warn(f'At least one of the wells do not have '
-    The following boreholes failed being processed:  ['GD0617', 'GD0305', 'GD0464', 'GD1016', 'GD0308', 'GD0981', 'GD0235', 'GD0504', 'GD0597', 'GD0041', 'GD0419', 'GD0845', 'GD1007', 'GD0573', 'GD0942', 'GD0622', 'GD0611', 'GD0813', 'GD0211', 'GD0304', 'GD0816', 'GD0948', 'GD0760', 'GD0715', 'GD0399', 'GD0136', 'GD0858', 'GD0080', 'GD0529', 'GD0632', 'GD0236', 'GD0377', 'GD0937', 'GD0733', 'GD0092', 'GD0526', 'GD0505', 'GD0439', 'GD0487', 'GD0766', 'GD0843', 'GD0225']
+    The following boreholes failed being processed:  ['GD0419', 'GD0622', 'GD0611', 'GD0504', 'GD0715', 'GD0304', 'GD1016', 'GD0041', 'GD0305', 'GD0526', 'GD0617', 'GD0816', 'GD0733', 'GD0487', 'GD0529', 'GD0766', 'GD0942', 'GD0760', 'GD0235', 'GD0225', 'GD0843', 'GD1007', 'GD0845', 'GD0080', 'GD0858', 'GD0981', 'GD0236', 'GD0573', 'GD0632', 'GD0399', 'GD0092', 'GD0211', 'GD0377', 'GD0308', 'GD0464', 'GD0948', 'GD0597', 'GD0505', 'GD0439', 'GD0813', 'GD0136', 'GD0937']
 
 
 
@@ -471,11 +471,11 @@ To help loading files we can use the following helper dataclass
       * XYZ           (XYZ) <U1 'X' 'Y' 'Z'
       * cell_attr     (cell_attr) object 'lith_log'
       * vertex_attr   (vertex_attr) int64 
-        UWI           (cell) object 'GD0982' 'GD0982' 'GD0982' ... 'GD0407' 'GD0407'
-        Depth         (cell) float64 0.09241 0.2772 0.462 ... 9.684 9.81 9.937
+        UWI           (cell) object 'GD0751' 'GD0751' 'GD0751' ... 'GD1072' 'GD1072'
+        Depth         (cell) float64 0.1263 0.3788 0.6313 ... 1.142e+03 1.157e+03
     Dimensions without coordinates: cell, nodes
     Data variables:
-        vertex        (points, XYZ) float64 3.241e+07 5.758e+06 ... 5.76e+06 62.35
+        vertex        (points, XYZ) float64 3.242e+07 5.777e+06 ... -1.098e+03
         cells         (cell, nodes) int64 0 1 1 2 2 ... 88157 88158 88158 88159
         cell_attrs    (cell, cell_attr) int64 1 1 1 1 1 1 1 1 1 ... 9 9 9 9 9 9 9 9
         vertex_attrs  (points, vertex_attr) float64 
@@ -539,7 +539,7 @@ transformation can be done by the functions `to_pyvista_...`.
     /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1332: PyvistaDeprecationWarning: Use of `cell_arrays` is deprecated. Use `cell_data` instead.
       warnings.warn(
 
-    <pyvista.plotting.plotting.Plotter object at 0x7fb33b05e640>
+    <pyvista.plotting.plotting.Plotter object at 0x7f085b66ac40>
 
 
 
@@ -615,7 +615,7 @@ Element
  .. code-block:: none
 
 
-    <subsurface.structs.unstructured_elements.PointSet object at 0x7fb33b4c5f40>
+    <subsurface.structs.unstructured_elements.PointSet object at 0x7f085baf1520>
 
 
 
@@ -691,7 +691,7 @@ Pyvista mesh
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7fb33b05e610>
+    <pyvista.plotting.plotting.Plotter object at 0x7f085b4a0430>
 
 
 
@@ -798,7 +798,7 @@ Remove outliers
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7fb33b233e20>
+    <pyvista.plotting.plotting.Plotter object at 0x7f083ba2b700>
 
 
 
@@ -904,7 +904,7 @@ Read Profiles
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7fb33b193820>
+    <pyvista.plotting.plotting.Plotter object at 0x7f085b880e50>
 
 
 
@@ -975,7 +975,7 @@ UnstructuredData
  .. code-block:: none
 
 
-    <pyvista.plotting.plotting.Plotter object at 0x7fb33b17ad00>
+    <pyvista.plotting.plotting.Plotter object at 0x7f085b500b50>
 
 
 
@@ -1016,7 +1016,7 @@ Export to binary
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  39.177 seconds)
+   **Total running time of the script:** ( 0 minutes  54.756 seconds)
 
 
 .. _sphx_glr_download_examples_getting_started_getting_started.py:
