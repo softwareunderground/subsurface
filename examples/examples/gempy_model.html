@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reading Simple GemPy model in Subsurface &mdash; subsurface 0.2.7.dev8+gc2408bf documentation</title>
+  <title>Reading Simple GemPy model in Subsurface &mdash; subsurface 0.2.7.dev15+ge00404f documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -38,7 +38,7 @@
             <img src="../../_static/subsurface.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.2.7.dev8+gc2408bf
+                0.2.7.dev15+ge00404f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -60,7 +60,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#sphx-glr-examples-examples">Examples</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Reading Simple GemPy model in Subsurface</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Reading Simple GemPy model in Subsurface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#single-surface">Single surface</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#getting-started">Getting Started</a></li>
@@ -131,26 +134,24 @@ to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="reading-simple-gempy-model-in-subsurface">
 <span id="sphx-glr-examples-examples-gempy-model-py"></span><h1>Reading Simple GemPy model in Subsurface<a class="headerlink" href="#reading-simple-gempy-model-in-subsurface" title="Permalink to this headline"></a></h1>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
-<span class="c1"># import sys</span>
-<span class="c1">#</span>
-<span class="c1"># sys.path.insert(0, &#39;subsurface/&#39;)</span>
-<span class="c1"># import pooch</span>
-<span class="c1"># import subsurface as ss</span>
-<span class="c1"># import subsurface.reader.read_netcdf</span>
-<span class="c1">#</span>
-<span class="c1"># # %% md</span>
-<span class="c1"># # Single surface</span>
-<span class="c1"># # --------------</span>
-<span class="c1">#</span>
-<span class="c1"># # Pull gempy model</span>
-<span class="c1"># model_files = pooch.retrieve(</span>
-<span class="c1">#     url=&quot;https://github.com/cgre-aachen/gempy_data/raw/master/&quot;</span>
-<span class="c1">#         &quot;data/subsurface/example1.zip&quot;,</span>
-<span class="c1">#     known_hash=&quot;fb79a63eeb874cf0cdca557106c62c67eace23811db5935e57c3448fed7f8978&quot;,</span>
-<span class="c1">#     processor=pooch.Unzip()</span>
-<span class="c1"># )</span>
-<span class="c1">#</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;subsurface/&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pooch</span>
+<span class="kn">import</span> <span class="nn">subsurface</span> <span class="k">as</span> <span class="nn">ss</span>
+<span class="kn">import</span> <span class="nn">subsurface.reader.read_netcdf</span>
+</pre></div>
+</div>
+<section id="single-surface">
+<h2>Single surface<a class="headerlink" href="#single-surface" title="Permalink to this headline"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pull gempy model</span>
+<span class="n">model_files</span> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
+    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/cgre-aachen/gempy_data/raw/master/&quot;</span>
+        <span class="s2">&quot;data/subsurface/example1.zip&quot;</span><span class="p">,</span>
+    <span class="n">known_hash</span><span class="o">=</span><span class="s2">&quot;fb79a63eeb874cf0cdca557106c62c67eace23811db5935e57c3448fed7f8978&quot;</span><span class="p">,</span>
+    <span class="n">processor</span><span class="o">=</span><span class="n">pooch</span><span class="o">.</span><span class="n">Unzip</span><span class="p">()</span>
+<span class="p">)</span>
+
 <span class="c1"># # %%</span>
 <span class="c1"># fname, = [i for i in model_files if &quot;meshes.nc&quot; in i]</span>
 <span class="c1"># dataset = ss.reader.read_netcdf.read_unstruct(fname)</span>
@@ -214,7 +215,12 @@ to download the full example code</p>
 <span class="c1"># ss.visualization.pv_plot([pyvista_mesh])</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.001 seconds)</p>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Downloading data from &#39;https://github.com/cgre-aachen/gempy_data/raw/master/data/subsurface/example1.zip&#39; to file &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip&#39;.
+Unzipping contents of &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip&#39; to &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip.unzip&#39;
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.910 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-examples-gempy-model-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/df1954c565bdf5d746205b3b06dad539/gempy_model.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">gempy_model.py</span></code></a></p>
@@ -224,6 +230,7 @@ to download the full example code</p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
 </section>
 
 
