@@ -25,10 +25,10 @@ pyvista.set_plot_theme('document')
 pyvista.rcParams['window_size'] = np.array([1024, 768]) * 2
 
 # Save figures in specified directory
-#pyvista.FIGURE_PATH = os.path.join(os.path.abspath('./images/'), 'auto-generated/')
+pyvista.FIGURE_PATH = os.path.join(os.path.abspath('./images/'), 'auto-generated/')
 
-# if not os.path.exists(pyvista.FIGURE_PATH):
-#     os.makedirs(pyvista.FIGURE_PATH)
+if not os.path.exists(pyvista.FIGURE_PATH):
+    os.makedirs(pyvista.FIGURE_PATH)
 
 sys.path.insert(0, os.path.abspath('.'))
 
