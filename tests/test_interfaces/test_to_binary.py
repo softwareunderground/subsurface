@@ -40,7 +40,7 @@ def test_wells_to_binary(wells):
     new_file.write(bytearray_le)
 
 
-@pytest.mark.skipif(GEOPANDAS_IMPORTED is False, reason="Geopandas is not imported" )
+@pytest.mark.skipif(GEOPANDAS_IMPORTED is False, reason="Geopandas is not imported " )
 def test_profile_to_binary(data_path):
     traces = gpd.read_file(data_path + '/profiles/Traces.shp')
     v, e = create_mesh_from_trace(traces.loc[0, 'geometry'], traces.loc[0, 'zmax'],
