@@ -1,88 +1,45 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Getting started &mdash; subsurface 0.2.5 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-binder.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-dataframe.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/gallery-rendered-html.css" type="text/css" />
-
-  
-  
+  <title>Getting started &mdash; subsurface 0.2.7.dev8+gc2408bf documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Reading Well Data into Subsurface" href="../tutorials/reading_well_data.html" />
     <link rel="prev" title="Reading Simple GemPy model in Subsurface" href="../examples/gempy_model.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html">
-          
-
-          
-            
             <img src="../../_static/subsurface.png" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                0.2.5
+                0.2.7.dev8+gc2408bf
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -90,39 +47,21 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../manual.html">Manual</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance.html">Maintenance</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Galleries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Galleries</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../index.html#sphx-glr-examples-examples">Examples</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#getting-started">Getting Started</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Getting started</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#read-wells">Read wells:</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#read-topography">Read Topography</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#read-profiles">Read Profiles</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#gempy-mesh">GemPy Mesh</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#export-to-binary">Export to binary</a></li>
-</ul>
-</li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Getting started</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#tutorials">Tutorials</a></li>
@@ -130,7 +69,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../external/external_examples.html">External Examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../code-geological-formats.html">Geological Formats</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../code-interfaces.html">Interfaces</a></li>
@@ -141,8 +80,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../code-writer.html">Writer</a></li>
 </ul>
 
-            
-          
 
     
         <p class="caption">
@@ -160,86 +97,40 @@
     
 
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">subsurface</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../index.html">Examples</a> &raquo;</li>
-        
       <li>Getting started</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/examples/getting_started/getting_started.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="../tutorials/reading_well_data.html" class="btn btn-neutral float-right" title="Reading Well Data into Subsurface" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="../examples/gempy_model.html" class="btn btn-neutral float-left" title="Reading Simple GemPy model in Subsurface" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-      
+        <a href="../tutorials/reading_well_data.html" class="btn btn-neutral float-right" title="Reading Well Data into Subsurface" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p>Click <a class="reference internal" href="#sphx-glr-download-examples-getting-started-getting-started-py"><span class="std std-ref">here</span></a>
 to download the full example code</p>
 </div>
-<div class="sphx-glr-example-title section" id="getting-started">
-<span id="sphx-glr-examples-getting-started-getting-started-py"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<section class="sphx-glr-example-title" id="getting-started">
+<span id="sphx-glr-examples-getting-started-getting-started-py"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
 <p>Authors: Miguel de la Varga and Alexander Juestel</p>
 <p>This example shows how to read into subsurface structures a bunch of different
 data such as:</p>
@@ -249,604 +140,232 @@ data such as:</p>
 <li><p>Cross sections with textures from trace -&gt; shp, png</p></li>
 <li><p>Exported gempy model from netcdf</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="kn">import</span> <span class="nn">subsurface</span> <span class="k">as</span> <span class="nn">ss</span>
-<span class="kn">import</span> <span class="nn">pooch</span>
-</pre></div>
-</div>
-<div class="section" id="read-wells">
-<h2>Read wells:<a class="headerlink" href="#read-wells" title="Permalink to this headline">¶</a></h2>
-<p>We can read well data - using welly as the backend. First we need to have the
-data in the right format for digesting.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pulling data example</span>
-<span class="kn">import</span> <span class="nn">subsurface.reader.profiles.profiles_core</span>
-<span class="kn">import</span> <span class="nn">subsurface.reader.read_netcdf</span>
-<span class="kn">import</span> <span class="nn">subsurface.reader.topography.topo_core</span>
-<span class="kn">import</span> <span class="nn">subsurface.reader.wells.wells_api</span>
-<span class="kn">from</span> <span class="nn">subsurface.reader.wells.wells_api</span> <span class="kn">import</span> <a href="../../api/subsurface.reader.wells.wells_api.read_wells_to_unstruct.html#subsurface.reader.wells.wells_api.read_wells_to_unstruct" title="subsurface.reader.wells.wells_api.read_wells_to_unstruct" class="sphx-glr-backref-module-subsurface-reader-wells-wells_api sphx-glr-backref-type-py-function"><span class="n">read_wells_to_unstruct</span></a><span class="p">,</span> <a href="../../api/subsurface.reader.wells.wells_api.borehole_location_to_unstruct.html#subsurface.reader.wells.wells_api.borehole_location_to_unstruct" title="subsurface.reader.wells.wells_api.borehole_location_to_unstruct" class="sphx-glr-backref-module-subsurface-reader-wells-wells_api sphx-glr-backref-type-py-function"><span class="n">borehole_location_to_unstruct</span></a>
-<span class="kn">from</span> <span class="nn">subsurface.reader.readers_data</span> <span class="kn">import</span> <span class="n">ReaderWellsHelper</span><span class="p">,</span> <span class="n">ReaderFilesHelper</span>
-<span class="kn">from</span> <span class="nn">subsurface.structs.base_structures.common_data_utils</span> <span class="kn">import</span> <a href="../../api/subsurface.structs.base_structures.common_data_utils.replace_outliers.html#subsurface.structs.base_structures.common_data_utils.replace_outliers" title="subsurface.structs.base_structures.common_data_utils.replace_outliers" class="sphx-glr-backref-module-subsurface-structs-base_structures-common_data_utils sphx-glr-backref-type-py-function"><span class="n">replace_outliers</span></a>
-
-<span class="n">model_file</span> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
-    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/cgre-aachen/gempy_data/raw/master/&quot;</span>
-        <span class="s2">&quot;data/subsurface/example1.zip&quot;</span><span class="p">,</span>
-    <span class="n">known_hash</span><span class="o">=</span><span class="kc">None</span>
-<span class="p">)</span>
-
-<span class="n">data_path</span> <span class="o">=</span> <span class="n">model_file</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
-<span class="n">shutil</span><span class="o">.</span><span class="n">unpack_archive</span><span class="p">(</span><span class="n">model_file</span><span class="p">,</span> <span class="n">extract_dir</span><span class="o">=</span><span class="n">model_file</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
-
-<span class="c1"># Read original file</span>
-<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ori_wells</span></a> <span class="o">=</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv" title="pandas.read_csv" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-function"><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span></a><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">)</span>
-
-<span class="c1"># Add top and base columns</span>
-<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_fixed</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">wells</span><span class="o">.</span><span class="n">add_tops_from_base_and_altitude_in_place</span><span class="p">(</span>
-    <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ori_wells</span></a><span class="p">,</span>
-    <span class="s1">&#39;Index&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Z&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Altitude&#39;</span>
-<span class="p">)</span>
-
-<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_fixed</span></a><span class="p">[</span><span class="s1">&#39;md&#39;</span><span class="p">]</span> <span class="o">=</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_fixed</span></a><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span>
-<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv" title="pandas.DataFrame.to_csv" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method"><span class="n">wells_fixed</span><span class="o">.</span><span class="n">to_csv</span></a><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">)</span>
-<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_fixed</span></a>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.10/x64/lib/python3.8/site-packages/pandas/core/indexing.py:1676: SettingWithCopyWarning:
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  self._setitem_single_column(ilocs[0], value, pi)
-/home/runner/work/subsurface/subsurface/examples/getting_started/getting_started.py:65: SettingWithCopyWarning:
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  wells_fixed[&#39;md&#39;] = wells_fixed[&#39;top&#39;]
-</pre></div>
-</div>
-<div class="output_subarea output_html rendered_html output_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Unnamed: 0</th>
-      <th>Unnamed: 0.1</th>
-      <th>Unnamed: 0.1.1</th>
-      <th>Index</th>
-      <th>X</th>
-      <th>Y</th>
-      <th>Z</th>
-      <th>Altitude</th>
-      <th>Depth</th>
-      <th>formation</th>
-      <th>base</th>
-      <th>top</th>
-      <th>_top_abs</th>
-      <th>md</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>GD0001</td>
-      <td>32428405.75</td>
-      <td>5784686.57</td>
-      <td>131.8</td>
-      <td>132.0</td>
-      <td>59.0</td>
-      <td>Quaternary</td>
-      <td>0.2</td>
-      <td>0.0</td>
-      <td>132.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>GD0001</td>
-      <td>32428405.75</td>
-      <td>5784686.57</td>
-      <td>119.2</td>
-      <td>132.0</td>
-      <td>59.0</td>
-      <td>MittlererBuntsandsteinGP</td>
-      <td>12.8</td>
-      <td>0.2</td>
-      <td>132.2</td>
-      <td>0.2</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>2</td>
-      <td>2</td>
-      <td>GD0001</td>
-      <td>32428405.75</td>
-      <td>5784686.57</td>
-      <td>86.8</td>
-      <td>132.0</td>
-      <td>59.0</td>
-      <td>Zechstein</td>
-      <td>45.2</td>
-      <td>12.8</td>
-      <td>144.8</td>
-      <td>12.8</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3</td>
-      <td>3</td>
-      <td>3</td>
-      <td>GD0001</td>
-      <td>32428405.75</td>
-      <td>5784686.57</td>
-      <td>84.0</td>
-      <td>132.0</td>
-      <td>59.0</td>
-      <td>UntererKeuperGP</td>
-      <td>48.0</td>
-      <td>45.2</td>
-      <td>177.2</td>
-      <td>45.2</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4</td>
-      <td>4</td>
-      <td>4</td>
-      <td>GD0001</td>
-      <td>32428405.75</td>
-      <td>5784686.57</td>
-      <td>73.0</td>
-      <td>132.0</td>
-      <td>59.0</td>
-      <td>UnterJura</td>
-      <td>59.0</td>
-      <td>48.0</td>
-      <td>180.0</td>
-      <td>48.0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2793</th>
-      <td>2793</td>
-      <td>2793</td>
-      <td>2860</td>
-      <td>GD1145</td>
-      <td>32416535.22</td>
-      <td>5771551.96</td>
-      <td>-1910.0</td>
-      <td>50.0</td>
-      <td>2007.0</td>
-      <td>BochumFM</td>
-      <td>1960.0</td>
-      <td>1810.0</td>
-      <td>1860.0</td>
-      <td>1810.0</td>
-    </tr>
-    <tr>
-      <th>2794</th>
-      <td>2794</td>
-      <td>2794</td>
-      <td>2861</td>
-      <td>GD1145</td>
-      <td>32416535.22</td>
-      <td>5771551.96</td>
-      <td>-1957.0</td>
-      <td>50.0</td>
-      <td>2007.0</td>
-      <td>Carboniferous</td>
-      <td>2007.0</td>
-      <td>1960.0</td>
-      <td>2010.0</td>
-      <td>1960.0</td>
-    </tr>
-    <tr>
-      <th>2795</th>
-      <td>2795</td>
-      <td>2795</td>
-      <td>2862</td>
-      <td>GD1146</td>
-      <td>32407713.16</td>
-      <td>5742143.75</td>
-      <td>59.5</td>
-      <td>60.0</td>
-      <td>1135.0</td>
-      <td>Quaternary</td>
-      <td>0.5</td>
-      <td>0.0</td>
-      <td>60.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>2796</th>
-      <td>2796</td>
-      <td>2796</td>
-      <td>2863</td>
-      <td>GD1146</td>
-      <td>32407713.16</td>
-      <td>5742143.75</td>
-      <td>-865.0</td>
-      <td>60.0</td>
-      <td>1135.0</td>
-      <td>UnterSantonium</td>
-      <td>925.0</td>
-      <td>0.5</td>
-      <td>60.5</td>
-      <td>0.5</td>
-    </tr>
-    <tr>
-      <th>2797</th>
-      <td>2797</td>
-      <td>2797</td>
-      <td>2864</td>
-      <td>GD1146</td>
-      <td>32407713.16</td>
-      <td>5742143.75</td>
-      <td>-1075.0</td>
-      <td>60.0</td>
-      <td>1135.0</td>
-      <td>UnterTuronium</td>
-      <td>1135.0</td>
-      <td>925.0</td>
-      <td>985.0</td>
-      <td>925.0</td>
-    </tr>
-  </tbody>
-</table>
-<p>2787 rows × 14 columns</p>
-</div>
-</div>
-<br />
-<br /><p>Now we can read the csv files into subsurface.UnstructuredData</p>
-<p>To help loading files we can use the following helper dataclass</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reader_collars_helper</span> <span class="o">=</span> <span class="n">ReaderFilesHelper</span><span class="p">(</span><span class="n">file_or_buffer</span><span class="o">=</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">,</span>
-                                          <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;Altitude&#39;</span><span class="p">],</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">reader_collars_helper</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ReaderFilesHelper(file_or_buffer=&#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1/wells.csv&#39;, usecols=[&#39;Index&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;Altitude&#39;], col_names=None, drop_cols=None, format=&#39;.csv&#39;, index_map=None, columns_map=None, additional_reader_kwargs={}, file_or_buffer_type=&lt;class &#39;str&#39;&gt;, index_col=False, header=0)
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reader_wells_helper</span> <span class="o">=</span> <span class="n">ReaderWellsHelper</span><span class="p">(</span>
-    <span class="n">reader_collars_args</span><span class="o">=</span><span class="n">reader_collars_helper</span><span class="p">,</span>
-    <span class="n">reader_survey_args</span><span class="o">=</span><span class="n">ReaderFilesHelper</span><span class="p">(</span>
-        <span class="n">file_or_buffer</span><span class="o">=</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">,</span>
-        <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;Index&quot;</span><span class="p">,</span>
-        <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;md&#39;</span><span class="p">]</span>
-    <span class="p">),</span>
-    <span class="n">reader_lith_args</span><span class="o">=</span><span class="n">ReaderFilesHelper</span><span class="p">(</span>
-        <span class="n">file_or_buffer</span><span class="o">=</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">,</span>
-        <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;Index&quot;</span><span class="p">,</span>
-        <span class="n">columns_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;top&#39;</span><span class="p">:</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span> <span class="s1">&#39;formation&#39;</span><span class="p">:</span> <span class="s1">&#39;component lith&#39;</span><span class="p">},</span>
-        <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span> <span class="s1">&#39;formation&#39;</span><span class="p">]</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-<span class="n">reader_wells_helper</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ReaderWellsHelper(reader_collars_args=ReaderFilesHelper(file_or_buffer=&#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1/wells.csv&#39;, usecols=[&#39;Index&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;Altitude&#39;], col_names=None, drop_cols=None, format=&#39;.csv&#39;, index_map=None, columns_map=None, additional_reader_kwargs={}, file_or_buffer_type=&lt;class &#39;str&#39;&gt;, index_col=False, header=0), reader_survey_args=ReaderFilesHelper(file_or_buffer=&#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1/wells.csv&#39;, usecols=[&#39;Index&#39;, &#39;md&#39;], col_names=None, drop_cols=None, format=&#39;.csv&#39;, index_map=None, columns_map=None, additional_reader_kwargs={}, file_or_buffer_type=&lt;class &#39;str&#39;&gt;, index_col=&#39;Index&#39;, header=&#39;infer&#39;), reader_lith_args=ReaderFilesHelper(file_or_buffer=&#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1/wells.csv&#39;, usecols=[&#39;Index&#39;, &#39;top&#39;, &#39;base&#39;, &#39;formation&#39;], col_names=None, drop_cols=None, format=&#39;.csv&#39;, index_map=None, columns_map={&#39;top&#39;: &#39;top&#39;, &#39;base&#39;: &#39;base&#39;, &#39;formation&#39;: &#39;component lith&#39;}, additional_reader_kwargs={}, file_or_buffer_type=&lt;class &#39;str&#39;&gt;, index_col=&#39;Index&#39;, header=&#39;infer&#39;), reader_attr_args=None)
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wells_unstructured_data</span> <span class="o">=</span> <a href="../../api/subsurface.reader.wells.wells_api.read_wells_to_unstruct.html#subsurface.reader.wells.wells_api.read_wells_to_unstruct" title="subsurface.reader.wells.wells_api.read_wells_to_unstruct" class="sphx-glr-backref-module-subsurface-reader-wells-wells_api sphx-glr-backref-type-py-function"><span class="n">read_wells_to_unstruct</span></a><span class="p">(</span><span class="n">reader_wells_helper</span><span class="p">)</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/subsurface/subsurface/subsurface/reader/wells/well_files_reader.py:140: UserWarning: inc and/or azi columns are not present in the file. The boreholes will be straight.
-  warnings.warn(&#39;inc and/or azi columns are not present in the file.&#39;
-The following striplog failed being processed:  [&#39;GD0041&#39;, &#39;GD0080&#39;, &#39;GD0092&#39;, &#39;GD0136&#39;, &#39;GD0211&#39;, &#39;GD0225&#39;, &#39;GD0235&#39;, &#39;GD0236&#39;, &#39;GD0304&#39;, &#39;GD0305&#39;, &#39;GD0308&#39;, &#39;GD0377&#39;, &#39;GD0399&#39;, &#39;GD0419&#39;, &#39;GD0439&#39;, &#39;GD0464&#39;, &#39;GD0487&#39;, &#39;GD0504&#39;, &#39;GD0505&#39;, &#39;GD0526&#39;, &#39;GD0529&#39;, &#39;GD0573&#39;, &#39;GD0597&#39;, &#39;GD0611&#39;, &#39;GD0617&#39;, &#39;GD0622&#39;, &#39;GD0632&#39;, &#39;GD0715&#39;, &#39;GD0733&#39;, &#39;GD0760&#39;, &#39;GD0766&#39;, &#39;GD0813&#39;, &#39;GD0816&#39;, &#39;GD0843&#39;, &#39;GD0845&#39;, &#39;GD0858&#39;, &#39;GD0937&#39;, &#39;GD0942&#39;, &#39;GD0948&#39;, &#39;GD0981&#39;, &#39;GD1007&#39;, &#39;GD1016&#39;]
-/home/runner/work/subsurface/subsurface/subsurface/reader/wells/welly_reader.py:116: UserWarning: At least one of the wells do not have assigned a survey. Borehole name: {w.name}
-  warnings.warn(f&#39;At least one of the wells do not have &#39;
-The following boreholes failed being processed:  [&#39;GD0715&#39;, &#39;GD1016&#39;, &#39;GD0235&#39;, &#39;GD0733&#39;, &#39;GD0760&#39;, &#39;GD0377&#39;, &#39;GD0236&#39;, &#39;GD0597&#39;, &#39;GD0419&#39;, &#39;GD0464&#39;, &#39;GD0948&#39;, &#39;GD0981&#39;, &#39;GD0439&#39;, &#39;GD0816&#39;, &#39;GD0399&#39;, &#39;GD1007&#39;, &#39;GD0505&#39;, &#39;GD0858&#39;, &#39;GD0304&#39;, &#39;GD0611&#39;, &#39;GD0080&#39;, &#39;GD0041&#39;, &#39;GD0305&#39;, &#39;GD0766&#39;, &#39;GD0225&#39;, &#39;GD0813&#39;, &#39;GD0845&#39;, &#39;GD0942&#39;, &#39;GD0843&#39;, &#39;GD0632&#39;, &#39;GD0526&#39;, &#39;GD0308&#39;, &#39;GD0529&#39;, &#39;GD0622&#39;, &#39;GD0573&#39;, &#39;GD0487&#39;, &#39;GD0937&#39;, &#39;GD0211&#39;, &#39;GD0617&#39;, &#39;GD0136&#39;, &#39;GD0092&#39;, &#39;GD0504&#39;]
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wells_unstructured_data</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
-Dimensions:       (XYZ: 3, cell: 87058, cell_attr: 1, nodes: 2, points: 88160, vertex_attr: 0)
-Coordinates:
-  * points        (points) int64 0 1 2 3 4 5 ... 88155 88156 88157 88158 88159
-  * XYZ           (XYZ) &lt;U1 &#39;X&#39; &#39;Y&#39; &#39;Z&#39;
-  * cell_attr     (cell_attr) object &#39;lith_log&#39;
-  * vertex_attr   (vertex_attr) int64
-    UWI           (cell) object &#39;GD0846&#39; &#39;GD0846&#39; &#39;GD0846&#39; ... &#39;GD0237&#39; &#39;GD0237&#39;
-    Depth         (cell) float64 0.1804 0.5411 0.9019 ... 1.259 1.275 1.292
-Dimensions without coordinates: cell, nodes
-Data variables:
-    vertex        (points, XYZ) float64 3.242e+07 5.784e+06 ... 5.743e+06 71.7
-    cells         (cell, nodes) int64 0 1 1 2 2 ... 88157 88158 88158 88159
-    cell_attrs    (cell, cell_attr) int64 1 1 1 1 1 1 1 1 1 ... 1 1 1 1 1 1 1 1
-    vertex_attrs  (points, vertex_attr) float64
-</pre></div>
-</div>
-<p>From UnstructuredData we can create geometric objects such a lines, points, meshes,
-etc. In the case of boreholes <cite>subsurface.LineSet</cite> is the most suitable geometric
-representation.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wells_element</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">LineSet</span><span class="p">(</span><span class="n">wells_unstructured_data</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>All elements in subsurface have their direct link to a pyvista mesh. This
-transformation can be done by the functions <cite>to_pyvista_…</cite>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pyvista mesh</span>
-<a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_line</span><span class="p">(</span><span class="n">wells_element</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-
-<span class="c1"># Plotting</span>
-<span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span><span class="p">(</span>
-    <span class="p">[</span><a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">wells_mesh</span></a><span class="p">],</span>
-    <span class="n">image_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">ve</span><span class="o">=</span><span class="mi">5</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<img alt="getting started" class="sphx-glr-single-img" src="../../_images/sphx_glr_getting_started_001.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f23f833fa90&gt;
-</pre></div>
-</div>
-<p>We can do the same for point data, for example the borehole location.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># UnstructuredData</span>
-<span class="n">borehole_location_struct</span> <span class="o">=</span> <a href="../../api/subsurface.reader.wells.wells_api.borehole_location_to_unstruct.html#subsurface.reader.wells.wells_api.borehole_location_to_unstruct" title="subsurface.reader.wells.wells_api.borehole_location_to_unstruct" class="sphx-glr-backref-module-subsurface-reader-wells-wells_api sphx-glr-backref-type-py-function"><span class="n">borehole_location_to_unstruct</span></a><span class="p">(</span>
-    <span class="n">ReaderFilesHelper</span><span class="p">(</span>
-        <span class="n">file_or_buffer</span><span class="o">=</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/wells.csv&#39;</span><span class="p">,</span>
-        <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;Altitude&#39;</span><span class="p">],</span>
-        <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">columns_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;Altitude&#39;</span><span class="p">:</span> <span class="s1">&#39;altitude&#39;</span><span class="p">}</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-<span class="n">borehole_location_struct</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
-Dimensions:       (XYZ: 3, cell: 1144, cell_attr: 1, nodes: 1, points: 1144, vertex_attr: 0)
-Coordinates:
-  * points        (points) int64 0 1 2 3 4 5 6 ... 1138 1139 1140 1141 1142 1143
-  * XYZ           (XYZ) &lt;U1 &#39;X&#39; &#39;Y&#39; &#39;Z&#39;
-  * cell_attr     (cell_attr) object &#39;number_segments&#39;
-  * vertex_attr   (vertex_attr) int64
-    cell_         (cell) int64 0 1 2 3 4 5 6 ... 1138 1139 1140 1141 1142 1143
-Dimensions without coordinates: cell, nodes
-Data variables:
-    vertex        (points, XYZ) float32 3.243e+07 5.785e+06 ... 5.742e+06 60.0
-    cells         (cell, nodes) int64 0 1 2 3 4 5 ... 1139 1140 1141 1142 1143
-    cell_attrs    (cell, cell_attr) float32 2.0 2.0 9.0 2.0 ... 2.0 2.0 2.0 2.0
-    vertex_attrs  (points, vertex_attr) float64
-Attributes:
-    wells_names:  [&#39;GD0001&#39;, &#39;GD0002&#39;, &#39;GD0003&#39;, &#39;GD0004&#39;, &#39;GD0005&#39;, &#39;GD0006&#39;...
-</pre></div>
-</div>
-<p>Element</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">borehole_location_point_set</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">PointSet</span><span class="p">(</span><span class="n">borehole_location_struct</span><span class="p">)</span>
-<span class="n">borehole_location_point_set</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;subsurface.structs.unstructured_elements.PointSet object at 0x7f2432b5b100&gt;
-</pre></div>
-</div>
-<p>Pyvista mesh</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">borehole_loc_mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_points</span><span class="p">(</span><span class="n">borehole_location_point_set</span><span class="p">)</span>
-<a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">borehole_loc_mesh</span></a>
-</pre></div>
-</div>
-<div class="output_subarea output_html rendered_html output_result">
-<table><tr><th>Header</th><th>Data Arrays</th></tr><tr><td>
-<table>
-<tr><th>PolyData</th><th>Information</th></tr>
-<tr><td>N Cells</td><td>1144</td></tr>
-<tr><td>N Points</td><td>1144</td></tr>
-<tr><td>X Bounds</td><td>3.238e+07, 3.243e+07</td></tr>
-<tr><td>Y Bounds</td><td>5.735e+06, 5.785e+06</td></tr>
-<tr><td>Z Bounds</td><td>3.500e+01, 2.304e+02</td></tr>
-<tr><td>N Arrays</td><td>1</td></tr>
-</table>
-
-</td><td>
-<table>
-<tr><th>Name</th><th>Field</th><th>Type</th><th>N Comp</th><th>Min</th><th>Max</th></tr>
-<tr><td><b>number_segments</b></td><td>Points</td><td>float64</td><td>1</td><td>1.000e+00</td><td>1.900e+01</td></tr>
-</table>
-
-</td></tr> </table>
-</div>
-<br />
-<br /><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span><span class="p">([</span><a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">borehole_loc_mesh</span></a><span class="p">],</span> <span class="n">image_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ve</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-</div>
-<img alt="getting started" class="sphx-glr-single-img" src="../../_images/sphx_glr_getting_started_002.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f23f833f610&gt;
-</pre></div>
-</div>
-</div>
-<div class="section" id="read-topography">
-<h2>Read Topography<a class="headerlink" href="#read-topography" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># StructuredData</span>
-<span class="n">topo_structured_data</span> <span class="o">=</span> <a href="../../api/subsurface.reader.topography.topo_core.read_structured_topography.html#subsurface.reader.topography.topo_core.read_structured_topography" title="subsurface.reader.topography.topo_core.read_structured_topography" class="sphx-glr-backref-module-subsurface-reader-topography-topo_core sphx-glr-backref-type-py-function"><span class="n">subsurface</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">topography</span><span class="o">.</span><span class="n">topo_core</span><span class="o">.</span><span class="n">read_structured_topography</span></a><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/DEM50.tif&#39;</span><span class="p">)</span>
-<span class="n">topo_structured_data</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>StructuredData(data=&lt;xarray.Dataset&gt;
-Dimensions:     (x: 2000, y: 2800)
-Coordinates:
-  * x           (x) float64 3.25e+07 3.25e+07 3.25e+07 ... 3.236e+07 3.236e+07
-  * y           (y) float64 5.7e+06 5.7e+06 5.7e+06 ... 5.8e+06 5.8e+06 5.8e+06
-Data variables:
-    topography  (x, y) float32 0.0 0.0 0.0 0.0 0.0 0.0 ... 0.0 0.0 0.0 0.0 0.0, data_array_name=&#39;topography&#39;)
-</pre></div>
-</div>
-<p>Remove outliers</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../api/subsurface.structs.base_structures.common_data_utils.replace_outliers.html#subsurface.structs.base_structures.common_data_utils.replace_outliers" title="subsurface.structs.base_structures.common_data_utils.replace_outliers" class="sphx-glr-backref-module-subsurface-structs-base_structures-common_data_utils sphx-glr-backref-type-py-function"><span class="n">replace_outliers</span></a><span class="p">(</span><span class="n">topo_structured_data</span><span class="p">,</span> <span class="s1">&#39;topography&#39;</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">)</span>
-
-<span class="c1"># Element</span>
-<span class="n">topo_element</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">structs</span><span class="o">.</span><span class="n">StructuredGrid</span><span class="p">(</span><span class="n">topo_structured_data</span><span class="p">)</span>
-<span class="n">topo_element</span>
-
-<span class="c1"># Pyvista mesh</span>
-<a href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="pyvista.StructuredGrid" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topo_mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_grid</span><span class="p">(</span><span class="n">topo_element</span><span class="p">,</span> <span class="s1">&#39;topography&#39;</span><span class="p">,</span>
-                                             <span class="n">data_order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;xarray.DataArray &#39;topography&#39; (x: 2000, y: 2800)&gt;
-array([[  0.  ,   0.  ,   0.  , ...,  40.1 ,  40.09,  44.58],
-       [  0.  ,   0.  ,   0.  , ...,  40.08,  40.07,  44.21],
-       [  0.  ,   0.  ,   0.  , ...,  40.14,  44.21,  43.98],
-       ...,
-       [100.56, 102.14, 102.17, ...,   0.  ,   0.  ,   0.  ],
-       [ 99.44,  99.85,  99.77, ...,   0.  ,   0.  ,   0.  ],
-       [ 88.32,  91.76,  98.68, ...,   0.  ,   0.  ,   0.  ]],
-      dtype=float32)
-Coordinates:
-  * x         (x) float64 3.25e+07 3.25e+07 3.25e+07 ... 3.236e+07 3.236e+07
-  * y         (y) float64 5.7e+06 5.7e+06 5.7e+06 ... 5.8e+06 5.8e+06 5.8e+06
-    quantile  float64 0.98
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span><span class="p">([</span><a href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="pyvista.StructuredGrid" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topo_mesh</span></a><span class="p">],</span> <span class="n">image_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ve</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-</div>
-<img alt="getting started" class="sphx-glr-single-img" src="../../_images/sphx_glr_getting_started_003.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f23c6f716a0&gt;
-</pre></div>
-</div>
-</div>
-<div class="section" id="read-profiles">
-<h2>Read Profiles<a class="headerlink" href="#read-profiles" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">profiles_traces</span> <span class="o">=</span> <a href="../../api/subsurface.reader.profiles.profiles_core.lineset_from_trace.html#subsurface.reader.profiles.profiles_core.lineset_from_trace" title="subsurface.reader.profiles.profiles_core.lineset_from_trace" class="sphx-glr-backref-module-subsurface-reader-profiles-profiles_core sphx-glr-backref-type-py-function"><span class="n">subsurface</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">profiles_core</span><span class="o">.</span><span class="n">lineset_from_trace</span></a><span class="p">(</span>
-    <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/Profile_PyVista.shp&#39;</span><span class="p">,</span>
-    <span class="n">idx</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">profiles_trisurf_list</span><span class="p">,</span> <span class="n">profiles_mesh_list</span> <span class="o">=</span> <a href="../../api/subsurface.reader.profiles.profiles_core.create_tri_surf_from_traces_texture.html#subsurface.reader.profiles.profiles_core.create_tri_surf_from_traces_texture" title="subsurface.reader.profiles.profiles_core.create_tri_surf_from_traces_texture" class="sphx-glr-backref-module-subsurface-reader-profiles-profiles_core sphx-glr-backref-type-py-function"><span class="n">subsurface</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">profiles_core</span><span class="o">.</span><span class="n">create_tri_surf_from_traces_texture</span></a><span class="p">(</span>
-    <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/Profile_PyVista.shp&#39;</span><span class="p">,</span>
-    <span class="n">path_to_texture</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile001.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile002.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile003.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile004.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile005.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile006.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile007.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile008.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile009.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile010.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile011.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile012.png&#39;</span><span class="p">,</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/Profiles_cropped/profile013.png&#39;</span><span class="p">,</span>
-    <span class="p">],</span>
-    <span class="n">idx</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">13</span><span class="p">),</span>
-    <span class="n">return_mesh</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">return_uv</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span><span class="p">(</span><span class="n">profiles_mesh_list</span><span class="p">,</span> <span class="n">image_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ve</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-</div>
-<img alt="getting started" class="sphx-glr-single-img" src="../../_images/sphx_glr_getting_started_004.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f23c6df67f0&gt;
-</pre></div>
-</div>
-</div>
-<div class="section" id="gempy-mesh">
-<h2>GemPy Mesh<a class="headerlink" href="#gempy-mesh" title="Permalink to this headline">¶</a></h2>
-<p>UnstructuredData</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gempy_unstructured_data</span> <span class="o">=</span> <a href="../../api/subsurface.reader.read_netcdf.read_unstruct.html#subsurface.reader.read_netcdf.read_unstruct" title="subsurface.reader.read_netcdf.read_unstruct" class="sphx-glr-backref-module-subsurface-reader-read_netcdf sphx-glr-backref-type-py-function"><span class="n">subsurface</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_netcdf</span><span class="o">.</span><span class="n">read_unstruct</span></a><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/meshes.nc&#39;</span><span class="p">)</span>
-
-<span class="c1"># Element</span>
-<span class="n">trisurf_gempy</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">TriSurf</span><span class="p">(</span><span class="n">gempy_unstructured_data</span><span class="p">)</span>
-
-<span class="c1"># Pyvista mesh</span>
-<a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gempy_mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_mesh</span><span class="p">(</span><span class="n">trisurf_gempy</span><span class="p">)</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/subsurface/subsurface/subsurface/reader/read_netcdf.py:18: UserWarning: Trying loading legacy files.
-  warnings.warn(&quot;Trying loading legacy files.&quot;)
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span><span class="p">(</span>
-    <span class="p">[</span><a href="https://docs.pyvista.org/core/points.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">gempy_mesh</span></a><span class="p">],</span>
-    <span class="n">image_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">ve</span><span class="o">=</span><span class="mi">5</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<img alt="getting started" class="sphx-glr-single-img" src="../../_images/sphx_glr_getting_started_005.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pyvista.plotting.plotting.Plotter object at 0x7f23f81b19d0&gt;
-</pre></div>
-</div>
-<p>sphinx_gallery_thumbnail_number = 6</p>
-</div>
-<div class="section" id="export-to-binary">
-<h2>Export to binary<a class="headerlink" href="#export-to-binary" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">subsurface</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/wells&#39;</span><span class="p">,</span>
-                                                        <span class="n">wells_unstructured_data</span><span class="p">)</span>
-<span class="n">subsurface</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/topo&#39;</span><span class="p">,</span>
-                                                        <span class="n">topo_structured_data</span><span class="p">)</span>
-<span class="n">subsurface</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/collars&#39;</span><span class="p">,</span>
-                                                        <span class="n">borehole_location_struct</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">e</span><span class="p">,</span> <span class="n">tri_surf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">profiles_trisurf_list</span><span class="p">):</span>
-    <span class="n">subsurface</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/profile_</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">_mesh&#39;</span><span class="p">,</span>
-                                                            <span class="n">tri_surf</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
-    <span class="n">subsurface</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">to_binary</span><span class="o">.</span><span class="n">base_structs_to_binary_file</span><span class="p">(</span>
-        <span class="n">data_path</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/profile_</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">_texture_C&#39;</span><span class="p">,</span>
-        <span class="n">tri_surf</span><span class="o">.</span><span class="n">texture</span><span class="p">,</span>
-        <span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  48.443 seconds)</p>
+<p>import shutil
+import pandas as pd</p>
+<p>import subsurface as ss
+import pooch</p>
+<p># %%
+# Read wells:
+# ———–
+# We can read well data - using welly as the backend. First we need to have the
+# data in the right format for digesting.</p>
+<p># %%</p>
+<p># Pulling data example
+import subsurface.reader.profiles.profiles_core
+import subsurface.reader.read_netcdf
+import subsurface.reader.topography.topo_core
+import subsurface.reader.wells.wells_api
+from subsurface.reader.wells.wells_api import read_wells_to_unstruct, borehole_location_to_unstruct
+from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
+from subsurface.structs.base_structures.common_data_utils import replace_outliers</p>
+<dl>
+<dt>model_file = pooch.retrieve(</dt><dd><dl class="simple">
+<dt>url=”<a class="reference external" href="https://github.com/cgre-aachen/gempy_data/raw/master/">https://github.com/cgre-aachen/gempy_data/raw/master/</a>”</dt><dd><p>“data/subsurface/example1.zip”,</p>
+</dd>
+</dl>
+<p>known_hash=None</p>
+</dd>
+</dl>
+<p>)</p>
+<p>data_path = model_file[:-4]
+shutil.unpack_archive(model_file, extract_dir=model_file[:-4])</p>
+<p># Read original file
+ori_wells = pd.read_csv(data_path + ‘/wells.csv’)</p>
+<p># Add top and base columns
+wells_fixed = ss.reader.wells.add_tops_from_base_and_altitude_in_place(</p>
+<blockquote>
+<div><p>ori_wells,
+‘Index’,
+‘Z’,
+‘Altitude’</p>
+</div></blockquote>
+<p>)</p>
+<p>wells_fixed[‘md’] = wells_fixed[‘top’]
+wells_fixed.to_csv(data_path + ‘/wells.csv’)
+wells_fixed</p>
+<p># %%md
+# Now we can read the csv files into subsurface.UnstructuredData</p>
+<p># %%
+# To help loading files we can use the following helper dataclass
+reader_collars_helper = ReaderFilesHelper(file_or_buffer=data_path + ‘/wells.csv’,</p>
+<blockquote>
+<div><p>usecols=[‘Index’, ‘X’, ‘Y’, ‘Altitude’], header=0)</p>
+</div></blockquote>
+<p>reader_collars_helper</p>
+<p># %%
+reader_wells_helper = ReaderWellsHelper(</p>
+<blockquote>
+<div><p>reader_collars_args=reader_collars_helper,
+reader_survey_args=ReaderFilesHelper(</p>
+<blockquote>
+<div><p>file_or_buffer=data_path + ‘/wells.csv’,
+index_col=”Index”,
+usecols=[‘Index’, ‘md’]</p>
+</div></blockquote>
+<p>),
+reader_lith_args=ReaderFilesHelper(</p>
+<blockquote>
+<div><p>file_or_buffer=data_path + ‘/wells.csv’,
+index_col=”Index”,
+columns_map={‘top’: ‘top’, ‘base’: ‘base’, ‘formation’: ‘component lith’},
+usecols=[‘Index’, ‘top’, ‘base’, ‘formation’]</p>
+</div></blockquote>
+<p>)</p>
+</div></blockquote>
+<p>)
+reader_wells_helper</p>
+<p># %%
+wells_unstructured_data = read_wells_to_unstruct(reader_wells_helper)</p>
+<p># %%
+wells_unstructured_data</p>
+<p># %%md
+# From UnstructuredData we can create geometric objects such a lines, points, meshes,
+# etc. In the case of boreholes <cite>subsurface.LineSet</cite> is the most suitable geometric
+# representation.</p>
+<p># %%
+wells_element = ss.LineSet(wells_unstructured_data)</p>
+<p># %%
+# All elements in subsurface have their direct link to a pyvista mesh. This
+# transformation can be done by the functions <cite>to_pyvista_…</cite>.</p>
+<p># Pyvista mesh
+wells_mesh = ss.visualization.to_pyvista_line(wells_element, radius=50)</p>
+<p># Plotting
+ss.visualization.pv_plot(</p>
+<blockquote>
+<div><p>[wells_mesh],
+image_2d=False,
+ve=5</p>
+</div></blockquote>
+<p>)</p>
+<p># %%md
+# We can do the same for point data, for example the borehole location.</p>
+<p># %%</p>
+<p># UnstructuredData
+borehole_location_struct = borehole_location_to_unstruct(</p>
+<blockquote>
+<div><dl class="simple">
+<dt>ReaderFilesHelper(</dt><dd><p>file_or_buffer=data_path + ‘/wells.csv’,
+usecols=[‘Index’, ‘X’, ‘Y’, ‘Altitude’],
+header=0,
+columns_map={‘X’: ‘x’, ‘Y’: ‘y’, ‘Altitude’: ‘altitude’}</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>)
+borehole_location_struct</p>
+<p># %%
+# Element
+borehole_location_point_set = ss.PointSet(borehole_location_struct)
+borehole_location_point_set</p>
+<p># %%
+# Pyvista mesh
+borehole_loc_mesh = ss.visualization.to_pyvista_points(borehole_location_point_set)
+borehole_loc_mesh</p>
+<p># %%
+ss.visualization.pv_plot([borehole_loc_mesh], image_2d=False, ve=5)</p>
+<p># %%md
+# Read Topography
+# —————</p>
+<p># %%</p>
+<p># StructuredData
+topo_structured_data = subsurface.reader.topography.topo_core.read_structured_topography(data_path + ‘/DEM50.tif’)
+topo_structured_data
+# %%
+# Remove outliers
+replace_outliers(topo_structured_data, ‘topography’, 0.98)</p>
+<p># Element
+topo_element = ss.structs.StructuredGrid(topo_structured_data)
+topo_element</p>
+<p># Pyvista mesh
+topo_mesh = ss.visualization.to_pyvista_grid(topo_element, ‘topography’,</p>
+<blockquote>
+<div><p>data_order=’C’)</p>
+</div></blockquote>
+<p># %%
+ss.visualization.pv_plot([topo_mesh], image_2d=False, ve=5)</p>
+<p># %%md
+# Read Profiles
+# ————-</p>
+<p># %%</p>
+<dl class="simple">
+<dt>profiles_traces = subsurface.reader.profiles.profiles_core.lineset_from_trace(</dt><dd><p>data_path + ‘/Profiles_cropped/Profile_PyVista.shp’,
+idx=range(13)</p>
+</dd>
+</dl>
+<p>)</p>
+<p># %%
+profiles_trisurf_list, profiles_mesh_list = subsurface.reader.profiles.profiles_core.create_tri_surf_from_traces_texture(</p>
+<blockquote>
+<div><p>data_path + ‘/Profiles_cropped/Profile_PyVista.shp’,
+path_to_texture=[</p>
+<blockquote>
+<div><p>data_path + ‘/Profiles_cropped/profile001.png’,
+data_path + ‘/Profiles_cropped/profile002.png’,
+data_path + ‘/Profiles_cropped/profile003.png’,
+data_path + ‘/Profiles_cropped/profile004.png’,
+data_path + ‘/Profiles_cropped/profile005.png’,
+data_path + ‘/Profiles_cropped/profile006.png’,
+data_path + ‘/Profiles_cropped/profile007.png’,
+data_path + ‘/Profiles_cropped/profile008.png’,
+data_path + ‘/Profiles_cropped/profile009.png’,
+data_path + ‘/Profiles_cropped/profile010.png’,
+data_path + ‘/Profiles_cropped/profile011.png’,
+data_path + ‘/Profiles_cropped/profile012.png’,
+data_path + ‘/Profiles_cropped/profile013.png’,</p>
+</div></blockquote>
+<p>],
+idx=range(13),
+return_mesh=True,
+return_uv=True</p>
+</div></blockquote>
+<p>)</p>
+<p># %%
+ss.visualization.pv_plot(profiles_mesh_list, image_2d=False, ve=5)</p>
+<p># %%md
+# GemPy Mesh
+# ———-</p>
+<p># %%
+# UnstructuredData
+gempy_unstructured_data = subsurface.reader.read_netcdf.read_unstruct(data_path + ‘/meshes.nc’)</p>
+<p># Element
+trisurf_gempy = ss.TriSurf(gempy_unstructured_data)</p>
+<p># Pyvista mesh
+gempy_mesh = ss.visualization.to_pyvista_mesh(trisurf_gempy)</p>
+<p># %%
+ss.visualization.pv_plot(</p>
+<blockquote>
+<div><p>[gempy_mesh],
+image_2d=False,
+ve=5</p>
+</div></blockquote>
+<p>)</p>
+<p># %%
+# sphinx_gallery_thumbnail_number = 6</p>
+<p># %%
+# Export to binary
+# —————-</p>
+<p># %%
+subsurface.writer.to_binary.base_structs_to_binary_file(data_path + ‘/wells’,</p>
+<blockquote>
+<div><p>wells_unstructured_data)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>subsurface.writer.to_binary.base_structs_to_binary_file(data_path + ‘/topo’,</dt><dd><p>topo_structured_data)</p>
+</dd>
+<dt>subsurface.writer.to_binary.base_structs_to_binary_file(data_path + ‘/collars’,</dt><dd><p>borehole_location_struct)</p>
+</dd>
+<dt>for e, tri_surf in enumerate(profiles_trisurf_list):</dt><dd><dl class="simple">
+<dt>subsurface.writer.to_binary.base_structs_to_binary_file(data_path + f’/profile_{e}_mesh’,</dt><dd><p>tri_surf.mesh)</p>
+</dd>
+<dt>subsurface.writer.to_binary.base_structs_to_binary_file(</dt><dd><p>data_path + f’/profile_{e}_texture_C’,
+tri_surf.texture,
+order=’C’)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.000 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-getting-started-getting-started-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/ee05557a420390016cc326bd2c5af83d/getting_started.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">getting_started.py</span></code></a></p>
@@ -856,55 +375,37 @@ Coordinates:
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
-</div>
-</div>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../tutorials/reading_well_data.html" class="btn btn-neutral float-right" title="Reading Well Data into Subsurface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../examples/gempy_model.html" class="btn btn-neutral float-left" title="Reading Simple GemPy model in Subsurface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../tutorials/reading_well_data.html" class="btn btn-neutral float-right" title="Reading Well Data into Subsurface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021, The softwareunderground community.
-
-    </p>
+    <p>&#169; Copyright 2019-2021, The softwareunderground community.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
