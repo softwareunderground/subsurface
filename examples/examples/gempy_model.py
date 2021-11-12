@@ -22,17 +22,17 @@ model_files = pooch.retrieve(
     processor=pooch.Unzip()
 )
 
-# # %%
-# fname, = [i for i in model_files if "meshes.nc" in i]
-# dataset = ss.reader.read_netcdf.read_unstruct(fname)
-#
-# # %%
-# obj = ss.TriSurf(dataset)
-# print(obj.mesh.points_attributes_to_dict)
-#
-# mesh = ss.visualization.to_pyvista_mesh(obj)
-# ss.visualization.pv_plot([mesh])
-#
+# %%
+fname, = [i for i in model_files if "meshes.nc" in i]
+dataset = ss.reader.read_netcdf.read_unstruct(fname)
+
+# %%
+obj = ss.TriSurf(dataset)
+print(obj.mesh.points_attributes_to_dict)
+
+mesh = ss.visualization.to_pyvista_mesh(obj)
+ss.visualization.pv_plot([mesh])
+
 #
 # # %% md
 # # Four Layers
