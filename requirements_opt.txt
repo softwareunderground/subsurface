@@ -20,5 +20,5 @@ netcdf4
 scooby
 
 # Geospatial libraries
-#geopandas
-#rasterio
+geopandas
+rasterio
