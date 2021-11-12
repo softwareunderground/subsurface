@@ -119,8 +119,11 @@ sphinx_gallery_conf = {
         'numpy': 'https://numpy.org/doc/stable/'
 
     },
-
 }
+
+linkcheck_ignore = [r'https://github.com/cgre-aachen/gempy_data/raw/master/',
+                    r'https://raw.githubusercontent.com/softwareunderground/subsurface/main/tests/data/borehole/']
+
 
 # -- Options for HTML output ----------------------------------------------
 html_theme = 'sphinx_rtd_theme'
