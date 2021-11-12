@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reading Simple GemPy model in Subsurface &mdash; subsurface 0.2.7.dev15+ge00404f documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>Reading Simple GemPy model in Subsurface &mdash; subsurface 0.2.7.dev20+g697d1e4 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" /><link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -34,11 +30,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html">
-            <img src="../../_static/subsurface.png" class="logo" alt="Logo"/>
+            <a href="../../index.html"><img src="../../_static/subsurface.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.2.7.dev15+ge00404f
+                0.2.7.dev20+g697d1e4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -49,14 +44,14 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
-              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../manual.html">Manual</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance.html">Maintenance</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Galleries</span></p>
+<p class="caption"><span class="caption-text">Galleries</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#sphx-glr-examples-examples">Examples</a><ul class="current">
@@ -72,7 +67,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../external/external_examples.html">External Examples</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<p class="caption"><span class="caption-text">API Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../code-geological-formats.html">Geological Formats</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../code-interfaces.html">Interfaces</a></li>
@@ -132,8 +127,8 @@
 <p>Click <a class="reference internal" href="#sphx-glr-download-examples-examples-gempy-model-py"><span class="std std-ref">here</span></a>
 to download the full example code</p>
 </div>
-<section class="sphx-glr-example-title" id="reading-simple-gempy-model-in-subsurface">
-<span id="sphx-glr-examples-examples-gempy-model-py"></span><h1>Reading Simple GemPy model in Subsurface<a class="headerlink" href="#reading-simple-gempy-model-in-subsurface" title="Permalink to this headline"></a></h1>
+<div class="sphx-glr-example-title section" id="reading-simple-gempy-model-in-subsurface">
+<span id="sphx-glr-examples-examples-gempy-model-py"></span><h1>Reading Simple GemPy model in Subsurface<a class="headerlink" href="#reading-simple-gempy-model-in-subsurface" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;subsurface/&#39;</span><span class="p">)</span>
@@ -142,8 +137,8 @@ to download the full example code</p>
 <span class="kn">import</span> <span class="nn">subsurface.reader.read_netcdf</span>
 </pre></div>
 </div>
-<section id="single-surface">
-<h2>Single surface<a class="headerlink" href="#single-surface" title="Permalink to this headline"></a></h2>
+<div class="section" id="single-surface">
+<h2>Single surface<a class="headerlink" href="#single-surface" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pull gempy model</span>
 <span class="n">model_files</span> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
     <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/cgre-aachen/gempy_data/raw/master/&quot;</span>
@@ -153,16 +148,23 @@ to download the full example code</p>
 <span class="p">)</span>
 
 <span class="c1"># # %%</span>
-<span class="c1"># fname, = [i for i in model_files if &quot;meshes.nc&quot; in i]</span>
-<span class="c1"># dataset = ss.reader.read_netcdf.read_unstruct(fname)</span>
-<span class="c1">#</span>
-<span class="c1"># # %%</span>
-<span class="c1"># obj = ss.TriSurf(dataset)</span>
-<span class="c1"># print(obj.mesh.points_attributes_to_dict)</span>
-<span class="c1">#</span>
-<span class="c1"># mesh = ss.visualization.to_pyvista_mesh(obj)</span>
-<span class="c1"># ss.visualization.pv_plot([mesh])</span>
-<span class="c1">#</span>
+<span class="n">fname</span><span class="p">,</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model_files</span> <span class="k">if</span> <span class="s2">&quot;meshes.nc&quot;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>
+<span class="n">dataset</span> <span class="o">=</span> <a href="../../api/subsurface.reader.read_netcdf.read_unstruct.html#subsurface.reader.read_netcdf.read_unstruct" title="subsurface.reader.read_netcdf.read_unstruct" class="sphx-glr-backref-module-subsurface-reader-read_netcdf sphx-glr-backref-type-py-function"><span class="n">ss</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_netcdf</span><span class="o">.</span><span class="n">read_unstruct</span></a><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Downloading data from &#39;https://github.com/cgre-aachen/gempy_data/raw/master/data/subsurface/example1.zip&#39; to file &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip&#39;.
+Unzipping contents of &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip&#39; to &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip.unzip&#39;
+/home/runner/work/subsurface/subsurface/subsurface/reader/read_netcdf.py:18: UserWarning: Trying loading legacy files.
+  warnings.warn(&quot;Trying loading legacy files.&quot;)
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">TriSurf</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mesh</span></a><span class="o">.</span><span class="n">points_attributes_to_dict</span><span class="p">)</span>
+
+<a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mesh</span></a> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">to_pyvista_mesh</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="n">ss</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">pv_plot</span><span class="p">([</span><a href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="pyvista.PolyData" class="sphx-glr-backref-module-pyvista sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mesh</span></a><span class="p">])</span>
+
 <span class="c1">#</span>
 <span class="c1"># # %% md</span>
 <span class="c1"># # Four Layers</span>
@@ -215,12 +217,17 @@ to download the full example code</p>
 <span class="c1"># ss.visualization.pv_plot([pyvista_mesh])</span>
 </pre></div>
 </div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Downloading data from &#39;https://github.com/cgre-aachen/gempy_data/raw/master/data/subsurface/example1.zip&#39; to file &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip&#39;.
-Unzipping contents of &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip&#39; to &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip.unzip&#39;
+<img src="../../_images/sphx_glr_gempy_model_001.png" srcset="../../_images/sphx_glr_gempy_model_001.png" alt="gempy model" class = "sphx-glr-single-img"/><p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{}
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1332: PyvistaDeprecationWarning: Use of `cell_arrays` is deprecated. Use `cell_data` instead.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+  warnings.warn(
+
+&lt;pyvista.plotting.plotting.Plotter object at 0x7f9f40946d90&gt;
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.910 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  8.580 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-examples-gempy-model-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/df1954c565bdf5d746205b3b06dad539/gempy_model.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">gempy_model.py</span></code></a></p>
@@ -230,8 +237,8 @@ Unzipping contents of &#39;/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

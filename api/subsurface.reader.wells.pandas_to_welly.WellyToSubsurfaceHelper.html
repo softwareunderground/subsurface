@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WellyToSubsurfaceHelper &mdash; subsurface 0.2.7.dev15+ge00404f documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>WellyToSubsurfaceHelper &mdash; subsurface 0.2.7.dev20+g697d1e4 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="../_static/style.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -34,11 +30,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html">
-            <img src="../_static/subsurface.png" class="logo" alt="Logo"/>
+            <a href="../index.html"><img src="../_static/subsurface.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.2.7.dev15+ge00404f
+                0.2.7.dev20+g697d1e4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -49,19 +44,19 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
-              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../maintenance.html">Maintenance</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Galleries</span></p>
+<p class="caption"><span class="caption-text">Galleries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../external/external_examples.html">External Examples</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<p class="caption"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../code-geological-formats.html">Geological Formats</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../code-interfaces.html">Interfaces</a></li>
@@ -138,11 +133,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="wellytosubsurfacehelper">
-<h1>WellyToSubsurfaceHelper<a class="headerlink" href="#wellytosubsurfacehelper" title="Permalink to this headline"></a></h1>
+  <div class="section" id="wellytosubsurfacehelper">
+<h1>WellyToSubsurfaceHelper<a class="headerlink" href="#wellytosubsurfacehelper" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subsurface.reader.wells.pandas_to_welly.</span></span><span class="sig-name descname"><span class="pre">WellyToSubsurfaceHelper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collar_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survey_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lith_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrib_dfs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper" title="Permalink to this definition"></a></dt>
+<dt id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">subsurface.reader.wells.pandas_to_welly.</span></code><code class="sig-name descname"><span class="pre">WellyToSubsurfaceHelper</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collar_df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survey_df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lith_df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrib_dfs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p class="rubric">Attributes Summary</p>
 <table class="longtable docutils align-default">
@@ -172,7 +167,7 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_datum" title="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_datum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_datum</span></code></a>(data)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_deviation" title="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_deviation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_deviation</span></code></a>(deviations[, td, method, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_deviation" title="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_deviation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_deviation</span></code></a>(deviations[, td, method, …])</p></td>
 <td><p>Add a deviation survey to this instance, and try to compute a position log from it.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_striplog" title="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_striplog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_striplog</span></code></a>(data)</p></td>
@@ -185,47 +180,47 @@
 </table>
 <p class="rubric">Attributes Documentation</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.lith_component_table">
-<span class="sig-name descname"><span class="pre">lith_component_table</span></span><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.lith_component_table" title="Permalink to this definition"></a></dt>
+<dt id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.lith_component_table">
+<code class="sig-name descname"><span class="pre">lith_component_table</span></code><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.lith_component_table" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods Documentation</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_assays">
-<span class="sig-name descname"><span class="pre">add_assays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_assays"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_assays" title="Permalink to this definition"></a></dt>
+<dt id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_assays">
+<code class="sig-name descname"><span class="pre">add_assays</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Iterable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_assays"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_assays" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_collar">
-<span class="sig-name descname"><span class="pre">add_collar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_collar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_collar" title="Permalink to this definition"></a></dt>
+<dt id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_collar">
+<code class="sig-name descname"><span class="pre">add_collar</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_collar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_collar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for add_datum</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_datum">
-<span class="sig-name descname"><span class="pre">add_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_datum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_datum" title="Permalink to this definition"></a></dt>
+<dt id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_datum">
+<code class="sig-name descname"><span class="pre">add_datum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_datum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_datum" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_deviation">
-<span class="sig-name descname"><span class="pre">add_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deviations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">td</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_deviation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">azimuth_datum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_deviation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_deviation" title="Permalink to this definition"></a></dt>
+<dt id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_deviation">
+<code class="sig-name descname"><span class="pre">add_deviation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deviations</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">td</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_deviation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">azimuth_datum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_deviation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_deviation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a deviation survey to this instance, and try to compute a position
 log from it.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_striplog">
-<span class="sig-name descname"><span class="pre">add_striplog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_striplog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_striplog" title="Permalink to this definition"></a></dt>
+<dt id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_striplog">
+<code class="sig-name descname"><span class="pre">add_striplog</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.3.4)"><span class="pre">pandas.core.frame.DataFrame</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_striplog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_striplog" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_wells">
-<span class="sig-name descname"><span class="pre">add_wells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">well_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_wells"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_wells" title="Permalink to this definition"></a></dt>
+<dt id="subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_wells">
+<code class="sig-name descname"><span class="pre">add_wells</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">well_names</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Iterable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subsurface/reader/wells/pandas_to_welly.html#WellyToSubsurfaceHelper.add_wells"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subsurface.reader.wells.pandas_to_welly.WellyToSubsurfaceHelper.add_wells" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-</section>
+</div>
 
 
            </div>

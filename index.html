@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>subsurface Documentation &mdash; subsurface 0.2.7.dev15+ge00404f documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>subsurface Documentation &mdash; subsurface 0.2.7.dev20+g697d1e4 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="_static/style.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
-      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" /><link rel="shortcut icon" href="_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -33,11 +29,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#">
-            <img src="_static/subsurface.png" class="logo" alt="Logo"/>
+            <a href="#"><img src="_static/subsurface.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.2.7.dev15+ge00404f
+                0.2.7.dev20+g697d1e4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -48,19 +43,19 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
-              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="maintenance.html">Maintenance</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Galleries</span></p>
+<p class="caption"><span class="caption-text">Galleries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="external/external_examples.html">External Examples</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<p class="caption"><span class="caption-text">API Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="code-geological-formats.html">Geological Formats</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code-interfaces.html">Interfaces</a></li>
@@ -113,11 +108,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="subsurface-documentation">
-<span id="subsurface-manual"></span><h1>subsurface Documentation<a class="headerlink" href="#subsurface-documentation" title="Permalink to this headline"></a></h1>
+  <div class="section" id="subsurface-documentation">
+<span id="subsurface-manual"></span><h1>subsurface Documentation<a class="headerlink" href="#subsurface-documentation" title="Permalink to this headline">¶</a></h1>
 <dl class="field-list simple">
 <dt class="field-odd">Release</dt>
-<dd class="field-odd"><p>0.2.7.dev15+ge00404f</p>
+<dd class="field-odd"><p>0.2.7.dev20+g697d1e4</p>
 </dd>
 <dt class="field-even">Date</dt>
 <dd class="field-even"><p>12 November 2021</p>
@@ -127,8 +122,8 @@
 </dd>
 </dl>
 <hr class="docutils" />
-<section id="subsurface">
-<h2>subsurface<a class="headerlink" href="#subsurface" title="Permalink to this headline"></a></h2>
+<div class="section" id="subsurface">
+<h2>subsurface<a class="headerlink" href="#subsurface" title="Permalink to this headline">¶</a></h2>
 <p>DataHub for geoscientific data in Python. Two main purposes:</p>
 <ul class="simple">
 <li><p>Unify geometric data into data objects (using numpy arrays as memory representation) that all the packages of the stack understand</p></li>
@@ -142,8 +137,8 @@
 </dl>
 </li>
 </ul>
-<section id="data-levels">
-<h3>Data Levels<a class="headerlink" href="#data-levels" title="Permalink to this headline"></a></h3>
+<div class="section" id="data-levels">
+<h3>Data Levels<a class="headerlink" href="#data-levels" title="Permalink to this headline">¶</a></h3>
 <p>The difference between data levels is <strong>not</strong> which data they store but which data they <strong>parse and understand</strong>. The rationale for this is to be able to pass along any object while keeping the I/O in subsurface:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>             HUMAN
 
@@ -167,9 +162,9 @@
             COMPUTER
 </pre></div>
 </div>
-</section>
-<section id="documentation-wip">
-<h3>Documentation (WIP)<a class="headerlink" href="#documentation-wip" title="Permalink to this headline"></a></h3>
+</div>
+<div class="section" id="documentation-wip">
+<h3>Documentation (WIP)<a class="headerlink" href="#documentation-wip" title="Permalink to this headline">¶</a></h3>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">subsurface</span></code> is still in early days; do expect things to change. We
 welcome contributions very much, please get in touch if you would like to add
 support for subsurface in your package.</p>
@@ -180,9 +175,9 @@ support for subsurface in your package.</p>
 <li><p><a class="reference external" href="https://softwareunderground.github.io/subsurface/maintenance.html">Developers-guide</a></p></li>
 <li><p><a class="reference external" href="https://softwareunderground.github.io/subsurface/changelog.html">Changelog</a></p></li>
 </ul>
-</section>
-<section id="installation">
-<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h3>
+</div>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install subsurface</span>
 </pre></div>
 </div>
@@ -192,14 +187,14 @@ support for subsurface in your package.</p>
 </div>
 <p>Be aware that to read different formats you will need to manually install the
 specific dependency (e.g. <code class="docutils literal notranslate"><span class="pre">welly</span></code> to read well data).</p>
-</section>
-<section id="requirements">
-<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h3>
+</div>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
 <p>The <strong>only</strong> requirement for <code class="docutils literal notranslate"><span class="pre">subsurface</span></code> is <code class="docutils literal notranslate"><span class="pre">xarray</span></code> (which, in turn,
 requires <code class="docutils literal notranslate"><span class="pre">pandas</span></code> and <code class="docutils literal notranslate"><span class="pre">numpy</span></code>).</p>
-</section>
-<section id="optional-requirements">
-<h3>Optional requirements<a class="headerlink" href="#optional-requirements" title="Permalink to this headline"></a></h3>
+</div>
+<div class="section" id="optional-requirements">
+<h3>Optional requirements<a class="headerlink" href="#optional-requirements" title="Permalink to this headline">¶</a></h3>
 <p>There are many optional requirements, depending on the data format you want to
 read/write. Currently, the <code class="docutils literal notranslate"><span class="pre">requierements_opt.txt</span></code> reads like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openpyxl</span>
@@ -238,9 +233,9 @@ read/write. Currently, the <code class="docutils literal notranslate"><span clas
 </div>
 <div class="toctree-wrapper compound">
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>

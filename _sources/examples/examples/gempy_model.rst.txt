@@ -45,7 +45,7 @@ Reading Simple GemPy model in Subsurface
 Single surface
 --------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-86
+.. GENERATED FROM PYTHON SOURCE LINES 16-29
 
 .. code-block:: default
 
@@ -59,16 +59,37 @@ Single surface
     )
 
     # # %%
-    # fname, = [i for i in model_files if "meshes.nc" in i]
-    # dataset = ss.reader.read_netcdf.read_unstruct(fname)
-    #
-    # # %%
-    # obj = ss.TriSurf(dataset)
-    # print(obj.mesh.points_attributes_to_dict)
-    #
-    # mesh = ss.visualization.to_pyvista_mesh(obj)
-    # ss.visualization.pv_plot([mesh])
-    #
+    fname, = [i for i in model_files if "meshes.nc" in i]
+    dataset = ss.reader.read_netcdf.read_unstruct(fname)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    Downloading data from 'https://github.com/cgre-aachen/gempy_data/raw/master/data/subsurface/example1.zip' to file '/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip'.
+    Unzipping contents of '/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip' to '/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip.unzip'
+    /home/runner/work/subsurface/subsurface/subsurface/reader/read_netcdf.py:18: UserWarning: Trying loading legacy files.
+      warnings.warn("Trying loading legacy files.")
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 30-86
+
+.. code-block:: default
+
+    obj = ss.TriSurf(dataset)
+    print(obj.mesh.points_attributes_to_dict)
+
+    mesh = ss.visualization.to_pyvista_mesh(obj)
+    ss.visualization.pv_plot([mesh])
+
     #
     # # %% md
     # # Four Layers
@@ -122,6 +143,11 @@ Single surface
 
 
 
+.. image-sg:: /examples/examples/images/sphx_glr_gempy_model_001.png
+   :alt: gempy model
+   :srcset: /examples/examples/images/sphx_glr_gempy_model_001.png
+   :class: sphx-glr-single-img
+
 
 .. rst-class:: sphx-glr-script-out
 
@@ -129,16 +155,20 @@ Single surface
 
  .. code-block:: none
 
-    Downloading data from 'https://github.com/cgre-aachen/gempy_data/raw/master/data/subsurface/example1.zip' to file '/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip'.
-    Unzipping contents of '/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip' to '/home/runner/.cache/pooch/2ff36b994aa925b842ddd264256335a9-example1.zip.unzip'
+    {}
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1332: PyvistaDeprecationWarning: Use of `cell_arrays` is deprecated. Use `cell_data` instead.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pyvista/core/dataset.py:1192: PyvistaDeprecationWarning: Use of `point_arrays` is deprecated. Use `point_data` instead.
+      warnings.warn(
 
+    <pyvista.plotting.plotting.Plotter object at 0x7f9f40946d90>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.910 seconds)
+   **Total running time of the script:** ( 0 minutes  8.580 seconds)
 
 
 .. _sphx_glr_download_examples_examples_gempy_model.py:
