@@ -65,7 +65,7 @@ jobs:
 
       - name: Generate Docs & Check Links
         working-directory: docs/
-        run: make html -b linkcheck
+        run: make html
 
       - name: Publish generated content to GitHub Pages
         uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
