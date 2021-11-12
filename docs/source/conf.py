@@ -122,7 +122,13 @@ sphinx_gallery_conf = {
 }
 
 linkcheck_ignore = [r'https://github.com/cgre-aachen/gempy_data/raw/master/',
-                    r'https://raw.githubusercontent.com/softwareunderground/subsurface/main/tests/data/borehole/']
+                    r'https://raw.githubusercontent.com/softwareunderground/subsurface/main/tests/data/borehole/'
+                    ]
+
+linkcheck_request_header = {
+    '*': {'Accept': 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8'},
+    'https://github.com': {}
+}
 
 
 # -- Options for HTML output ----------------------------------------------
