@@ -3,7 +3,7 @@
 -r requirements_opt.txt
 
 # FOR DOCUMENTATION
-sphinx
+sphinx~=3.5
 sphinx_gallery
 sphinx_rtd_theme
 sphinx_automodapi
