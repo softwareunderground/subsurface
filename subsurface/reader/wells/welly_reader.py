@@ -66,7 +66,6 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
             if w.data["lith_log"].shape[0] != n_vertex_per_well - 1:
                 raise ValueError("Cell_attr does not match cells")
 
-
     try:
         df = wts.p.df()
     except ValueError as e:
@@ -76,7 +75,7 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
             raise ValueError
 
     print('The following boreholes failed being processed: ', missed_wells)
-
+    
     unstructured_data = UnstructuredData.from_array(vertex, cells, df)
     return unstructured_data
 
@@ -84,7 +83,7 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
 def striplog_to_curve_log(n_vertex_per_well, table, w: Well, wts: WellyToSubsurfaceHelper) -> Curve:
     start, stop, step_size = wts._calculate_basis_parameters(w, n_vertex_per_well - 1)
     s_log, basis, _table = w.data['lith'].to_log(step_size, start, stop, table=table, return_meta=True)
-    return Curve(s_log, basis)
+    return Curve(s_log, index=basis)
 
 
 def change_curve_basis_to_n_vertex_per_well_inplace(n_points, w, wts):

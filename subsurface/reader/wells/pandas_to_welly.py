@@ -11,7 +11,6 @@ try:
 except ImportError:
     welly_imported = False
 
-
 __all__ = ['WellyToSubsurfaceHelper', ]
 
 
@@ -76,7 +75,10 @@ class WellyToSubsurfaceHelper:
         self._well_names = self._well_names.union(well_names)
         for b in new_boreholes:
             # TODO: Name and uwi should be different
-            w = Well(params={'header': {'name': b, 'uwi': b}})
+            # w = Well(params={'header': {'name': b, 'UWI': b}})
+            w = Well()
+            w.uwi = b
+            w.name = b
             w.location = Location(params={'kb': 100})
             self.p += w
         return self.p
@@ -146,7 +148,7 @@ class WellyToSubsurfaceHelper:
         for b in unique_borehole:
             for a in assay_attributes:
                 w = self.p.get_well(b)
-                w.data[a] = Curve(data[a], basis)
+                w.data[a] = Curve(data[a].values, index=basis)
 
         return self.p
 
@@ -172,7 +174,10 @@ class WellyToSubsurfaceHelper:
 
         for b in unique_borehole:
             w = self.p.get_well(b)
-            w.location.add_deviation(deviations.loc[[b], ['md', 'inc', 'azi']],
+            deviation_val = deviations.loc[[b]]
+            deviation_val["inc"] = self._convert_inclination_to_valid_range(deviation_val["inc"])
+
+            w.location.add_deviation(deviation_val[['md', 'inc', 'azi']],
                                      td=td,
                                      method=method,
                                      update_deviation=update_deviation,
@@ -181,3 +186,10 @@ class WellyToSubsurfaceHelper:
                 raise ValueError('Deviations could not be calculated.')
 
         return self.p
+
+    @staticmethod
+    def _convert_inclination_to_valid_range(inc: pd.Series) -> pd.Series:
+        """Convert inclination degrees to be always between 0 and 180"""
+        inc[0 > inc] += 180
+        inc[inc > 180] -= 180
+        return inc
