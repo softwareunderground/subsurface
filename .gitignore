@@ -76,3 +76,11 @@ venv.bak/
 
 
 .local_settings.json
+/.idea/.gitignore
+/.idea/encodings.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/subsurface.iml
+/.idea/vcs.xml
