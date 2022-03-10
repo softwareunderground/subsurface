@@ -1,6 +1,7 @@
 # GLOBAL REQUIREMENTS.
 -r requirements.txt
 -r requirements_opt.txt
+-r requirements_opt_geospatial.txt
 
 # FOR DOCUMENTATION
 sphinx~=3.5
