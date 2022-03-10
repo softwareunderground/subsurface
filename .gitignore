@@ -75,7 +75,7 @@ venv.bak/
 .spyproject
 
 
-.local_settings.json
+.local.settings.json
 /.idea/.gitignore
 /.idea/encodings.xml
 /.idea/misc.xml
