@@ -13,7 +13,7 @@ from subsurface.visualization import to_pyvista_grid, pv_plot
 
 @pytest.mark.skip(reason="We need a small vtk file to add to the project for this.")
 def test_read_vtk():
-    address = r"C:\Users\legui\OneDrive - Terranigma Solutions GmbH\Documents\Products and Services\LiquidEarth\Test Data Sets\ET\DeepERT_Hombourg.vtk"
+    address = r""
     mesh: UnstructuredGrid = pv.read(address)
     
     point_data_mesh = mesh.cell_data_to_point_data()
