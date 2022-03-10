@@ -16,7 +16,7 @@ import subsurface
 import pathlib
 
 welly = pytest.importorskip('welly')
-xlrd = pytest.importorskip('xlrd')
+
 pf = pathlib.Path(__file__).parent.absolute()
 data_path = pf.joinpath('../data/borehole/')
 from striplog import Striplog, Component
