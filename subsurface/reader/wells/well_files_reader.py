@@ -2,10 +2,11 @@ import warnings
 from typing import Dict
 
 import pandas as pd
+import numpy as np
 
 from subsurface.reader.readers_data import ReaderFilesHelper, ReaderWellsHelper
 from subsurface.reader.wells.wells_utils import add_tops_from_base_and_altitude_in_place
-
+from subsurface.reader.wells.welly_reader import _create_welly_well_from_las
 
 __all__ = ['read_borehole_files', 'read_collar', 'read_survey', 'read_lith',
            'read_attributes', 'check_format_and_read_to_df',
@@ -79,6 +80,27 @@ def read_attributes(reader_helper: ReaderFilesHelper)-> pd.DataFrame:
 
     _validate_attr_data(d)
     return d
+
+
+def read_survey_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) -> pd.DataFrame:
+    """
+    Reads a las file and returns a dataframe.
+    
+    """
+    welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
+    survey_df = welly_well.df()[reader_helper.usecols]
+    map_rows_and_cols_inplace(survey_df, reader_helper)
+    survey_df["well_name"] = "Cottessen"
+    survey_df.set_index("well_name", inplace=True)
+    return survey_df
+
+
+def read_assay_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) -> pd.DataFrame:
+    welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
+    assay_df = welly_well.df()
+    assay_df["well_name"] = well_name
+    assay_df.set_index("well_name", inplace=True)
+    return assay_df
 
 
 def check_format_and_read_to_df(reader_helper: ReaderFilesHelper) -> pd.DataFrame:

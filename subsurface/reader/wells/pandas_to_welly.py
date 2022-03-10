@@ -181,7 +181,9 @@ class WellyToSubsurfaceHelper:
 
         for b in unique_borehole:
             w = self.p.get_well(b)
-            w.location.add_deviation(deviations.loc[[b], ['md', 'inc', 'azi']],
+            deviations_df: pd.DataFrame = deviations.loc[[b], ['md', 'inc', 'azi']]
+            deviations_df.fillna(0, inplace=True)
+            w.location.add_deviation(deviations_df,
                                      td=td,
                                      method=method,
                                      update_deviation=update_deviation,
