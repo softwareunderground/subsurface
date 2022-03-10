@@ -46,7 +46,7 @@ class WellyToSubsurfaceHelper:
         if welly_imported is False:
             raise ImportError('You need to install welly to read well data.')
 
-        self.p = Project([])
+        self.welly_project = Project([])
         self._well_names = set()
         self._unique_formations = None
 
@@ -61,7 +61,16 @@ class WellyToSubsurfaceHelper:
 
     def __repr__(self):
         return self.p.__repr__()
-
+    
+    @property
+    def p(self):
+        """Project Alias"""
+        return self.welly_project
+    
+    @p.setter
+    def p(self, p):
+        self.welly_project = p
+    
     @property
     def lith_component_table(self):
         return [Component({'lith': l}) for l in self._unique_formations]
