@@ -1,11 +1,13 @@
-﻿import subsurface
+﻿import pytest
+import subsurface
 from subsurface import LineSet
 from subsurface.reader.wells import WellyToSubsurfaceHelper, welly_to_subsurface
 from subsurface.reader.wells.welly_reader import create_welly_well_from_las
 
 
+@pytest.mark.skip(reason="find open access las files ")
 def test_read_from_las():
-    address = r"C:\Users\legui\OneDrive - Terranigma Solutions GmbH\Documents\Products and Services\LiquidEarth\Test Data Sets\ET\ET Boreholes\LAS_TEST/"
+    address = r""
 
     well = create_welly_well_from_las('Cottessen', address)
 
