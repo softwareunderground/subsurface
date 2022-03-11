@@ -1,17 +1,16 @@
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 import numpy as np
 import xarray as xr
 
-
 __all__ = ['StructuredData', ]
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=False)
 class StructuredData:
     data: xr.Dataset
-    data_array_name: str = "data_array"
+    _data_array_name: str = "data_array"
 
     """Primary structure definition for structured data
 
@@ -30,6 +29,17 @@ class StructuredData:
     Attributes:
         data (xarray.Dataset)
     """
+
+    @property
+    def data_array_name(self):
+        data_var_list = list(self.data.data_vars.keys())
+        if self._data_array_name not in data_var_list:
+            raise ValueError("data_array_name not found in data_vars: {}".format(data_var_list))
+        return self._data_array_name
+
+    @data_array_name.setter
+    def data_array_name(self, data_array_name: str):
+        self._data_array_name = data_array_name
 
     @classmethod
     def from_numpy(cls, array: np.ndarray, coords: dict = None, data_array_name: str = "data_array",
@@ -58,20 +68,27 @@ class StructuredData:
         return self.data[self.data_array_name].values
 
     @property
-    def default_dataset(self):
+    def default_data_array(self):
         return self.data[self.data_array_name]
 
-    def to_binary(self, order='F'):
-        bytearray_le = self._to_bytearray(order)
-        header = self._set_binary_header()
+    def default_data_array_to_binary(self, order='F'):
+        bytearray_le = self._to_bytearray(self.default_data_array, order)
+        header = self._set_binary_header(self.default_data_array)
 
         return bytearray_le, header
-
-    def _set_binary_header(self):
-        header = {"data_shape": self.values.shape}
+    
+    def to_binary(self, data_array: xr.DataArray, order: str = 'F') -> Tuple[bytes, Dict]:
+        bytearray_le = self._to_bytearray(data_array, order)
+        header = self._set_binary_header(data_array)
+        return bytearray_le, header
+        
+    @staticmethod
+    def _set_binary_header(data_array: xr.DataArray) -> Dict:
+        header = {"data_shape": data_array.shape}
         return header
 
-    def _to_bytearray(self, order):
-        data = self.values.astype('float32').tobytes(order)
+    @staticmethod
+    def _to_bytearray(data_array: xr.DataArray, order: str) -> bytes:
+        data = data_array.values.astype('float32').tobytes(order)
         bytearray_le = data
         return bytearray_le

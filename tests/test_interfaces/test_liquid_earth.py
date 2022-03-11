@@ -35,7 +35,7 @@ class TestLiquidEarthClient:
 
         unstruc = self.test_dataset2(data_path)
 
-        body, header = unstruc.to_binary()
+        body, header = unstruc.default_data_array_to_binary()
 
         liquid_earth_client.add_data_to_project(
             project_id="museum",
@@ -62,7 +62,7 @@ class TestLiquidEarthClient:
     def test_add_data_to_project(self, liquid_earth_client, data_path):
         us = read_unstruct(data_path + '/interpolator_meshes.nc')
         print(us.extent)
-        body, header = us.to_binary()
+        body, header = us.default_data_array_to_binary()
 
         liquid_earth_client.add_data_to_project(
             project_id="52f88baa-c84c-4082-bbba-869ef3819004",
@@ -112,7 +112,7 @@ class TestLiquidEarthClient:
     def test_put_file_in_project(self, liquid_earth_client, data_path):
         us = read_unstruct(data_path + '/interpolator_meshes.nc')
         print(us.extent)
-        body, header = us.to_binary()
+        body, header = us.default_data_array_to_binary()
 
         liquid_earth_client._put_file_in_project(
             project_id="52f88baa-c84c-4082-bbba-869ef3819004",

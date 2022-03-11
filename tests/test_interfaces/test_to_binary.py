@@ -30,7 +30,7 @@ def wells(data_path):
 
 
 def test_wells_to_binary(wells):
-    bytearray_le, header = wells.to_binary()
+    bytearray_le, header = wells.default_data_array_to_binary()
     print(header)
 
     with open('well_f.json', 'w') as outfile:
@@ -50,7 +50,7 @@ def test_profile_to_binary(data_path):
 
     cross = imageio.imread(data_path + '/profiles/Profil1_cropped.png')
     struct = StructuredData.from_numpy(np.array(cross))
-    texture_binary, texture_header = struct.to_binary()
+    texture_binary, texture_header = struct.default_data_array_to_binary()
 
     origin = [traces.loc[0, 'geometry'].xy[0][0],
               traces.loc[0, 'geometry'].xy[1][0],
@@ -78,7 +78,7 @@ def test_profile_to_binary(data_path):
     import pandas as pd
 
     unstruct = UnstructuredData.from_array(v, e, vertex_attr=pd.DataFrame(uv, columns=['u', 'v']))
-    mesh_binary, mesh_header = unstruct.to_binary()
+    mesh_binary, mesh_header = unstruct.default_data_array_to_binary()
 
     with open('mesh_uv.json', 'w') as outfile:
         import json
