@@ -33,7 +33,6 @@ def read_borehole_files(reader_wells_helper: ReaderWellsHelper) -> Dict[str, pd.
 
 
 def read_collar(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
-
     if reader_helper.usecols is None: reader_helper.usecols = [0, 1, 2, 3]
     if reader_helper.index_col is False: reader_helper.index_col = 0
 
@@ -70,7 +69,7 @@ def read_lith(reader_helper: ReaderFilesHelper):
     return lith_df
 
 
-def read_attributes(reader_helper: ReaderFilesHelper)-> pd.DataFrame:
+def read_attributes(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
     if reader_helper.index_col is False: reader_helper.index_col = 0
 
     d = check_format_and_read_to_df(reader_helper)
@@ -118,17 +117,17 @@ def check_format_and_read_to_df(reader_helper: ReaderFilesHelper) -> pd.DataFram
     else:
         raise AttributeError('file_or_buffer must be either a path or a dict')
 
-    if type(d.columns) is str:  d.columns = d.columns.str.strip() # Remove spaces at the beginning and end
+    if type(d.columns) is str:  d.columns = d.columns.str.strip()  # Remove spaces at the beginning and end
     if type(d.index) is str: d.index = d.index.str.strip()  # Remove spaces at the beginning and end
     return d
 
 
 def map_rows_and_cols_inplace(d: pd.DataFrame, reader_helper: ReaderFilesHelper):
     if reader_helper.index_map is not None:
-        d.rename(reader_helper.index_map, axis="index", inplace=True)#d.index = d.index.map(reader_helper.index_map)
+        d.rename(reader_helper.index_map, axis="index", inplace=True)  # d.index = d.index.map(reader_helper.index_map)
     if reader_helper.columns_map is not None:
         d.rename(reader_helper.columns_map, axis="columns", inplace=True)
-        #d.columns = d.columns.map(reader_helper.columns_map)
+        # d.columns = d.columns.map(reader_helper.columns_map)
 
 
 def _get_reader(file_format):

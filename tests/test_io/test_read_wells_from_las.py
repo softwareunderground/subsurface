@@ -10,7 +10,7 @@ from subsurface.reader.wells.well_files_reader import read_survey_df_from_las, r
 
 @pytest.mark.skip(reason="find open access las files ")
 def test_read_from_las():
-    address = r"C:\Users\legui\OneDrive - Terranigma Solutions GmbH\Documents\Products and Services\LiquidEarth\Test Data Sets\ET\ET Boreholes\LAS_TEST/"
+    address = r""
 
     collar_coord = np.array([[707385, 5627164, 0]])
     collar_df = pd.DataFrame(index=["Cottessen"], data=collar_coord, columns=["X", "Y", "Z"])
