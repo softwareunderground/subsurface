@@ -6,8 +6,8 @@ import sys
 from os import path
 from setuptools import setup, find_packages
 
-if not sys.version_info[:2] >= (3, 7):
-    sys.exit(f"subsurface is only meant for Python 3.7 and up.\n"
+if not sys.version_info[:2] >= (3, 8):
+    sys.exit(f"subsurface is only meant for Python 3.8 and up.\n"
              f"Current version: {sys.version_info[0]}.{sys.version_info[1]}.")
 
 this_directory = path.abspath(path.dirname(__file__))
