@@ -1,0 +1,6 @@
+{
+  "comment": "To run the tests that need credentials copy this file and rename it to local.settings.json",
+  "username": "",
+  "password": ""
+}
+  

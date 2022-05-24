@@ -16,7 +16,7 @@ import subsurface
 import pathlib
 
 welly = pytest.importorskip('welly')
-xlrd = pytest.importorskip('xlrd')
+
 pf = pathlib.Path(__file__).parent.absolute()
 data_path = pf.joinpath('../data/borehole/')
 from striplog import Striplog, Component
@@ -158,7 +158,7 @@ def test_create_welly_to_subsurface():
 
     # Plot gold
     pyvista_mesh.set_active_scalars('Au (g/t)')
-    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
+    subsurface.visualization.pv_plot([pyvista_mesh], image_2d=False)
 
 
 def test_read_to_welly_json():

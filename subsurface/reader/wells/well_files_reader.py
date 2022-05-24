@@ -2,10 +2,11 @@ import warnings
 from typing import Dict
 
 import pandas as pd
+import numpy as np
 
 from subsurface.reader.readers_data import ReaderFilesHelper, ReaderWellsHelper
 from subsurface.reader.wells.wells_utils import add_tops_from_base_and_altitude_in_place
-
+from subsurface.reader.wells.welly_reader import _create_welly_well_from_las
 
 __all__ = ['read_borehole_files', 'read_collar', 'read_survey', 'read_lith',
            'read_attributes', 'check_format_and_read_to_df',
@@ -32,7 +33,6 @@ def read_borehole_files(reader_wells_helper: ReaderWellsHelper) -> Dict[str, pd.
 
 
 def read_collar(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
-
     if reader_helper.usecols is None: reader_helper.usecols = [0, 1, 2, 3]
     if reader_helper.index_col is False: reader_helper.index_col = 0
 
@@ -69,7 +69,7 @@ def read_lith(reader_helper: ReaderFilesHelper):
     return lith_df
 
 
-def read_attributes(reader_helper: ReaderFilesHelper)-> pd.DataFrame:
+def read_attributes(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
     if reader_helper.index_col is False: reader_helper.index_col = 0
 
     d = check_format_and_read_to_df(reader_helper)
@@ -79,6 +79,27 @@ def read_attributes(reader_helper: ReaderFilesHelper)-> pd.DataFrame:
 
     _validate_attr_data(d)
     return d
+
+
+def read_survey_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) -> pd.DataFrame:
+    """
+    Reads a las file and returns a dataframe.
+    
+    """
+    welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
+    survey_df = welly_well.df()[reader_helper.usecols]
+    map_rows_and_cols_inplace(survey_df, reader_helper)
+    survey_df["well_name"] = "Cottessen"
+    survey_df.set_index("well_name", inplace=True)
+    return survey_df
+
+
+def read_assay_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) -> pd.DataFrame:
+    welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
+    assay_df = welly_well.df()
+    assay_df["well_name"] = well_name
+    assay_df.set_index("well_name", inplace=True)
+    return assay_df
 
 
 def check_format_and_read_to_df(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
@@ -96,17 +117,17 @@ def check_format_and_read_to_df(reader_helper: ReaderFilesHelper) -> pd.DataFram
     else:
         raise AttributeError('file_or_buffer must be either a path or a dict')
 
-    if type(d.columns) is str:  d.columns = d.columns.str.strip() # Remove spaces at the beginning and end
+    if type(d.columns) is str:  d.columns = d.columns.str.strip()  # Remove spaces at the beginning and end
     if type(d.index) is str: d.index = d.index.str.strip()  # Remove spaces at the beginning and end
     return d
 
 
 def map_rows_and_cols_inplace(d: pd.DataFrame, reader_helper: ReaderFilesHelper):
     if reader_helper.index_map is not None:
-        d.rename(reader_helper.index_map, axis="index", inplace=True)#d.index = d.index.map(reader_helper.index_map)
+        d.rename(reader_helper.index_map, axis="index", inplace=True)  # d.index = d.index.map(reader_helper.index_map)
     if reader_helper.columns_map is not None:
         d.rename(reader_helper.columns_map, axis="columns", inplace=True)
-        #d.columns = d.columns.map(reader_helper.columns_map)
+        # d.columns = d.columns.map(reader_helper.columns_map)
 
 
 def _get_reader(file_format):
