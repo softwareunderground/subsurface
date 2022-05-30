@@ -51,7 +51,7 @@ def get_images() -> List[str]:
 def test_converted_to_structured_data(get_structured_data):
     for x in get_structured_data:
         assert isinstance(x, StructuredData)
-        x.default_dataset.plot()
+        x.default_data_array.plot()
         plt.show(block=False)
 
 

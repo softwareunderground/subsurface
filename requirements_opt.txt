@@ -23,6 +23,3 @@ pooch
 netcdf4
 scooby
 
-# Geospatial libraries
-geopandas
-rasterio

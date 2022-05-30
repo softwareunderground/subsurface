@@ -87,7 +87,10 @@ class LiquidEarthClient():
 
     def add_data_to_project(self, project_id: str, data_name: str, data_type: DataTypes,
                             header: json, body: bytearray):
-
+        # Check if _ is in data_name
+        if "_" in project_id:
+            raise ValueError("project_id should not contain _")
+        
         self._post_update_meta_data(project_id, data_name, data_type)
         self._put_file_in_project(project_id, data_name + ".le", data_type, body)
         self._put_file_in_project(project_id, data_name + ".json", data_type,  json.dumps(header))

@@ -75,6 +75,17 @@ venv.bak/
 .spyproject
 
 
+.local.settings.json
+/.idea/.gitignore
+/.idea/encodings.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/subsurface.iml
+/.idea/vcs.xml
+/.idea/other.xml
+
 .local_settings.json
 
 # User-specific stuff:
@@ -92,9 +103,3 @@ venv.bak/
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 /.idea/codeStyles/codeStyleConfig.xml
-/.idea/other.xml
-/.idea/misc.xml
-/.idea/.gitignore
-/.idea/inspectionProfiles/Project_Default.xml
-/.idea/inspectionProfiles/profiles_settings.xml
-/.idea/subsurface.iml
