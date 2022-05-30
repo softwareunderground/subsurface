@@ -98,7 +98,7 @@ class WellyToSubsurfaceHelper:
             w = self.p.get_well(b)
             datum = data.loc[[b]]
             assert datum.shape[1] == 3, 'datum must be XYZ coord'
-            w.location.position = datum.values[0]
+            w.position = datum.values[0]
 
         return self.p
 

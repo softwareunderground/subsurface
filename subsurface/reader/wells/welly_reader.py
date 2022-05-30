@@ -145,6 +145,16 @@ def _create_welly_well_from_las(well_name: str, las_folder: str):
 def add_curves_from_las(w: Well, las_folder: str) -> Well:
     """ Add curves from las file. """
 
+    def _read_curves_to_welly_object(well: Well, curve_path: str = '.') -> Well:
+        las_files = glob.glob(curve_path + '*.las')
+        # throw error if no las files found
+        if len(las_files) == 0:
+            raise Exception('No las files found in ' + curve_path)
+
+        for curve in las_files:
+            well.add_curves_from_las(curve)
+        return well
+
     _read_curves_to_welly_object(w, curve_path=las_folder)
 
     w_df = w.df()
@@ -166,12 +176,4 @@ def _make_deviation_df(well_df: DataFrame, inclination_header: str, azimuth_head
     return deviation_complete
 
 
-def _read_curves_to_welly_object(well: Well, curve_path: str = '.') -> Well:
-    las_files = glob.glob(curve_path + '*.las')
-    # throw error if no las files found
-    if len(las_files) == 0:
-        raise Exception('No las files found in ' + curve_path)
 
-    for curve in las_files:
-        well.add_curves_from_las(curve)
-    return well
