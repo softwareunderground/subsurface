@@ -107,7 +107,14 @@ class LiquidEarthClient():
             print(response.text)
 
     def _post_update_meta_data(self, project_id: str, data_name: str, data_type: DataTypes):
-        query_param = f"?project_id={project_id}&data_id={data_name}&data_type={data_type.value}"
+        
+        # ! data_type Collar and tubes should be just mapped to well
+        if data_type == DataTypes.collars or data_type == DataTypes.cylinder:
+            address_in_cosmos = "wells"
+        else:
+            address_in_cosmos = data_type.value
+        
+        query_param = f"?project_id={project_id}&data_id={data_name}&data_type={address_in_cosmos}"
         end_point = "subsurface-lite/v1/update_project_meta" + query_param
 
         response = requests.post(self.host + end_point, headers=self.header)
