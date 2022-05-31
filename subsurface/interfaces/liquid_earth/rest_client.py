@@ -95,6 +95,11 @@ class LiquidEarthClient():
         self._put_file_in_project(project_id, data_name + ".le", data_type, body)
         self._put_file_in_project(project_id, data_name + ".json", data_type,  json.dumps(header))
 
+    def add_texture_to_mesh(self, project_id: str, data_name: str, data_type: DataTypes,
+                            texture):
+        self._post_update_meta_data(project_id, data_name, data_type)
+        self._put_file_in_project(project_id, data_name + ".png", data_type, texture)
+
     def _put_file_in_project(self, project_id: str, data_name, data_type: DataTypes, file):
         blob_path = data_type.value + "/" + data_name
 
@@ -105,6 +110,8 @@ class LiquidEarthClient():
             raise Exception(f"Request failed: {response.text}")
         elif response.status_code >= 200:
             print(response.text)
+        else:
+            print(response.status_code)
 
     def _post_update_meta_data(self, project_id: str, data_name: str, data_type: DataTypes):
         
