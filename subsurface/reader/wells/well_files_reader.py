@@ -3,12 +3,13 @@ from typing import Dict
 
 import pandas as pd
 import numpy as np
+import welly
 
 from subsurface.reader.readers_data import ReaderFilesHelper, ReaderWellsHelper
 from subsurface.reader.wells.wells_utils import add_tops_from_base_and_altitude_in_place
 from subsurface.reader.wells.welly_reader import _create_welly_well_from_las
 
-__all__ = ['read_borehole_files', 'read_collar', 'read_survey', 'read_lith',
+__all__ = ['read_borehole_files', 'read_collar_from_text', 'read_survey_from_text', 'read_lith',
            'read_attributes', 'check_format_and_read_to_df',
            'map_rows_and_cols_inplace']
 
@@ -16,9 +17,9 @@ __all__ = ['read_borehole_files', 'read_collar', 'read_survey', 'read_lith',
 def read_borehole_files(reader_wells_helper: ReaderWellsHelper) -> Dict[str, pd.DataFrame]:
     data_frames = dict()
 
-    data_frames['collar_df'] = read_collar(reader_wells_helper.reader_collars_args)
+    data_frames['collar_df'] = read_collar_from_text(reader_wells_helper.reader_collars_args)
 
-    data_frames['survey_df'] = read_survey(reader_wells_helper.reader_survey_args)
+    data_frames['survey_df'] = read_survey_from_text(reader_wells_helper.reader_survey_args)
 
     if reader_wells_helper.reader_lith_args is not None:
         data_frames['lith_df'] = read_lith(reader_wells_helper.reader_lith_args)
@@ -32,7 +33,7 @@ def read_borehole_files(reader_wells_helper: ReaderWellsHelper) -> Dict[str, pd.
     return data_frames
 
 
-def read_collar(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
+def read_collar_from_text(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
     if reader_helper.usecols is None: reader_helper.usecols = [0, 1, 2, 3]
     if reader_helper.index_col is False: reader_helper.index_col = 0
 
@@ -43,7 +44,21 @@ def read_collar(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
     return d
 
 
-def read_survey(reader_helper: ReaderFilesHelper):
+def read_collar_from_las(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
+    
+    well = welly.Well.from_las(reader_helper.file_or_buffer)
+    col = reader_helper.usecols
+    idx = reader_helper.index_col
+    
+    collars_df = well.df()
+    
+    collars_df = collars_df.loc[[idx], col]
+    collars_df[["well_id"]] = well.name
+    collars_df.set_index("well_id", inplace=True)
+    return collars_df
+
+
+def read_survey_from_text(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
     if reader_helper.index_col is False: reader_helper.index_col = 0
 
     d = check_format_and_read_to_df(reader_helper)
@@ -54,7 +69,23 @@ def read_survey(reader_helper: ReaderFilesHelper):
     return d_no_singles
 
 
-def read_lith(reader_helper: ReaderFilesHelper):
+def read_survey_df_from_las(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
+    """
+    Reads a las file and returns a dataframe.
+    
+    """
+    
+    # welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
+    welly_well = welly.Well.from_las(reader_helper.file_or_buffer)
+    
+    survey_df = welly_well.df()[reader_helper.usecols]
+    map_rows_and_cols_inplace(survey_df, reader_helper)
+    survey_df["well_name"] = welly_well.name
+    survey_df.set_index("well_name", inplace=True)
+    return survey_df
+
+
+def read_lith(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
     """Columns MUST contain:
         - top
         - base
@@ -68,6 +99,18 @@ def read_lith(reader_helper: ReaderFilesHelper):
 
     return lith_df
 
+def read_lith_from_las(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
+    welly_well = welly.Well.from_las(reader_helper.file_or_buffer)
+    lith_df = welly_well.df()
+    map_rows_and_cols_inplace(lith_df, reader_helper)
+    
+    lith_df["well_name"] = welly_well.name
+    lith_df.set_index("well_name", inplace=True)
+    
+    lith_df = _validate_lith_data(lith_df, reader_helper)
+    
+    return lith_df
+
 
 def read_attributes(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
     if reader_helper.index_col is False: reader_helper.index_col = 0
@@ -79,19 +122,6 @@ def read_attributes(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
 
     _validate_attr_data(d)
     return d
-
-
-def read_survey_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) -> pd.DataFrame:
-    """
-    Reads a las file and returns a dataframe.
-    
-    """
-    welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
-    survey_df = welly_well.df()[reader_helper.usecols]
-    map_rows_and_cols_inplace(survey_df, reader_helper)
-    survey_df["well_name"] = "Cottessen"
-    survey_df.set_index("well_name", inplace=True)
-    return survey_df
 
 
 def read_assay_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) -> pd.DataFrame:
@@ -114,6 +144,9 @@ def check_format_and_read_to_df(reader_helper: ReaderFilesHelper) -> pd.DataFram
     elif reader_helper.is_python_dict:
         reader = _get_reader('dict')
         d = reader(reader_helper.file_or_buffer)
+    elif reader_helper.is_las:
+        reader = _get_reader("las")
+        d = reader(reader_helper.file_or_buffer)
     else:
         raise AttributeError('file_or_buffer must be either a path or a dict')
 
@@ -131,25 +164,23 @@ def map_rows_and_cols_inplace(d: pd.DataFrame, reader_helper: ReaderFilesHelper)
 
 
 def _get_reader(file_format):
+    def _dict_reader(file_or_buffer: str):
+        return pd.DataFrame(data=dict_['data'], columns=dict_['columns'], index=dict_['index'])
+
+    def _las_reader(file_or_buffer: str) -> pd.DataFrame:
+        well = Well(params={'header': {'name': "temp", 'uwi': "temp"}})
+        well_from_las = _read_curves_to_welly_object(well, curve_path=file_or_buffer)
+        return well_from_las.df()
+
     if file_format == '.xlsx':
         reader = pd.read_excel
     elif file_format == 'dict':
         reader = _dict_reader
+    elif file_format == 'las':
+        reader = _las_reader
     else:
         reader = pd.read_csv
     return reader
-
-
-def _dict_reader(dict_):
-    """
-
-    Args:
-        dict_: data, index, columns
-
-    """
-    return pd.DataFrame(data=dict_['data'],
-                        columns=dict_['columns'],
-                        index=dict_['index'])
 
 
 def _validate_survey_data(d):
@@ -171,13 +202,30 @@ def _validate_survey_data(d):
 def _validate_lith_data(d: pd.DataFrame, reader_helper: ReaderFilesHelper) -> pd.DataFrame:
     given_top = pd.np.isin(['top', 'base', 'component lith'], d.columns).all()
     given_altitude_and_base = pd.np.isin(['altitude', 'base', 'component lith'], d.columns).all()
+    given_xyz = pd.np.isin(['x', 'y', 'z'], d.columns).all()
 
     if given_altitude_and_base and not given_top:
         d = add_tops_from_base_and_altitude_in_place(d, reader_helper.index_col, 'base', 'altitude')
+    elif given_xyz and not given_top and not given_altitude_and_base:
+        # TODO: Set base and altitude colums
+        d['altitude'] = d['z'][0]
+
+        xyz_array = d[['x', 'y', 'z']].values
+        # Shift xyz_array to origin
+        xyz_array_origin = xyz_array - xyz_array[0]
+
+        # Get md
+        md = np.linalg.norm(xyz_array_origin, axis=1)
+        d['base'] = md # + d['altitude']
+        
+        d = add_tops_from_base_and_altitude_in_place(d, d.index, 'base', 'altitude')
     elif not given_top and not given_altitude_and_base:
         raise ValueError('basis column must be present in the file. Use '
                          'columns_map to assign column names to these fields.')
     lith_df = d[['top', 'base', 'component lith']]
+    # lith_df nans to 0
+    lith_df.fillna(0, inplace=True)
+    
     return lith_df
 
 

@@ -10,18 +10,18 @@ from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
 
 from subsurface.structs import UnstructuredData
 
-from subsurface.reader.wells import read_collar
-
+from subsurface.reader.wells import read_collar_from_text
 
 __all__ = ['read_wells_to_unstruct', 'borehole_location_to_unstruct']
 
 
 def read_wells_to_unstruct(reader_wells_helper: ReaderWellsHelper,
-                            backend='welly', n_vertex_per_well=80,
+                           backend='welly', n_vertex_per_well=80,
                            table: List[Component] = None) -> UnstructuredData:
     """Read from csv files (or excel) to `subsurface.Unstructured` object.
 
     Args:
+        reader_helper: ReaderWellsHelper object.
         backend (string): Which library use for reading and processing of data.
          So far: welly
         table (List[Striplog.Component]): List of components to map lithologies
@@ -47,8 +47,7 @@ def read_wells_to_unstruct(reader_wells_helper: ReaderWellsHelper,
 
 def borehole_location_to_unstruct(reader_helper: ReaderFilesHelper,
                                   add_number_segments: bool = True) -> UnstructuredData:
-
-    collars = read_collar(reader_helper)
+    collars = read_collar_from_text(reader_helper)
     collars_attributes = pd.DataFrame()
 
     # Remove duplicates

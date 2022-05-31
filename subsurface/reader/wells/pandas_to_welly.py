@@ -11,7 +11,6 @@ try:
 except ImportError:
     welly_imported = False
 
-
 __all__ = ['WellyToSubsurfaceHelper', ]
 
 
@@ -61,16 +60,16 @@ class WellyToSubsurfaceHelper:
 
     def __repr__(self):
         return self.p.__repr__()
-    
+
     @property
     def p(self):
         """Project Alias"""
         return self.welly_project
-    
+
     @p.setter
     def p(self, p):
         self.welly_project = p
-    
+
     @property
     def lith_component_table(self):
         return [Component({'lith': l}) for l in self._unique_formations]
@@ -88,6 +87,11 @@ class WellyToSubsurfaceHelper:
             w = Well(params={'header': {'name': b, 'uwi': b}})
             w.location = Location(params={'kb': 100})
             self.p += w
+        return self.p
+
+    def add_well(self, well: Well):
+        well.location = Location(params={'kb': 100})
+        self.p += well
         return self.p
 
     def add_datum(self, data: pd.DataFrame):
@@ -122,11 +126,8 @@ class WellyToSubsurfaceHelper:
             except TypeError:
                 n_basis = 2
             try:
-                start, stop, step_size = self._calculate_basis_parameters(
-                    w,
-                    n_basis)
-                s_log, basis, table = s.to_log(step_size, start, stop,
-                                               return_meta=True)
+                start, stop, step_size = self._calculate_basis_parameters(w, n_basis)
+                s_log, basis, table = s.to_log(step_size, start, stop, return_meta=True)
 
                 w.data['lith'] = s
                 w.data['lith_log'] = Curve(s_log, basis)
@@ -164,8 +165,14 @@ class WellyToSubsurfaceHelper:
 
         max_ = well.location.md.max()
         min_ = well.location.md.min()
+        # ? Should _min always being 0 and max_? 
+
         step_size = (max_ - min_) / n_points
-        return min_ + step_size / 2, max_ - step_size / 2, step_size + 1e-12
+
+        start = min_ + step_size / 2
+        stop = max_ - step_size / 2
+
+        return start, stop, step_size + 1e-12
 
     def add_deviation(self, deviations: pd.DataFrame,
                       td=None,
@@ -176,19 +183,59 @@ class WellyToSubsurfaceHelper:
          log from it.
 
         """
+
+        def _extract_data_and_add_deviation_to_well(azimuth_datum, b, deviations, method, td, update_deviation, w):
+            deviations_df: pd.DataFrame = deviations.loc[[b], ['md', 'inc', 'azi']]
+            deviations_df.fillna(0, inplace=True)
+            w.location.add_deviation(deviations_df, td=td, method=method, update_deviation=update_deviation,
+                                     azimuth_datum=azimuth_datum)
+
         unique_borehole = np.unique(deviations.index)
         self.add_wells(unique_borehole)
 
         for b in unique_borehole:
             w = self.p.get_well(b)
-            deviations_df: pd.DataFrame = deviations.loc[[b], ['md', 'inc', 'azi']]
-            deviations_df.fillna(0, inplace=True)
-            w.location.add_deviation(deviations_df,
-                                     td=td,
-                                     method=method,
-                                     update_deviation=update_deviation,
-                                     azimuth_datum=azimuth_datum)
+
+            # TODO [-]: Check if the columns are md inc azi or x, y, z 
+            if pd.np.isin(['md', 'inc', 'azi'], deviations.columns).all():
+                _extract_data_and_add_deviation_to_well(azimuth_datum, b, deviations, method, td, update_deviation, w, )
+            elif pd.np.isin(['x', 'y', 'z'], deviations.columns).all():
+                xyz_df: pd.DataFrame = deviations.loc[[b], ['x', 'y', 'z']]
+                deviations.loc[[b], ['md', 'azi', 'inc']] = self._xyz_coordinates_to_md_azimuth_inclination(xyz_df)
+                _extract_data_and_add_deviation_to_well(azimuth_datum, b, deviations, method, td, update_deviation, w, )
+            else:
+                raise AttributeError('Deviation survey must have columns md, inc, or x, y, z')
+
             if w.location.position is None:
                 raise ValueError('Deviations could not be calculated.')
 
         return self.p
+
+    def _xyz_coordinates_to_md_azimuth_inclination(self, xyz_array) -> np.ndarray:
+        """
+        Converts a numpy array of xyz coordinates to md, azimuth, dip in degrees
+        """
+        # # ! So far we are assuming the coordinates are absolute (instead to be relative to the datum)
+
+        xyz_array = np.array(xyz_array)
+
+        # Shift xyz_array to origin
+        xyz_array_origin = xyz_array - xyz_array[0]
+
+        # Get md
+        md = np.linalg.norm(xyz_array_origin, axis=1)
+
+        # Get azimuth and dip
+        azimuth = np.arctan2(xyz_array_origin[:, 0], xyz_array_origin[:, 1])
+        dip = np.arctan2(xyz_array_origin[:, 2], np.sqrt(xyz_array_origin[:, 0] ** 2 + xyz_array_origin[:, 1] ** 2))
+
+        # Convert to degrees
+        azimuth = np.rad2deg(azimuth)
+        dip = np.rad2deg(dip)
+
+        # Make sure azimuth is between 0 and 360
+        azimuth[azimuth < 0] = azimuth[azimuth < 0] + 360
+
+        dip = + 90 + dip
+
+        return np.vstack((md, azimuth, dip)).T

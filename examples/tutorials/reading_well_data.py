@@ -20,7 +20,7 @@ from striplog import Component
 
 import subsurface as sb
 from subsurface.reader import ReaderFilesHelper
-from subsurface.reader.wells import read_collar, read_survey, read_lith, WellyToSubsurfaceHelper, welly_to_subsurface
+from subsurface.reader.wells import read_collar_from_text, read_survey_from_text, read_lith, WellyToSubsurfaceHelper, welly_to_subsurface
 from subsurface.structs.base_structures.common_data_utils import to_netcdf
 
 base_url = "https://raw.githubusercontent.com/softwareunderground/subsurface/main/tests/data/borehole/"
@@ -56,20 +56,18 @@ asdict(reading_collars)
 # we can use it for specific functions to read the file into pandas:
 
 # %%
-collar = read_collar(reading_collars)
+collar = read_collar_from_text(reading_collars)
 collar
 
 # %% md
 # We do the same for survey and lithologies:
 
 # %%
-survey = read_survey(
-    ReaderFilesHelper(
-        file_or_buffer=raw_borehole_data_csv,
-        index_col="name",
-        usecols=["name", "md"]
-    )
-)
+survey = read_survey_from_text(ReaderFilesHelper(
+    file_or_buffer=raw_borehole_data_csv,
+    index_col="name",
+    usecols=["name", "md"]
+))
 survey
 
 # %%

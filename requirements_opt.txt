@@ -1,4 +1,6 @@
 openpyxl
+pandas==1.4.1
+
 
 welly == 0.4.8
 

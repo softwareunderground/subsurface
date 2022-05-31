@@ -53,14 +53,15 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
 
         cells, vertex, last_index = vertex_and_cells_from_welly_trajectory(
             cells, elev, kwargs, last_index, n_vertex_per_well, vertex, w)
-
+ 
         change_curve_basis_to_n_vertex_per_well_inplace(n_vertex_per_well, w, wts)
 
         # Convert striplog into Curve
         if convert_lith is True:
             if 'lith' in w.data:
                 if table is None: table = wts.lith_component_table
-                w.data['lith_log'] = striplog_to_curve_log(n_vertex_per_well, table, w, wts)
+                log = striplog_to_curve_log(n_vertex_per_well, table, w, wts)
+                w.data['lith_log'] = log
             else:
                 w.data["lith_log"] = Curve(-1 * np.ones(n_vertex_per_well - 1, dtype=int))
 
@@ -97,7 +98,9 @@ def vertex_and_cells_from_welly_trajectory(cells: np.ndarray, elev: bool,
                                            welly_trajectory_kwargs: dict,
                                            last_index: int, n_vertex_for_well: int,
                                            vertex: np.ndarray, w: Well):
-    xyz = w.location.trajectory(w.position, elev, n_vertex_for_well, **welly_trajectory_kwargs)
+    
+    
+    xyz = w.location.trajectory(w.position, elev, n_vertex_for_well, **welly_trajectory_kwargs)  # * w.position is set when the collar is set `add_datum`
     # Make sure deviation is there
     a = np.arange(0 + last_index, xyz.shape[0] - 1 + last_index, dtype=np.int_)
     b = np.arange(1 + last_index, xyz.shape[0] + last_index, dtype=np.int_)
@@ -131,47 +134,53 @@ def _create_welly_well_from_las(well_name: str, las_folder: str):
 
     """
 
-    def _create_well(uwi: str = 'dummy_uwi'):
-        w = Well()
-        w.location.uwi = well_name
-        w.location.name = well_name
+    def add_curves_from_las(w: Well, las_folder: str) -> Well:
+        """ Add curves from las file. """
 
+        def _read_curves_to_welly_object(well: Well, curve_path: str = '.') -> Well:
+            las_files = glob.glob(curve_path + '*.las')
+            # throw error if no las files found
+            if len(las_files) == 0:
+                raise Exception('No las files found in ' + curve_path)
+
+            for curve in las_files:
+                well.add_curves_from_las(curve)
+            return well
+
+        def _make_deviation_df(well_df: DataFrame, inclination_header: str, azimuth_header: str,
+                               depth_header: str = '', depth_index=True):
+            if depth_index:
+                deviation_data = well_df[[inclination_header, azimuth_header]].to_numpy()
+                deviation_index = well_df.index.to_numpy()
+                deviation_complete = np.insert(deviation_data, 0, deviation_index, axis=1)
+                deviation_complete = deviation_complete[~np.isnan(deviation_complete).any(axis=1), :]
+            else:
+                deviation_complete = well_df[[depth_header, inclination_header, azimuth_header]].to_numpy()
+                deviation_complete = deviation_complete[~np.isnan(deviation_complete).any(axis=1), :]
+            return deviation_complete
+
+        # ======================
+        w = _read_curves_to_welly_object(w, curve_path=las_folder)
+        w_df = w.df()
+
+        # TODO: From this point on I should be able to merge it with the standard pipeline
+
+        deviation_df = _make_deviation_df(w_df, inclination_header='IMG_INCL', azimuth_header='IMG_AZ')
+        w.location.add_deviation(deviation_df)
         return w
-
-    well = _create_well(well_name)
+        
+    well = Well(params={'header': {'name': well_name, 'uwi': well_name}})
     return add_curves_from_las(well, las_folder)
 
 
-def add_curves_from_las(w: Well, las_folder: str) -> Well:
-    """ Add curves from las file. """
-
-    _read_curves_to_welly_object(w, curve_path=las_folder)
-
-    w_df = w.df()
-    deviation_df = _make_deviation_df(w_df, inclination_header='IMG_INCL', azimuth_header='IMG_AZ')
-    w.location.add_deviation(deviation_df)
-    return w
-
-
-def _make_deviation_df(well_df: DataFrame, inclination_header: str, azimuth_header: str,
-                       depth_header: str = '', depth_index=True):
-    if depth_index:
-        deviation_data = well_df[[inclination_header, azimuth_header]].to_numpy()
-        deviation_index = well_df.index.to_numpy()
-        deviation_complete = np.insert(deviation_data, 0, deviation_index, axis=1)
-        deviation_complete = deviation_complete[~np.isnan(deviation_complete).any(axis=1), :]
-    else:
-        deviation_complete = well_df[[depth_header, inclination_header, azimuth_header]].to_numpy()
-        deviation_complete = deviation_complete[~np.isnan(deviation_complete).any(axis=1), :]
-    return deviation_complete
 
 
 def _read_curves_to_welly_object(well: Well, curve_path: str = '.') -> Well:
-    las_files = glob.glob(curve_path + '*.las')
-    # throw error if no las files found
-    if len(las_files) == 0:
-        raise Exception('No las files found in ' + curve_path)
+        las_files = glob.glob(curve_path + '*.las')
+        # throw error if no las files found
+        if len(las_files) == 0:
+            raise Exception('No las files found in ' + curve_path)
 
-    for curve in las_files:
-        well.add_curves_from_las(curve)
-    return well
+        for curve in las_files:
+            well.add_curves_from_las(curve)
+        return well

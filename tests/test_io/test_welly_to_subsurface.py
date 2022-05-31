@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
 from subsurface.reader.wells import add_tops_from_base_and_altitude_in_place
 from subsurface.reader.wells.pandas_to_welly import WellyToSubsurfaceHelper
-from subsurface.reader.wells.well_files_reader import read_collar, read_survey, read_lith, read_attributes
+from subsurface.reader.wells.well_files_reader import read_collar_from_text, read_survey_from_text, read_lith, read_attributes
 from subsurface.reader.wells.wells_api import read_wells_to_unstruct
 from subsurface.reader.wells.wells_utils import pivot_wells_df_into_segment_per_row, map_attr_to_segments, \
     fix_wells_higher_base_than_top_inplace
@@ -28,11 +28,11 @@ def test_empty_project():
 
 
 def test_read_borehole_stateless():
-    collar = read_collar(ReaderFilesHelper(
+    collar = read_collar_from_text(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
         header=None,
         usecols=[0, 1, 2, 4]))
-    survey = read_survey(ReaderFilesHelper(
+    survey = read_survey_from_text(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
         columns_map={'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'},
         index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
@@ -59,11 +59,12 @@ def test_read_borehole_stateless():
 
 
 def test_read_borehole_manual_api():
-    collar = read_collar(ReaderFilesHelper(
+    collar = read_collar_from_text(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
         header=None,
         usecols=[0, 1, 2, 4]))
-    survey = read_survey(ReaderFilesHelper(
+    
+    survey = read_survey_from_text(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
         columns_map={'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'},
         index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
@@ -87,6 +88,19 @@ def test_read_borehole_manual_api():
     )
     wts = WellyToSubsurfaceHelper(collar_df=collar, survey_df=survey, lith_df=lith, attrib_dfs=[attr])
     unstruct = welly_to_subsurface(wts)
+
+    # print collar dataframe
+    print("\n" + collar.to_markdown())
+    
+    # print survey dataframe
+    print("\n" + survey.to_markdown())
+    
+    # print lith dataframe
+    print("\n" + lith.to_markdown())
+    
+    # print attr dataframe
+    print("\n" + attr.to_markdown())
+
     print(unstruct)
 
     if True:
@@ -162,11 +176,11 @@ def test_create_welly_to_subsurface():
 
 
 def test_read_to_welly_json():
-    collar = read_collar(ReaderFilesHelper(
+    collar = read_collar_from_text(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
         header=None,
         usecols=[0, 1, 2, 4]))
-    survey = read_survey(ReaderFilesHelper(
+    survey = read_survey_from_text(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
         columns_map={'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'},
         index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
@@ -193,11 +207,11 @@ def test_read_to_welly_dict():
     """Read from dict is important for json"""
 
     # Convert xlsx into dict. Dict has to be already cleaned
-    collar = read_collar(ReaderFilesHelper(
+    collar = read_collar_from_text(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
         header=None,
         usecols=[0, 1, 2, 4]))
-    survey = read_survey(ReaderFilesHelper(
+    survey = read_survey_from_text(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),
         columns_map={'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'},
         index_map={'ELV-01': 'foo', 'ELV-02': 'bar'}
@@ -338,23 +352,19 @@ formations = ["topo", "etchegoin", "macoma", "chanac", "mclure",
 
 
 def test_read_kim():
-    collar = read_collar(
-        ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath('kim_ready.csv'),
-            index_col="name",
-            usecols=['x', 'y', 'altitude', "name"]
-        )
-    )
+    collar = read_collar_from_text(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath('kim_ready.csv'),
+        index_col="name",
+        usecols=['x', 'y', 'altitude', "name"]
+    ))
 
     print(collar)
 
-    survey = read_survey(
-        ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath('kim_ready.csv'),
-            index_col="name",
-            usecols=["name", "md"]
-        )
-    )
+    survey = read_survey_from_text(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath('kim_ready.csv'),
+        index_col="name",
+        usecols=["name", "md"]
+    ))
 
     lith = read_lith(
         ReaderFilesHelper(
@@ -379,23 +389,19 @@ def test_read_kim():
 
 
 def test_read_kim_default_component_table():
-    collar = read_collar(
-        ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath('kim_ready.csv'),
-            index_col="name",
-            usecols=['x', 'y', 'altitude', "name"]
-        )
-    )
+    collar = read_collar_from_text(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath('kim_ready.csv'),
+        index_col="name",
+        usecols=['x', 'y', 'altitude', "name"]
+    ))
 
     print(collar)
 
-    survey = read_survey(
-        ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath('kim_ready.csv'),
-            index_col="name",
-            usecols=["name", "md"]
-        )
-    )
+    survey = read_survey_from_text(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath('kim_ready.csv'),
+        index_col="name",
+        usecols=["name", "md"]
+    ))
 
     lith = read_lith(
         ReaderFilesHelper(
@@ -421,38 +427,34 @@ def test_read_wells():
 
     file_name = 'wells-database-small.xlsx'
 
-    collar = read_collar(
-        ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath(file_name),
-            index_col="HOLE",
-            usecols=['EAST', 'NORT', 'ELEV', "HOLE"],
-            # ['x', 'y', 'altitude', "name"]
-            columns_map={
-                "EAST": "x",
-                'NORT': "y",
-                "ELEV": "altitude"
-            },
-            additional_reader_kwargs=
-            {
-                "sheet_name": "collar"
-            }
-        )
-    )
+    collar = read_collar_from_text(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath(file_name),
+        index_col="HOLE",
+        usecols=['EAST', 'NORT', 'ELEV', "HOLE"],
+        # ['x', 'y', 'altitude', "name"]
+        columns_map={
+            "EAST": "x",
+            'NORT': "y",
+            "ELEV": "altitude"
+        },
+        additional_reader_kwargs=
+        {
+            "sheet_name": "collar"
+        }
+    ))
 
     print(collar)
 
-    survey = read_survey(
-        ReaderFilesHelper(
-            file_or_buffer=data_path.joinpath(file_name),
-            index_col="HOLE",
-            columns_map={'DEAT': 'md', 'INCL': 'inc', 'AZIM': 'azi'},
-            usecols=["HOLE", "DEAT", "AZIM", "INCL"],
-            additional_reader_kwargs=
-            {
-                "sheet_name": "survey"
-            }
-        )
-    )
+    survey = read_survey_from_text(ReaderFilesHelper(
+        file_or_buffer=data_path.joinpath(file_name),
+        index_col="HOLE",
+        columns_map={'DEAT': 'md', 'INCL': 'inc', 'AZIM': 'azi'},
+        usecols=["HOLE", "DEAT", "AZIM", "INCL"],
+        additional_reader_kwargs=
+        {
+            "sheet_name": "survey"
+        }
+    ))
 
     print(survey)
 

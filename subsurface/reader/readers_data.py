@@ -55,6 +55,10 @@ class ReaderFilesHelper:
     @property
     def is_python_dict(self):
         return self.file_or_buffer_type == dict
+    
+    @property
+    def is_las(self):
+        return self.format == "las"
 
 @dataclass
 class ReaderUnstructuredHelper:
