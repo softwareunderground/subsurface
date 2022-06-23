@@ -6,7 +6,7 @@ from typing import Union, Literal, Dict, Optional, List, Callable, Any
 import numpy as np
 import pandas as pd
 import xarray as xr
-from pandas._typing import FilePath, ReadCsvBuffer, ReadCsvBuffer
+from pandas._typing import FilePath, ReadCsvBuffer
 
 from subsurface.utils.utils_core import get_extension
 
@@ -17,7 +17,7 @@ __all__ = ['ReaderFilesHelper', 'ReaderUnstructuredHelper',
 
 @dataclass
 class ReaderFilesHelper:
-    file_or_buffer: Union[FilePath, ReadCsvBuffer[bytes], ReadCsvBuffer[str]]
+    file_or_buffer: Union[FilePath, ReadCsvBuffer[bytes], ReadCsvBuffer[str]] # TODO: Change FilePath and other private types and methods of pandas to own ones
 
     usecols: Union[List[str], List[int]] = None # Use a subset of columns
     col_names: List[Union[str, int]] = None # Give a name
