@@ -15,8 +15,8 @@ __all__ = ['ReaderFilesHelper', 'ReaderUnstructuredHelper',
            'ReaderWellsHelper', 'RawDataOptions', 'RawDataUnstructured']
 
 if pd.__version__ < '1.4.0':
-    from pandas._typing import FilePathorBuffer, ReadCsvBuffer
-    fb = Union[FilePathorBuffer, ReadCsvBuffer[bytes], ReadCsvBuffer[str]]
+    from pandas._typing import FilePathOrBuffer
+    fb = FilePathOrBuffer
 elif pd.__version__ >= '1.4.0':
     from pandas._typing import FilePath, ReadCsvBuffer
     fb = Union[FilePath, ReadCsvBuffer[bytes], ReadCsvBuffer[str]]
