@@ -1,6 +1,7 @@
 import warnings
 from typing import Dict
 
+import pandas
 import pandas as pd
 import numpy as np
 
