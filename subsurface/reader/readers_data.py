@@ -23,7 +23,7 @@ elif pd.__version__ >= '1.4.0':
 
 @dataclass
 class ReaderFilesHelper:
-    file_or_buffer: fb # TODO: Change FilePath and other private types and methods of pandas to own ones
+    file_or_buffer: fb 
 
 
     usecols: Union[List[str], List[int]] = None # Use a subset of columns
