@@ -98,7 +98,8 @@ class WellyToSubsurfaceHelper:
             w = self.p.get_well(b)
             datum = data.loc[[b]]
             assert datum.shape[1] == 3, 'datum must be XYZ coord'
-            w.position = datum.values[0]
+
+            w.location.position = datum.values[0]
 
         return self.p
 
@@ -114,8 +115,10 @@ class WellyToSubsurfaceHelper:
         for b in unique_borehole:
             w = self.p.get_well(b)
             data_dict = data.loc[[b]].to_dict('list')
-
-            s = Striplog.from_dict_advanced(data_dict, points=True)
+            data_csv = data.loc[[b]].to_csv()
+            #s = Striplog.from_dict_advanced(data_dict, points=True)
+            #s = Striplog.from_dict(data_dict)
+            s = Striplog.from_csv(text=data_csv)
 
             try:
                 n_basis = w.location.md.shape[0]
