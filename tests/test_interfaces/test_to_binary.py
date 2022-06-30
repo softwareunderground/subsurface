@@ -30,8 +30,7 @@ def wells(data_path):
 
 
 def test_wells_to_binary(wells):
-    bytearray_le, header = wells.default_data_array_to_binary()
-    print(header)
+    bytearray_le, header = wells.to_binary()
 
     with open('well_f.json', 'w') as outfile:
         json.dump(header, outfile)
@@ -78,7 +77,7 @@ def test_profile_to_binary(data_path):
     import pandas as pd
 
     unstruct = UnstructuredData.from_array(v, e, vertex_attr=pd.DataFrame(uv, columns=['u', 'v']))
-    mesh_binary, mesh_header = unstruct.default_data_array_to_binary()
+    mesh_binary, mesh_header = unstruct.to_binary()
 
     with open('mesh_uv.json', 'w') as outfile:
         import json
