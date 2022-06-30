@@ -417,7 +417,7 @@ def test_read_kim_default_component_table():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
-def test_read_wells():
+def test_read_wells(): #TODO: fix trajectory IndexError of Well.location.trajectory()
 
     file_name = 'wells-database-small.xlsx'
 
