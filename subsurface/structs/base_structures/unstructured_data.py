@@ -125,8 +125,8 @@ class UnstructuredData:
         # TODO: This is an issue in wells. If it is only there maybe we should move it there
         try:
             ds = ds.reset_index('cell')
-        except KeyError:
-            pass
+        except KeyError as e:
+            raise KeyError(f"xarray dataset must include 'cell' key. {e}")
 
         return cls(ds, default_cells_attributes_name, default_points_attributes_name)
 

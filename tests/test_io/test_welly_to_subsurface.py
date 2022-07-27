@@ -19,6 +19,8 @@ welly = pytest.importorskip('welly')
 
 pf = pathlib.Path(__file__).parent.absolute()
 data_path = pf.joinpath('../data/borehole/')
+import sys
+sys.path.insert(0, '../../../striplog_miguel/striplog/')
 from striplog import Striplog, Component
 
 
