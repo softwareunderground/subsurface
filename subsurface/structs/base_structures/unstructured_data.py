@@ -119,6 +119,7 @@ class UnstructuredData:
                               default_cells_attributes_name="cell_attrs",
                               default_points_attributes_name="vertex_attrs"):
 
+        # TODO: xr.Dataset seems to have been changed with 2022.06. needs to be adapted for indexing
         ds = xr.Dataset(xarray_dict, coords=coords, attrs=xarray_attributes)
 
         # Try to unstack pandas dataframe if exist
