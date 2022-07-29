@@ -290,7 +290,7 @@ def test_striplog_2():
 
     # Load striplog
     s = Striplog.from_csv(text=foo_csv)
-
+    # TODO: Maybe get rid of from_dict_advanced, as it does not show a benefit over csv?
     # data_dict = foo.to_dict('list')
     #
     # s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
