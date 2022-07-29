@@ -230,13 +230,19 @@ def test_excel_to_subsurface():
     well_names = data[well_name_column].unique()
 
     foo = data.groupby(well_name_column).get_group(well_names[0])
-    data_dict = foo.to_dict('list')
+    foo.columns = foo.columns.map({'DEPTH_FROM': 'top',
+                               'DEPTH_TO': 'base',
+                               'LITHOLOGY': 'component lith',
+                               'SITE_ID': 'description'})
+    foo_csv = foo.to_csv(index=False)
+    #data_dict = foo.to_dict('list')
 
     # Load striplog
-    s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
-                                             'DEPTH_TO': 'base',
-                                             'LITHOLOGY': 'component lith',
-                                             'SITE_ID': 'description'})
+    s = Striplog.from_csv(text=foo_csv)
+    # s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
+    #                                          'DEPTH_TO': 'base',
+    #                                          'LITHOLOGY': 'component lith',
+    #                                          'SITE_ID': 'description'})
 
     s.plot()
     plt.show(block=False)
@@ -274,12 +280,23 @@ def test_striplog_2():
     well_name_column = 'SITE_ID'
     well_names = data[well_name_column].unique()
     foo = data.groupby(well_name_column).get_group(well_names[0])
-    data_dict = foo.to_dict('list')
 
-    s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
-                                             'DEPTH_TO': 'base',
-                                             'LITHOLOGY': 'component lith',
-                                             'SITE_ID': 'description'})
+    foo.columns = foo.columns.map({'DEPTH_FROM': 'top',
+                                   'DEPTH_TO': 'base',
+                                   'LITHOLOGY': 'component lith',
+                                   'SITE_ID': 'description'})
+    foo_csv = foo.to_csv(index=False)
+    # data_dict = foo.to_dict('list')
+
+    # Load striplog
+    s = Striplog.from_csv(text=foo_csv)
+
+    # data_dict = foo.to_dict('list')
+    #
+    # s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
+    #                                          'DEPTH_TO': 'base',
+    #                                          'LITHOLOGY': 'component lith',
+    #                                          'SITE_ID': 'description'})
 
     s.plot()
     plt.show(block=False)
