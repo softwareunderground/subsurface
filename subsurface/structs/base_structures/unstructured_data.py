@@ -126,7 +126,7 @@ class UnstructuredData:
         try:
             ds = ds.reset_index('cell')
         except (KeyError, ValueError) as e:
-            raise e(f"xarray dataset must include 'cell' key (KeyError). \nxarray 'cell' has no index.")
+            print(f"{e} xarray dataset must include 'cell' key (KeyError) or xarray 'cell' has no index (ValueError).")
 
         return cls(ds, default_cells_attributes_name, default_points_attributes_name)
 
