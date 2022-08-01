@@ -97,7 +97,7 @@ def vertex_and_cells_from_welly_trajectory(cells: np.ndarray, elev: bool,
                                            welly_trajectory_kwargs: dict,
                                            last_index: int, n_vertex_for_well: int,
                                            vertex: np.ndarray, w: Well):
-    xyz = w.location.trajectory(w.location.position, elev, n_vertex_for_well, **welly_trajectory_kwargs)
+    xyz = w.location.trajectory(datum=None, elev, n_vertex_for_well, **welly_trajectory_kwargs) #w.location.position
     # Make sure deviation is there
     a = np.arange(0 + last_index, xyz.shape[0] - 1 + last_index, dtype=np.int_)
     b = np.arange(1 + last_index, xyz.shape[0] + last_index, dtype=np.int_)
