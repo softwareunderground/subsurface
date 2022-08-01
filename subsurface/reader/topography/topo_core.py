@@ -29,11 +29,12 @@ def read_structured_topography_to_unstructured(path) -> UnstructuredData:
 
 def rasterio_dataset_to_structured_data(dataset):
     data = dataset.read(1)
+    data = np.fliplr(data.T)
     shape = data.shape
     coords = {
         'x': np.linspace(
-            dataset.bounds.right,
             dataset.bounds.left,
+            dataset.bounds.right,
             shape[0]
         ),
         'y': np.linspace(

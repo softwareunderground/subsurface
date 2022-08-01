@@ -31,7 +31,7 @@ def interpolate_unstructured_data_to_structured_data(
     grid = np.meshgrid(*coords.values())
 
     interpolated_attributes = griddata(ud.vertex,
-                                       ud.points_attributes.loc[:, attr_name],
+                                       ud.attributes.loc[:, attr_name],
                                        tuple(grid), method=interpolation_method.value)
 
     sd = StructuredData.from_numpy(

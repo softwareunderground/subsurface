@@ -6,7 +6,7 @@ from typing import Union, Literal, Dict, Optional, List, Callable, Any
 import numpy as np
 import pandas as pd
 import xarray as xr
-from pandas._typing import FilePath, ReadCsvBuffer, ReadCsvBuffer
+
 
 from subsurface.utils.utils_core import get_extension
 
@@ -14,10 +14,17 @@ from subsurface.utils.utils_core import get_extension
 __all__ = ['ReaderFilesHelper', 'ReaderUnstructuredHelper',
            'ReaderWellsHelper', 'RawDataOptions', 'RawDataUnstructured']
 
+if pd.__version__ < '1.4.0':
+    from pandas._typing import FilePathOrBuffer
+    fb = FilePathOrBuffer
+elif pd.__version__ >= '1.4.0':
+    from pandas._typing import FilePath, ReadCsvBuffer
+    fb = Union[FilePath, ReadCsvBuffer[bytes], ReadCsvBuffer[str]]
 
 @dataclass
 class ReaderFilesHelper:
-    file_or_buffer: Union[FilePath, ReadCsvBuffer[bytes], ReadCsvBuffer[str]]
+    file_or_buffer: fb
+
 
     usecols: Union[List[str], List[int]] = None # Use a subset of columns
     col_names: List[Union[str, int]] = None # Give a name

@@ -1,6 +1,7 @@
 import warnings
 from typing import Dict
 
+import pandas
 import pandas as pd
 import numpy as np
 
@@ -89,7 +90,7 @@ def read_survey_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) ->
     welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
     survey_df = welly_well.df()[reader_helper.usecols]
     map_rows_and_cols_inplace(survey_df, reader_helper)
-    survey_df["well_name"] = "Cottessen"
+    survey_df["well_name"] = well_name
     survey_df.set_index("well_name", inplace=True)
     return survey_df
 

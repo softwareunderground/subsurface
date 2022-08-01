@@ -19,6 +19,8 @@ welly = pytest.importorskip('welly')
 
 pf = pathlib.Path(__file__).parent.absolute()
 data_path = pf.joinpath('../data/borehole/')
+import sys
+sys.path.insert(0, '../../../striplog_miguel/striplog/')
 from striplog import Striplog, Component
 
 
@@ -228,13 +230,19 @@ def test_excel_to_subsurface():
     well_names = data[well_name_column].unique()
 
     foo = data.groupby(well_name_column).get_group(well_names[0])
-    data_dict = foo.to_dict('list')
+    foo.columns = foo.columns.map({'DEPTH_FROM': 'top',
+                               'DEPTH_TO': 'base',
+                               'LITHOLOGY': 'component lith',
+                               'SITE_ID': 'description'})
+    foo_csv = foo.to_csv(index=False)
+    #data_dict = foo.to_dict('list')
 
     # Load striplog
-    s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
-                                             'DEPTH_TO': 'base',
-                                             'LITHOLOGY': 'component lith',
-                                             'SITE_ID': 'description'})
+    s = Striplog.from_csv(text=foo_csv)
+    # s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
+    #                                          'DEPTH_TO': 'base',
+    #                                          'LITHOLOGY': 'component lith',
+    #                                          'SITE_ID': 'description'})
 
     s.plot()
     plt.show(block=False)
@@ -272,12 +280,23 @@ def test_striplog_2():
     well_name_column = 'SITE_ID'
     well_names = data[well_name_column].unique()
     foo = data.groupby(well_name_column).get_group(well_names[0])
-    data_dict = foo.to_dict('list')
 
-    s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
-                                             'DEPTH_TO': 'base',
-                                             'LITHOLOGY': 'component lith',
-                                             'SITE_ID': 'description'})
+    foo.columns = foo.columns.map({'DEPTH_FROM': 'top',
+                                   'DEPTH_TO': 'base',
+                                   'LITHOLOGY': 'component lith',
+                                   'SITE_ID': 'description'})
+    foo_csv = foo.to_csv(index=False)
+    # data_dict = foo.to_dict('list')
+
+    # Load striplog
+    s = Striplog.from_csv(text=foo_csv)
+    # TODO: Maybe get rid of from_dict_advanced, as it does not show a benefit over csv?
+    # data_dict = foo.to_dict('list')
+    #
+    # s = Striplog.from_dict_advanced(data_dict, remap={'DEPTH_FROM': 'top',
+    #                                          'DEPTH_TO': 'base',
+    #                                          'LITHOLOGY': 'component lith',
+    #                                          'SITE_ID': 'description'})
 
     s.plot()
     plt.show(block=False)
@@ -417,7 +436,7 @@ def test_read_kim_default_component_table():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
-def test_read_wells():
+def test_read_wells(): #TODO: fix trajectory IndexError of Well.location.trajectory() Missing NC-10 End, added a dummy
 
     file_name = 'wells-database-small.xlsx'
 

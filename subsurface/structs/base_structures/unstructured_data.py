@@ -7,7 +7,6 @@ import xarray as xr
 
 from subsurface.reader.readers_data import RawDataUnstructured
 
-
 __all__ = ['UnstructuredData', ]
 
 
@@ -119,14 +118,15 @@ class UnstructuredData:
                               default_cells_attributes_name="cell_attrs",
                               default_points_attributes_name="vertex_attrs"):
 
+        # TODO: xr.Dataset seems to have been changed with 2022.06. needs to be adapted for indexing
         ds = xr.Dataset(xarray_dict, coords=coords, attrs=xarray_attributes)
 
         # Try to unstack pandas dataframe if exist
         # TODO: This is an issue in wells. If it is only there maybe we should move it there
         try:
             ds = ds.reset_index('cell')
-        except KeyError:
-            pass
+        except (KeyError, ValueError) as e:
+            print(f"{e} xarray dataset must include 'cell' key (KeyError) or xarray 'cell' has no index (ValueError).")
 
         return cls(ds, default_cells_attributes_name, default_points_attributes_name)
 
@@ -256,7 +256,7 @@ class UnstructuredData:
     def extent(self):
         max = self.vertex.max(axis=0)
         min = self.vertex.min(axis=0)
-        extent = np.stack((min, max), axis = 1).ravel()
+        extent = np.stack((min, max), axis=1).ravel()
         return extent
 
     def to_xarray(self):
