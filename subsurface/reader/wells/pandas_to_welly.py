@@ -2,8 +2,10 @@ from typing import Iterable, Union, List
 
 import numpy as np
 import pandas as pd
+from packaging import version
 
 try:
+    import welly
     from welly import Well, Location, Project, Curve
     from striplog import Striplog, Component
 
@@ -85,7 +87,13 @@ class WellyToSubsurfaceHelper:
         self._well_names = self._well_names.union(well_names)
         for b in new_boreholes:
             # TODO: Name and uwi should be different
-            w = Well(params={'header': {'name': b, 'uwi': b}})
+            if version.parse(welly.__version__) < version.parse("0.5.0"):
+                w = Well(params={'header': {'name': b, 'uwi': b}})
+            else:
+                w = Well()
+                w.uwi = b
+                w.name = f'well_{b}'
+
             w.location = Location(params={'kb': 100})
             self.p += w
         return self.p
