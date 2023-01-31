@@ -1,8 +1,9 @@
-from typing import Union, Callable
+import io
+from typing import Union, Callable, TextIO
 
 import pandas as pd
 
-from subsurface.reader.readers_data import ReaderFilesHelper
+from subsurface.reader.readers_data import ReaderFilesHelper, SupportedFormats
 from subsurface.utils.utils_core import get_extension
 import numpy as np
 
@@ -11,15 +12,17 @@ __all__ = ['read_mesh_file_to_vertex', 'read_mesh_file_to_cells',
            'read_mesh_file_to_attr', 'mesh_csv_to_vertex', 'mesh_csv_to_cells',
            'mesh_csv_to_attributes', 'get_cells_from_df',
            'cells_from_delaunay', 'get_vertices_from_df', 'map_columns_names',
-           'dxf_to_vertex_edges', 'dxf_to_vertex']
+           'dxf_to_vertex_edges', 'dxf_from_file_to_vertex']
 
 
 def read_mesh_file_to_vertex(reader_args: ReaderFilesHelper) -> np.ndarray:
-    if reader_args.format == '.csv':
+    if reader_args.format is SupportedFormats.CSV:
         vertex = mesh_csv_to_vertex(reader_args.file_or_buffer, reader_args.columns_map,
                                     **reader_args.pandas_reader_kwargs)
-    elif reader_args.format == '.dxf':
-        vertex = dxf_to_vertex(reader_args.file_or_buffer)
+    elif reader_args.format is SupportedFormats.DXF:
+        vertex = dxf_from_file_to_vertex(reader_args.file_or_buffer)
+    elif reader_args.format is SupportedFormats.DXFStream:
+        vertex = dxf_from_stream_to_vertex(reader_args.file_or_buffer)
     else:
         raise ValueError(f"Subsurface is not able to read the following extension: {reader_args.format}")
     return vertex
@@ -107,15 +110,15 @@ def map_columns_names(columns_map: Union[Callable, dict, pd.Series], data: pd.Da
 
 def dxf_to_vertex_edges(file_or_buffer):
     from scipy.spatial.qhull import Delaunay
-    vertex = dxf_to_vertex(file_or_buffer)
+    vertex = dxf_from_file_to_vertex(file_or_buffer)
     tri = Delaunay(vertex[:, [0, 1]])
     faces = tri.simplices
     return faces, vertex
 
 
-def dxf_to_vertex(file_or_buffer):
+def dxf_from_file_to_vertex(file_path: str):
     import ezdxf
-    dataset = ezdxf.readfile(file_or_buffer)
+    dataset = ezdxf.readfile(file_path)
     vertex = []
     entity = dataset.modelspace()
     for e in entity:
@@ -126,6 +129,19 @@ def dxf_to_vertex(file_or_buffer):
     vertex = np.unique(vertex, axis=0)
     return vertex
 
+
+def dxf_from_stream_to_vertex(stream: TextIO):
+    import ezdxf
+    dataset = ezdxf.read(stream)
+    vertex = []
+    entity = dataset.modelspace()
+    for e in entity:
+        vertex.append(e[0])
+        vertex.append(e[1])
+        vertex.append(e[2])
+    vertex = np.array(vertex)
+    vertex = np.unique(vertex, axis=0)
+    return vertex
 
 def map_cell_attr_strings_to_integers(cell_attr):
     d = dict([(y,x+1) for x,y in enumerate(sorted(set(np.unique(cell_attr))))])
