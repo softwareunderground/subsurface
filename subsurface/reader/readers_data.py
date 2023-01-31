@@ -1,3 +1,4 @@
+import enum
 import pathlib
 import io
 from dataclasses import dataclass, field
@@ -21,15 +22,20 @@ elif pd.__version__ >= '1.4.0':
     from pandas._typing import FilePath, ReadCsvBuffer
     fb = Union[FilePath, ReadCsvBuffer[bytes], ReadCsvBuffer[str]]
 
+
+class SupportedFormats(enum.Enum):
+    DXF = "dxf"
+    DXFStream = "dxfstream"
+    CSV = "csv"
+
+
 @dataclass
 class ReaderFilesHelper:
     file_or_buffer: fb
-
-
     usecols: Union[List[str], List[int]] = None # Use a subset of columns
     col_names: List[Union[str, int]] = None # Give a name
     drop_cols: List[str] = None # Drop a subset of columns
-    format: str = None
+    format: SupportedFormats = None
     index_map: Union[None, Callable, dict, pd.Series] = None
     columns_map: Union[None, Callable, dict, pd.Series] = None
     additional_reader_kwargs: dict = field(default_factory=dict)
@@ -39,7 +45,12 @@ class ReaderFilesHelper:
     header: Union[None, int, List[int]] = "infer"
 
     def __post_init__(self):
-        if self.format is None: self.format = get_extension(self.file_or_buffer)
+        if self.format is None: 
+            extension: str = get_extension(self.file_or_buffer)
+            if extension == ".dxf":
+                self.format = SupportedFormats.DXF
+            elif extension == ".csv":
+                self.format = SupportedFormats.CSV
         self.file_or_buffer_type = type(self.file_or_buffer)
 
     @property
@@ -62,6 +73,7 @@ class ReaderFilesHelper:
     @property
     def is_python_dict(self):
         return self.file_or_buffer_type == dict
+
 
 @dataclass
 class ReaderUnstructuredHelper:
