@@ -43,7 +43,7 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
 
     """
     vertex = np.zeros((0, 3))
-    cells = np.zeros((0, 2), dtype=np.int_)
+    cells = np.zeros((0, 2), dtype=int)
 
     last_index = 0
     missed_wells = []
@@ -62,7 +62,7 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
                 if table is None: table = wts.lith_component_table
                 w.data['lith_log'] = striplog_to_curve_log(n_vertex_per_well, table, w, wts)
             else:
-                w.data["lith_log"] = Curve(-1 * np.ones(n_vertex_per_well - 1, dtype=int))
+                w.data["lith_log"] = Curve(-1 * np.ones(n_vertex_per_well - 1, dtype=int), mnemonic='lith_log')
 
             if w.data["lith_log"].shape[0] != n_vertex_per_well - 1:
                 raise ValueError("Cell_attr does not match cells")
@@ -84,7 +84,7 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
 def striplog_to_curve_log(n_vertex_per_well, table, w: Well, wts: WellyToSubsurfaceHelper) -> Curve:
     start, stop, step_size = wts._calculate_basis_parameters(w, n_vertex_per_well - 1)
     s_log, basis, _table = w.data['lith'].to_log(step_size, start, stop, table=table, return_meta=True)
-    return Curve(s_log, basis)
+    return Curve(s_log, basis, mnemonic='lith_log')
 
 
 def change_curve_basis_to_n_vertex_per_well_inplace(n_points, w, wts):
