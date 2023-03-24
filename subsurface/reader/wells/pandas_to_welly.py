@@ -4,13 +4,13 @@ import numpy as np
 import pandas as pd
 
 try:
+    import welly
     from welly import Well, Location, Project, Curve
     from striplog import Striplog, Component
 
     welly_imported = True
 except ImportError:
     welly_imported = False
-
 
 __all__ = ['WellyToSubsurfaceHelper', ]
 
@@ -61,16 +61,16 @@ class WellyToSubsurfaceHelper:
 
     def __repr__(self):
         return self.p.__repr__()
-    
+
     @property
     def p(self):
         """Project Alias"""
         return self.welly_project
-    
+
     @p.setter
     def p(self, p):
         self.welly_project = p
-    
+
     @property
     def lith_component_table(self):
         return [Component({'lith': l}) for l in self._unique_formations]
@@ -85,8 +85,13 @@ class WellyToSubsurfaceHelper:
         self._well_names = self._well_names.union(well_names)
         for b in new_boreholes:
             # TODO: Name and uwi should be different
-            w = Well(params={'header': {'name': b, 'uwi': b}})
-            w.location = Location(params={'kb': 100})
+            if welly.__version__ < '0.5':
+                w = Well(params={'header': {'name': b, 'uwi': b}})
+            else:
+                w = Well()
+                w.uwi = b
+                w.name = b
+            # w.location = Location(params={'kb': 100})
             self.p += w
         return self.p
 
@@ -116,8 +121,8 @@ class WellyToSubsurfaceHelper:
             w = self.p.get_well(b)
             data_dict = data.loc[[b]].to_dict('list')
             data_csv = data.loc[[b]].to_csv()
-            #s = Striplog.from_dict_advanced(data_dict, points=True)
-            #s = Striplog.from_dict(data_dict)
+            # s = Striplog.from_dict_advanced(data_dict, points=True)
+            # s = Striplog.from_dict(data_dict)
             s = Striplog.from_csv(text=data_csv)
 
             try:
