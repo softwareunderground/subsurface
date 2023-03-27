@@ -3,7 +3,8 @@ openpyxl
 welly
 
 # There is an open PR for striplog
-git+https://github.com/Leguark/striplog.git
+# git+https://github.com/Leguark/striplog.git
+striplog
 
 segyio
 matplotlib
