@@ -22,7 +22,7 @@ def test_read_vtk():
     cell = np.array(point_data_mesh.cells)
 
     attributes_names = point_data_mesh.array_names
-    point_arrays = point_data_mesh.point_arrays
+    point_arrays = point_data_mesh.point_data
 
     bounds = mesh.bounds
 

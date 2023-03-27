@@ -36,7 +36,7 @@ class ReaderFilesHelper:
     file_or_buffer_type: Any = field(init=False)
 
     index_col: Union[int, str] = False
-    header: Union[None, int, List[int]] = "infer"
+    header: Union[None, int, List[int]] = 0
 
     def __post_init__(self):
         if self.format is None: self.format = get_extension(self.file_or_buffer)
