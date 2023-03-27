@@ -92,7 +92,7 @@ class Seismic:
         grid = pv.UniformGrid()
         grid.spacing = (1, 1, 1)  # TODO: cell sizes? vertical exaggeration etc
         grid.dimensions = np.array(self.data.shape) + 1
-        grid.cell_data["values"] = self.data.flatten(order="F")
+        grid.cell_arrays["values"] = self.data.flatten(order="F")
         # TODO: correct orientation of cube
         return grid
 

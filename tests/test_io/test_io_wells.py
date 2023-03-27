@@ -10,7 +10,7 @@ def test_borehole_location_to_unstruct(data_path):
         ReaderFilesHelper(
             file_or_buffer=data_path + '/borehole/borehole_collar.xlsx',
             header=None,
-            columns_map={1: 'x', 2: 'y', 3: 'altitude'}
+            columns_map={1: 'x', 2: 'y', 3: 'altitude' }
         )
     )
     point_set = PointSet(us)

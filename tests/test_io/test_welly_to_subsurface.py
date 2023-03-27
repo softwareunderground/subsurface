@@ -32,7 +32,7 @@ def test_empty_project():
 def test_read_borehole_stateless():
     collar = read_collar(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
-        header=0,
+        header=None,
         usecols=[0, 1, 2, 4]))
     survey = read_survey(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_survey.xlsx'),

@@ -89,7 +89,7 @@ def to_pyvista_points(point_set: PointSet):
         pv.PolyData
     """
     poly = pv.PolyData(point_set.data.vertex)
-    poly.point_data.update(point_set.data.attributes_to_dict)
+    poly.point_arrays.update(point_set.data.attributes_to_dict)
 
     return poly
 
@@ -106,8 +106,8 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf],
     cells = np.c_[np.full(unstructured_element.mesh.n_elements, nve),
                   unstructured_element.mesh.cells]
     mesh = pv.PolyData(vertices, cells)
-    mesh.cell_data.update(unstructured_element.mesh.attributes_to_dict)
-    mesh.point_data.update(unstructured_element.mesh.points_attributes)
+    mesh.cell_arrays.update(unstructured_element.mesh.attributes_to_dict)
+    mesh.point_arrays.update(unstructured_element.mesh.points_attributes)
 
     return mesh
 
@@ -162,7 +162,7 @@ def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,
     else:
         raise NotImplementedError
         # mesh = pv.Spline(ver)
-    mesh.cell_data.update(line_set.data.attributes_to_dict)
+    mesh.cell_arrays.update(line_set.data.attributes_to_dict)
     if as_tube is True:
         return mesh.tube(radius=radius)
     else:
@@ -177,7 +177,7 @@ def to_pyvista_tetra(tetra_mesh: TetraMesh):
     import vtk
     ctypes = np.array([vtk.VTK_TETRA, ], np.int32)
     mesh = pv.UnstructuredGrid(cells, ctypes, vertices)
-    mesh.cell_data.update(tetra_mesh.data.attributes_to_dict)
+    mesh.cell_arrays.update(tetra_mesh.data.attributes_to_dict)
     return mesh
 
 
@@ -236,7 +236,7 @@ def update_grid_attribute(mesh, structured_grid,
     if data_set_name is None:
         data_set_name = structured_grid.ds.data_array_name
 
-    mesh.point_data.update(
+    mesh.point_arrays.update(
         {data_set_name: structured_grid.ds.data[data_set_name].sel(
             **attribute_slice
         ).values.ravel(data_order)})
