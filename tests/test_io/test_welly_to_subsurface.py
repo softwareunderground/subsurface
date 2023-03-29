@@ -19,14 +19,12 @@ welly = pytest.importorskip('welly')
 
 pf = pathlib.Path(__file__).parent.absolute()
 data_path = pf.joinpath('../data/borehole/')
-import sys
-sys.path.insert(0, '../../../striplog_miguel/striplog/')
 from striplog import Striplog, Component
 
 
 def test_empty_project():
     wts = WellyToSubsurfaceHelper()
-    print(wts.p)
+    # print(wts.p)
 
 
 def test_read_borehole_stateless():
@@ -51,7 +49,7 @@ def test_read_borehole_stateless():
 
     wts = WellyToSubsurfaceHelper(collar_df=c_df, survey_df=s_df)
     unstruct = welly_to_subsurface(wts)
-    print(unstruct)
+    # print(unstruct)
 
     if True:
         element = LineSet(unstruct)
@@ -90,7 +88,7 @@ def test_read_borehole_manual_api():
     )
     wts = WellyToSubsurfaceHelper(collar_df=collar, survey_df=survey, lith_df=lith, attrib_dfs=[attr])
     unstruct = welly_to_subsurface(wts)
-    print(unstruct)
+    # print(unstruct)
 
     if True:
         element = LineSet(unstruct)
@@ -144,10 +142,10 @@ def test_read_wells_to_unstruct():
 @pytest.mark.skip(reason="needs updating in welly/striplog")
 def test_create_welly_to_subsurface():
     wts = WellyToSubsurfaceHelper()
-    collars = test_read_collars()
-    survey = test_read_survey()
-    lith = test_read_lith()
-    assays = test_read_assay()
+    collars = inp_read_collars()
+    survey = inp_read_survey()
+    lith = inp_read_lith()
+    assays = inp_read_assay()
 
     wts.add_datum(collars)
     wts.add_deviation(survey)
@@ -186,7 +184,7 @@ def test_read_to_welly_json():
                                                  format='.json')
         )
     )
-    print('\n', unstructured_data)
+    # print('\n', unstructured_data)
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
 
@@ -216,7 +214,7 @@ def test_read_to_welly_dict():
             reader_survey_args=ReaderFilesHelper(survey.to_dict(orient='split'))
         )
     )
-    print('\n', unstructured_data)
+    # print('\n', unstructured_data)
     element = LineSet(unstructured_data)
     pyvista_mesh = subsurface.visualization.to_pyvista_line(element)
 
@@ -251,21 +249,21 @@ def test_excel_to_subsurface():
     plt.show(block=False)
 
 
-def test_striplog():
+def inp_striplog():
     s = Striplog.from_csv(data_path.joinpath('striplog_integration/alpha_strip.tops'))
     s.components[0] = {'lith': 'overburden',
                        "colour": 'blue'}
 
     s.plot()
     plt.show(block=False)
-    print(s)
+    # print(s)
     return s
 
 
 @pytest.mark.skip(reason="needs updating in welly/striplog")
 def test_striplog_to_log():
     from striplog import Component
-    s = test_striplog()
+    s = inp_striplog()
     table_input = []
     for i in range(6):
         table_input.append(Component({'lith': i}))
@@ -276,7 +274,7 @@ def test_striplog_to_log():
     c.plot()
 
     plt.show(block=False)
-    print(table)
+    # print(table)
 
 
 def test_striplog_2():
@@ -304,41 +302,41 @@ def test_striplog_2():
 
     s.plot()
     plt.show(block=False)
-    print(s)
+    # print(s)
 
 
-def test_read_lith():
+def inp_read_lith():
     d = pd.read_excel(data_path.joinpath('borehole_lith.xlsx'), index_col='SITE_ID')
     d.columns = d.columns.map({'DEPTH_FROM': 'top',
                                'DEPTH_TO': 'base',
                                'LITHOLOGY': 'component lith',
                                'SITE_ID': 'description'})
     # d.to_csv('lith.csv')
-    print(d)
+    # print(d)
     return d
 
 
-def test_read_survey():
+def inp_read_survey():
     """TODO the reading function must return the df already on the right format"""
     d = pd.read_excel(data_path.joinpath('borehole_survey.xlsx'),
                       index_col=0)
     d.index = d.index.map({'ELV-01': 'foo', 'ELV-02': 'bar'})
     d.columns = d.columns.map({'DEPTH': 'md', 'INCLINATION': 'inc', 'DIRECTION': 'azi'})
     # d.to_csv('survey.csv')
-    print(d)
+    # print(d)
     return d
 
 
-def test_read_collars():
+def inp_read_collars():
     cols = [0, 1, 2, 4]
     d = pd.read_excel(data_path.joinpath('borehole_collar.xlsx'), usecols=cols,
                       header=None, index_col=0)
-    print(d)
+    # print(d)
     # d.to_csv('collars.csv')
     return d
 
 
-def test_read_assay():
+def inp_read_assay():
     d = pd.read_excel(data_path.joinpath('borehole_assays.xlsx'),
                       index_col=0)
     d.drop('TO', axis=1, inplace=True)
@@ -346,7 +344,7 @@ def test_read_assay():
     return d
 
 
-def test_read_density():
+def inp_read_density():
     d = pd.read_excel(data_path.joinpath('borehole_density.xlsx'),
                       index_col=0)
     d.drop('DEPTH_TO', axis=1, inplace=True)
@@ -370,7 +368,7 @@ def test_read_kim():
         )
     )
 
-    print(collar)
+    # print(collar)
 
     survey = read_survey(
         ReaderFilesHelper(
@@ -412,7 +410,7 @@ def test_read_kim_default_component_table():
         )
     )
 
-    print(collar)
+    # print(collar)
 
     survey = read_survey(
         ReaderFilesHelper(
@@ -465,7 +463,7 @@ def test_read_wells(): #TODO: fix trajectory IndexError of Well.location.traject
         )
     )
 
-    print(collar)
+    # print(collar)
 
     survey = read_survey(
         ReaderFilesHelper(
@@ -480,7 +478,7 @@ def test_read_wells(): #TODO: fix trajectory IndexError of Well.location.traject
         )
     )
 
-    print(survey)
+    # print(survey)
 
     lith = read_lith(
         ReaderFilesHelper(
@@ -497,7 +495,7 @@ def test_read_wells(): #TODO: fix trajectory IndexError of Well.location.traject
         )
     )
 
-    print(lith)
+    # print(lith)
 
     wts = WellyToSubsurfaceHelper(collar_df=collar, survey_df=survey,
                                   lith_df=lith
@@ -535,9 +533,9 @@ def test_aux_operations():
                                      attr_per_segment=formations,
                                      n_wells=df.shape[0]
                                      )
-    print(df_pivoted)
+    # print(df_pivoted)
     df_with_tops_base = add_tops_from_base_and_altitude_in_place(df_mapped, 'name', "base", 'altitude')
     df_fixed = fix_wells_higher_base_than_top_inplace(df_with_tops_base)
-    print(df_fixed)
+    # print(df_fixed)
     if False:
         df_fixed.to_csv(data_path.joinpath("kim_ready.csv"))
