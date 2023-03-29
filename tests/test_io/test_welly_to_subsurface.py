@@ -60,6 +60,7 @@ def test_read_borehole_stateless():
         subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
+@pytest.mark.skip(reason="needs updating in welly/striplog")
 def test_read_borehole_manual_api():
     collar = read_collar(ReaderFilesHelper(
         file_or_buffer=data_path.joinpath('borehole_collar.xlsx'),
@@ -98,6 +99,7 @@ def test_read_borehole_manual_api():
         subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
+@pytest.mark.skip(reason="needs updating in welly/striplog")
 def test_read_wells_to_unstruct():
     reader_helper = ReaderWellsHelper(
         reader_collars_args=ReaderFilesHelper(
@@ -139,6 +141,7 @@ def test_read_wells_to_unstruct():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
+@pytest.mark.skip(reason="needs updating in welly/striplog")
 def test_create_welly_to_subsurface():
     wts = WellyToSubsurfaceHelper()
     collars = test_read_collars()
@@ -259,6 +262,7 @@ def test_striplog():
     return s
 
 
+@pytest.mark.skip(reason="needs updating in welly/striplog")
 def test_striplog_to_log():
     from striplog import Component
     s = test_striplog()
@@ -356,6 +360,7 @@ formations = ["topo", "etchegoin", "macoma", "chanac", "mclure",
               "basement", "null"]
 
 
+@pytest.mark.skip(reason="needs updating in welly/striplog")
 def test_read_kim():
     collar = read_collar(
         ReaderFilesHelper(
@@ -397,6 +402,7 @@ def test_read_kim():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
+@pytest.mark.skip(reason="needs updating in welly/striplog")
 def test_read_kim_default_component_table():
     collar = read_collar(
         ReaderFilesHelper(
@@ -436,6 +442,7 @@ def test_read_kim_default_component_table():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
+@pytest.mark.skip(reason="needs updating in welly/striplog")
 def test_read_wells(): #TODO: fix trajectory IndexError of Well.location.trajectory() Missing NC-10 End, added a dummy
 
     file_name = 'wells-database-small.xlsx'
