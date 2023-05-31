@@ -88,7 +88,7 @@ def to_pyvista_points(point_set: PointSet):
     Returns:
         pv.PolyData
     """
-    poly = pv.PolyData(point_set.data.vertex)
+    poly: pv.PolyData = pv.PolyData(point_set.data.vertex)
     poly.point_data.update(point_set.data.attributes_to_dict)
 
     return poly
