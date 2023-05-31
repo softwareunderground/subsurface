@@ -88,8 +88,8 @@ def to_pyvista_points(point_set: PointSet):
     Returns:
         pv.PolyData
     """
-    poly = pv.PolyData(point_set.data.vertex)
-    poly.point_arrays.update(point_set.data.attributes_to_dict)
+    poly: pv.PolyData = pv.PolyData(point_set.data.vertex)
+    poly.point_data.update(point_set.data.attributes_to_dict)
 
     return poly
 
@@ -106,8 +106,8 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf],
     cells = np.c_[np.full(unstructured_element.mesh.n_elements, nve),
                   unstructured_element.mesh.cells]
     mesh = pv.PolyData(vertices, cells)
-    mesh.cell_arrays.update(unstructured_element.mesh.attributes_to_dict)
-    mesh.point_arrays.update(unstructured_element.mesh.points_attributes)
+    mesh.cell_data.update(unstructured_element.mesh.attributes_to_dict)
+    mesh.point_data.update(unstructured_element.mesh.points_attributes)
 
     return mesh
 
