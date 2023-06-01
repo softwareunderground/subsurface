@@ -4,7 +4,7 @@ import subsurface
 from subsurface.interfaces.liquid_earth.rest_client import LiquidEarthClient, DataTypes
 from subsurface.reader.read_netcdf import read_unstruct, read_struct
 
-from subsurface.reader.mesh.surface_reader import dxf_to_mesh
+from subsurface.reader.mesh.surface_reader import dxf_file_to_unstruct_input
 import trimesh
 import numpy as np
 import pandas
@@ -87,7 +87,7 @@ class TestLiquidEarthClient:
     def test_dataset2(self, data_path):
         path = data_path + '/surfaces/shafts.dxf'
 
-        vertex, cells, cell_attr_int, cell_attr_map = dxf_to_mesh(path)
+        vertex, cells, cell_attr_int, cell_attr_map = dxf_file_to_unstruct_input(path)
 
         tri = trimesh.Trimesh(vertex, faces=cells, face_attributes={"Shaft id": cell_attr_int})
 
