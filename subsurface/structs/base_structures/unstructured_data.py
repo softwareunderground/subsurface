@@ -275,15 +275,15 @@ class UnstructuredData:
     def _set_binary_header(self):
 
         header = {
-            "vertex_shape": self.vertex.shape,
-            "cell_shape": self.cells.shape,
-            "cell_attr_shape": self.attributes.shape,
+            "vertex_shape"     : self.vertex.shape,
+            "cell_shape"       : self.cells.shape,
+            "cell_attr_shape"  : self.attributes.shape,
             "vertex_attr_shape": self.points_attributes.shape,
-            "cell_attr_names": self.attributes.columns.to_list(),
-            "cell_attr_types": self.attributes.dtypes.astype(str).to_list(),
+            "cell_attr_names"  : self.attributes.columns.to_list(),
+            "cell_attr_types"  : self.attributes.dtypes.astype(str).to_list(),
             "vertex_attr_names": self.points_attributes.columns.to_list(),
             "vertex_attr_types": self.attributes.dtypes.astype(str).to_list(),
-            "xarray_attrs": self.data.attrs
+            "xarray_attrs"     : self.data.attrs
         }
         return header
 

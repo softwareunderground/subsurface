@@ -1,4 +1,5 @@
 import io
+import pathlib
 from typing import Union, Callable, TextIO
 
 import pandas as pd
@@ -143,14 +144,30 @@ def dxf_from_stream_to_vertex(stream: TextIO):
     vertex = np.unique(vertex, axis=0)
     return vertex
 
+
 def map_cell_attr_strings_to_integers(cell_attr):
     d = dict([(y,x+1) for x,y in enumerate(sorted(set(np.unique(cell_attr))))])
     cell_attr_int = np.array([d[x] for x in cell_attr])
     return cell_attr_int, d
 
-def dxf_to_mesh(file_or_buffer):
+
+def dxf_file_to_unstruct_input(file: Union[str, pathlib.Path]):
     import ezdxf
-    dataset = ezdxf.readfile(file_or_buffer)
+    dataset = ezdxf.readfile(file)
+    cell_attr_int, cell_attr_map, cells, vertex = _dxf_dataset_to_unstruct_input(dataset)
+
+    return vertex, cells, cell_attr_int, cell_attr_map
+
+
+def dxf_stream_to_unstruct_input(stream: TextIO):
+    import ezdxf
+    dataset = ezdxf.read(stream)
+    cell_attr_int, cell_attr_map, cells, vertex = _dxf_dataset_to_unstruct_input(dataset)
+
+    return vertex, cells, cell_attr_int, cell_attr_map
+
+
+def _dxf_dataset_to_unstruct_input(dataset):
     vertex = []
     cell_attr = []
     entity = dataset.modelspace()
@@ -161,9 +178,6 @@ def dxf_to_mesh(file_or_buffer):
         cell_attr.append(e.dxf.get("layer"))
     vertex = np.array(vertex)
     cells = np.arange(0, vertex.shape[0]).reshape(-1, 3)
-    
     cell_attr_int, cell_attr_map = map_cell_attr_strings_to_integers(cell_attr)
-    
-
-    return vertex, cells, cell_attr_int, cell_attr_map
+    return cell_attr_int, cell_attr_map, cells, vertex
 

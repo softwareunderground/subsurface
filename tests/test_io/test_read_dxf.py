@@ -24,17 +24,17 @@ def test_read_dxf_only_vertex(data_path):
 
 def test_read_dxf_into_dirty_mesh(data_path):
     path = data_path + '/surfaces/shafts_small.dxf'
-    from subsurface.reader.mesh.surface_reader import dxf_to_mesh
-    vertex, cells, cell_attr, cell_attr_map = dxf_to_mesh(path)
+    from subsurface.reader.mesh.surface_reader import dxf_file_to_unstruct_input
+    vertex, cells, cell_attr, cell_attr_map = dxf_file_to_unstruct_input(path)
 
 
 def test_read_dxf_into_mesh(data_path):
     path = data_path + '/surfaces/shafts_small.dxf'
-    from subsurface.reader.mesh.surface_reader import dxf_to_mesh
+    from subsurface.reader.mesh.surface_reader import dxf_file_to_unstruct_input
     import trimesh
     import numpy as np
     import pandas
-    vertex, cells, cell_attr_int, cell_attr_map = dxf_to_mesh(path)
+    vertex, cells, cell_attr_int, cell_attr_map = dxf_file_to_unstruct_input(path)
 
     min = vertex.min(axis=0)
     tri_array_shifted = vertex - min
@@ -63,11 +63,11 @@ def test_read_dxf_into_mesh(data_path):
 def test_read_dxf_into_mesh_split_by_bodies(data_path):
     path = data_path + '/surfaces/shafts_small.dxf'
     #path = "W:\FARMIN\DATA\Museum/sala_model_forth.dxf"
-    from subsurface.reader.mesh.surface_reader import dxf_to_mesh
+    from subsurface.reader.mesh.surface_reader import dxf_file_to_unstruct_input
     import trimesh
     import numpy as np
     import pandas
-    vertex, cells, cell_attr_int, cell_attr_map = dxf_to_mesh(path)
+    vertex, cells, cell_attr_int, cell_attr_map = dxf_file_to_unstruct_input(path)
 
     tri_full = trimesh.Trimesh(vertex, faces=cells, face_attributes={"Shaft id": cell_attr_int})
     prev_n_cells = 0
