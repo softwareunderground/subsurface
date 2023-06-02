@@ -94,22 +94,36 @@ class UnstructuredData:
         cells_data_array, n_cells, n_vertex, vertex_data_array = cls.vertex_and_cells_arrays_to_data_array(cells,
                                                                                                            vertex)
         points_attributes_xarray_dict = cls.raw_attributes_to_dict_data_arrays(
-            default_points_attr_name, n_vertex, ["points", "vertex_attr"], vertex_attr)
+            default_attributes_name=default_points_attr_name,
+            n_items=n_vertex,
+            dims=["points", "vertex_attr"],
+            raw_attributes=vertex_attr
+        )
+
         cells_attributes_xarray_dict = cls.raw_attributes_to_dict_data_arrays(
-            default_cells_attr_name, n_cells, ["cell", "cell_attr"], cells_attr)
+            default_attributes_name=default_cells_attr_name,
+            n_items=n_cells,
+            dims=["cell", "cell_attr"],
+            raw_attributes=cells_attr
+        )
 
         xarray_dict = {
-            "vertex": vertex_data_array, "cells": cells_data_array,
+            "vertex": vertex_data_array,
+            "cells" : cells_data_array,
             **cells_attributes_xarray_dict,
             **points_attributes_xarray_dict
         }
 
         default_cells_attr_name = cells_attributes_xarray_dict.get(None, next(iter(cells_attributes_xarray_dict)))
-        default_points_attr_name = points_attributes_xarray_dict.get(None,
-                                                                     next(iter(points_attributes_xarray_dict)))
+        default_points_attr_name = points_attributes_xarray_dict.get(None, next(iter(points_attributes_xarray_dict)))
 
-        return cls.from_data_arrays_dict(xarray_dict, coords, xarray_attributes,
-                                         default_cells_attr_name, default_points_attr_name)
+        return cls.from_data_arrays_dict(
+            xarray_dict=xarray_dict,
+            coords=coords,
+            xarray_attributes=xarray_attributes,
+            default_cells_attributes_name=default_cells_attr_name,
+            default_points_attributes_name=default_points_attr_name
+        )
 
     @classmethod
     def from_data_arrays_dict(cls, xarray_dict: Dict[str, xr.DataArray],
@@ -145,14 +159,17 @@ class UnstructuredData:
         return points_attributes_xarray_dict
 
     @classmethod
-    def vertex_and_cells_arrays_to_data_array(cls, cells: Union[np.ndarray, Literal["lines", "points"]],
-                                              vertex: np.ndarray):
+    def vertex_and_cells_arrays_to_data_array(cls, cells: Union[np.ndarray, Literal["lines", "points"]], vertex: np.ndarray):
         n_vertex = vertex.shape[0]
         if type(cells) != np.ndarray:
             cells = cls.create_default_cells_arg(cells, n_vertex)
         n_cells = cells.shape[0]
-        vertex_data_array = xr.DataArray(vertex, dims=['points', 'XYZ'],
-                                         coords={'XYZ': ['X', 'Y', 'Z']})
+        
+        vertex_data_array = xr.DataArray(
+            data=vertex,
+            dims=['points', 'XYZ'],
+            coords={'XYZ': ['X', 'Y', 'Z']}
+        )
         cells_data_array = xr.DataArray(cells, dims=['cell', 'nodes'])
         return cells_data_array, n_cells, n_vertex, vertex_data_array
 
@@ -165,13 +182,11 @@ class UnstructuredData:
         if type(raw_data) is pd.DataFrame:
             data_array = xr.DataArray(raw_data, dims=dims)
         else:
-            raise ValueError("cells_attributes must be either pd.DataFrame or "
-                             "None/default.")
+            raise ValueError("cells_attributes must be either pd.DataFrame or " "None/default.")
         return data_array
 
     @classmethod
     def create_default_cells_arg(cls, cells: Literal["points", "lines"], n_vertex: int) -> np.ndarray:
-
         if cells is None or cells == 'points':
             cells = np.arange(0, n_vertex).reshape(-1, 1)
         elif cells == 'lines':
@@ -187,17 +202,13 @@ class UnstructuredData:
         try:
             _ = self.data[self.cells_attr_name]['cell']
             _ = self.data[self.cells_attr_name]['cell_attr']
-
         except KeyError:
-            raise KeyError('Cell attribute DataArrays must contain dimension cell and '
-                           'cell_attr')
-
+            raise KeyError('Cell attribute DataArrays must contain dimension cell and cell_attr')
         try:
             _ = self.data[self.vertex_attr_name]['vertex_attr']
             _ = self.data[self.vertex_attr_name]['points']
         except KeyError:
-            raise KeyError('Point attribute DataArrays must contain dimensions'
-                           ' points and vertex_attr.')
+            raise KeyError('Point attribute DataArrays must contain dimensions points and vertex_attr.')
 
         # Make sure the number of vertices matches the associated data.
         if self.data['cells']['cell'].size != self.data[self.cells_attr_name]['cell'].size:
