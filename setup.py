@@ -35,7 +35,7 @@ setup(
     author="Software Underground",
     author_email="hello@softwareunderground.org",
     license="Apache-2.0",
-    install_requires=["xarray", ],
+    install_requires=["xarray", "pandas==1.5.3"],
     classifiers=CLASSIFIERS,
     zip_safe=False,
     use_scm_version={
