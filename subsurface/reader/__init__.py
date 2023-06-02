@@ -5,6 +5,7 @@ from .profiles import *
 from .topography.topo_core import read_structured_topography, read_unstructured_topography
 
 from .readers_data import ReaderFilesHelper, ReaderWellsHelper, RawDataOptions
+from .mesh.omf_mesh_reader import omf_stream_to_unstructs
 
 try:
     from . import wells

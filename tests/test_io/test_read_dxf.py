@@ -21,13 +21,13 @@ def test_read_dxf_only_vertex(data_path):
 
 def test_read_dxf_into_dirty_mesh(data_path):
     path = data_path + '/surfaces/shafts_small.dxf'
-    from subsurface.reader.mesh.surface_reader import dxf_file_to_unstruct_input
+    from subsurface.reader.mesh.dxf_reader import dxf_file_to_unstruct_input
     vertex, cells, cell_attr, cell_attr_map = dxf_file_to_unstruct_input(path)
 
 
 def test_read_dxf_into_mesh(data_path):
     path = data_path + '/surfaces/shafts_small.dxf'
-    from subsurface.reader.mesh.surface_reader import dxf_file_to_unstruct_input
+    from subsurface.reader.mesh.dxf_reader import dxf_file_to_unstruct_input
     import trimesh
     import numpy as np
     import pandas
@@ -45,9 +45,10 @@ def test_read_dxf_into_mesh(data_path):
         np.array(tri.faces),
         cells_attr=pandas.DataFrame(np.array(tri.face_attributes["Shaft id"]),
                                     columns=["Shaft id"]),
-        xarray_attributes={"bounds": tri.bounds.tolist(),
-                           "cell_attr_map": cell_attr_map
-                           },
+        xarray_attributes={
+            "bounds"       : tri.bounds.tolist(),
+            "cell_attr_map": cell_attr_map
+        },
     )
 
     ts = TriSurf(mesh=unstruct)
@@ -57,8 +58,7 @@ def test_read_dxf_into_mesh(data_path):
 
 def test_read_dxf_into_mesh_split_by_bodies(data_path):
     path = data_path + '/surfaces/shafts_small.dxf'
-    #path = "W:\FARMIN\DATA\Museum/sala_model_forth.dxf"
-    from subsurface.reader.mesh.surface_reader import dxf_file_to_unstruct_input
+    from subsurface.reader.mesh.dxf_reader import dxf_file_to_unstruct_input
     import trimesh
     import numpy as np
     import pandas
@@ -72,7 +72,7 @@ def test_read_dxf_into_mesh_split_by_bodies(data_path):
         cells = np.array(tri.faces)
 
         n_cells = cells.shape[0]
-        attr_ = tri_full.face_attributes["Shaft id"][prev_n_cells:prev_n_cells+n_cells]
+        attr_ = tri_full.face_attributes["Shaft id"][prev_n_cells:prev_n_cells + n_cells]
         prev_n_cells += n_cells
 
         cells_attr = pandas.DataFrame(np.array(attr_), columns=["Shaft id"])
@@ -81,13 +81,12 @@ def test_read_dxf_into_mesh_split_by_bodies(data_path):
             vertex,
             cells,
             cells_attr=cells_attr,
-            xarray_attributes={"bounds": tri.bounds.tolist(),
-                               "cell_attr_map": cell_attr_map
-                               },
+            xarray_attributes={
+                "bounds"       : tri.bounds.tolist(),
+                "cell_attr_map": cell_attr_map
+            },
         )
-
 
         ts = TriSurf(mesh=unstruct)
         s = sb_viz.to_pyvista_mesh(ts)
         sb_viz.pv_plot([s], image_2d=True)
-

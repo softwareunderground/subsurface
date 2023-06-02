@@ -4,7 +4,7 @@ import subsurface
 from subsurface.interfaces.liquid_earth.rest_client import LiquidEarthClient, DataTypes
 from subsurface.reader.read_netcdf import read_unstruct, read_struct
 
-from subsurface.reader.mesh.surface_reader import dxf_file_to_unstruct_input
+from subsurface.reader.mesh.dxf_reader import dxf_file_to_unstruct_input
 import trimesh
 import numpy as np
 import pandas
