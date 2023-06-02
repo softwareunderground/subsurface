@@ -40,7 +40,7 @@ def test_omf_to_unstruct_single_block(load_omf):
 
     ts = TriSurf(mesh=unstruct)
     s = to_pyvista_mesh(ts)
-    pv_plot([s], image_2d=False)
+    pv_plot([s], image_2d=True)
 
 
 def test_omf_to_unstruct_all_surfaces(load_omf):
@@ -58,12 +58,25 @@ def test_omf_to_unstruct_all_surfaces(load_omf):
                 cells=pyvista_unstructured_grid.cells.reshape(-1, 4)[:, 1:],
             )
 
-            base_structs_to_binary_file(omf.get_block_name(i), unstructured_data)
-            
             # * Convert subsurface object to pyvista again for plotting
             ts: subsurface.TriSurf = TriSurf(mesh=unstructured_data)
             s: pyvista.PolyData = to_pyvista_mesh(ts)
 
             list_of_polydata.append(s)
 
+    pv_plot(list_of_polydata, image_2d=True)
+
+
+def test_omf_from_stream_to_unstruct_all_surfaces():
+    config = dotenv_values()
+    path = config.get('PATH_TO_OMF')
+    with open(path, "rb") as stream:
+        list_unstructs = subsurface.reader.omf_stream_to_unstructs(stream)       
+    
+    list_of_polydata: list[pyvista.PolyData] = []
+    for unstruct in list_unstructs:
+        ts: subsurface.TriSurf = TriSurf(mesh=unstruct)
+        s: pyvista.PolyData = to_pyvista_mesh(ts)
+        list_of_polydata.append(s)
+    
     pv_plot(list_of_polydata, image_2d=False)

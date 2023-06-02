@@ -1,0 +1,2 @@
+- (Miguel de la Varga, June 2023) The original design of the importing API was made thinking of a quite convouluted 
+ architechture on docker which is mostly obsolete. Probably, having a more functional API segmented mostly by formats is a better way to go.
