@@ -20,8 +20,7 @@ def omf_stream_to_unstructs(stream: TextIO) -> list[UnstructuredData]:
                 vertex=pyvista_unstructured_grid.points,
                 cells=pyvista_unstructured_grid.cells.reshape(-1, 4)[:, 1:],
             )
-            
-            unstructured_data.data.attrs['name'] = omf.block_names[i]
+            unstructured_data.data.attrs['name'] = omf.get_block_name(i)
             list_unstructs.append(unstructured_data)
     
     return list_unstructs
