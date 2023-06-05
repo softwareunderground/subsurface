@@ -15,7 +15,7 @@ from subsurface.writer import base_structs_to_binary_file
 @pytest.fixture(scope="module")
 def load_omf():
     config = dotenv_values()
-    path = config.get('PATH_TO_OMF')
+    path = config.get('PATH_TO_OMF2')
     omf = omfvista.load_project(path)
     return omf
 
@@ -69,7 +69,7 @@ def test_omf_to_unstruct_all_surfaces(load_omf):
 
 def test_omf_from_stream_to_unstruct_all_surfaces():
     config = dotenv_values()
-    path = config.get('PATH_TO_OMF')
+    path = config.get('PATH_TO_OMF2')
     with open(path, "rb") as stream:
         list_unstructs = subsurface.reader.omf_stream_to_unstructs(stream)       
     
