@@ -28,9 +28,13 @@ def create_mesh_from_trace(linestring,
     """
     from scipy.spatial.qhull import Delaunay
 
-    n = len(list(linestring.coords))
-    coords = np.array([[x[0] for x in list(linestring.coords)],
-                       [y[1] for y in list(linestring.coords)]]).T
+    if isinstance(linestring, list):
+        linestring_coords = linestring
+    else:  # ! For now I leave it as this because I am not sure with object geopandas returns
+        linestring_coords = linestring.coords # * Geopandas branch
+    n = len(list(linestring_coords))
+    coords = np.array([[x[0] for x in list(linestring_coords)],
+                       [y[1] for y in list(linestring_coords)]]).T
     # duplicating the line, once with z=lower and another with z=upper values
     vertices = np.zeros((2 * n, 3))
     vertices[:n, :2] = coords
@@ -73,8 +77,7 @@ def create_tri_surf_from_traces_texture(
 def base_structs_to_tri_surf(args_list) -> List:
     ts_list = []
     for i in args_list:
-        ts = subsurface.TriSurf(mesh=i[0], texture=i[1], texture_origin=i[2], texture_point_u=i[3],
-                                texture_point_v=i[4])
+        ts = subsurface.TriSurf(mesh=i[0], texture=i[1], texture_origin=i[2], texture_point_u=i[3], texture_point_v=i[4])
         ts_list.append(ts)
     return ts_list
 
