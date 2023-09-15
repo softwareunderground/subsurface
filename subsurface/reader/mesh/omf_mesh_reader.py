@@ -1,13 +1,12 @@
 import io
-from typing import TextIO
-
-import omfvista
 import pyvista
 
+from subsurface.optional_dependencies import require_omf
 from subsurface.structs.unstructured_elements import UnstructuredData
 
 
 def omf_stream_to_unstructs(stream: io.BytesIO) -> list[UnstructuredData]:
+    omfvista = require_omf()
     omf = omfvista.load_project(stream)
     list_unstructs: list[UnstructuredData] = []
     for i in range(omf.n_blocks):
