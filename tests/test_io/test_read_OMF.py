@@ -12,18 +12,6 @@ from subsurface.visualization import to_pyvista_mesh, pv_plot
 from subsurface.writer import base_structs_to_binary_file
 
 
-@pytest.fixture(scope="module")
-def load_omf():
-    config = dotenv_values()
-    path = config.get('PATH_TO_OMF2')
-    omf = omfvista.load_project(path)
-    return omf
-
-
-def test_read_omf_with_pyvista(load_omf):
-    omf = load_omf
-    omf.plot(multi_colors=True, show_edges=True, notebook=False)
-
 
 def test_omf_to_unstruct_single_block(load_omf):
     omf = load_omf
