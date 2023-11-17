@@ -15,7 +15,6 @@ try:
 except ImportError:
     background_plotter_imported = False
 
-
 __all__ = ['pv_plot', 'to_pyvista_points', 'to_pyvista_mesh',
            'to_pyvista_mesh_and_texture', 'to_pyvista_line',
            'to_pyvista_tetra', 'to_pyvista_grid', 'update_grid_attribute']
@@ -24,6 +23,7 @@ __all__ = ['pv_plot', 'to_pyvista_points', 'to_pyvista_mesh',
 def pv_plot(meshes: list,
             image_2d=False,
             ve=None,
+            cmap='viridis',
             plotter_kwargs: dict = None,
             add_mesh_kwargs: dict = None,
             background_plotter=False):
@@ -56,7 +56,13 @@ def pv_plot(meshes: list,
     if ve is not None:
         p.set_scale(zscale=ve)
 
+    if 'color' not in add_mesh_kwargs.keys():
+        colors = _generate_colors_from_colormap(len(meshes), cmap_name=cmap)
+    else:
+        colors = add_mesh_kwargs.pop('color')
+        
     for m in meshes:
+        add_mesh_kwargs['color'] = colors.pop()
         p.add_mesh(m, **add_mesh_kwargs)
 
     p.show_bounds()
@@ -94,8 +100,7 @@ def to_pyvista_points(point_set: PointSet):
     return poly
 
 
-def to_pyvista_mesh(unstructured_element: Union[TriSurf],
-                    ) -> pv.PolyData:
+def to_pyvista_mesh(unstructured_element: Union[TriSurf], ) -> pv.PolyData:
     """Create planar surface PolyData from unstructured element such as TriSurf
 
     Returns:
@@ -104,7 +109,7 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf],
     nve = unstructured_element.mesh.n_vertex_per_element
     vertices = unstructured_element.mesh.vertex
     cells = np.c_[np.full(unstructured_element.mesh.n_elements, nve),
-                  unstructured_element.mesh.cells]
+    unstructured_element.mesh.cells]
     mesh = pv.PolyData(vertices, cells)
     mesh.cell_data.update(unstructured_element.mesh.attributes_to_dict)
     mesh.point_data.update(unstructured_element.mesh.points_attributes)
@@ -154,7 +159,7 @@ def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,
     nve = line_set.data.n_vertex_per_element
     vertices = line_set.data.vertex
     cells = np.c_[np.full(line_set.data.n_elements, nve),
-                  line_set.data.cells]
+    line_set.data.cells]
     if spline is False:
         mesh = pv.PolyData()
         mesh.points = vertices
@@ -248,3 +253,21 @@ def _n_cartesian_coord(attribute, structured_grid):
     coord_names = np.array(['X', 'Y', 'Z', 'x', 'y', 'z'])
     ndim = np.isin(coord_names, structured_grid.ds.data[attribute].dims).sum()
     return ndim
+
+
+def _generate_colors_from_colormap(num_colors, cmap_name='viridis'):
+    """
+    Generate a sequence of colors from a given Matplotlib colormap.
+
+    Parameters:
+    num_colors (int): Number of colors to generate.
+    cmap_name (str): Name of the Matplotlib colormap to use.
+
+    Returns:
+    list of tuple: List of RGB color tuples.
+    """
+    import matplotlib.pyplot as plt
+    colormap = plt.cm.get_cmap(cmap_name)
+    colors = colormap(np.linspace(0, 1, num_colors))
+    # Convert from RGBA to RGB and scale to 0-255
+    return [(int(r * 255), int(g * 255), int(b * 255)) for r, g, b, _ in colors]
