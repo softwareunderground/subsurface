@@ -1,6 +1,7 @@
 import json
 
 import numpy as np
+import xarray as xr
 
 
 def read_data(json_file_path, binary_file_path):
