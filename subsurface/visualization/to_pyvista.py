@@ -40,29 +40,10 @@ def pv_plot(meshes: list,
          backgroung plotter.
     """
 
-    plotter_kwargs = dict() if plotter_kwargs is None else plotter_kwargs
     add_mesh_kwargs = dict() if add_mesh_kwargs is None else add_mesh_kwargs
+    p = init_plotter(image_2d, ve, plotter_kwargs, background_plotter)
 
-    if background_plotter is True:
-        if background_plotter_imported is True:
-            p = BackgroundPlotter(**plotter_kwargs, off_screen=image_2d)
-        else:
-            raise ImportError(
-                'You need to install pyvistaqt for using this plotter.')
-    else:
-        off_screen = True if image_2d is True else None
-        p = pv.Plotter(**plotter_kwargs, off_screen=off_screen)
-
-    if ve is not None:
-        p.set_scale(zscale=ve)
-
-    if 'color' not in add_mesh_kwargs.keys():
-        colors = _generate_colors_from_colormap(len(meshes), cmap_name=cmap)
-    else:
-        colors = add_mesh_kwargs.pop('color')
-        
     for m in meshes:
-        add_mesh_kwargs['color'] = colors.pop()
         p.add_mesh(m, **add_mesh_kwargs)
 
     p.show_bounds()
@@ -83,6 +64,27 @@ def pv_plot(meshes: list,
         plt.show(block=False)
         p.close()
         return fig
+
+
+def init_plotter(
+        image_2d=False,
+        ve=None,
+        plotter_kwargs: dict = None,
+        background_plotter=False
+):
+    plotter_kwargs = dict() if plotter_kwargs is None else plotter_kwargs
+    if background_plotter is True:
+        if background_plotter_imported is True:
+            p = BackgroundPlotter(**plotter_kwargs, off_screen=image_2d)
+        else:
+            raise ImportError(
+                'You need to install pyvistaqt for using this plotter.')
+    else:
+        off_screen = True if image_2d is True else None
+        p = pv.Plotter(**plotter_kwargs, off_screen=off_screen)
+    if ve is not None:
+        p.set_scale(zscale=ve)
+    return p
 
 
 def to_pyvista_points(point_set: PointSet):
@@ -167,7 +169,7 @@ def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,
     else:
         raise NotImplementedError
         # mesh = pv.Spline(ver)
-    mesh.cell_arrays.update(line_set.data.attributes_to_dict)
+    mesh.cell_data.update(line_set.data.attributes_to_dict)
     if as_tube is True:
         return mesh.tube(radius=radius)
     else:
