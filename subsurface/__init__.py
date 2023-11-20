@@ -1,6 +1,7 @@
 import subsurface.reader
 import subsurface.interfaces
 import subsurface.writer
+import subsurface.visualization
 from subsurface.structs import *
 from datetime import datetime
 
