@@ -20,9 +20,9 @@ def test_pyvista_tri_surf(tri_surf):
 
 
 def test_pyvista_line_set(line_set):
-    s = to_pyvista_line(line_set, as_tube=False)
+    s = to_pyvista_line(line_set, as_tube=True)
 
-    pv_plot([s], image_2d=True, add_mesh_kwargs={'line_width': 5})
+    pv_plot([s], image_2d=False, add_mesh_kwargs={'line_width': 5})
 
 
 def test_pyvista_tetra(tetra_set):
