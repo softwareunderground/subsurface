@@ -1,3 +1,5 @@
+import warnings
+
 from typing import Union, Tuple, Optional
 
 from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
@@ -6,7 +8,7 @@ import numpy as np
 try:
     import pyvista as pv
 except ImportError:
-    raise ImportError()
+    warnings.warn('Pyvista is not installed. Some visualization functions will not work.')
 
 try:
     from pyvistaqt import BackgroundPlotter
@@ -102,7 +104,7 @@ def to_pyvista_points(point_set: PointSet):
     return poly
 
 
-def to_pyvista_mesh(unstructured_element: Union[TriSurf], ) -> pv.PolyData:
+def to_pyvista_mesh(unstructured_element: Union[TriSurf], ) -> "pv.PolyData":
     """Create planar surface PolyData from unstructured element such as TriSurf
 
     Returns:
@@ -119,7 +121,7 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf], ) -> pv.PolyData:
     return mesh
 
 
-def to_pyvista_mesh_and_texture(triangular_surface: Union[TriSurf], ) -> Tuple[pv.PolyData, Optional[np.array]]:
+def to_pyvista_mesh_and_texture(triangular_surface: Union[TriSurf], ) -> Tuple["pv.PolyData", Optional[np.array]]:
     """Create planar surface PolyData from unstructured element such as TriSurf
 
     Returns:
