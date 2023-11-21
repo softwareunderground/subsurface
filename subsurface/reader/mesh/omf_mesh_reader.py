@@ -1,11 +1,11 @@
 import io
-import pyvista
 
-from subsurface.optional_dependencies import require_omf
+from subsurface.optional_dependencies import require_omf, require_pyvista
 from subsurface.structs.unstructured_elements import UnstructuredData
 
 
 def omf_stream_to_unstructs(stream: io.BytesIO) -> list[UnstructuredData]:
+    pyvista = require_pyvista()
     omfvista = require_omf()
     omf = omfvista.load_project(stream)
     list_unstructs: list[UnstructuredData] = []
