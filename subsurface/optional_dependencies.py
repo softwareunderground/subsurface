@@ -12,3 +12,11 @@ def require_rasterio():
     except ImportError:
         raise ImportError("The rasterio package is required to run this function.")
     return rasterio
+
+
+def require_pyvista():
+    try:
+        import pyvista
+    except ImportError:
+        raise ImportError("The pyvista package is required to run this function.")
+    return pyvista
