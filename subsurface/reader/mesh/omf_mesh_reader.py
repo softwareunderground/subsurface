@@ -11,7 +11,7 @@ def omf_stream_to_unstructs(stream: io.BytesIO) -> list[UnstructuredData]:
     list_unstructs: list[UnstructuredData] = []
     for i in range(omf.n_blocks):
         block: pyvista.PolyData = omf[i]
-        cell_type = block.cell_type(0)
+        cell_type = block.get_cell(0).type
         if cell_type == pyvista.CellType.TRIANGLE:
             pyvista_unstructured_grid: pyvista.UnstructuredGrid = block.cast_to_unstructured_grid()
 

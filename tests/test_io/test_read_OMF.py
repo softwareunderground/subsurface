@@ -1,21 +1,28 @@
-import numpy as np
-import pandas as pd
 import pyvista
-import omfvista
 from dotenv import dotenv_values
-
-import pytest
 
 import subsurface
 from subsurface import TriSurf
 from subsurface.visualization import to_pyvista_mesh, pv_plot
 from subsurface.writer import base_structs_to_binary_file
 
+import omfvista
+import pytest
+
+
+@pytest.fixture(scope="module")
+def load_omf():
+    config = dotenv_values()
+    path = config.get('PATH_TO_OMF')
+    omf = omfvista.load_project(path)
+    return omf
 
 
 def test_omf_to_unstruct_single_block(load_omf):
     omf = load_omf
-    polydata_obj: pyvista.PolyData = omf["GSB - BIF contacts"]
+
+    block_name = omf.get_block_name(4)
+    polydata_obj: pyvista.PolyData = omf[block_name]
     unstruct_pyvista: pyvista.UnstructuredGrid = polydata_obj.cast_to_unstructured_grid()
     cells_pyvista = unstruct_pyvista.cells.reshape(-1, 4)[:, 1:]
 
@@ -36,7 +43,8 @@ def test_omf_to_unstruct_all_surfaces(load_omf):
     list_of_polydata: list[pyvista.PolyData] = []
     for i in range(omf.n_blocks):
         block: pyvista.PolyData = omf[i]
-        cell_type = block.cell_type(0)
+        cell_type = block.get_cell(0).type
+
         if cell_type == pyvista.CellType.TRIANGLE:
             pyvista_unstructured_grid: pyvista.UnstructuredGrid = block.cast_to_unstructured_grid()
 
@@ -57,7 +65,7 @@ def test_omf_to_unstruct_all_surfaces(load_omf):
 
 def test_omf_from_stream_to_unstruct_all_surfaces():
     config = dotenv_values()
-    path = config.get('PATH_TO_OMF2')
+    path = config.get('PATH_TO_OMF')
     with open(path, "rb") as stream:
         list_unstructs = subsurface.reader.omf_stream_to_unstructs(stream)       
     
