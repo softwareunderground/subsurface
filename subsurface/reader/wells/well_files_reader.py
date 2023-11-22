@@ -5,7 +5,7 @@ import pandas
 import pandas as pd
 import numpy as np
 
-from subsurface.reader.readers_data import ReaderFilesHelper, ReaderWellsHelper
+from subsurface.reader.readers_data import ReaderFilesHelper, ReaderWellsHelper, SupportedFormats
 from subsurface.reader.wells.wells_utils import add_tops_from_base_and_altitude_in_place
 from subsurface.reader.wells.welly_reader import _create_welly_well_from_las
 
@@ -132,12 +132,16 @@ def map_rows_and_cols_inplace(d: pd.DataFrame, reader_helper: ReaderFilesHelper)
 
 
 def _get_reader(file_format):
-    if file_format == '.xlsx':
+    if file_format == SupportedFormats.XLXS:
         reader = pd.read_excel
     elif file_format == 'dict':
         reader = _dict_reader
-    else:
+    elif file_format == SupportedFormats.CSV:
         reader = pd.read_csv
+    elif file_format == SupportedFormats.JSON:
+        reader = _dict_reader
+    else:
+        raise ValueError(f"Subsurface is not able to read the following extension: {file_format}")
     return reader
 
 

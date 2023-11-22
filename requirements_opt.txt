@@ -24,3 +24,6 @@ pooch
 netcdf4
 scooby
 
+omfvista
+
+python-dotenv
