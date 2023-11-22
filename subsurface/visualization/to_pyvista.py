@@ -2,6 +2,7 @@ import warnings
 
 from typing import Union, Tuple, Optional
 
+import subsurface
 from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
 import numpy as np
 
@@ -235,20 +236,23 @@ def to_pyvista_grid(structured_grid: StructuredGrid,
     return mesh
 
 
-def update_grid_attribute(mesh, structured_grid,
-                          data_order='F',
-                          attribute_slice=None,
-                          data_set_name=None):
+def update_grid_attribute(
+        mesh: pv.StructuredGrid,
+        structured_grid: StructuredGrid,
+        data_order='F',
+        attribute_slice=None,
+        data_set_name=None
+):
     if attribute_slice is None:
         attribute_slice = dict()
 
     if data_set_name is None:
         data_set_name = structured_grid.ds.data_array_name
-
-    mesh.point_data.update(
-        {data_set_name: structured_grid.ds.data[data_set_name].sel(
-            **attribute_slice
-        ).values.ravel(data_order)})
+    import xarray as xr
+    dataset: xr.DataArray = structured_grid.ds.data[data_set_name]
+    
+    attributeData = {data_set_name: dataset.sel(**attribute_slice).values.ravel(data_order)}
+    mesh.point_data.update( attributeData)
 
     return mesh
 
