@@ -226,7 +226,7 @@ class UnstructuredData:
         return self.data['cells'].values
 
     @property
-    def attributes(self):
+    def attributes(self) -> pd.DataFrame:
         xarray = self.data[self.cells_attr_name]
         return xarray.to_dataframe()[self.cells_attr_name].unstack(level=1)
 
