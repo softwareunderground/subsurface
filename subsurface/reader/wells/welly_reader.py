@@ -14,17 +14,12 @@ from subsurface.structs.base_structures import UnstructuredData
 welly = optional_requirements.require_welly()
 striplog = optional_requirements.require_striplog()
 
-__all__ = ['welly_to_subsurface', 'striplog_to_curve_log',
-           'change_curve_basis_to_n_vertex_per_well_inplace',
-           'vertex_and_cells_from_welly_trajectory',
-           'well_without_valid_survey']
-
 
 def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
                         elev=True,
                         n_vertex_per_well=50,
                         convert_lith=True,
-                        table: List[welly.Component] = None,
+                        table: List[striplog.Component] = None,
                         **kwargs) -> UnstructuredData:
     """Method to convert well data to `subsurface.UnstructuredData`
 

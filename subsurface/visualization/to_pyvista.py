@@ -18,9 +18,6 @@ try:
 except ImportError:
     background_plotter_imported = False
 
-__all__ = ['pv_plot', 'to_pyvista_points', 'to_pyvista_mesh',
-           'to_pyvista_mesh_and_texture', 'to_pyvista_line',
-           'to_pyvista_tetra', 'to_pyvista_grid', 'update_grid_attribute']
 
 
 def pv_plot(meshes: list,
@@ -99,6 +96,7 @@ def to_pyvista_points(point_set: PointSet):
     Returns:
         pv.PolyData
     """
+    pv = optional_requirements.require_pyvista()
     poly: pv.PolyData = pv.PolyData(point_set.data.vertex)
     poly.point_data.update(point_set.data.attributes_to_dict)
 
