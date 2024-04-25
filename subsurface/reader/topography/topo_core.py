@@ -2,7 +2,7 @@ from typing import Sequence, Optional
 
 import numpy as np
 
-from subsurface.optional_dependencies import require_rasterio
+from subsurface.optional_requirements import require_rasterio
 from subsurface.reader.readers_data import ReaderFilesHelper, ReaderUnstructuredHelper
 from subsurface.structs import StructuredData, UnstructuredData, StructuredGrid
 from subsurface.reader.mesh.surfaces_api import read_2d_mesh_to_unstruct

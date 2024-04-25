@@ -1,5 +1,8 @@
 # GLOBAL REQUIREMENTS.
 -r requirements.txt
+numpy
+pandas
+netCDF4
 
 # FOR DOCUMENTATION
 sphinx~=3.5
