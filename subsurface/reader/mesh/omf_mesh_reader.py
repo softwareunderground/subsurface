@@ -1,6 +1,6 @@
 import io
 
-from subsurface.optional_dependencies import require_omf, require_pyvista
+from subsurface.optional_requirements import require_omf, require_pyvista
 from subsurface.structs.unstructured_elements import UnstructuredData
 
 

@@ -17,18 +17,24 @@ def test_unstructured_data():
     foo = UnstructuredData.from_array(
         vertex=np.ones((5, 3)),
         cells=np.ones((4, 3)),
-        cells_attr= pd.DataFrame({'foo': np.arange(4)})
+        cells_attr=pd.DataFrame({'foo': np.arange(4)})
     )
     print(foo)
 
     # No attributes
-    foo = UnstructuredData.from_array(np.ones((5, 3)), np.ones((4, 3)))
+    foo = UnstructuredData.from_array(
+        vertex=np.ones((5, 3)),
+        cells=np.ones((4, 3)),
+    )
     print(foo)
 
     # Failed validation
     with pytest.raises(ValueError):
-        foo = UnstructuredData.from_array(np.ones((5, 3)), np.ones((4, 3)),
-                                          pd.DataFrame({'foo': np.arange(1)}))
+        foo = UnstructuredData.from_array(
+            vertex=np.ones((5, 3)),
+            cells=np.ones((4, 3)),
+            cells_attr=pd.DataFrame({'foo': np.arange(1)})
+        )
         print(foo)
 
 
@@ -41,8 +47,11 @@ def test_unstructured_data_no_cells_no_attributes():
     attributes = {'notAttributeName': xr.DataArray(pd.DataFrame({'foo': np.arange(4)}))}
 
     with pytest.raises(KeyError):
-        foo = UnstructuredData.from_array(vertex=np.ones((5, 3)), cells=np.ones((4, 3)),
-                                          attributes=attributes)
+        foo = UnstructuredData.from_array(
+            vertex=np.ones((5, 3)),
+            cells=np.ones((4, 3)),
+            attributes=attributes
+        )
 
     attributes2 = {
             'notAttributeName': xr.DataArray(
@@ -50,8 +59,11 @@ def test_unstructured_data_no_cells_no_attributes():
                 dims=['cell', 'cell_attr']
             )}
 
-    foo = UnstructuredData.from_array(vertex=np.ones((5, 3)), cells=np.ones((4, 3)),
-                                      attributes=attributes2)
+    foo = UnstructuredData.from_array(
+        vertex=np.ones((5, 3)),
+        cells=np.ones((4, 3)),
+        attributes=attributes2
+    )
 
     print(foo)
 
@@ -60,18 +72,25 @@ def test_structured_data(struc_data):
     xx, yy, zz = struc_data[0]
     geo_map, high = struc_data[1]
     x_coord, y_coord, z_coord = struc_data[2:]
-    s = xr.Dataset({'lith'          : (["x", "y", 'z'], xx),
-                    'porosity'      : (["x", "y", 'z'], yy),
-                    'something_else': (["x", "y", 'z'], zz),
-                    'geo_map'       : (['x', 'y'], geo_map)},
-                   coords={'x': x_coord, 'y': y_coord, 'z': z_coord})
+    s = xr.Dataset(
+        {
+                'lith'          : (["x", "y", 'z'], xx),
+                'porosity'      : (["x", "y", 'z'], yy),
+                'something_else': (["x", "y", 'z'], zz),
+                'geo_map'       : (['x', 'y'], geo_map)
+        },
+        coords={'x': x_coord, 'y': y_coord, 'z': z_coord})
+
     # StructuredData from Dataset
     a = StructuredData(s)
     print(a)
 
     # StructuredData from DataArray
-    b0 = xr.DataArray(xx, coords={'x': x_coord, 'y': y_coord, 'z': z_coord},
-                      dims=['x', 'y', 'z'])
+    b0 = xr.DataArray(
+        data=xx,
+        coords={'x': x_coord, 'y': y_coord, 'z': z_coord},
+        dims=['x', 'y', 'z']
+    )
     b = StructuredData.from_data_array(b0)
     print(b)
 
@@ -80,7 +99,6 @@ def test_structured_data(struc_data):
     print(c)
 
 
-def test_xarray():
     """this test is only to figure out how xarray works exactly"""
     xrng = np.arange(-10, 10, 2)
     yrng = np.arange(-10, 10, 2)
@@ -91,20 +109,29 @@ def test_xarray():
     s0 = xr.DataArray(xx)
     print(s0)
 
-    s1 = xr.DataArray(coords={'x': xrng, 'y': yrng, 'z': zrng}, dims=['x', 'y', 'z'])
+    s1 = xr.DataArray(
+        coords={'x': xrng, 'y': yrng, 'z': zrng},
+        dims=['x', 'y', 'z']
+    )
     print(s1)
 
-    s2 = xr.DataArray(xx, coords={'x': xrng, 'y': yrng, 'z': zrng},
-                      dims=['x', 'y', 'z'])
+    s2 = xr.DataArray(
+        data=xx,
+        coords={'x': xrng, 'y': yrng, 'z': zrng},
+        dims=['x', 'y', 'z']
+    )
     print(s2)
 
     # Each data set can be align to different dimensions that is why we need to specify
     # The coordinate name
-    s = xr.Dataset({'xx' : (["x", "y", 'z'], xx),
-                    'yy' : (["x", "y", 'z'], xx),
-                    'zz' : (["x", "y", 'z'], xx),
-                    'foo': (['x', 'y'], x_test)},
-                   coords={'x': xrng, 'y': yrng, 'z': zrng, 'bar': np.arange(3)})
+    s = xr.Dataset(
+        {
+                'xx' : (["x", "y", 'z'], xx),
+                'yy' : (["x", "y", 'z'], xx),
+                'zz' : (["x", "y", 'z'], xx),
+                'foo': (['x', 'y'], x_test)
+        },
+        coords={'x': xrng, 'y': yrng, 'z': zrng, 'bar': np.arange(3)})
 
     print(s)
     # Slice by data array
@@ -131,21 +158,22 @@ def test_read_unstruct(data_path):
 def test_read_struct(data_path):
     s = read_struct(data_path + '/interpolator_regular_grid.nc')
     sg = StructuredGrid(s)
-    s = to_pyvista_grid(sg,
-                        data_set_name='block_matrix',
-                        attribute_slice={'Properties': 'id',
-                                         'Features'  : 'Default series'})
+    s = to_pyvista_grid(
+        structured_grid=sg,
+        data_set_name='block_matrix',
+        attribute_slice={
+                'Properties': 'id',
+                'Features'  : 'Default series'
+        })
 
     pv_plot([s], image_2d=True)
 
 
 def test_remove_outliers(data_path):
     """
-     Notes:
-         It needs rasterio/gdal
-
-
-     """
+    Notes:
+        It needs rasterio/gdal
+    """
 
     topo_path = data_path + '/topo/dtm_rp.tif'
     struct = read_structured_topography(topo_path)

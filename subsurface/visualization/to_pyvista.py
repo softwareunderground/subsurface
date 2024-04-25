@@ -2,6 +2,7 @@ import warnings
 
 from typing import Union, Tuple, Optional
 
+from subsurface import optional_requirements
 from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
 import numpy as np
 
@@ -112,8 +113,14 @@ def to_pyvista_mesh(unstructured_element: Union[TriSurf], ) -> "pv.PolyData":
     """
     nve = unstructured_element.mesh.n_vertex_per_element
     vertices = unstructured_element.mesh.vertex
-    cells = np.c_[np.full(unstructured_element.mesh.n_elements, nve),
-    unstructured_element.mesh.cells]
+    
+    # ? We need better name for these variables
+    num_vertex_elements = np.full(unstructured_element.mesh.n_elements, nve)
+    x = unstructured_element.mesh.cells
+    
+    cells = np.c_[num_vertex_elements, x]
+    
+    pv = optional_requirements.require_pyvista()
     mesh = pv.PolyData(vertices, cells)
     mesh.cell_data.update(unstructured_element.mesh.attributes_to_dict)
     mesh.point_data.update(unstructured_element.mesh.points_attributes)
@@ -228,6 +235,7 @@ def to_pyvista_grid(structured_grid: StructuredGrid,
                              'Possibly there are not valid dimension name in the'
                              'xarray.DataArray. These are X Y Z x y z')
 
+    pv = optional_requirements.require_pyvista()
     mesh = pv.StructuredGrid(*meshgrid)
     update_grid_attribute(mesh, structured_grid, data_order,
                           attribute_slice, data_set_name)
