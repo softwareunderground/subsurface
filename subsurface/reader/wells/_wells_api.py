@@ -1,24 +1,18 @@
 from typing import List
 
 import pandas as pd
-from striplog import Component
 
-from subsurface.reader.wells.pandas_to_welly import WellyToSubsurfaceHelper
-from subsurface.reader.wells.well_files_reader import read_borehole_files
-from subsurface.reader.wells.welly_reader import welly_to_subsurface
-from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
+from .pandas_to_welly import WellyToSubsurfaceHelper
+from .well_files_reader import read_borehole_files, read_collar
+from .welly_reader import welly_to_subsurface
 
-from subsurface.structs import UnstructuredData
-
-from subsurface.reader.wells import read_collar
-
-
-__all__ = ['read_wells_to_unstruct', 'borehole_location_to_unstruct']
+from ..readers_data import ReaderWellsHelper, ReaderFilesHelper
+from ...structs import UnstructuredData
 
 
 def read_wells_to_unstruct(reader_wells_helper: ReaderWellsHelper,
-                            backend='welly', n_vertex_per_well=80,
-                           table: List[Component] = None) -> UnstructuredData:
+                           backend='welly', n_vertex_per_well=80,
+                           table: List['welly.Component'] = None) -> UnstructuredData:
     """Read from csv files (or excel) to `subsurface.Unstructured` object.
 
     Args:
@@ -47,7 +41,6 @@ def read_wells_to_unstruct(reader_wells_helper: ReaderWellsHelper,
 
 def borehole_location_to_unstruct(reader_helper: ReaderFilesHelper,
                                   add_number_segments: bool = True) -> UnstructuredData:
-
     collars = read_collar(reader_helper)
     collars_attributes = pd.DataFrame()
 
