@@ -12,19 +12,18 @@ import functools
 
 @enum.unique
 class RequirementsLevel(enum.Enum):
-    
     CORE = 2**1
     BASE = 2**2
-    OPTIONAL = 2**3
     GEOSPATIAL = 2**4
     WELLS = 2**5
     DEV = 2**31
     READ_WELL = CORE | WELLS
+    OPTIONAL = CORE | BASE | GEOSPATIAL | WELLS
     ALL = CORE | BASE | OPTIONAL | GEOSPATIAL | DEV
 
     @classmethod
-    def REQUIREMENT_LEVEL(cls):
-        return cls.CORE
+    def REQUIREMENT_LEVEL_TO_TEST(cls):
+        return cls.READ_WELL
     
     # Utility function to check if a flag is set
     def __or__(self, other):
@@ -45,16 +44,13 @@ class RequirementsLevel(enum.Enum):
     def __invert__(self):
         return RequirementsLevel(~self.value & int(RequirementsLevel.ALL.value))
 
-    def __contains__(self, item):
-        return (self.value & item.value) == item.value
-    
     @classmethod
     def is_set(cls, flag):
-        return (cls.REQUIREMENT_LEVEL().value & flag.value) == flag.value
+        return (cls.REQUIREMENT_LEVEL_TO_TEST().value & flag.value) == flag.value
     
     @classmethod
     def is_not_set(cls, flag):
-        return (cls.REQUIREMENT_LEVEL().value & flag.value) != flag.value
+        return (cls.REQUIREMENT_LEVEL_TO_TEST().value & flag.value) != flag.value
 
     # Utility to combine flags
     @staticmethod
@@ -64,12 +60,12 @@ class RequirementsLevel(enum.Enum):
     
     @classmethod    
     def check_requirements(cls, minimum_level):
-        return cls.REQUIREMENT_LEVEL().value < minimum_level.value
+        return cls.REQUIREMENT_LEVEL_TO_TEST().value < minimum_level.value
 
 
 
 def check_requirements(minimum_level: RequirementsLevel):
-    return RequirementsLevel.REQUIREMENT_LEVEL().value < minimum_level.value
+    return RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST().value < minimum_level.value
 
 
 @pytest.fixture(scope='session')
