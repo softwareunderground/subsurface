@@ -36,3 +36,11 @@ def require_geopandas():
     except ImportError:
         raise ImportError("The geopandas package is required to run this function.")
     return gpd
+
+
+def require_segyio():
+    try:
+        import segyio
+    except ImportError:
+        raise ImportError("The segyio package is required to run this function.")
+    return segyio

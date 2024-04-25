@@ -1,5 +1,6 @@
-import pyvista as pv
 import pandas as pd
+
+from subsurface import optional_requirements
 
 
 class FaultSticks:
@@ -22,6 +23,7 @@ class FaultSticks:
             self._make_pointcloud()
             self._make_sticks()
 
+        pv = optional_requirements.require_pyvista()   
         p = pv.Plotter(notebook=notebook)
         p.add_mesh(self.pointcloud, color=color)
         for stick in self.sticks:
@@ -29,10 +31,11 @@ class FaultSticks:
         p.show()
 
     def _make_pointcloud(self):
+        pv = optional_requirements.require_pyvista()
         self.pointcloud = pv.PolyData(self.df[["X", "Y", "Z"]].values)
 
     def _make_sticks(self):
-
+        pv = optional_requirements.require_pyvista()
         lines = []
         for stick, indices in self.df.groupby("stick id").groups.items():
             stickdf = self.df.loc[indices]
