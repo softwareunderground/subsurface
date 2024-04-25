@@ -1,26 +1,14 @@
-import imageio
-import pytest
-from subsurface.reader.read_netcdf import read_unstruct
 import json
 
-try:
-    import geopandas as gpd
-    GEOPANDAS_IMPORTED = True
-except ImportError:
-    GEOPANDAS_IMPORTED = False
+from conftest import RequirementsLevel, check_requirements
+from subsurface.reader.read_netcdf import read_unstruct
+
 import pytest
 import numpy as np
 
-from subsurface import UnstructuredData, TriSurf, StructuredData
+from subsurface import UnstructuredData, TriSurf, StructuredData, optional_requirements
 from subsurface.reader.profiles.profiles_core import create_mesh_from_trace
-from subsurface.visualization import to_pyvista_mesh, pv_plot, \
-    to_pyvista_mesh_and_texture
-
-
-@pytest.fixture(scope='module')
-def unstruct(data_path):
-    us = read_unstruct(data_path + '/interpolator_meshes.nc')
-    return us
+from subsurface.visualization import to_pyvista_mesh_and_texture
 
 
 @pytest.fixture(scope='module')
@@ -39,27 +27,38 @@ def test_wells_to_binary(wells):
     new_file.write(bytearray_le)
 
 
-@pytest.mark.skipif(GEOPANDAS_IMPORTED is False, reason="Geopandas is not imported " )
+@pytest.mark.skipif(check_requirements(RequirementsLevel.GEOSPATIAL), reason="Geopandas is not imported ")
 def test_profile_to_binary(data_path):
+    gpd = optional_requirements.require_geopandas()
     traces = gpd.read_file(data_path + '/profiles/Traces.shp')
-    v, e = create_mesh_from_trace(traces.loc[0, 'geometry'], traces.loc[0, 'zmax'],
-                                  traces.loc[0, 'zmin'])
+    v, e = create_mesh_from_trace(
+        traces.loc[0, 'geometry'],
+        traces.loc[0, 'zmax'],
+        traces.loc[0, 'zmin']
+    )
 
     unstruct_temp = UnstructuredData.from_array(v, e)
 
+    imageio = optional_requirements.require_imageio()
     cross = imageio.imread(data_path + '/profiles/Profil1_cropped.png')
     struct = StructuredData.from_numpy(np.array(cross))
     texture_binary, texture_header = struct.default_data_array_to_binary()
 
-    origin = [traces.loc[0, 'geometry'].xy[0][0],
-              traces.loc[0, 'geometry'].xy[1][0],
-              int(traces.loc[0, 'zmin'])]
-    point_u = [traces.loc[0, 'geometry'].xy[0][-1],
-               traces.loc[0, 'geometry'].xy[1][-1],
-               int(traces.loc[0, 'zmin'])]
-    point_v = [traces.loc[0, 'geometry'].xy[0][0],
-               traces.loc[0, 'geometry'].xy[1][0],
-               int(traces.loc[0, 'zmax'])]
+    origin = [
+            traces.loc[0, 'geometry'].xy[0][0],
+            traces.loc[0, 'geometry'].xy[1][0],
+            int(traces.loc[0, 'zmin'])
+    ]
+    point_u = [
+            traces.loc[0, 'geometry'].xy[0][-1],
+            traces.loc[0, 'geometry'].xy[1][-1],
+            int(traces.loc[0, 'zmin'])
+    ]
+    point_v = [
+            traces.loc[0, 'geometry'].xy[0][0],
+            traces.loc[0, 'geometry'].xy[1][0],
+            int(traces.loc[0, 'zmax'])
+    ]
 
     texture_header['texture_origin'] = origin
     texture_header['texture_point_u'] = point_u
