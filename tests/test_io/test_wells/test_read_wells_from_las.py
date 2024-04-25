@@ -1,16 +1,19 @@
-﻿import pytest
+﻿import os
+
+import pytest
 import numpy as np
 import pandas as pd
 import subsurface
 from subsurface import LineSet
 from subsurface.reader import ReaderFilesHelper
-from subsurface.reader.wells import WellyToSubsurfaceHelper, welly_to_subsurface
-from subsurface.reader.wells.well_files_reader import read_survey_df_from_las, read_assay_df_from_las
+from subsurface.reader.wells import WellyToSubsurfaceHelper, read_survey_df_from_las, read_assay_df_from_las, welly_to_subsurface
 
 
-@pytest.mark.skip(reason="find open access las files ")
+# @pytest.mark.skip(reason="find open access las files ")
 def test_read_from_las():
-    address = r""
+    address = os.getenv("PATH_TO_COTTESSEN")
+    if address is None:
+        pytest.skip("No path to Cottessen las file")
 
     collar_coord = np.array([[707385, 5627164, 0]])
     collar_df = pd.DataFrame(index=["Cottessen"], data=collar_coord, columns=["X", "Y", "Z"])
