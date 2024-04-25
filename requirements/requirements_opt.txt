@@ -1,3 +1,5 @@
+-r requirements.txt
+
 openpyxl
 
 welly
@@ -7,8 +9,6 @@ welly
 striplog
 
 segyio
-matplotlib
-pyvista
 
 imageio
 scipy
@@ -25,5 +25,3 @@ netcdf4
 scooby
 
 omfvista
-
-python-dotenv
