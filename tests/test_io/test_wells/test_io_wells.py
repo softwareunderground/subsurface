@@ -4,11 +4,11 @@ from conftest import RequirementsLevel
 from subsurface import PointSet
 from subsurface.reader.readers_data import ReaderFilesHelper
 from subsurface.reader.wells import borehole_location_to_unstruct
-# from subsurface.visualization import to_pyvista_points, pv_plot
-# import pandas as pd
+from subsurface.visualization import to_pyvista_points, pv_plot
+import pandas as pd
 
 pytestmark = pytest.mark.skipif(
-    condition=RequirementsLevel.is_not_set(RequirementsLevel.READ_WELL),
+    condition=RequirementsLevel.is_not_set(RequirementsLevel.WELLS),
     reason="Need to set the READ_WELL variable to run this test"
 )
 
