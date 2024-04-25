@@ -150,6 +150,12 @@ def test_structured_data(struc_data):
     print(s3)
 
 
+def test_write_unstruc(unstruct_factory):
+    a = xr.DataArray(unstruct_factory.vertex, dims=['points', 'XYZ'])
+    b = xr.DataArray(unstruct_factory.cells, dims=['cells', 'node'])
+    e = xr.DataArray(unstruct_factory.attributes)
+    c = xr.Dataset({'v': a, 'e': b, 'a': e})
+    print(c)
 
 @pytest.mark.skipif(check_requirements(RequirementsLevel.BASE), reason="This test needs higher requirements.")
 def test_read_unstruct(data_path):
