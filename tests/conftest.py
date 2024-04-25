@@ -7,61 +7,22 @@ from subsurface.structs.base_structures import UnstructuredData
 import numpy as np
 import pandas as pd
 import os
-import functools
 
 
 @enum.unique
-class RequirementsLevel(enum.Enum):
+class RequirementsLevel(enum.Flag):
     CORE = 2**1
     BASE = 2**2
     GEOSPATIAL = 2**4
     WELLS = 2**5
     DEV = 2**31
-    READ_WELL = CORE | WELLS
+    READ_WELL = BASE | WELLS  # Reading and plotting
     OPTIONAL = CORE | BASE | GEOSPATIAL | WELLS
     ALL = CORE | BASE | OPTIONAL | GEOSPATIAL | DEV
 
     @classmethod
     def REQUIREMENT_LEVEL_TO_TEST(cls):
-        return cls.READ_WELL
-    
-    # Utility function to check if a flag is set
-    def __or__(self, other):
-        if isinstance(other, RequirementsLevel):
-            return RequirementsLevel(self.value | other.value)
-        return NotImplemented
-
-    def __and__(self, other):
-        if isinstance(other, RequirementsLevel):
-            return RequirementsLevel(self.value & other.value)
-        return NotImplemented
-
-    def __xor__(self, other):
-        if isinstance(other, RequirementsLevel):
-            return RequirementsLevel(self.value ^ other.value)
-        return NotImplemented
-
-    def __invert__(self):
-        return RequirementsLevel(~self.value & int(RequirementsLevel.ALL.value))
-
-    @classmethod
-    def is_set(cls, flag):
-        return (cls.REQUIREMENT_LEVEL_TO_TEST().value & flag.value) == flag.value
-    
-    @classmethod
-    def is_not_set(cls, flag):
-        return (cls.REQUIREMENT_LEVEL_TO_TEST().value & flag.value) != flag.value
-
-    # Utility to combine flags
-    @staticmethod
-    def combine(*flags):
-        result = functools.reduce(lambda x, y: x | y, (flag.value for flag in flags))
-        return RequirementsLevel(result)
-    
-    @classmethod    
-    def check_requirements(cls, minimum_level):
-        return cls.REQUIREMENT_LEVEL_TO_TEST().value < minimum_level.value
-
+        return cls.WELLS
 
 
 def check_requirements(minimum_level: RequirementsLevel):

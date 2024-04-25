@@ -7,12 +7,11 @@ from subsurface.reader.wells import borehole_location_to_unstruct
 from subsurface.visualization import to_pyvista_points, pv_plot
 import pandas as pd
 
-pytestmark = pytest.mark.skipif(
-    condition=RequirementsLevel.is_not_set(RequirementsLevel.WELLS),
+
+@pytest.mark.skipif(
+    condition=(RequirementsLevel.WELLS | RequirementsLevel.BASE) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
     reason="Need to set the READ_WELL variable to run this test"
 )
-
-
 def test_borehole_location_to_unstruct(data_path):
     us = borehole_location_to_unstruct(
         ReaderFilesHelper(
@@ -25,6 +24,10 @@ def test_borehole_location_to_unstruct(data_path):
     s = to_pyvista_points(point_set)
 
 
+@pytest.mark.skipif(
+    condition=RequirementsLevel.WELLS not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set the READ_WELL variable to run this test"
+)
 def test_generate_tops(data_path):
     d = pd.read_csv(data_path + '/borehole/no_tops.csv')
     d['_'] = d['Z'] - d['Altitude']
