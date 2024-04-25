@@ -1,8 +1,7 @@
-import pytest
-import pandas as pd
 import numpy as np
+import pandas as pd
+import pytest
 
-import subsurface as ss
 from subsurface.structs import PointSet
 from subsurface.structs.base_structures import UnstructuredData
 
@@ -37,13 +36,3 @@ def test_line_set_init(line_set):
 def test_tetra_mesh_init(tetra_set):
     mesh = tetra_set
     assert mesh.n_tetrahedrals == len(mesh.data.cells)
-
-
-@pytest.mark.skip()
-def test_curvi_mesh_init():
-    xrng = np.arange(-10, 10, 2)
-    yrng = np.arange(-10, 10, 2)
-    zrng = np.arange(-10, 10, 2)
-    xx, yy, zz = np.meshgrid(xrng, yrng, zrng)
-    vertices = np.c_[xx.ravel(), yy.ravel(), zz.ravel()]
-
