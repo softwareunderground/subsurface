@@ -1,4 +1,6 @@
 import pytest
+
+from conftest import RequirementsLevel, check_requirements
 from subsurface import TriSurf, StructuredGrid
 from subsurface.reader.read_netcdf import read_unstruct, read_struct
 from subsurface.reader.topography.topo_core import read_structured_topography
@@ -148,6 +150,8 @@ def test_structured_data(struc_data):
     print(s3)
 
 
+
+@pytest.mark.skipif(check_requirements(RequirementsLevel.BASE), reason="This test needs higher requirements.")
 def test_read_unstruct(data_path):
     us = read_unstruct(data_path + '/interpolator_meshes.nc')
     trisurf = TriSurf(us)
@@ -155,6 +159,8 @@ def test_read_unstruct(data_path):
     pv_plot([s], image_2d=True)
 
 
+
+@pytest.mark.skipif(check_requirements(RequirementsLevel.BASE), reason="This test needs higher requirements.")
 def test_read_struct(data_path):
     s = read_struct(data_path + '/interpolator_regular_grid.nc')
     sg = StructuredGrid(s)
@@ -169,6 +175,8 @@ def test_read_struct(data_path):
     pv_plot([s], image_2d=True)
 
 
+
+@pytest.mark.skipif(check_requirements(RequirementsLevel.OPTIONAL), reason="This test needs higher requirements.")
 def test_remove_outliers(data_path):
     """
     Notes:

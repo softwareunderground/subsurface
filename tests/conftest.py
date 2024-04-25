@@ -1,3 +1,5 @@
+import enum
+
 import pytest
 
 from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh
@@ -5,6 +7,21 @@ from subsurface.structs.base_structures import UnstructuredData
 import numpy as np
 import pandas as pd
 import os
+
+
+class RequirementsLevel(enum.Enum):
+    CORE = enum.auto()
+    BASE = enum.auto()
+    OPTIONAL = enum.auto()
+    GEOSPATIAL = enum.auto()
+    DEV = enum.auto()
+
+
+REQUIREMENT_LEVEL = RequirementsLevel.CORE  # * Use CORE for mandatory tests, OPTIONAL for optional tests and DEV for development tests
+
+
+def check_requirements(minimum_level: RequirementsLevel):
+    return REQUIREMENT_LEVEL.value < minimum_level.value
 
 
 @pytest.fixture(scope='session')
