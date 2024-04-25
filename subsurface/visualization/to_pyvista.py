@@ -2,7 +2,6 @@ import warnings
 
 from typing import Union, Tuple, Optional
 
-import subsurface
 from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
 import numpy as np
 
@@ -237,7 +236,7 @@ def to_pyvista_grid(structured_grid: StructuredGrid,
 
 
 def update_grid_attribute(
-        mesh: pv.StructuredGrid,
+        mesh: 'pv.StructuredGrid',
         structured_grid: StructuredGrid,
         data_order='F',
         attribute_slice=None,

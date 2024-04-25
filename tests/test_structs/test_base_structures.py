@@ -14,8 +14,11 @@ from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
 
 def test_unstructured_data():
     # Normal constructor
-    foo = UnstructuredData.from_array(np.ones((5, 3)), np.ones((4, 3)),
-                                      pd.DataFrame({'foo': np.arange(4)}))
+    foo = UnstructuredData.from_array(
+        vertex=np.ones((5, 3)),
+        cells=np.ones((4, 3)),
+        cells_attr= pd.DataFrame({'foo': np.arange(4)})
+    )
     print(foo)
 
     # No attributes
@@ -42,13 +45,13 @@ def test_unstructured_data_no_cells_no_attributes():
                                           attributes=attributes)
 
     attributes2 = {
-        'notAttributeName': xr.DataArray(
-            pd.DataFrame({'foo': np.arange(4)}),
-            dims=['cell', 'cell_attr']
-        )}
+            'notAttributeName': xr.DataArray(
+                pd.DataFrame({'foo': np.arange(4)}),
+                dims=['cell', 'cell_attr']
+            )}
 
     foo = UnstructuredData.from_array(vertex=np.ones((5, 3)), cells=np.ones((4, 3)),
-                                                attributes=attributes2)
+                                      attributes=attributes2)
 
     print(foo)
 
@@ -57,10 +60,10 @@ def test_structured_data(struc_data):
     xx, yy, zz = struc_data[0]
     geo_map, high = struc_data[1]
     x_coord, y_coord, z_coord = struc_data[2:]
-    s = xr.Dataset({'lith': (["x", "y", 'z'], xx),
-                    'porosity': (["x", "y", 'z'], yy),
+    s = xr.Dataset({'lith'          : (["x", "y", 'z'], xx),
+                    'porosity'      : (["x", "y", 'z'], yy),
                     'something_else': (["x", "y", 'z'], zz),
-                    'geo_map': (['x', 'y'], geo_map)},
+                    'geo_map'       : (['x', 'y'], geo_map)},
                    coords={'x': x_coord, 'y': y_coord, 'z': z_coord})
     # StructuredData from Dataset
     a = StructuredData(s)
@@ -97,9 +100,9 @@ def test_xarray():
 
     # Each data set can be align to different dimensions that is why we need to specify
     # The coordinate name
-    s = xr.Dataset({'xx': (["x", "y", 'z'], xx),
-                    'yy': (["x", "y", 'z'], xx),
-                    'zz': (["x", "y", 'z'], xx),
+    s = xr.Dataset({'xx' : (["x", "y", 'z'], xx),
+                    'yy' : (["x", "y", 'z'], xx),
+                    'zz' : (["x", "y", 'z'], xx),
                     'foo': (['x', 'y'], x_test)},
                    coords={'x': xrng, 'y': yrng, 'z': zrng, 'bar': np.arange(3)})
 
@@ -131,7 +134,7 @@ def test_read_struct(data_path):
     s = to_pyvista_grid(sg,
                         data_set_name='block_matrix',
                         attribute_slice={'Properties': 'id',
-                                         'Features': 'Default series'})
+                                         'Features'  : 'Default series'})
 
     pv_plot([s], image_2d=True)
 
