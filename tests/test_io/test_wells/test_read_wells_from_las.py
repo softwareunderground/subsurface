@@ -4,12 +4,16 @@ import pytest
 import numpy as np
 import pandas as pd
 import subsurface
+from conftest import RequirementsLevel
 from subsurface import LineSet
 from subsurface.reader import ReaderFilesHelper
 from subsurface.reader.wells import WellyToSubsurfaceHelper, read_survey_df_from_las, read_assay_df_from_las, welly_to_subsurface
 
 
-# @pytest.mark.skip(reason="find open access las files ")
+@pytest.mark.skipif(
+    condition=(RequirementsLevel.WELLS | RequirementsLevel.BASE) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set the READ_WELL variable to run this test"
+)
 def test_read_from_las():
     address = os.getenv("PATH_TO_COTTESSEN")
     if address is None:

@@ -22,7 +22,7 @@ class RequirementsLevel(enum.Flag):
 
     @classmethod
     def REQUIREMENT_LEVEL_TO_TEST(cls):
-        return cls.WELLS
+        return cls.READ_WELL
 
 
 def check_requirements(minimum_level: RequirementsLevel):
