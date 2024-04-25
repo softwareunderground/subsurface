@@ -4,13 +4,15 @@ from typing import List
 import warnings
 
 from pandas import DataFrame
+
+from subsurface import optional_requirements
 from subsurface.reader.wells.pandas_to_welly import WellyToSubsurfaceHelper
 import numpy as np
 
 from subsurface.structs.base_structures import UnstructuredData
 
-from welly import Well, Location, Project, Curve
-from striplog import Striplog, Component
+welly = optional_requirements.require_welly()
+striplog = optional_requirements.require_striplog()
 
 __all__ = ['welly_to_subsurface', 'striplog_to_curve_log',
            'change_curve_basis_to_n_vertex_per_well_inplace',
@@ -22,7 +24,7 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
                         elev=True,
                         n_vertex_per_well=50,
                         convert_lith=True,
-                        table: List[Component] = None,
+                        table: List[welly.Component] = None,
                         **kwargs) -> UnstructuredData:
     """Method to convert well data to `subsurface.UnstructuredData`
 
@@ -81,7 +83,7 @@ def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
     return unstructured_data
 
 
-def striplog_to_curve_log(n_vertex_per_well, table, w: Well, wts: WellyToSubsurfaceHelper) -> Curve:
+def striplog_to_curve_log(n_vertex_per_well, table, w: welly.Well, wts: WellyToSubsurfaceHelper) -> welly.Curve:
     start, stop, step_size = wts._calculate_basis_parameters(w, n_vertex_per_well - 1)
     s_log, basis, _table = w.data['lith'].to_log(step_size, start, stop, table=table, return_meta=True)
     return Curve(s_log, basis=basis, mnemonic='lith_log')
@@ -93,17 +95,17 @@ def change_curve_basis_to_n_vertex_per_well_inplace(n_points, w, wts):
     w.unify_basis(keys=None, basis=basis)
 
 
-def vertex_and_cells_from_welly_trajectory(cells: np.ndarray, elev: bool,
-                                           welly_trajectory_kwargs: dict,
-                                           last_index: int, n_vertex_for_well: int,
-                                           vertex: np.ndarray, w: Well):
-
+def vertex_and_cells_from_welly_trajectory(
+        cells: np.ndarray, elev: bool,
+        welly_trajectory_kwargs: dict,
+        last_index: int, n_vertex_for_well: int,
+        vertex: np.ndarray, w: welly.Well):
     try:
         datum = w.location.datum
     except AttributeError:
         datum = None
 
-    xyz = w.location.trajectory(datum=datum, elev=elev, points=n_vertex_for_well, **welly_trajectory_kwargs) #w.location.position
+    xyz = w.location.trajectory(datum=datum, elev=elev, points=n_vertex_for_well, **welly_trajectory_kwargs)  # w.location.position
     # Make sure deviation is there
     a = np.arange(0 + last_index, xyz.shape[0] - 1 + last_index, dtype=np.int_)
     b = np.arange(1 + last_index, xyz.shape[0] + last_index, dtype=np.int_)
@@ -116,7 +118,7 @@ def vertex_and_cells_from_welly_trajectory(cells: np.ndarray, elev: bool,
     return cells, vertex, last_index
 
 
-def well_without_valid_survey(w: Well, missed_wells: List[str]):
+def well_without_valid_survey(w: welly.Well, missed_wells: List[str]):
     well_without_position = w.location.position is None
     if well_without_position:
         warnings.warn(f'At least one of the wells do not have '
@@ -138,7 +140,7 @@ def _create_welly_well_from_las(well_name: str, las_folder: str):
     """
 
     def _create_well(uwi: str = 'dummy_uwi'):
-        w = Well()
+        w = welly.Well()
         w.location.uwi = well_name
         w.location.name = well_name
 
@@ -148,10 +150,10 @@ def _create_welly_well_from_las(well_name: str, las_folder: str):
     return add_curves_from_las(well, las_folder)
 
 
-def add_curves_from_las(w: Well, las_folder: str) -> Well:
+def add_curves_from_las(w: welly.Well, las_folder: str) -> welly.Well:
     """ Add curves from las file. """
 
-    def _read_curves_to_welly_object(well: Well, curve_path: str = '.') -> Well:
+    def _read_curves_to_welly_object(well: welly.Well, curve_path: str = '.') -> welly.Well:
         las_files = glob.glob(curve_path + '*.las')
         # throw error if no las files found
         if len(las_files) == 0:
@@ -180,6 +182,3 @@ def _make_deviation_df(well_df: DataFrame, inclination_header: str, azimuth_head
         deviation_complete = well_df[[depth_header, inclination_header, azimuth_header]].to_numpy()
         deviation_complete = deviation_complete[~np.isnan(deviation_complete).any(axis=1), :]
     return deviation_complete
-
-
-

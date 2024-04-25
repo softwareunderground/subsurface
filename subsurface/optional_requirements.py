@@ -44,3 +44,19 @@ def require_segyio():
     except ImportError:
         raise ImportError("The segyio package is required to run this function.")
     return segyio
+
+
+def require_welly():
+    try:
+        import welly
+    except ImportError:
+        raise ImportError("The welly package is required to run this function.")
+    return welly
+
+
+def require_striplog():
+    try:
+        import striplog
+    except ImportError:
+        raise ImportError("The striplog package is required to run this function.")
+    return striplog

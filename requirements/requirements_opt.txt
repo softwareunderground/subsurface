@@ -2,11 +2,7 @@
 
 openpyxl
 
-welly
-
-# There is an open PR for striplog
-# git+https://github.com/Leguark/striplog.git
-striplog
+-r requirements_wells.txt
 
 segyio
 

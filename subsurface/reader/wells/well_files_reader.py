@@ -1,17 +1,9 @@
+import pandas as pd
 import warnings
 from typing import Dict
 
-import pandas
-import pandas as pd
-import numpy as np
-
 from subsurface.reader.readers_data import ReaderFilesHelper, ReaderWellsHelper, SupportedFormats
 from subsurface.reader.wells.wells_utils import add_tops_from_base_and_altitude_in_place
-from subsurface.reader.wells.welly_reader import _create_welly_well_from_las
-
-__all__ = ['read_borehole_files', 'read_collar', 'read_survey', 'read_lith',
-           'read_attributes', 'check_format_and_read_to_df',
-           'map_rows_and_cols_inplace']
 
 
 def read_borehole_files(reader_wells_helper: ReaderWellsHelper) -> Dict[str, pd.DataFrame]:
@@ -87,6 +79,7 @@ def read_survey_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) ->
     Reads a las file and returns a dataframe.
     
     """
+    from subsurface.reader.wells.welly_reader import _create_welly_well_from_las
     welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
     survey_df = welly_well.df()[reader_helper.usecols]
     map_rows_and_cols_inplace(survey_df, reader_helper)
@@ -96,6 +89,7 @@ def read_survey_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) ->
 
 
 def read_assay_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) -> pd.DataFrame:
+    from subsurface.reader.wells.welly_reader import _create_welly_well_from_las
     welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
     assay_df = welly_well.df()
     assay_df["well_name"] = well_name
