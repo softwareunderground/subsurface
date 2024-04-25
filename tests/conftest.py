@@ -30,7 +30,7 @@ def data_path():
 
 
 @pytest.fixture(scope='session')
-def unstruc():
+def unstruct_factory():
     foo = UnstructuredData.from_array(np.ones((5, 3)), np.ones((4, 3)), pd.DataFrame({'foo': np.arange(4)}))
     return foo
 
