@@ -79,7 +79,7 @@ def read_survey_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) ->
     Reads a las file and returns a dataframe.
     
     """
-    from subsurface.reader.wells.welly_reader import _create_welly_well_from_las
+    from subsurface.reader.wells._welly_reader import _create_welly_well_from_las
     welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
     survey_df = welly_well.df()[reader_helper.usecols]
     map_rows_and_cols_inplace(survey_df, reader_helper)
@@ -89,7 +89,7 @@ def read_survey_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) ->
 
 
 def read_assay_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) -> pd.DataFrame:
-    from subsurface.reader.wells.welly_reader import _create_welly_well_from_las
+    from subsurface.reader.wells._welly_reader import _create_welly_well_from_las
     welly_well = _create_welly_well_from_las(well_name, reader_helper.file_or_buffer)
     assay_df = welly_well.df()
     assay_df["well_name"] = well_name

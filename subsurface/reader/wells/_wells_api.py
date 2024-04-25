@@ -3,8 +3,8 @@ from typing import List
 import pandas as pd
 
 from .pandas_to_welly import WellyToSubsurfaceHelper
-from .well_files_reader import read_borehole_files, read_collar
-from .welly_reader import welly_to_subsurface
+from ._well_files_reader import read_borehole_files, read_collar
+from ._welly_reader import welly_to_subsurface
 
 from ..readers_data import ReaderWellsHelper, ReaderFilesHelper
 from ...structs import UnstructuredData
