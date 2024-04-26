@@ -10,7 +10,7 @@ from subsurface.reader.readers_data import RawDataUnstructured
 __all__ = ['UnstructuredData', ]
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=False)
 class UnstructuredData:
     data: xr.Dataset
     cells_attr_name: str = "cell_attrs"
@@ -240,8 +240,9 @@ class UnstructuredData:
             self.vertex_attr_name].unstack(level=1)
 
     @points_attributes.setter
-    def points_attributes(self, dataframe):
-        self.data[self.vertex_attr_name] = xr.DataArray(dataframe, dims=['points', 'vertex_attr'])
+    def points_attributes(self, dataframe: pd.DataFrame):
+        vertex_attr: xr.DataArray = self.data[self.vertex_attr_name] 
+        vertex_attr.values = dataframe.values
 
     @property
     def n_elements(self):

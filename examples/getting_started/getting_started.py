@@ -202,9 +202,7 @@ profiles_trisurf_list, profiles_mesh_list = subsurface.reader.profiles.profiles_
         data_path + '/Profiles_cropped/profile012.png',
         data_path + '/Profiles_cropped/profile013.png',
     ],
-    idx=range(13),
-    return_mesh=True,
-    return_uv=True
+    idx=range(13)
 )
 
 # %%
