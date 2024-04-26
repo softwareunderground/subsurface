@@ -1,14 +1,9 @@
 from typing import Union
-from scipy.spatial.qhull import Delaunay
-from shapely.geometry import LineString
+
+from subsurface import optional_requirements
 from subsurface.structs.base_structures import StructuredData
 import numpy as np
 
-try:
-    import segyio
-    segyio_imported = True
-except ImportError:
-    segyio_imported = False
 
 
 def read_in_segy(filepath: str, coords=None) -> StructuredData:
@@ -24,6 +19,7 @@ def read_in_segy(filepath: str, coords=None) -> StructuredData:
 
     """
 
+    segyio = optional_requirements.require_segyio()
     segyfile = segyio.open(filepath, ignore_geometry=True)
 
     data = np.asarray([np.copy(tr) for tr in segyfile.trace[:]])
@@ -33,7 +29,7 @@ def read_in_segy(filepath: str, coords=None) -> StructuredData:
     return sd
 
 
-def create_mesh_from_coords(coords: Union[dict, LineString],
+def create_mesh_from_coords(coords: Union[dict, 'shapely.geometry.LineString'],
                            zmin: Union[float, int], zmax: Union[float, int] = 0.0):
     """Creates a mesh for plotting StructuredData
 

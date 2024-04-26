@@ -4,14 +4,11 @@ openpyxl
 
 -r requirements_wells.txt
 -r requirements_mesh.txt
+-r requirements_volume.txt
 
-segyio
-
-imageio # Textures
 scipy
 shapely
 requests
-
 
 pooch
 netcdf4
