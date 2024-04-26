@@ -6,5 +6,6 @@
 -r requirements_volume.txt
 -r requirements_traces.txt
 
-pooch
+-r requirements_geospatial.txt
 
+-r requirements_dev.txt
