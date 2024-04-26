@@ -182,7 +182,7 @@ def test_read_struct(data_path):
 
 
 
-@pytest.mark.skipif(check_requirements(RequirementsLevel.OPTIONAL), reason="This test needs higher requirements.")
+@pytest.mark.skipif(check_requirements(RequirementsLevel.GEOSPATIAL), reason="This test needs higher requirements.")
 def test_remove_outliers(data_path):
     """
     Notes:
