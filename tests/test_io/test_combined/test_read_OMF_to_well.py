@@ -22,7 +22,7 @@ def load_omf():
     omfvista = optional_requirements.require_omf()
     omf = omfvista.load_project(path)
 
-    if plot := True:
+    if plot := False:
         omf.plot(multi_colors=True, show_edges=True, notebook=False)
     return omf
 

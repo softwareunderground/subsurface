@@ -4,10 +4,9 @@ TODO: This is legacy code waiting to be updated to the new ideas
 """
 
 import xarray as xr
-import segyio
-import matplotlib.pyplot as plt
 import numpy as np
-import pyvista as pv
+
+from subsurface import optional_requirements
 
 
 class Seismic:
@@ -66,6 +65,7 @@ class Seismic:
         Args:
             filepath (str): Filepath for SEGY file.
         """
+        segyio = optional_requirements.require_segyio()
         segyio.tools.from_array(filepath, self._xarray.data)
 
     def plot_(self):
@@ -80,7 +80,7 @@ class Seismic:
         elif self.n_shp >= 3:
             _plot_3d(self)
 
-    def create_pyvista_grid(self) -> pv.grid.UniformGrid:
+    def create_pyvista_grid(self) -> 'pyvista.grid.UniformGrid':
         """Generate UniformGrid object for 3D plotting of the seismic.
 
         Args:
@@ -89,6 +89,7 @@ class Seismic:
         Returns:
             (pv.grid.UniformGrid)
         """
+        pv = optional_requirements.require_pyvista()
         grid = pv.UniformGrid()
         grid.spacing = (1, 1, 1)  # TODO: cell sizes? vertical exaggeration etc
         grid.dimensions = np.array(self.data.shape) + 1
@@ -97,6 +98,7 @@ class Seismic:
         return grid
 
     def plot_3d_slices(self):
+        pv = optional_requirements.require_pyvista()
         if self.n_shp != 3:
             raise AssertionError("Seismic data needs to be a 3-D volume.")
         # TODO: cmap, kwarg passthrough
@@ -104,6 +106,7 @@ class Seismic:
 
 
 def _plot_1d(seismic: Seismic, linekwargs={}, fillkwargs={}):
+    import matplotlib.pyplot as plt
     fig, ax = plt.subplots(figsize=(2,8))
     
     lkwargs = dict(
@@ -149,6 +152,7 @@ def from_segy(filepath:str, coords=None) -> Seismic:
     Returns:
         Seismic: Seismic data object based on xarray.DataArray.
     """
+    segyio = optional_requirements.require_segyio()
     with segyio.open(filepath) as sf:
         sf.mmap()  # memory mapping
         xlines = sf.xlines

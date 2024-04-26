@@ -16,6 +16,7 @@ path_to_mtl = config.get('PATH_TO_MTL')
 def test_read_obj():
     reader = pv.get_reader(path_to_obj)
     mesh = reader.read()
-    mesh.plot()
+    if plot := False:
+        mesh.plot()
     
     
