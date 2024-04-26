@@ -12,17 +12,19 @@ import os
 @enum.unique
 class RequirementsLevel(enum.Flag):
     CORE = 2**1
-    BASE = 2**2
+    PLOT = 2 ** 2
+    MESH = 2**3
     GEOSPATIAL = 2**4
     WELLS = 2**5
     DEV = 2**31
-    READ_WELL = BASE | WELLS  # Reading and plotting
-    OPTIONAL = CORE | BASE | GEOSPATIAL | WELLS
-    ALL = CORE | BASE | OPTIONAL | GEOSPATIAL | DEV
+    READ_WELL = PLOT | WELLS  # Reading and plotting
+    READ_MESH = PLOT | MESH
+    OPTIONAL = CORE | PLOT | GEOSPATIAL | WELLS | MESH
+    ALL = CORE | PLOT | OPTIONAL | GEOSPATIAL | DEV
 
     @classmethod
     def REQUIREMENT_LEVEL_TO_TEST(cls):
-        return cls.READ_WELL
+        return cls.READ_MESH
 
 
 def check_requirements(minimum_level: RequirementsLevel):

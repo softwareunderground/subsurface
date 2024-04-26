@@ -3,9 +3,11 @@ from typing import TextIO, Union
 
 import numpy as np
 
+from subsurface import optional_requirements
+
 
 def dxf_from_file_to_vertex(file_path: str):
-    import ezdxf
+    ezdxf = optional_requirements.require_ezdxf()
     dataset = ezdxf.readfile(file_path)
     vertex = []
     entity = dataset.modelspace()
@@ -19,7 +21,7 @@ def dxf_from_file_to_vertex(file_path: str):
 
 
 def dxf_from_stream_to_vertex(stream: TextIO):
-    import ezdxf
+    ezdxf = optional_requirements.require_ezdxf()
     dataset = ezdxf.read(stream)
     vertex = []
     entity = dataset.modelspace()
@@ -33,7 +35,7 @@ def dxf_from_stream_to_vertex(stream: TextIO):
 
 
 def dxf_file_to_unstruct_input(file: Union[str, pathlib.Path]):
-    import ezdxf
+    ezdxf = optional_requirements.require_ezdxf()
     dataset = ezdxf.readfile(file)
     cell_attr_int, cell_attr_map, cells, vertex = _dxf_dataset_to_unstruct_input(dataset)
 
@@ -41,7 +43,7 @@ def dxf_file_to_unstruct_input(file: Union[str, pathlib.Path]):
 
 
 def dxf_stream_to_unstruct_input(stream: TextIO):
-    import ezdxf
+    ezdxf = optional_requirements.require_ezdxf()
     dataset = ezdxf.read(stream)
     cell_attr_int, cell_attr_map, cells, vertex = _dxf_dataset_to_unstruct_input(dataset)
 

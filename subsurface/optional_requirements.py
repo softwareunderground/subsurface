@@ -60,3 +60,19 @@ def require_striplog():
     except ImportError:
         raise ImportError("The striplog package is required to run this function.")
     return striplog
+
+
+def require_ezdxf():
+    try:
+        import ezdxf
+    except ImportError:
+        raise ImportError("The ezdxf package is required to run this function.")
+    return ezdxf
+
+
+def require_trimesh():
+    try:
+        import trimesh
+    except ImportError:
+        raise ImportError("The trimesh package is required to run this function.")
+    return trimesh
