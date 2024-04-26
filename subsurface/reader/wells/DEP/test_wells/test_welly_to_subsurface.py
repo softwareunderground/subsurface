@@ -1,27 +1,24 @@
-import pytest
-
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
+import pathlib
+import pytest
+from striplog import Striplog, Component
 
+import subsurface
 from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
 from subsurface.reader.wells import add_tops_from_base_and_altitude_in_place
-from subsurface.reader.wells.pandas_to_welly import WellyToSubsurfaceHelper
-from subsurface.reader.wells._well_files_reader import read_collar, read_survey, read_lith, read_attributes
+from subsurface.reader.wells.DEP._well_files_reader import read_collar, read_survey, read_lith, read_attributes
 from subsurface.reader.wells._wells_api import read_wells_to_unstruct
+from subsurface.reader.wells._welly_reader import welly_to_subsurface
+from subsurface.reader.wells.pandas_to_welly import WellyToSubsurfaceHelper
 from subsurface.reader.wells.wells_utils import pivot_wells_df_into_segment_per_row, map_attr_to_segments, \
     fix_wells_higher_base_than_top_inplace
-from subsurface.reader.wells._welly_reader import welly_to_subsurface
 from subsurface.structs import LineSet
-import subsurface
-import pathlib
 
 welly = pytest.importorskip('welly')
 
 pf = pathlib.Path(__file__).parent.absolute()
-data_path = pf.joinpath('../data/borehole/')
-import sys
-sys.path.insert(0, '../../../striplog_miguel/striplog/')
-from striplog import Striplog, Component
+data_path = pf.joinpath('../../data/borehole/')
 
 
 def test_empty_project():
@@ -76,7 +73,7 @@ def test_read_borehole_manual_api():
             file_or_buffer=data_path.joinpath('borehole_lith.xlsx'),
             index_col="SITE_ID",
             columns_map={'DEPTH_FROM': 'top', 'DEPTH_TO': 'base',
-                         'LITHOLOGY': 'component lith', 'SITE_ID': 'description'}
+                         'LITHOLOGY' : 'component lith', 'SITE_ID': 'description'}
         )
     )
 
@@ -113,19 +110,19 @@ def test_read_wells_to_unstruct():
             file_or_buffer=data_path.joinpath('borehole_lith.xlsx'),
             index_col="SITE_ID",
             columns_map={'DEPTH_FROM': 'top', 'DEPTH_TO': 'base',
-                         'LITHOLOGY': 'component lith', 'SITE_ID': 'description'}
+                         'LITHOLOGY' : 'component lith', 'SITE_ID': 'description'}
         ),
         reader_attr_args=[
-            ReaderFilesHelper(
-                data_path.joinpath('borehole_assays.xlsx'),
-                drop_cols=['TO'],
-                columns_map={'FROM': 'basis'}
-            ),
-            ReaderFilesHelper(
-                data_path.joinpath('borehole_density.xlsx'),
-                drop_cols=['LITOLOGIA'],
-                columns_map={'DEPTH_TO': 'basis'}
-            )
+                ReaderFilesHelper(
+                    data_path.joinpath('borehole_assays.xlsx'),
+                    drop_cols=['TO'],
+                    columns_map={'FROM': 'basis'}
+                ),
+                ReaderFilesHelper(
+                    data_path.joinpath('borehole_density.xlsx'),
+                    drop_cols=['LITOLOGIA'],
+                    columns_map={'DEPTH_TO': 'basis'}
+                )
         ]
     )
     unstructured_data = read_wells_to_unstruct(reader_helper)
@@ -231,11 +228,11 @@ def test_excel_to_subsurface():
 
     foo = data.groupby(well_name_column).get_group(well_names[0])
     foo.columns = foo.columns.map({'DEPTH_FROM': 'top',
-                               'DEPTH_TO': 'base',
-                               'LITHOLOGY': 'component lith',
-                               'SITE_ID': 'description'})
+                                   'DEPTH_TO'  : 'base',
+                                   'LITHOLOGY' : 'component lith',
+                                   'SITE_ID'   : 'description'})
     foo_csv = foo.to_csv(index=False)
-    #data_dict = foo.to_dict('list')
+    # data_dict = foo.to_dict('list')
 
     # Load striplog
     s = Striplog.from_csv(text=foo_csv)
@@ -250,7 +247,7 @@ def test_excel_to_subsurface():
 
 def test_striplog():
     s = Striplog.from_csv(data_path.joinpath('striplog_integration/alpha_strip.tops'))
-    s.components[0] = {'lith': 'overburden',
+    s.components[0] = {'lith'  : 'overburden',
                        "colour": 'blue'}
 
     s.plot()
@@ -265,7 +262,7 @@ def test_striplog_to_log():
     table_input = []
     for i in range(6):
         table_input.append(Component({'lith': i}))
-    table_input.append(Component({"lith": "miguel",
+    table_input.append(Component({"lith"  : "miguel",
                                   "colour": "red"}))
     s_log, basis, table = s.to_log(return_meta=True, table=table_input)
     c = welly.Curve(s_log)
@@ -282,9 +279,9 @@ def test_striplog_2():
     foo = data.groupby(well_name_column).get_group(well_names[0])
 
     foo.columns = foo.columns.map({'DEPTH_FROM': 'top',
-                                   'DEPTH_TO': 'base',
-                                   'LITHOLOGY': 'component lith',
-                                   'SITE_ID': 'description'})
+                                   'DEPTH_TO'  : 'base',
+                                   'LITHOLOGY' : 'component lith',
+                                   'SITE_ID'   : 'description'})
     foo_csv = foo.to_csv(index=False)
     # data_dict = foo.to_dict('list')
 
@@ -306,9 +303,9 @@ def test_striplog_2():
 def test_read_lith():
     d = pd.read_excel(data_path.joinpath('borehole_lith.xlsx'), index_col='SITE_ID')
     d.columns = d.columns.map({'DEPTH_FROM': 'top',
-                               'DEPTH_TO': 'base',
-                               'LITHOLOGY': 'component lith',
-                               'SITE_ID': 'description'})
+                               'DEPTH_TO'  : 'base',
+                               'LITHOLOGY' : 'component lith',
+                               'SITE_ID'   : 'description'})
     # d.to_csv('lith.csv')
     print(d)
     return d
@@ -379,8 +376,8 @@ def test_read_kim():
         ReaderFilesHelper(
             file_or_buffer=data_path.joinpath('kim_ready.csv'),
             usecols=['name', 'top', 'base', 'formation'],
-            columns_map={'top': 'top',
-                         'base': 'base',
+            columns_map={'top'      : 'top',
+                         'base'     : 'base',
                          'formation': 'component lith',
                          }
         )
@@ -420,8 +417,8 @@ def test_read_kim_default_component_table():
         ReaderFilesHelper(
             file_or_buffer=data_path.joinpath('kim_ready.csv'),
             usecols=['name', 'top', 'base', 'formation'],
-            columns_map={'top': 'top',
-                         'base': 'base',
+            columns_map={'top'      : 'top',
+                         'base'     : 'base',
                          'formation': 'component lith',
                          }
         )
@@ -436,7 +433,7 @@ def test_read_kim_default_component_table():
     subsurface.visualization.pv_plot([pyvista_mesh], image_2d=True)
 
 
-def test_read_wells(): #TODO: fix trajectory IndexError of Well.location.trajectory() Missing NC-10 End, added a dummy
+def test_read_wells():  # TODO: fix trajectory IndexError of Well.location.trajectory() Missing NC-10 End, added a dummy
 
     file_name = 'wells-database-small.xlsx'
 
@@ -447,13 +444,13 @@ def test_read_wells(): #TODO: fix trajectory IndexError of Well.location.traject
             usecols=['EAST', 'NORT', 'ELEV', "HOLE"],
             # ['x', 'y', 'altitude', "name"]
             columns_map={
-                "EAST": "x",
-                'NORT': "y",
-                "ELEV": "altitude"
+                    "EAST": "x",
+                    'NORT': "y",
+                    "ELEV": "altitude"
             },
             additional_reader_kwargs=
             {
-                "sheet_name": "collar"
+                    "sheet_name": "collar"
             }
         )
     )
@@ -468,7 +465,7 @@ def test_read_wells(): #TODO: fix trajectory IndexError of Well.location.traject
             usecols=["HOLE", "DEAT", "AZIM", "INCL"],
             additional_reader_kwargs=
             {
-                "sheet_name": "survey"
+                    "sheet_name": "survey"
             }
         )
     )
@@ -485,7 +482,7 @@ def test_read_wells(): #TODO: fix trajectory IndexError of Well.location.traject
                          },
             additional_reader_kwargs=
             {
-                "sheet_name": "geology"
+                    "sheet_name": "geology"
             }
         )
     )
