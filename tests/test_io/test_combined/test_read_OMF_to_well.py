@@ -1,23 +1,25 @@
-﻿import omfvista
-import pytest
-import pyvista
-import pandas as pd
+﻿import pytest
+from dotenv import dotenv_values
 
 import subsurface
-from dotenv import dotenv_values
-from subsurface import TriSurf, LineSet, UnstructuredData, PointSet
-from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_line, to_pyvista_points
+from conftest import RequirementsLevel
+from subsurface import LineSet, UnstructuredData, PointSet, optional_requirements
+from subsurface.visualization import pv_plot, to_pyvista_line, to_pyvista_points
 from subsurface.writer import base_structs_to_binary_file
 
+pytestmark = pytest.mark.skipif(
+    condition=(RequirementsLevel.READ_MESH) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set READ_MESH"
+)
 
-
-# skip these test for now until I have an open omf file to test
+pyvista = optional_requirements.require_pyvista()
 
 
 @pytest.fixture(scope="module")
 def load_omf():
     config = dotenv_values()
     path = config.get('PATH_TO_BOLIDEN')
+    omfvista = optional_requirements.require_omf()
     omf = omfvista.load_project(path)
     return omf
 
@@ -34,10 +36,11 @@ def test_omf_to_cylinders_to_collars(load_omf):
 def test_omf_to_cylinders(load_omf):
     omf = load_omf
     block_name = omf.get_block_name(0)
+    pyvista = optional_requirements.require_pyvista()
     polydata_obj: pyvista.PolyData = omf[block_name]
     # Grab only 20% of the data
 
-    line = polydata_to_unstruct(polydata_obj)
+    line = _polydata_to_unstruct(polydata_obj)
     index_of_collars = line.get_first_index_per_well("holeid")
     collars_unstruct = UnstructuredData.from_array(
         vertex= line.data.vertex[index_of_collars],
@@ -56,7 +59,8 @@ def test_omf_to_cylinders(load_omf):
     pv_plot([p, s], image_2d=False, add_mesh_kwargs={'point_size': 10})
 
 
-def polydata_to_unstruct(polydata_obj: pyvista.PolyData) -> LineSet:
+def _polydata_to_unstruct(polydata_obj: 'pyvista.PolyData') -> LineSet:
+    pd = optional_requirements.require_pandas()
     unstruct_pyvista: pyvista.UnstructuredGrid = polydata_obj.cast_to_unstructured_grid()
     cells_pyvista = unstruct_pyvista.cells.reshape(-1, 4)[:, 1:]
     grid = unstruct_pyvista

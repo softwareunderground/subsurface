@@ -84,3 +84,11 @@ def require_scipy():
     except ImportError:
         raise ImportError("The scipy package is required to run this function.")
     return scipy
+
+
+def require_pandas():
+    try:
+        import pandas as pd
+    except ImportError:
+        raise ImportError("The pandas package is required to run this function.")
+    return pd

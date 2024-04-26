@@ -2,3 +2,4 @@ ezdxf
 trimesh # to fix dxf meshes
 networkx # used by trimesh
 imageio # Textures
+omfvista
