@@ -1,5 +1,7 @@
 import pathlib
+import pytest
 
+from conftest import RequirementsLevel
 from subsurface.reader.volume.volume_utils import interpolate_unstructured_data_to_structured_data
 from subsurface.structs import PointSet, StructuredGrid
 
@@ -9,8 +11,12 @@ from subsurface.reader.volume.read_volume import read_volumetric_mesh_coord_file
 from subsurface.visualization import to_pyvista_points, pv_plot, to_pyvista_grid
 
 pf = pathlib.Path(__file__).parent.absolute()
-data_path = pf.joinpath('../data/volume/')
+data_path = pf.joinpath('../../data/volume/')
 
+pytestmark = pytest.mark.skipif(
+    condition=(RequirementsLevel.PLOT) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set the READ_MESH"
+)
 
 def test_volumetric_mesh_to_subsurface():
     ud = read_volumetric_mesh_to_subsurface(
@@ -22,7 +28,7 @@ def test_volumetric_mesh_to_subsurface():
             additional_reader_kwargs={
                 "skiprows": 1,
                 "delimiter": "\s{2,}",
-                "error_bad_lines": False,
+                "on_bad_lines": "error",
                 "nrows": None,
             }
         ),
@@ -57,7 +63,7 @@ def test_read_volumetric_mesh():
             additional_reader_kwargs={
                 "skiprows": 1,
                 "delimiter": "\s{2,}",
-                "error_bad_lines": False,
+                "on_bad_lines": "error",
                 "nrows": None,
             }
         )
