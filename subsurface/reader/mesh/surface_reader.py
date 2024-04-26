@@ -23,9 +23,12 @@ def read_mesh_file_to_vertex(reader_args: ReaderFilesHelper) -> np.ndarray:
 def read_mesh_file_to_cells(reader_args: ReaderFilesHelper) -> np.ndarray:
     extension = reader_args.format
 
-    if extension == '.csv':
-        cells = mesh_csv_to_cells(reader_args.file_or_buffer, reader_args.columns_map,
-                                  **reader_args.pandas_reader_kwargs)
+    if extension == SupportedFormats.CSV:
+        cells = mesh_csv_to_cells(
+            path_to_file=reader_args.file_or_buffer,
+            columns_map=reader_args.columns_map,
+            **reader_args.pandas_reader_kwargs
+        )
     else:
         raise ValueError(f"Subsurface is not able to read the following extension: {extension}")
     return cells
@@ -33,7 +36,7 @@ def read_mesh_file_to_cells(reader_args: ReaderFilesHelper) -> np.ndarray:
 
 def read_mesh_file_to_attr(reader_args: ReaderFilesHelper):
     extension = reader_args.format
-    if extension == ".csv":
+    if extension == SupportedFormats.CSV:
         attr = mesh_csv_to_attributes(reader_args.file_or_buffer,
                                       reader_args.columns_map,
                                       **reader_args.pandas_reader_kwargs)
@@ -48,5 +51,3 @@ def cells_from_delaunay(vertex):
     b = a.delaunay_2d().faces
     cells = b.reshape(-1, 4)[:, 1:]
     return cells
-
-

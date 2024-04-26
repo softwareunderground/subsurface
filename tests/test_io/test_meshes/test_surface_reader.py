@@ -3,14 +3,18 @@ import os
 import pytest
 
 import subsurface.reader.mesh.surfaces_api
+from conftest import RequirementsLevel
 from subsurface.reader.readers_data import ReaderUnstructuredHelper, ReaderFilesHelper
 from subsurface.structs import TriSurf
 from subsurface.structs.base_structures import UnstructuredData
 from subsurface.visualization.to_pyvista import pv_plot, to_pyvista_mesh
 
-input_path = os.path.dirname(__file__) + '/../data/surfaces'
+input_path = os.path.dirname(__file__) + '/../../data/surfaces'
 
-
+pytestmark = pytest.mark.skipif(
+    condition=(RequirementsLevel.READ_MESH) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set the READ_MESH"
+)
 
 @pytest.fixture(scope="module")
 def get_less_unstructured_data() -> UnstructuredData:
@@ -108,6 +112,7 @@ def test_plot_attributes_pyvista(get_unstructured_data_with_attribute):
     s = to_pyvista_mesh(ts)
     pv_plot([s], image_2d=True)
 
+
 def test_read_from_multiple_files():
     reader_vertex_args = ReaderFilesHelper(input_path + '/kim_vertices.csv', col_names=['x', 'y', 'z'])
     reader_edges_args = ReaderFilesHelper(input_path + '/kim_cells.csv', col_names=['e1', 'e2', 'e3'])
@@ -121,5 +126,3 @@ def test_read_from_multiple_files():
     ts = TriSurf(ud)
     s = to_pyvista_mesh(ts)
     pv_plot([s], image_2d=True)
-
-
