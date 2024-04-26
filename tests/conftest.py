@@ -29,7 +29,7 @@ class RequirementsLevel(enum.Flag):
 
     @classmethod
     def REQUIREMENT_LEVEL_TO_TEST(cls):
-        return cls.READ_VOLUME
+        return cls.READ_MESH
 
 
 def check_requirements(minimum_level: RequirementsLevel):
