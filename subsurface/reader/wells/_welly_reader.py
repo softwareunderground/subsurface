@@ -15,12 +15,13 @@ welly = optional_requirements.require_welly()
 striplog = optional_requirements.require_striplog()
 
 
-def welly_to_subsurface(wts: WellyToSubsurfaceHelper,
-                        elev=True,
-                        n_vertex_per_well=50,
-                        convert_lith=True,
-                        table: List[striplog.Component] = None,
-                        **kwargs) -> UnstructuredData:
+def welly_to_subsurface(
+        wts: WellyToSubsurfaceHelper,
+        elev=True,
+        n_vertex_per_well=50,
+        convert_lith=True,
+        table: List[striplog.Component] = None,
+        **kwargs) -> UnstructuredData:
     """Method to convert well data to `subsurface.UnstructuredData`
 
     Args:

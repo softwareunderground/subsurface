@@ -16,11 +16,13 @@ __all__ = ['WellyToSubsurfaceHelper', ]
 
 
 class WellyToSubsurfaceHelper:
-    def __init__(self,
-                 collar_df: pd.DataFrame = None,
-                 survey_df: pd.DataFrame = None,
-                 lith_df: pd.DataFrame = None,
-                 attrib_dfs: List[pd.DataFrame] = None):
+    def __init__(
+            self,
+            collar_df: pd.DataFrame = None,
+            survey_df: pd.DataFrame = None,
+            lith_df: pd.DataFrame = None,
+            attrib_dfs: List[pd.DataFrame] = None
+    ):
         """ Class that wraps `welly` to read borehole data - las files (upcoming)
          and deviations, csv, excel - and converts it into a
          `subsurface.UnstructuredData`
@@ -96,21 +98,22 @@ class WellyToSubsurfaceHelper:
         return self.p
 
     def add_datum(self, data: pd.DataFrame):
-        unique_borehole = np.unique(data.index)
-        self.add_wells(unique_borehole)
+        self.add_wells(
+            well_names=np.unique(data.index)
+        )
 
-        for b in unique_borehole:
-            w = self.p.get_well(b)
+        for b in np.unique(data.index):
+            w = self.welly_project.get_well(b)
             datum = data.loc[[b]]
             assert datum.shape[1] == 3, 'datum must be XYZ coord'
 
             w.location.position = datum.values[0]
 
-        return self.p
+        return self.welly_project
 
-    def add_collar(self, *args, **kwargs):
+    def add_collar(self, data: pd.DataFrame):
         """Alias for add_datum"""
-        return self.add_datum(*args, **kwargs)
+        return self.add_datum(data=data)
 
     def add_striplog(self, data: pd.DataFrame):
         unique_borehole = np.unique(data.index)
@@ -163,7 +166,10 @@ class WellyToSubsurfaceHelper:
         for b in unique_borehole:
             for a in assay_attributes:
                 w = self.p.get_well(b)
-                w.data[a] = Curve(data[a], basis)
+                w.data[a] = Curve(
+                    data=data[a],
+                    basis=basis
+                )
 
         return self.p
 
@@ -175,11 +181,14 @@ class WellyToSubsurfaceHelper:
         step_size = (max_ - min_) / n_points
         return min_ + step_size / 2, max_ - step_size / 2, step_size + 1e-12
 
-    def add_deviation(self, deviations: pd.DataFrame,
-                      td=None,
-                      method='mc',
-                      update_deviation=True,
-                      azimuth_datum=0):
+    def add_deviation(
+            self,
+            deviations: pd.DataFrame,
+            td=None,
+            method='mc',
+            update_deviation=True,
+            azimuth_datum=0
+    ):
         """ Add a deviation survey to this instance, and try to compute a position
          log from it.
 
@@ -191,11 +200,12 @@ class WellyToSubsurfaceHelper:
             w = self.p.get_well(b)
             deviations_df: pd.DataFrame = deviations.loc[[b], ['md', 'inc', 'azi']]
             deviations_df.fillna(0, inplace=True)
-            w.location.add_deviation(deviations_df,
-                                     td=td,
-                                     method=method,
-                                     update_deviation=update_deviation,
-                                     azimuth_datum=azimuth_datum)
+            w.location.add_deviation(
+                deviation=deviations_df,
+                td=td,
+                method=method,
+                update_deviation=update_deviation,
+                azimuth_datum=azimuth_datum)
             if w.location.position is None:
                 raise ValueError('Deviations could not be calculated.')
 
