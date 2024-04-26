@@ -21,12 +21,15 @@ def load_omf():
     path = config.get('PATH_TO_BOLIDEN')
     omfvista = optional_requirements.require_omf()
     omf = omfvista.load_project(path)
+
+    if plot := True:
+        omf.plot(multi_colors=True, show_edges=True, notebook=False)
     return omf
 
 
 def test_read_omf_with_pyvista(load_omf):
     omf = load_omf
-    omf.plot(multi_colors=True, show_edges=True, notebook=False)
+    # ? For now I leave this commented out since we do not want to open a viewer
 
 
 def test_omf_to_cylinders_to_collars(load_omf):
@@ -56,7 +59,7 @@ def test_omf_to_cylinders(load_omf):
     if TO_LIQUID_EARTH := False:
         base_structs_to_binary_file("well", line.data)
 
-    pv_plot([p, s], image_2d=False, add_mesh_kwargs={'point_size': 10})
+    pv_plot([p, s], image_2d=True, add_mesh_kwargs={'point_size': 10})
 
 
 def _polydata_to_unstruct(polydata_obj: 'pyvista.PolyData') -> LineSet:
