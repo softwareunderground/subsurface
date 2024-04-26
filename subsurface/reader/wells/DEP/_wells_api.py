@@ -6,8 +6,8 @@ from .pandas_to_welly import WellyToSubsurfaceHelper
 from ._well_files_reader import read_borehole_files, read_collar
 from ._welly_reader import welly_to_subsurface
 
-from ..readers_data import ReaderWellsHelper, ReaderFilesHelper
-from ...structs import UnstructuredData
+from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
+from subsurface.structs import UnstructuredData
 
 
 def read_wells_to_unstruct(reader_wells_helper: ReaderWellsHelper,

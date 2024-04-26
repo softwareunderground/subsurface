@@ -1,7 +1,6 @@
-from ._well_files_reader import read_borehole_files, read_collar, read_lith, read_survey
+from subsurface.reader.wells.DEP._well_files_reader import read_borehole_files, read_collar, read_lith, read_survey
 from .pandas_to_welly import WellyToSubsurfaceHelper
 # from .welly_reader import welly_to_subsurface
-from subsurface.reader.wells.wells_utils import add_tops_from_base_and_altitude_in_place
 from .. import ReaderFilesHelper
 from ... import UnstructuredData
 
@@ -13,12 +12,12 @@ def borehole_location_to_unstruct(reader_helper: ReaderFilesHelper,
 
 
 def read_survey_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) -> 'pd.DataFrame':
-    from . import _well_files_reader
+    from .DEP import _well_files_reader
     return _well_files_reader.read_survey_df_from_las(reader_helper, well_name)
 
 
 def read_assay_df_from_las(reader_helper: ReaderFilesHelper, well_name: str) -> 'pd.DataFrame':
-    from . import _well_files_reader
+    from .DEP import _well_files_reader
     return _well_files_reader.read_assay_df_from_las(reader_helper, well_name)
 
 
