@@ -76,3 +76,11 @@ def require_trimesh():
     except ImportError:
         raise ImportError("The trimesh package is required to run this function.")
     return trimesh
+
+
+def require_scipy():
+    try:
+        import scipy
+    except ImportError:
+        raise ImportError("The scipy package is required to run this function.")
+    return scipy

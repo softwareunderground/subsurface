@@ -1,17 +1,9 @@
 -r requirements.txt
 
-openpyxl
-
 -r requirements_wells.txt
 -r requirements_mesh.txt
 -r requirements_volume.txt
 
-scipy
-shapely
-requests
-
 pooch
-netcdf4
-scooby
 
 omfvista

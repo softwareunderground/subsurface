@@ -4,7 +4,7 @@ import pytest
 import os
 
 from conftest import RequirementsLevel
-from subsurface import  TriSurf
+from subsurface import TriSurf, optional_requirements
 from subsurface.geological_formats import segy_reader
 from subsurface.structs.base_structures import StructuredData, UnstructuredData
 import matplotlib.pyplot as plt
@@ -17,6 +17,8 @@ pytestmark = pytest.mark.skipif(
     condition=(RequirementsLevel.READ_VOLUME) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
     reason="Need to set READ_VOLUME"
 )
+
+pv = optional_requirements.require_pyvista()
 
 
 def _read_segy_file(file_path) -> dict:
@@ -82,11 +84,9 @@ def test_pyvista_grid(get_structured_data, get_images):
 
 
 def test_read_segy_to_struct_data_imageio(get_structured_data, get_images):
+    imageio = optional_requirements.require_imageio()
     for x, image in zip(get_structured_data, get_images):
         vertex = np.array([[0, x.data['x'][0], x.data['y'][0]], [0, x.data['x'][-1], x.data['y'][0]], [0, x.data['x'][0], x.data['y'][-1]], [0, x.data['x'][-1], x.data['y'][-1]]])
-        # vertex = np.array([[0, coords['x'][0], coords['y'][0]], [0, coords['x'][-1], coords['y'][-1]], [0, coords['x'][0], coords['y'][0]], [0, coords['x'][0], coords['y'][0]]])
-        # [print(s) for s in vertex]
-        import pyvista as pv
         a = pv.PolyData(vertex)
         b = a.delaunay_2d().faces
         cells = b.reshape(-1, 4)[:, 1:]
@@ -96,8 +96,6 @@ def test_read_segy_to_struct_data_imageio(get_structured_data, get_images):
         ts = TriSurf(
             mesh=unstruct,
             texture=struct
-            # texture_point_u=point_u,
-            # texture_point_v=point_v
         )
 
         s = to_pyvista_mesh(ts)
@@ -105,6 +103,7 @@ def test_read_segy_to_struct_data_imageio(get_structured_data, get_images):
 
 
 def test_plot_segy_as_struct_data_with_coords_dict(get_structured_data, get_images):
+    imageio = optional_requirements.require_imageio()
     for x, image in zip(get_structured_data, get_images):
         zmin = -6000.0
         zmax = 0.0
