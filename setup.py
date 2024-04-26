@@ -58,7 +58,7 @@ setup(
     install_requires=read_requirements("requirements/requirements.txt"),
     extras_require={
             "opt"           : read_requirements("requirements/optional-requirements.txt"),
-            "opt-geospatial": read_requirements("requirements/requirements_opt_geospatial.txt"),
+            "opt-geospatial": read_requirements("requirements/requirements_geospatial.txt"),
             "dev"           : read_requirements("requirements/requirements_dev.txt"),
     },
     classifiers=CLASSIFIERS,

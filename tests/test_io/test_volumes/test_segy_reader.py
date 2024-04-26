@@ -3,36 +3,39 @@ from typing import List
 import pytest
 import os
 
+from conftest import RequirementsLevel
 from subsurface import  TriSurf
 from subsurface.geological_formats import segy_reader
 from subsurface.structs.base_structures import StructuredData, UnstructuredData
 import matplotlib.pyplot as plt
 import numpy as np
-import pyvista as pv
-import imageio
 
 from subsurface.visualization import to_pyvista_mesh, pv_plot
 
-segyio = pytest.importorskip('segyio')
 
-input_path = os.path.dirname(__file__) + '/../data/segy'
+pytestmark = pytest.mark.skipif(
+    condition=(RequirementsLevel.READ_VOLUME) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set READ_VOLUME"
+)
+
+
+def _read_segy_file(file_path) -> dict:
+    with open(file_path, 'r') as cf:
+        lines = cf.readlines()
+        xs = []
+        ys = []
+        for line in lines:
+            x = line.split()[1]
+            y = line.split()[2]
+            xs.append(x)
+            ys.append(y)
+    return {'x': xs, 'y': ys}
+
+
+input_path = os.path.dirname(__file__) + '/../../data/segy'
 files = ['/E5_MIG_DMO_FINAL.sgy', '/E5_MIG_DMO_FINAL_DEPTH.sgy', '/E5_STACK_DMO_FINAL.sgy', '/test.segy']
 images = ['/myplot_cropped.png', '/myplot2_cropped.png', '/myplot3_cropped.png', '/myplot4_cropped.png']
-# all files are unstructured: only raw data reading and writing is supported by segyio
-
-coords_file = input_path + '/E5_CMP_COORDS.txt'
-coords = {}
-with open(coords_file, 'r') as cf:
-    lines = cf.readlines()
-    xs = []
-    ys = []
-    for line in lines:
-        x = line.split()[1]
-        y = line.split()[2]
-        xs.append(x)
-        ys.append(y)
-coords = {'x': xs, 'y': ys}
-# coords = input_path + '/E5_CMP_COORDS.csv'
+coords = _read_segy_file(input_path + '/E5_CMP_COORDS.txt')
 
 
 @pytest.fixture(scope="module")
