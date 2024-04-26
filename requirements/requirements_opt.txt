@@ -3,6 +3,7 @@
 openpyxl
 
 -r requirements_wells.txt
+-r requirements_mesh.txt
 
 segyio
 
@@ -10,11 +11,7 @@ imageio
 scipy
 shapely
 requests
-ezdxf
 
-# Importing dxf
-trimesh # to fix dxf meshes
-networkx
 
 pooch
 netcdf4

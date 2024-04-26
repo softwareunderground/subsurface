@@ -157,7 +157,7 @@ def test_write_unstruc(unstruct_factory):
     c = xr.Dataset({'v': a, 'e': b, 'a': e})
     print(c)
 
-@pytest.mark.skipif(check_requirements(RequirementsLevel.BASE), reason="This test needs higher requirements.")
+@pytest.mark.skipif(check_requirements(RequirementsLevel.PLOT), reason="This test needs higher requirements.")
 def test_read_unstruct(data_path):
     us = read_unstruct(data_path + '/interpolator_meshes.nc')
     trisurf = TriSurf(us)
@@ -166,7 +166,7 @@ def test_read_unstruct(data_path):
 
 
 
-@pytest.mark.skipif(check_requirements(RequirementsLevel.BASE), reason="This test needs higher requirements.")
+@pytest.mark.skipif(check_requirements(RequirementsLevel.PLOT), reason="This test needs higher requirements.")
 def test_read_struct(data_path):
     s = read_struct(data_path + '/interpolator_regular_grid.nc')
     sg = StructuredGrid(s)

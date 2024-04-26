@@ -11,14 +11,6 @@ try:
 except ImportError:
     warnings.warn('Pyvista is not installed. Some visualization functions will not work.')
 
-try:
-    from pyvistaqt import BackgroundPlotter
-
-    background_plotter_imported = True
-except ImportError:
-    background_plotter_imported = False
-
-
 
 def pv_plot(meshes: list,
             image_2d=False,
@@ -51,7 +43,6 @@ def pv_plot(meshes: list,
     if image_2d is False:
         p.show()
         return p
-
     else:
         try:
             import matplotlib.pyplot as plt
@@ -59,7 +50,7 @@ def pv_plot(meshes: list,
             raise ImportError('Matplotlib is necessary for generating a 2D image.')
         img = p.show(screenshot=True)
         img = p.last_image
-        fig = plt.imshow(img[1])
+        fig = plt.imshow(img)
         plt.axis('off')
         plt.show(block=False)
         p.close()
@@ -73,15 +64,8 @@ def init_plotter(
         background_plotter=False
 ):
     plotter_kwargs = dict() if plotter_kwargs is None else plotter_kwargs
-    if background_plotter is True:
-        if background_plotter_imported is True:
-            p = BackgroundPlotter(**plotter_kwargs, off_screen=image_2d)
-        else:
-            raise ImportError(
-                'You need to install pyvistaqt for using this plotter.')
-    else:
-        off_screen = True if image_2d is True else None
-        p = pv.Plotter(**plotter_kwargs, off_screen=off_screen)
+    off_screen = True if image_2d is True else None
+    p = pv.Plotter(**plotter_kwargs, off_screen=off_screen)
     if ve is not None:
         p.set_scale(zscale=ve)
     return p
