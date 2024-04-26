@@ -87,25 +87,36 @@ def to_pyvista_points(point_set: PointSet):
     return poly
 
 
-def to_pyvista_mesh(unstructured_element: Union[TriSurf], ) -> "pv.PolyData":
+def to_pyvista_mesh(triangular_surface: TriSurf) -> "pv.PolyData":
     """Create planar surface PolyData from unstructured element such as TriSurf
 
     Returns:
         mesh texture
     """
-    nve = unstructured_element.mesh.n_vertex_per_element
-    vertices = unstructured_element.mesh.vertex
+    nve = triangular_surface.mesh.n_vertex_per_element
+    vertices = triangular_surface.mesh.vertex
     
     # ? We need better name for these variables
-    num_vertex_elements = np.full(unstructured_element.mesh.n_elements, nve)
-    x = unstructured_element.mesh.cells
+    num_vertex_elements = np.full(triangular_surface.mesh.n_elements, nve)
+    x = triangular_surface.mesh.cells
     
     cells = np.c_[num_vertex_elements, x]
     
     pv = optional_requirements.require_pyvista()
     mesh = pv.PolyData(vertices, cells)
-    mesh.cell_data.update(unstructured_element.mesh.attributes_to_dict)
-    mesh.point_data.update(unstructured_element.mesh.points_attributes)
+    mesh.cell_data.update(triangular_surface.mesh.attributes_to_dict)
+    mesh.point_data.update(triangular_surface.mesh.points_attributes)
+
+    if triangular_surface.has_texture_data:
+        mesh.texture_map_to_plane(
+            inplace=True,
+            origin=triangular_surface.texture_origin,
+            point_u=triangular_surface.texture_point_u,
+            point_v=triangular_surface.texture_point_v
+        )
+
+        tex = pv.numpy_to_texture(triangular_surface.texture.values)
+        mesh._textures = {0: tex}
 
     return mesh
 
