@@ -81,4 +81,4 @@ def test_omf_from_stream_to_unstruct_all_surfaces():
         s: pyvista.PolyData = to_pyvista_mesh(ts)
         list_of_polydata.append(s)
 
-    pv_plot(list_of_polydata, image_2d=False)
+    pv_plot(list_of_polydata, image_2d=True)

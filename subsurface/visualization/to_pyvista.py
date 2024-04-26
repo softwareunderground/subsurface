@@ -186,7 +186,7 @@ def to_pyvista_tetra(tetra_mesh: TetraMesh):
     import vtk
     ctypes = np.array([vtk.VTK_TETRA, ], np.int32)
     mesh = pv.UnstructuredGrid(cells, ctypes, vertices)
-    mesh.cell_arrays.update(tetra_mesh.data.attributes_to_dict)
+    mesh.cell_data.update(tetra_mesh.data.attributes_to_dict)
     return mesh
 
 
