@@ -48,7 +48,7 @@ def require_segyio():
 
 def require_welly():
     try:
-        import welly
+        import welly 
     except ImportError:
         raise ImportError("The welly package is required to run this function.")
     return welly
