@@ -9,8 +9,8 @@ import numpy as np
 
 
 @pytest.mark.skipif(
-    condition=(RequirementsLevel.GEOSPATIAL | RequirementsLevel.PLOT) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
-    reason="Need to set the READ_GEOSPATIAL variable to run this test"
+    condition=(RequirementsLevel.READ_PROFILES) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set the READ_PROFILES flag to True in the conftest.py file to run this test"
 )
 def test_read_trace_to_unstruct(data_path):
     gpd = optional_requirements.require_geopandas()
@@ -44,12 +44,14 @@ def test_read_trace_to_unstruct(data_path):
         texture_point_u=point_u,
         texture_point_v=point_v
     )
-
-    # s = to_pyvista_mesh(ts)
     s, uv = to_pyvista_mesh_and_texture(ts)
-    pv_plot([s], image_2d=False)
+    pv_plot([s], image_2d=True)
 
 
+@pytest.mark.skipif(
+    condition=(RequirementsLevel.TRACES | RequirementsLevel.MESH) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set the READ_PROFILES flag to True in the conftest.py file to run this test"
+)
 def test_tri_surf_from_traces_and_png(data_path):
     us, mesh_list = create_tri_surf_from_traces_texture(
         data_path + '/profiles/Traces.shp',
@@ -61,14 +63,16 @@ def test_tri_surf_from_traces_and_png(data_path):
                 data_path + '/profiles/Profil5_cropped.png',
                 data_path + '/profiles/Profil6_cropped.png',
                 data_path + '/profiles/Profil7_cropped.png',
-        ],
-        return_mesh=True,
-        return_uv=False
+        ]
     )
 
-    pv_plot(mesh_list, image_2d=True)
+    pv_plot(mesh_list, image_2d=True)  # * This plots the uv
 
 
+@pytest.mark.skipif(
+    condition=(RequirementsLevel.READ_PROFILES) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set the READ_PROFILES flag to True in the conftest.py file to run this test"
+)
 def test_tri_surf_from_traces_and_png_uv(data_path):
     tri_surf, mesh_list = create_tri_surf_from_traces_texture(
         data_path + '/profiles/Traces.shp',
@@ -80,15 +84,16 @@ def test_tri_surf_from_traces_and_png_uv(data_path):
                 data_path + '/profiles/Profil5_cropped.png',
                 data_path + '/profiles/Profil6_cropped.png',
                 data_path + '/profiles/Profil7_cropped.png',
-        ],
-        return_mesh=True,
-        return_uv=True
+        ]
     )
 
     print(tri_surf[0].mesh.points_attributes)
     pv_plot(mesh_list, image_2d=True)
 
-
+@pytest.mark.skipif(
+    condition=(RequirementsLevel.TRACES) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set the READ_PROFILES flag to True in the conftest.py file to run this test"
+)
 def test_line_set_from_trace(data_path):
     m = lineset_from_trace(data_path + '/profiles/Traces.shp')
     pv_plot(m, image_2d=True)
