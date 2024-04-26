@@ -7,7 +7,7 @@ openpyxl
 
 segyio
 
-imageio
+imageio # Textures
 scipy
 shapely
 requests

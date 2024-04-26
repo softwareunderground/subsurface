@@ -19,12 +19,13 @@ class RequirementsLevel(enum.Flag):
     DEV = 2**31
     READ_WELL = PLOT | WELLS  # Reading and plotting
     READ_MESH = PLOT | MESH
+    READ_GEOSPATIAL = PLOT | GEOSPATIAL
     OPTIONAL = CORE | PLOT | GEOSPATIAL | WELLS | MESH
     ALL = CORE | PLOT | OPTIONAL | GEOSPATIAL | DEV
 
     @classmethod
     def REQUIREMENT_LEVEL_TO_TEST(cls):
-        return cls.READ_MESH
+        return cls.READ_GEOSPATIAL  
 
 
 def check_requirements(minimum_level: RequirementsLevel):

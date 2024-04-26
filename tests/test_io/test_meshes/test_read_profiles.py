@@ -1,27 +1,29 @@
 import pytest
 
-try:
-    import geopandas as gpd
-    GEOPANDAS_IMPORTED = True
-except ImportError:
-    GEOPANDAS_IMPORTED = False
-
-from subsurface import UnstructuredData, TriSurf, StructuredData
+from conftest import RequirementsLevel
+from subsurface import UnstructuredData, TriSurf, StructuredData, optional_requirements
 from subsurface.reader.profiles.profiles_core import create_mesh_from_trace, \
     create_tri_surf_from_traces_texture, lineset_from_trace
-from subsurface.visualization import to_pyvista_mesh, pv_plot
-import imageio
+from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_mesh_and_texture
 import numpy as np
 
 
-@pytest.mark.skipif(GEOPANDAS_IMPORTED is False, reason="Geopandas is not imported" )
+@pytest.mark.skipif(
+    condition=(RequirementsLevel.GEOSPATIAL | RequirementsLevel.PLOT) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
+    reason="Need to set the READ_GEOSPATIAL variable to run this test"
+)
 def test_read_trace_to_unstruct(data_path):
+    gpd = optional_requirements.require_geopandas()
     traces = gpd.read_file(data_path + '/profiles/Traces.shp')
-    v, e = create_mesh_from_trace(traces.loc[0, 'geometry'], traces.loc[0, 'zmax'],
-                                  traces.loc[0, 'zmin'])
+    v, e = create_mesh_from_trace(
+        traces.loc[0, 'geometry'],
+        traces.loc[0, 'zmax'],
+        traces.loc[0, 'zmin']
+    )
 
     unstruct = UnstructuredData.from_array(v, e)
 
+    imageio = optional_requirements.require_imageio()
     cross = imageio.imread(data_path + '/profiles/Profil1_cropped.png')
     struct = StructuredData.from_numpy(np.array(cross))
 
@@ -43,22 +45,22 @@ def test_read_trace_to_unstruct(data_path):
         texture_point_v=point_v
     )
 
-    s = to_pyvista_mesh(ts)
-
-    pv_plot([s], image_2d=True)
+    # s = to_pyvista_mesh(ts)
+    s, uv = to_pyvista_mesh_and_texture(ts)
+    pv_plot([s], image_2d=False)
 
 
 def test_tri_surf_from_traces_and_png(data_path):
     us, mesh_list = create_tri_surf_from_traces_texture(
         data_path + '/profiles/Traces.shp',
         path_to_texture=[
-            data_path + '/profiles/Profil1_cropped.png',
-            data_path + '/profiles/Profil2_cropped.png',
-            data_path + '/profiles/Profil3_cropped.png',
-            data_path + '/profiles/Profil4_cropped.png',
-            data_path + '/profiles/Profil5_cropped.png',
-            data_path + '/profiles/Profil6_cropped.png',
-            data_path + '/profiles/Profil7_cropped.png',
+                data_path + '/profiles/Profil1_cropped.png',
+                data_path + '/profiles/Profil2_cropped.png',
+                data_path + '/profiles/Profil3_cropped.png',
+                data_path + '/profiles/Profil4_cropped.png',
+                data_path + '/profiles/Profil5_cropped.png',
+                data_path + '/profiles/Profil6_cropped.png',
+                data_path + '/profiles/Profil7_cropped.png',
         ],
         return_mesh=True,
         return_uv=False
@@ -71,13 +73,13 @@ def test_tri_surf_from_traces_and_png_uv(data_path):
     tri_surf, mesh_list = create_tri_surf_from_traces_texture(
         data_path + '/profiles/Traces.shp',
         path_to_texture=[
-            data_path + '/profiles/Profil1_cropped.png',
-            data_path + '/profiles/Profil2_cropped.png',
-            data_path + '/profiles/Profil3_cropped.png',
-            data_path + '/profiles/Profil4_cropped.png',
-            data_path + '/profiles/Profil5_cropped.png',
-            data_path + '/profiles/Profil6_cropped.png',
-            data_path + '/profiles/Profil7_cropped.png',
+                data_path + '/profiles/Profil1_cropped.png',
+                data_path + '/profiles/Profil2_cropped.png',
+                data_path + '/profiles/Profil3_cropped.png',
+                data_path + '/profiles/Profil4_cropped.png',
+                data_path + '/profiles/Profil5_cropped.png',
+                data_path + '/profiles/Profil6_cropped.png',
+                data_path + '/profiles/Profil7_cropped.png',
         ],
         return_mesh=True,
         return_uv=True
