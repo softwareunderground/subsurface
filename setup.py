@@ -46,7 +46,6 @@ def read_requirements(file_name, base_path=""):
             else:
                 requirements.append(line)
 
-    print(requirements)
     return requirements
 
 
