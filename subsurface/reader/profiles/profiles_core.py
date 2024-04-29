@@ -1,36 +1,34 @@
+import pyvista as pv
+from dataclasses import dataclass
+
 from typing import Union, List
 
 import numpy as np
 import pandas as pd
 
 import subsurface
-from subsurface.visualization import to_pyvista_mesh_and_texture, to_pyvista_line
+from subsurface import optional_requirements, TriSurf
+from subsurface.visualization import to_pyvista_line, to_pyvista_mesh
 
 
-__all__ = ['create_mesh_from_trace', 'create_tri_surf_from_traces_texture',
-           'base_structs_to_tri_surf', 'traces_texture_to_sub_structs',
-           'lineset_from_trace']
+@dataclass
+class TexturedMesh:
+    unstruct: subsurface.UnstructuredData
+    struct: subsurface.StructuredData
+    origin_vector3: np.array
+    point_u_vector3: np.array
+    point_v_vector3: np.array
 
 
-def create_mesh_from_trace(linestring,
-                           zmax: Union[float, int],
-                           zmin: Union[float, int],
-                           ):
-    """
-
-    Args:
-        linestring (shapely.geometry.LineString):
-        zmax:
-        zmin:
-
-    Returns:
-
-    """
+def create_mesh_from_trace(linestring, zmax: Union[float, int], zmin: Union[float, int]):
     from scipy.spatial.qhull import Delaunay
-
-    n = len(list(linestring.coords))
-    coords = np.array([[x[0] for x in list(linestring.coords)],
-                       [y[1] for y in list(linestring.coords)]]).T
+    if isinstance(linestring, list):
+        linestring_coords = linestring
+    else:  # ! For now I leave it as this because I am not sure with object geopandas returns
+        linestring_coords = linestring.coords  # * Geopandas branch
+    n = len(list(linestring_coords))
+    coords = np.array([[x[0] for x in list(linestring_coords)],
+                       [y[1] for y in list(linestring_coords)]]).T
     # duplicating the line, once with z=lower and another with z=upper values
     vertices = np.zeros((2 * n, 3))
     vertices[:n, :2] = coords
@@ -53,60 +51,18 @@ def create_tri_surf_from_traces_texture(
         path_to_trace,
         path_to_texture: Union[List[str]],
         idx=None,
-        return_mesh=False,
-        return_uv=False,
         uv=None
 ):
-    args_list = traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx, uv=uv)
-    tri_surf_list = base_structs_to_tri_surf(args_list)
-    meshes = None
+    tri_surf: list[subsurface.TriSurf] = _traces_texture_to_sub_structs(
+        path_to_trace=path_to_trace,
+        path_to_texture=path_to_texture,
+        idx=idx,
+        uv=uv
+    )
 
-    if return_mesh is True or return_uv is True:
-        meshes_uv = [to_pyvista_mesh_and_texture(i) for i in tri_surf_list]
-        meshes, uv = list(zip(*meshes_uv))
-        if return_uv is True:
-            tri_surf_list, meshes = create_tri_surf_from_traces_texture(path_to_trace, path_to_texture, idx=idx,
-                                                                        return_mesh=return_mesh, return_uv=False, uv=uv)
-    return tri_surf_list, meshes
+    pyvista_mesh = [to_pyvista_mesh(i) for i in tri_surf]
 
-
-def base_structs_to_tri_surf(args_list) -> List:
-    ts_list = []
-    for i in args_list:
-        ts = subsurface.TriSurf(mesh=i[0], texture=i[1], texture_origin=i[2], texture_point_u=i[3],
-                                texture_point_v=i[4])
-        ts_list.append(ts)
-    return ts_list
-
-
-def traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx, uv=None):
-    import geopandas as gpd
-
-    traces = gpd.read_file(path_to_trace)
-    traces = _select_traces_by_index(idx, traces)
-
-    base_args = []
-    n = 0
-    for index, row in traces.iterrows():
-        v, e = create_mesh_from_trace(row['geometry'], row['zmax'], row['zmin'])
-        if uv is not None:
-            uv_item = pd.DataFrame(uv[n], columns=['u', 'v'])
-        else:
-            uv_item = None
-
-        unstruct = subsurface.UnstructuredData.from_array(v, e, vertex_attr=uv_item)
-
-        import imageio
-        cross = imageio.imread(path_to_texture[index])
-        struct = subsurface.StructuredData.from_numpy(np.array(cross))
-
-        origin = [row['geometry'].xy[0][0], row['geometry'].xy[1][0], row['zmin']]
-        point_u = [row['geometry'].xy[0][-1], row['geometry'].xy[1][-1], row['zmin']]
-        point_v = [row['geometry'].xy[0][0], row['geometry'].xy[1][0], row['zmax']]
-
-        base_args.append((unstruct, struct, origin, point_u, point_v))
-        n += 1
-    return base_args
+    return tri_surf, pyvista_mesh
 
 
 def lineset_from_trace(path_to_trace, idx=None):
@@ -125,6 +81,65 @@ def lineset_from_trace(path_to_trace, idx=None):
         mesh_list.append(to_pyvista_line(ls, radius=10))
 
     return mesh_list
+
+
+def _traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx, uv=None) -> list[TriSurf]:
+    gpd = optional_requirements.require_geopandas()
+    imageio = optional_requirements.require_imageio()
+
+    traces = gpd.read_file(path_to_trace)
+    traces = _select_traces_by_index(idx, traces)
+
+    textured_mesh: list[TriSurf] = []
+    n = 0
+    for index, row in traces.iterrows():
+        v, e = create_mesh_from_trace(row['geometry'], row['zmax'], row['zmin'])
+        unstruct_mesh = subsurface.UnstructuredData.from_array(
+            vertex=v,
+            cells=e,
+            vertex_attr=pd.DataFrame(np.zeros((v.shape[0], 2)), columns=['u', 'v'])
+        )
+        structured_data_texture = subsurface.StructuredData.from_numpy(
+            array=np.array(imageio.v3.imread(path_to_texture[index]))
+        )
+
+        tri_surf = TriSurf(
+            mesh=unstruct_mesh,
+            texture=structured_data_texture,
+            texture_origin=np.array([row['geometry'].xy[0][0], row['geometry'].xy[1][0], row['zmin']]),
+            texture_point_u=np.array([row['geometry'].xy[0][-1], row['geometry'].xy[1][-1], row['zmin']]),
+            texture_point_v=np.array([row['geometry'].xy[0][0], row['geometry'].xy[1][0], row['zmax']])
+        )
+
+        # * Set uv
+        if uv is not None:
+            uv_item = pd.DataFrame(uv[n], columns=['u', 'v'])
+        else:
+            uv_item = _get_uv_from_pyvista(tri_surf)
+        tri_surf.mesh.points_attributes = uv_item
+        
+        textured_mesh.append(tri_surf)
+        n += 1
+    return textured_mesh
+
+
+def _get_uv_from_pyvista(tri_surf: TriSurf) -> pd.DataFrame:
+    pyvista = optional_requirements.require_pyvista()
+    _mesh = to_pyvista_mesh(tri_surf)
+    if tri_surf.texture is None:
+        raise ValueError('unstructured_element needs texture data to be mapped.')
+    _mesh.texture_map_to_plane(
+        inplace=True,
+        origin=tri_surf.texture_origin,
+        point_u=tri_surf.texture_point_u,
+        point_v=tri_surf.texture_point_v
+    )
+    tex = pv.numpy_to_texture(tri_surf.texture.values)
+    _mesh._textures = {0: tex}
+    from vtkmodules.util.numpy_support import vtk_to_numpy
+    uv = vtk_to_numpy(_mesh.GetPointData().GetTCoords())
+
+    return pd.DataFrame(uv, columns=['u', 'v'])
 
 
 def _select_traces_by_index(idx, traces):

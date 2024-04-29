@@ -1,0 +1,5 @@
+welly == 0.4.8
+openpyxl
+
+# There is an open PR for striplog
+git+https://github.com/Leguark/striplog.git

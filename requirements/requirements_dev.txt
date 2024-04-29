@@ -1,0 +1,15 @@
+# GLOBAL REQUIREMENTS.
+-r requirements.txt
+numpy
+pandas
+netCDF4
+
+# FOR DOCUMENTATION
+sphinx~=3.5
+sphinx_gallery
+sphinx_rtd_theme
+sphinx_automodapi
+
+# FOR TESTING
+pytest
+pytest-cov

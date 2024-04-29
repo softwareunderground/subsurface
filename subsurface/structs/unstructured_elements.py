@@ -11,6 +11,8 @@ Regularly gridded dataset will NOT be managed by these classes but will use
 """
 
 import numpy as np
+import pandas as pd
+
 from .base_structures import UnstructuredData, StructuredData
 
 
@@ -100,6 +102,10 @@ class TriSurf:
         self.texture_point_v = kwargs.get('texture_point_v', None)
 
     @property
+    def has_texture_data(self):
+        return self.texture is not None and self.texture_origin is not None and self.texture_point_u is not None and self.texture_point_v is not None
+    
+    @property
     def triangles(self):
         return self.mesh.cells
 
@@ -139,6 +145,28 @@ class LineSet:
 
         # TODO: these must all be integer dtypes!
 
+    def get_first_index_per_well(self, attr_hole_id: str):
+        """ Method to get the first index of each well in the LineSet
+
+        Returns:
+            np.ndarray[(Any,), IntX]
+
+        """
+        import xarray as xr
+        dataset: xr.Dataset = self.data.data
+        dataframe: pd.DataFrame = self.data.attributes
+        array = dataframe[attr_hole_id].values
+        
+        first_index = np.where(array[:-1] != array[1:])[0]
+        return first_index
+        
+        
+        
+        
+        
+        
+        
+    
     def generate_default_cells(self):
         """ Method to generate cells based on the order of the vertex. This
         only works if the LineSet only represents one single line

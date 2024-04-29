@@ -37,8 +37,8 @@ import pooch
 import subsurface.reader.profiles.profiles_core
 import subsurface.reader.read_netcdf
 import subsurface.reader.topography.topo_core
-import subsurface.reader.wells.wells_api
-from subsurface.reader.wells.wells_api import read_wells_to_unstruct, borehole_location_to_unstruct
+import subsurface.reader.wells._wells_api
+from subsurface.reader.wells._wells_api import read_wells_to_unstruct, borehole_location_to_unstruct
 from subsurface.reader.readers_data import ReaderWellsHelper, ReaderFilesHelper
 from subsurface.structs.base_structures.common_data_utils import replace_outliers
 
@@ -202,9 +202,7 @@ profiles_trisurf_list, profiles_mesh_list = subsurface.reader.profiles.profiles_
         data_path + '/Profiles_cropped/profile012.png',
         data_path + '/Profiles_cropped/profile013.png',
     ],
-    idx=range(13),
-    return_mesh=True,
-    return_uv=True
+    idx=range(13)
 )
 
 # %%

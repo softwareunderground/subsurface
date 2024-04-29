@@ -1,14 +1,8 @@
 from typing import Union
-from scipy.spatial.qhull import Delaunay
-from shapely.geometry import LineString
+
+from subsurface import optional_requirements
 from subsurface.structs.base_structures import StructuredData
 import numpy as np
-
-try:
-    import segyio
-    segyio_imported = True
-except ImportError:
-    segyio_imported = False
 
 
 def read_in_segy(filepath: str, coords=None) -> StructuredData:
@@ -24,6 +18,7 @@ def read_in_segy(filepath: str, coords=None) -> StructuredData:
 
     """
 
+    segyio = optional_requirements.require_segyio()
     segyfile = segyio.open(filepath, ignore_geometry=True)
 
     data = np.asarray([np.copy(tr) for tr in segyfile.trace[:]])
@@ -33,8 +28,7 @@ def read_in_segy(filepath: str, coords=None) -> StructuredData:
     return sd
 
 
-def create_mesh_from_coords(coords: Union[dict, LineString],
-                           zmin: Union[float, int], zmax: Union[float, int] = 0.0):
+def create_mesh_from_coords(coords: dict, zmin: Union[float, int], zmax: Union[float, int] = 0.0):
     """Creates a mesh for plotting StructuredData
 
     Args:
@@ -45,17 +39,10 @@ def create_mesh_from_coords(coords: Union[dict, LineString],
     Returns: vertices and faces for creating an UnstructuredData object
 
     """
-    if type(coords) == LineString:
-        linestring = coords
-        n = len(list(linestring.coords))
-        coords = np.array([[x[0] for x in list(linestring.coords)],
-                           [y[1] for y in list(linestring.coords)]]).T
-    else:
-        n = len(coords['x'])
-        coords = np.array([coords['x'],
-                           coords['y']]).T
+    n = len(coords['x'])
+    coords = np.array([coords['x'], coords['y']]).T
     # duplicating the line, once with z=lower and another with z=upper values
-    vertices = np.zeros((2*n, 3))
+    vertices = np.zeros((2 * n, 3))
     vertices[:n, :2] = coords
     vertices[:n, 2] = zmin
     vertices[n:, :2] = coords
@@ -67,7 +54,7 @@ def create_mesh_from_coords(coords: Union[dict, LineString],
     # |   \   |
     # i  --- i+1
 
-    tri = Delaunay(vertices[:, [0, 2]])
+    scipy = optional_requirements.require_scipy()
+    tri = scipy.spatial.qhull.Delaunay(vertices[:, [0, 2]])
     faces = tri.simplices
     return vertices, faces
-

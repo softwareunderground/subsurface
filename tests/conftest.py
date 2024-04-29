@@ -1,3 +1,5 @@
+import enum
+
 import pytest
 
 from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh
@@ -7,13 +9,39 @@ import pandas as pd
 import os
 
 
+@enum.unique
+class RequirementsLevel(enum.Flag):
+    CORE = 2**1
+    PLOT = 2 ** 2
+    MESH = 2**3
+    GEOSPATIAL = 2**4
+    WELLS = 2**5
+    TRACES = 2**6
+    VOL = 2**7
+    DEV = 2**31
+    READ_WELL = PLOT | WELLS  # Reading and plotting
+    READ_MESH = PLOT | MESH
+    READ_VOLUME = PLOT | VOL
+    READ_PROFILES = PLOT | MESH | TRACES
+    READ_GEOSPATIAL = PLOT | GEOSPATIAL
+    ALL = PLOT | GEOSPATIAL | WELLS | MESH | TRACES | VOL
+
+    @classmethod
+    def REQUIREMENT_LEVEL_TO_TEST(cls):
+        return cls.ALL
+
+
+def check_requirements(minimum_level: RequirementsLevel):
+    return RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST().value < minimum_level.value
+
+
 @pytest.fixture(scope='session')
 def data_path():
     return os.path.abspath(os.path.dirname(__file__) + '/data')
 
 
 @pytest.fixture(scope='session')
-def unstruc():
+def unstruct_factory():
     foo = UnstructuredData.from_array(np.ones((5, 3)), np.ones((4, 3)), pd.DataFrame({'foo': np.arange(4)}))
     return foo
 

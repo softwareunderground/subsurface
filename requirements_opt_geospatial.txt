@@ -1,3 +1,0 @@
-# Geospatial libraries
-geopandas
-rasterio

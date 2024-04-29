@@ -1,29 +1,21 @@
+import warnings
+
 from typing import Union, Tuple, Optional
 
+from subsurface import optional_requirements
 from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
 import numpy as np
 
 try:
     import pyvista as pv
 except ImportError:
-    raise ImportError()
-
-try:
-    from pyvistaqt import BackgroundPlotter
-
-    background_plotter_imported = True
-except ImportError:
-    background_plotter_imported = False
-
-
-__all__ = ['pv_plot', 'to_pyvista_points', 'to_pyvista_mesh',
-           'to_pyvista_mesh_and_texture', 'to_pyvista_line',
-           'to_pyvista_tetra', 'to_pyvista_grid', 'update_grid_attribute']
+    warnings.warn('Pyvista is not installed. Some visualization functions will not work.')
 
 
 def pv_plot(meshes: list,
             image_2d=False,
             ve=None,
+            cmap='viridis',
             plotter_kwargs: dict = None,
             add_mesh_kwargs: dict = None,
             background_plotter=False):
@@ -40,21 +32,8 @@ def pv_plot(meshes: list,
          backgroung plotter.
     """
 
-    plotter_kwargs = dict() if plotter_kwargs is None else plotter_kwargs
     add_mesh_kwargs = dict() if add_mesh_kwargs is None else add_mesh_kwargs
-
-    if background_plotter is True:
-        if background_plotter_imported is True:
-            p = BackgroundPlotter(**plotter_kwargs, off_screen=image_2d)
-        else:
-            raise ImportError(
-                'You need to install pyvistaqt for using this plotter.')
-    else:
-        off_screen = True if image_2d is True else None
-        p = pv.Plotter(**plotter_kwargs, off_screen=off_screen)
-
-    if ve is not None:
-        p.set_scale(zscale=ve)
+    p = init_plotter(image_2d, ve, plotter_kwargs, background_plotter)
 
     for m in meshes:
         p.add_mesh(m, **add_mesh_kwargs)
@@ -64,7 +43,6 @@ def pv_plot(meshes: list,
     if image_2d is False:
         p.show()
         return p
-
     else:
         try:
             import matplotlib.pyplot as plt
@@ -72,11 +50,25 @@ def pv_plot(meshes: list,
             raise ImportError('Matplotlib is necessary for generating a 2D image.')
         img = p.show(screenshot=True)
         img = p.last_image
-        fig = plt.imshow(img[1])
+        fig = plt.imshow(img)
         plt.axis('off')
         plt.show(block=False)
         p.close()
         return fig
+
+
+def init_plotter(
+        image_2d=False,
+        ve=None,
+        plotter_kwargs: dict = None,
+        background_plotter=False
+):
+    plotter_kwargs = dict() if plotter_kwargs is None else plotter_kwargs
+    off_screen = True if image_2d is True else None
+    p = pv.Plotter(**plotter_kwargs, off_screen=off_screen)
+    if ve is not None:
+        p.set_scale(zscale=ve)
+    return p
 
 
 def to_pyvista_points(point_set: PointSet):
@@ -88,31 +80,48 @@ def to_pyvista_points(point_set: PointSet):
     Returns:
         pv.PolyData
     """
-    poly = pv.PolyData(point_set.data.vertex)
+    pv = optional_requirements.require_pyvista()
+    poly: pv.PolyData = pv.PolyData(point_set.data.vertex)
     poly.point_data.update(point_set.data.attributes_to_dict)
 
     return poly
 
 
-def to_pyvista_mesh(unstructured_element: Union[TriSurf],
-                    ) -> pv.PolyData:
+def to_pyvista_mesh(triangular_surface: TriSurf) -> "pv.PolyData":
     """Create planar surface PolyData from unstructured element such as TriSurf
 
     Returns:
         mesh texture
     """
-    nve = unstructured_element.mesh.n_vertex_per_element
-    vertices = unstructured_element.mesh.vertex
-    cells = np.c_[np.full(unstructured_element.mesh.n_elements, nve),
-                  unstructured_element.mesh.cells]
+    nve = triangular_surface.mesh.n_vertex_per_element
+    vertices = triangular_surface.mesh.vertex
+    
+    # ? We need better name for these variables
+    num_vertex_elements = np.full(triangular_surface.mesh.n_elements, nve)
+    x = triangular_surface.mesh.cells
+    
+    cells = np.c_[num_vertex_elements, x]
+    
+    pv = optional_requirements.require_pyvista()
     mesh = pv.PolyData(vertices, cells)
-    mesh.cell_data.update(unstructured_element.mesh.attributes_to_dict)
-    mesh.point_data.update(unstructured_element.mesh.points_attributes)
+    mesh.cell_data.update(triangular_surface.mesh.attributes_to_dict)
+    mesh.point_data.update(triangular_surface.mesh.points_attributes)
+
+    if triangular_surface.has_texture_data:
+        mesh.texture_map_to_plane(
+            inplace=True,
+            origin=triangular_surface.texture_origin,
+            point_u=triangular_surface.texture_point_u,
+            point_v=triangular_surface.texture_point_v
+        )
+
+        tex = pv.numpy_to_texture(triangular_surface.texture.values)
+        mesh._textures = {0: tex}
 
     return mesh
 
 
-def to_pyvista_mesh_and_texture(triangular_surface: Union[TriSurf], ) -> Tuple[pv.PolyData, Optional[np.array]]:
+def to_pyvista_mesh_and_texture(triangular_surface: Union[TriSurf], ) -> Tuple["pv.PolyData", Optional[np.array]]:
     """Create planar surface PolyData from unstructured element such as TriSurf
 
     Returns:
@@ -154,7 +163,7 @@ def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,
     nve = line_set.data.n_vertex_per_element
     vertices = line_set.data.vertex
     cells = np.c_[np.full(line_set.data.n_elements, nve),
-                  line_set.data.cells]
+    line_set.data.cells]
     if spline is False:
         mesh = pv.PolyData()
         mesh.points = vertices
@@ -219,6 +228,7 @@ def to_pyvista_grid(structured_grid: StructuredGrid,
                              'Possibly there are not valid dimension name in the'
                              'xarray.DataArray. These are X Y Z x y z')
 
+    pv = optional_requirements.require_pyvista()
     mesh = pv.StructuredGrid(*meshgrid)
     update_grid_attribute(mesh, structured_grid, data_order,
                           attribute_slice, data_set_name)
@@ -226,20 +236,23 @@ def to_pyvista_grid(structured_grid: StructuredGrid,
     return mesh
 
 
-def update_grid_attribute(mesh, structured_grid,
-                          data_order='F',
-                          attribute_slice=None,
-                          data_set_name=None):
+def update_grid_attribute(
+        mesh: 'pv.StructuredGrid',
+        structured_grid: StructuredGrid,
+        data_order='F',
+        attribute_slice=None,
+        data_set_name=None
+):
     if attribute_slice is None:
         attribute_slice = dict()
 
     if data_set_name is None:
         data_set_name = structured_grid.ds.data_array_name
-
-    mesh.point_data.update(
-        {data_set_name: structured_grid.ds.data[data_set_name].sel(
-            **attribute_slice
-        ).values.ravel(data_order)})
+    import xarray as xr
+    dataset: xr.DataArray = structured_grid.ds.data[data_set_name]
+    
+    attributeData = {data_set_name: dataset.sel(**attribute_slice).values.ravel(data_order)}
+    mesh.point_data.update( attributeData)
 
     return mesh
 
@@ -248,3 +261,21 @@ def _n_cartesian_coord(attribute, structured_grid):
     coord_names = np.array(['X', 'Y', 'Z', 'x', 'y', 'z'])
     ndim = np.isin(coord_names, structured_grid.ds.data[attribute].dims).sum()
     return ndim
+
+
+def _generate_colors_from_colormap(num_colors, cmap_name='viridis'):
+    """
+    Generate a sequence of colors from a given Matplotlib colormap.
+
+    Parameters:
+    num_colors (int): Number of colors to generate.
+    cmap_name (str): Name of the Matplotlib colormap to use.
+
+    Returns:
+    list of tuple: List of RGB color tuples.
+    """
+    import matplotlib.pyplot as plt
+    colormap = plt.cm.get_cmap(cmap_name)
+    colors = colormap(np.linspace(0, 1, num_colors))
+    # Convert from RGBA to RGB and scale to 0-255
+    return [(int(r * 255), int(g * 255), int(b * 255)) for r, g, b, _ in colors]

@@ -1,21 +1,26 @@
+from typing import Sequence, Optional
+
 import numpy as np
 
+from subsurface.optional_requirements import require_rasterio
 from subsurface.reader.readers_data import ReaderFilesHelper, ReaderUnstructuredHelper
 from subsurface.structs import StructuredData, UnstructuredData, StructuredGrid
 from subsurface.reader.mesh.surfaces_api import read_2d_mesh_to_unstruct
 from subsurface.utils.utils_core import get_extension
 
-__all__ = ['read_structured_topography', 'rasterio_dataset_to_structured_data',
-           'read_unstructured_topography']
+__all__ = ['read_structured_topography', 'rasterio_dataset_to_structured_data', 'read_unstructured_topography']
 
 
-def read_structured_topography(path) -> StructuredData:
-    import rasterio
+def read_structured_topography(path, crop_to_extent: Optional[Sequence]=None) -> StructuredData:
+    rasterio = require_rasterio()
 
     extension = get_extension(path)
     if extension == '.tif':
-        dataset = rasterio.open(path)
-        structured_data = rasterio_dataset_to_structured_data(dataset)
+        structured_data = rasterio_dataset_to_structured_data(
+            dataset=rasterio.open(path),
+            crop_to_extent=crop_to_extent
+        )
+        
     else:
         raise NotImplementedError('The extension given cannot be read yet')
 
@@ -27,10 +32,20 @@ def read_structured_topography_to_unstructured(path) -> UnstructuredData:
     return topography_to_unstructured_data(structured_data)
 
 
-def rasterio_dataset_to_structured_data(dataset):
-    data = dataset.read(1)
+def rasterio_dataset_to_structured_data(dataset, crop_to_extent: Optional[Sequence]=None):
+    if crop_to_extent is not None: 
+        window = _get_raster_window(crop_to_extent, dataset)
+    else:
+        window = None
+
+    data = dataset.read(1, window=window)
     data = np.fliplr(data.T)
     shape = data.shape
+    
+    # TODO: ===================
+    # TODO: Add the option to crop
+    # TODO: Resample
+    
     coords = {
         'x': np.linspace(
             dataset.bounds.left,
@@ -43,8 +58,7 @@ def rasterio_dataset_to_structured_data(dataset):
             shape[1]
         )
     }
-    structured_data = StructuredData.from_numpy(data, data_array_name='topography',
-                                                coords=coords)
+    structured_data = StructuredData.from_numpy(data, data_array_name='topography', coords=coords)
     return structured_data
 
 
@@ -64,3 +78,15 @@ def topography_to_unstructured_data(structured_data: StructuredData) -> Unstruct
 
     unstructured_data = UnstructuredData.from_array(vertex, cells)
     return unstructured_data
+
+
+def _get_raster_window(crop_to_extent, dataset):
+    from rasterio.windows import Window
+    # TODO: Add None check
+    # Get the indices of the window
+    left, bottom, right, top = crop_to_extent
+    row_start, col_start = dataset.index(left, top)
+    row_stop, col_stop = dataset.index(right, bottom)
+    # Read the data in the window
+    window = Window.from_slices((row_start, row_stop), (col_start, col_stop))
+    return window

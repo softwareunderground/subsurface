@@ -1,0 +1,3 @@
+xarray
+netcdf4
+python-dotenv

@@ -3,7 +3,6 @@ from subsurface.structs import UnstructuredData
 from subsurface.reader.readers_data import ReaderFilesHelper
 import pandas as pd
 
-
 __all__ = ['read_volumetric_mesh_to_subsurface',
            'read_volumetric_mesh_coord_file',
            'read_volumetric_mesh_attr_file']
@@ -23,9 +22,16 @@ def read_volumetric_mesh_to_subsurface(reader_helper_coord: ReaderFilesHelper,
 
 def read_volumetric_mesh_coord_file(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
     df = pd.read_csv(
-        filepath_or_buffer=reader_helper.file_or_buffer, **reader_helper.pandas_reader_kwargs)
-    if reader_helper.columns_map is not None: df.rename(reader_helper.columns_map,
-                                                        axis="columns", inplace=True)
+        filepath_or_buffer=reader_helper.file_or_buffer,
+        **reader_helper.pandas_reader_kwargs
+    )
+    if reader_helper.columns_map is not None:
+        df.rename(
+            mapper=reader_helper.columns_map,
+            axis="columns",
+            inplace=True
+        )
+        
     df.dropna(axis=0, inplace=True)
 
     df.x = df.x.astype(float)
