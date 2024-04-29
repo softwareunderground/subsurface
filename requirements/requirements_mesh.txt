@@ -1,5 +1,8 @@
 ezdxf
-trimesh # to fix dxf meshes
-networkx # used by trimesh
-imageio # Textures
+# to fix dxf meshes
+trimesh 
+# used by trimesh
+networkx
+# Textures
+imageio 
 omfvista

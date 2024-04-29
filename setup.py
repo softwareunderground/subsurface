@@ -2,6 +2,7 @@
 """
 Python installation file.
 """
+import os
 import sys
 from os import path
 from setuptools import setup, find_packages
@@ -26,9 +27,11 @@ CLASSIFIERS = [
 ]
 
 
-def read_requirements(file_name):
+def read_requirements(file_name, base_path=""):
+    # Construct the full path to the requirements file
+    full_path = os.path.join(base_path, file_name)
     requirements = []
-    with open(file_name, "r", encoding="utf-8") as f:
+    with open(full_path, "r", encoding="utf-8") as f:
         for line in f:
             # Strip whitespace and ignore comments
             line = line.strip()
@@ -38,10 +41,12 @@ def read_requirements(file_name):
             # Handle -r directive
             if line.startswith("-r "):
                 referenced_file = line.split()[1]  # Extract the file name
-                requirements.extend(read_requirements(referenced_file))  # Recursively read referenced file
+                # Recursively read the referenced file, making sure to include the base path
+                requirements.extend(read_requirements(referenced_file, base_path=base_path))
             else:
                 requirements.append(line)
 
+    print(requirements)
     return requirements
 
 
@@ -55,11 +60,12 @@ setup(
     author="Software Underground",
     author_email="hello@softwareunderground.org",
     license="Apache-2.0",
-    install_requires=read_requirements("requirements/requirements.txt"),
+    install_requires=read_requirements("requirements.txt", "requirements"),
     extras_require={
-            "opt": read_requirements("requirements/requirements_opt.txt"),
-            "dev": read_requirements("requirements/requirements_dev.txt"),
-            "all": read_requirements("requirements/requirements_all.txt"),
+            "plog": read_requirements("requirements_plot.txt", "requirements"),
+            "opt": read_requirements("requirements_opt.txt", "requirements"),
+            "dev": read_requirements("requirements_dev.txt", "requirements"),
+            "all": read_requirements("requirements_all.txt", "requirements")
     },
     classifiers=CLASSIFIERS,
     zip_safe=False,

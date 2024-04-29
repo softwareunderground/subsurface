@@ -1,7 +1,6 @@
 -r requirements.txt
 -r requirements_plot.txt
 
--r requirements_wells.txt
 -r requirements_mesh.txt
 -r requirements_volume.txt
 -r requirements_traces.txt
