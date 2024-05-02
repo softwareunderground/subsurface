@@ -1,5 +1,5 @@
 from ....core.structs import UnstructuredData
-from ..readers_data import ReaderFilesHelper
+from subsurface.core.reader_helpers.readers_data import ReaderFilesHelper
 import pandas as pd
 
 

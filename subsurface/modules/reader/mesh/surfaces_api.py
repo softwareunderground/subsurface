@@ -2,7 +2,9 @@ import warnings
 
 
 from .surface_reader import read_mesh_file_to_vertex, read_mesh_file_to_cells, cells_from_delaunay, read_mesh_file_to_attr
-from ..readers_data import ReaderUnstructuredHelper, RawDataOptions, RawDataUnstructured
+from subsurface.core.reader_helpers.readers_data import RawDataOptions
+from ....core.reader_helpers.readers_raw_unstructured import RawDataUnstructured
+from ....core.reader_helpers.reader_unstruct import ReaderUnstructuredHelper
 from ....core.structs import UnstructuredData
 
 __all__ = ['read_2d_mesh_to_unstruct', ]

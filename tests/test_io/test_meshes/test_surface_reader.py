@@ -3,7 +3,8 @@ import os
 import pytest
 
 from conftest import RequirementsLevel
-from subsurface.modules.reader.readers_data import ReaderUnstructuredHelper, ReaderFilesHelper
+from subsurface.core.reader_helpers.readers_data import ReaderFilesHelper
+from subsurface.core.reader_helpers.reader_unstruct import ReaderUnstructuredHelper
 from subsurface.core.structs import TriSurf
 from subsurface.core.structs.base_structures import UnstructuredData
 from subsurface.modules.visualization.to_pyvista import pv_plot, to_pyvista_mesh

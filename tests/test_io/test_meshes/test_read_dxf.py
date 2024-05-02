@@ -4,7 +4,8 @@ from conftest import RequirementsLevel
 from subsurface.core.structs import UnstructuredData
 from subsurface import TriSurf, PointSet, optional_requirements
 from subsurface.modules.reader.mesh.surfaces_api import read_2d_mesh_to_unstruct
-from subsurface.modules.reader.readers_data import ReaderUnstructuredHelper, ReaderFilesHelper
+from subsurface.core.reader_helpers.readers_data import ReaderFilesHelper
+from subsurface.core.reader_helpers.reader_unstruct import ReaderUnstructuredHelper
 import subsurface.modules.visualization as sb_viz
 
 import numpy as np

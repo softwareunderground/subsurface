@@ -2,24 +2,17 @@ import enum
 import pathlib
 import io
 from dataclasses import dataclass, field
-from typing import Union, Literal, Dict, Optional, List, Callable, Any
+from typing import Union, List, Callable, Any
 
-import numpy as np
 import pandas as pd
-import xarray as xr
 
-from ...core.utils.utils_core import get_extension
+from subsurface.core.utils.utils_core import get_extension
 
-__all__ = ['ReaderFilesHelper', 'ReaderUnstructuredHelper',
-           'ReaderWellsHelper', 'RawDataOptions', 'RawDataUnstructured']
 
 if pd.__version__ < '1.4.0':
-    from pandas._typing import FilePathOrBuffer
-
-    fb = FilePathOrBuffer
+    pass
 elif pd.__version__ >= '1.4.0':
     from pandas._typing import FilePath, ReadCsvBuffer
-
     fb = Union[FilePath, ReadCsvBuffer[bytes], ReadCsvBuffer[str]]
 
 
@@ -83,34 +76,7 @@ class ReaderFilesHelper:
 
 
 @dataclass
-class ReaderUnstructuredHelper:
-    reader_vertex_args: ReaderFilesHelper
-    reader_cells_args: ReaderFilesHelper = None
-    reader_vertex_attr_args: ReaderFilesHelper = None
-    reader_cells_attr_args: ReaderFilesHelper = None
-
-
-@dataclass
-class ReaderWellsHelper:
-    reader_collars_args: ReaderFilesHelper
-    reader_survey_args: ReaderFilesHelper
-    reader_lith_args: ReaderFilesHelper = None
-    reader_attr_args: List[ReaderFilesHelper] = None
-
-
-@dataclass
 class RawDataOptions:
     swap_yz_cells: bool = False
 
 
-@dataclass(init=False)
-class RawDataUnstructured:
-    vertex: np.ndarray
-    cells: Union[np.ndarray, Literal["lines", "points"]]
-    cells_attr: Union[None, pd.DataFrame, Dict[str, xr.DataArray]] = None
-    vertex_attr: Union[None, pd.DataFrame, Dict[str, xr.DataArray]] = None
-
-    def swap_yz_col_cells(self):
-        cells_aux = self.cells.copy()
-        self.cells[:, 1] = cells_aux[:, 2]
-        self.cells[:, 2] = cells_aux[:, 1]

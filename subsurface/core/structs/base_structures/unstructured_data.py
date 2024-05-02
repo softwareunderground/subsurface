@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
-from ....modules.reader.readers_data import RawDataUnstructured
+from subsurface.core.reader_helpers.readers_raw_unstructured import RawDataUnstructured
 
 __all__ = ['UnstructuredData', ]
 
@@ -47,7 +47,7 @@ class UnstructuredData:
         return self.data.__repr__()
 
     @classmethod
-    def from_raw_data(cls, raw_data: RawDataUnstructured,
+    def from_raw_data(cls, raw_data: 'RawDataUnstructured',
                       coords: Mapping[Hashable, Any] = None,
                       xarray_attributes: Mapping[Hashable, Any] = None,
                       default_cells_attributes_name: str = "cell_attrs",

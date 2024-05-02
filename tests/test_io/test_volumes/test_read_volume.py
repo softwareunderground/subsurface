@@ -5,7 +5,7 @@ from conftest import RequirementsLevel
 from subsurface.modules.reader.volume.volume_utils import interpolate_unstructured_data_to_structured_data
 from subsurface.core.structs import PointSet, StructuredGrid
 
-from subsurface.modules.reader.readers_data import ReaderFilesHelper
+from subsurface.core.reader_helpers.readers_data import ReaderFilesHelper
 from subsurface.modules.reader.volume.read_volume import read_volumetric_mesh_coord_file, read_volumetric_mesh_attr_file, \
     read_volumetric_mesh_to_subsurface
 from subsurface.modules.visualization import to_pyvista_points, pv_plot, to_pyvista_grid

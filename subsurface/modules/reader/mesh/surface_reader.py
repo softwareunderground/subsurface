@@ -1,6 +1,6 @@
 from .csv_mesh_reader import mesh_csv_to_vertex, mesh_csv_to_cells, mesh_csv_to_attributes
 from .dxf_reader import dxf_from_file_to_vertex, dxf_from_stream_to_vertex
-from ..readers_data import ReaderFilesHelper, SupportedFormats
+from subsurface.core.reader_helpers.readers_data import ReaderFilesHelper, SupportedFormats
 import numpy as np
 
 __all__ = ['read_mesh_file_to_vertex', 'read_mesh_file_to_cells',
