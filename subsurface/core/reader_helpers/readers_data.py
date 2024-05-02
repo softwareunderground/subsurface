@@ -35,6 +35,7 @@ class GenericReaderFilesHelper:
     columns_map: Union[None, Callable, dict, pd.Series] = None
     additional_reader_kwargs: dict = field(default_factory=dict)
     file_or_buffer_type: Any = field(init=False)
+    encoding: str = "ISO-8859-1"
 
     index_col: Union[int, str] = False
     header: Union[None, int, List[int]] = 0
@@ -59,7 +60,8 @@ class GenericReaderFilesHelper:
                 "names"    : self.col_names,
                 "header"   : self.header,
                 "index_col": self.index_col,
-                "usecols"  : self.usecols
+                "usecols"  : self.usecols,
+                "encoding" : self.encoding
         }
         return {**attr_dict, **self.additional_reader_kwargs}
 

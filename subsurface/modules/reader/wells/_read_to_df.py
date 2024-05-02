@@ -8,7 +8,10 @@ def check_format_and_read_to_df(reader_helper: GenericReaderFilesHelper) -> pd.D
         d = pd.read_json(reader_helper.file_or_buffer, orient='split')
     elif reader_helper.is_file_in_disk:
         reader = _get_reader(reader_helper.format)
-        d = reader(reader_helper.file_or_buffer, **reader_helper.pandas_reader_kwargs)
+        d = reader(
+            filepath_or_buffer=reader_helper.file_or_buffer, 
+            **reader_helper.pandas_reader_kwargs
+        )
     elif reader_helper.is_bytes_string:
         reader = _get_reader('.csv')
         d = reader(reader_helper.file_or_buffer, **reader_helper.pandas_reader_kwargs)
@@ -38,14 +41,15 @@ def _dict_reader(dict_):
 
 
 def _get_reader(file_format):
-    if file_format == SupportedFormats.XLXS:
-        reader = pd.read_excel
-    elif file_format == 'dict':
-        reader = _dict_reader
-    elif file_format == SupportedFormats.CSV:
-        reader = pd.read_csv
-    elif file_format == SupportedFormats.JSON:
-        reader = _dict_reader
-    else:
-        raise ValueError(f"Subsurface is not able to read the following extension: {file_format}")
+    match file_format:
+        case SupportedFormats.XLXS:
+            reader = pd.read_excel
+        case 'dict':
+            reader = _dict_reader
+        case SupportedFormats.CSV:
+            reader = pd.read_csv
+        case SupportedFormats.JSON:
+            reader = _dict_reader
+        case _:
+            raise ValueError(f"Subsurface is not able to read the following extension: {file_format}")
     return reader
