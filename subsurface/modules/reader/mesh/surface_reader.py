@@ -1,13 +1,13 @@
 from .csv_mesh_reader import mesh_csv_to_vertex, mesh_csv_to_cells, mesh_csv_to_attributes
 from .dxf_reader import dxf_from_file_to_vertex, dxf_from_stream_to_vertex
-from subsurface.core.reader_helpers.readers_data import ReaderFilesHelper, SupportedFormats
+from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper, SupportedFormats
 import numpy as np
 
 __all__ = ['read_mesh_file_to_vertex', 'read_mesh_file_to_cells',
            'read_mesh_file_to_attr', 'cells_from_delaunay']
 
 
-def read_mesh_file_to_vertex(reader_args: ReaderFilesHelper) -> np.ndarray:
+def read_mesh_file_to_vertex(reader_args: GenericReaderFilesHelper) -> np.ndarray:
     if reader_args.format is SupportedFormats.CSV:
         vertex = mesh_csv_to_vertex(reader_args.file_or_buffer, reader_args.columns_map,
                                     **reader_args.pandas_reader_kwargs)
@@ -20,7 +20,7 @@ def read_mesh_file_to_vertex(reader_args: ReaderFilesHelper) -> np.ndarray:
     return vertex
 
 
-def read_mesh_file_to_cells(reader_args: ReaderFilesHelper) -> np.ndarray:
+def read_mesh_file_to_cells(reader_args: GenericReaderFilesHelper) -> np.ndarray:
     extension = reader_args.format
 
     if extension == SupportedFormats.CSV:
@@ -34,7 +34,7 @@ def read_mesh_file_to_cells(reader_args: ReaderFilesHelper) -> np.ndarray:
     return cells
 
 
-def read_mesh_file_to_attr(reader_args: ReaderFilesHelper):
+def read_mesh_file_to_attr(reader_args: GenericReaderFilesHelper):
     extension = reader_args.format
     if extension == SupportedFormats.CSV:
         attr = mesh_csv_to_attributes(reader_args.file_or_buffer,

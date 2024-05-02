@@ -4,7 +4,7 @@ from conftest import RequirementsLevel
 from subsurface.core.structs import UnstructuredData
 from subsurface import TriSurf, PointSet, optional_requirements
 from subsurface.modules.reader.mesh.surfaces_api import read_2d_mesh_to_unstruct
-from subsurface.core.reader_helpers.readers_data import ReaderFilesHelper
+from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
 from subsurface.core.reader_helpers.reader_unstruct import ReaderUnstructuredHelper
 import subsurface.modules.visualization as sb_viz
 
@@ -20,7 +20,7 @@ class TestReadDxfAndPlot:
     def test_read_dxf_only_vertex(self, data_path):
         path = data_path + '/surfaces/shafts_small.dxf'
 
-        foo = ReaderUnstructuredHelper(ReaderFilesHelper(path))
+        foo = ReaderUnstructuredHelper(GenericReaderFilesHelper(path))
 
         unstruct = read_2d_mesh_to_unstruct(foo, delaunay=False)
 

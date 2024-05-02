@@ -25,7 +25,7 @@ class SupportedFormats(enum.Enum):
 
 
 @dataclass
-class ReaderFilesHelper:
+class GenericReaderFilesHelper:
     file_or_buffer: fb
     usecols: Union[List[str], List[int]] = None  # Use a subset of columns
     col_names: List[Union[str, int]] = None  # Give a name

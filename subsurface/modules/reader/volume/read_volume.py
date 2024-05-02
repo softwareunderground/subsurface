@@ -1,10 +1,10 @@
 from ....core.structs import UnstructuredData
-from subsurface.core.reader_helpers.readers_data import ReaderFilesHelper
+from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
 import pandas as pd
 
 
-def read_volumetric_mesh_to_subsurface(reader_helper_coord: ReaderFilesHelper,
-                                       reader_helper_attr: ReaderFilesHelper) -> UnstructuredData:
+def read_volumetric_mesh_to_subsurface(reader_helper_coord: GenericReaderFilesHelper,
+                                       reader_helper_attr: GenericReaderFilesHelper) -> UnstructuredData:
     df_coord = read_volumetric_mesh_coord_file(reader_helper_coord)
     df_attr = read_volumetric_mesh_attr_file(reader_helper_attr)
     combined_df = df_coord.merge(df_attr, left_index=True, right_index=True)
@@ -15,7 +15,7 @@ def read_volumetric_mesh_to_subsurface(reader_helper_coord: ReaderFilesHelper,
     return ud
 
 
-def read_volumetric_mesh_coord_file(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
+def read_volumetric_mesh_coord_file(reader_helper: GenericReaderFilesHelper) -> pd.DataFrame:
     df = pd.read_csv(
         filepath_or_buffer=reader_helper.file_or_buffer,
         **reader_helper.pandas_reader_kwargs
@@ -35,7 +35,7 @@ def read_volumetric_mesh_coord_file(reader_helper: ReaderFilesHelper) -> pd.Data
     return df
 
 
-def read_volumetric_mesh_attr_file(reader_helper: ReaderFilesHelper) -> pd.DataFrame:
+def read_volumetric_mesh_attr_file(reader_helper: GenericReaderFilesHelper) -> pd.DataFrame:
     df = pd.read_table(reader_helper.file_or_buffer, **reader_helper.pandas_reader_kwargs)
     df.columns = df.columns.str.strip()
     return df

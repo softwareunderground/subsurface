@@ -5,7 +5,7 @@ import numpy as np
 from ....optional_requirements import require_rasterio
 from ....core.structs import StructuredData, UnstructuredData, StructuredGrid
 from ....core.utils.utils_core import get_extension
-from subsurface.core.reader_helpers.readers_data import ReaderFilesHelper
+from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
 from ....core.reader_helpers.reader_unstruct import ReaderUnstructuredHelper
 from ..mesh.surfaces_api import read_2d_mesh_to_unstruct
 
@@ -64,7 +64,7 @@ def rasterio_dataset_to_structured_data(dataset, crop_to_extent: Optional[Sequen
 
 
 def read_unstructured_topography(path) -> UnstructuredData:
-    return read_2d_mesh_to_unstruct(ReaderUnstructuredHelper(ReaderFilesHelper(path)))
+    return read_2d_mesh_to_unstruct(ReaderUnstructuredHelper(GenericReaderFilesHelper(path)))
 
 
 def topography_to_unstructured_data(structured_data: StructuredData) -> UnstructuredData:
