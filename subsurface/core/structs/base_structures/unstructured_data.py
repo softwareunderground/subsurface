@@ -7,6 +7,8 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
+from subsurface.core.structs.base_structures._unstructured_data_constructor import vertex_and_cells_arrays_to_data_array, raw_attributes_to_dict_data_arrays
+
 
 class SpecialCellCase(enum.Enum):
     POINTS = "points"
@@ -69,8 +71,8 @@ class UnstructuredData:
             cells (Union[np.ndarray, Literal["lines", "points"]]): NDArray[(Any, ...), IntX]:
              Combination of vertex that create different geometric elements. If
              str use default values for either points or lines
-            cells_attr (Union[None, pd.DataFrame, Dict[str, xr.DataArray]]]: Number associated to an element
-            vertex_attr (Union[None, pd.DataFrame, Dict[str, xr.DataArray]]]: Number
+            cells_attr (Union[None, pd.DataFrame, Dict[str, xr.DataArray]]: Number associated to an element
+            vertex_attr (Union[None, pd.DataFrame, Dict[str, xr.DataArray]]: Number
              associated to points
             coords:
             xarray_attributes:
@@ -84,18 +86,18 @@ class UnstructuredData:
         if attributes is not None:
             cells_attr = attributes
 
-        cells_data_array, n_cells, n_vertex, vertex_data_array = _vertex_and_cells_arrays_to_data_array(
+        cells_data_array, n_cells, n_vertex, vertex_data_array = vertex_and_cells_arrays_to_data_array(
             cells=cells,
             vertex=vertex
         )
-        points_attributes_xarray_dict = _raw_attributes_to_dict_data_arrays(
+        points_attributes_xarray_dict: dict[str, xr.DataArray] = raw_attributes_to_dict_data_arrays(
             default_attributes_name=default_points_attr_name,
             n_items=n_vertex,
             dims=["points", "vertex_attr"],
             raw_attributes=vertex_attr
         )
 
-        cells_attributes_xarray_dict = _raw_attributes_to_dict_data_arrays(
+        cells_attributes_xarray_dict: dict[str, xr.DataArray] = raw_attributes_to_dict_data_arrays(
             default_attributes_name=default_cells_attr_name,
             n_items=n_cells,
             dims=["cell", "cell_attr"],
@@ -108,9 +110,6 @@ class UnstructuredData:
                 **cells_attributes_xarray_dict,
                 **points_attributes_xarray_dict
         }
-
-        default_cells_attr_name = cells_attributes_xarray_dict.get(None, next(iter(cells_attributes_xarray_dict)))
-        default_points_attr_name = points_attributes_xarray_dict.get(None, next(iter(points_attributes_xarray_dict)))
 
         return cls.from_data_arrays_dict(
             xarray_dict=xarray_dict,
@@ -140,7 +139,6 @@ class UnstructuredData:
             print(f"{e} xarray dataset must include 'cell' key (KeyError) or xarray 'cell' has no index (ValueError).")
 
         return cls(ds, default_cells_attributes_name, default_points_attributes_name)
-
 
     @property
     def vertex(self) -> np.ndarray:
@@ -182,7 +180,10 @@ class UnstructuredData:
         return self.vertex.shape[0]
 
     @property
-    def attributes_to_dict(self, orient='list'):
+    def attributes_to_dict(
+            self,
+            orient: Literal["dict", "list", "series", "split", "tight", "index"] = "list"
+    ):
         return self.attributes.to_dict(orient)
 
     @property
