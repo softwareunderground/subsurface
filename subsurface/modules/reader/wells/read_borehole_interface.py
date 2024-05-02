@@ -1,10 +1,10 @@
 import numpy as np
 import warnings
 
-from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper, SupportedFormats
+from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
 import pandas as pd
 
-from ._read_to_df import check_format_and_read_to_df
+from subsurface.modules.reader.wells._read_to_df import check_format_and_read_to_df
 
 
 def read_collar(reader_helper: GenericReaderFilesHelper) -> pd.DataFrame:
