@@ -6,7 +6,7 @@ from subsurface.core.structs import PointSet
 from subsurface.core.structs.base_structures import UnstructuredData
 
 
-def test_point_set_init(point_set):
+def test_point_set_init(point_set_fixture):
     n = 100
     # Test check of number of cells:
     data = UnstructuredData.from_array(vertex=np.random.rand(n, 3), cells=np.random.rand(n, 3),
@@ -16,8 +16,8 @@ def test_point_set_init(point_set):
         pointset_break = PointSet(data)
 
     # Test Fixture
-    print(point_set)
-    assert point_set.point_data_dict['foo'][50] == 50
+    print(point_set_fixture)
+    assert point_set_fixture.point_data_dict['foo'][50] == 50
 
 
 def test_tri_surf_init(tri_surf):

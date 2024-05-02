@@ -9,8 +9,8 @@ import xarray as xr
 pv = pytest.importorskip("pyvista")
 
 
-def test_pyvista_points(point_set):
-    s = to_pyvista_points(point_set)
+def test_pyvista_points(point_set_fixture):
+    s = to_pyvista_points(point_set_fixture)
     pv_plot([s], image_2d=True)
 
 

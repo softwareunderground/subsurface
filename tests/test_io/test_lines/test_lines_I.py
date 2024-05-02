@@ -8,8 +8,11 @@ from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
 from subsurface.core.structs.base_structures.base_structures_enum import SpecialCellCase
 from subsurface.core.structs.unstructured_elements import PointSet
 from subsurface.modules.reader.wells.read_borehole_interface import read_collar
+from subsurface.modules.visualization import to_pyvista_points, pv_plot
 
 dotenv.load_dotenv()
+
+PLOT = True
 
 
 def test_read_collar():
@@ -18,25 +21,27 @@ def test_read_collar():
         header=0,
         usecols=[0, 1, 2, 4],
         columns_map={
-                "hole_id": "id", # ? Index name is not mapped
+                "hole_id"            : "id",  # ? Index name is not mapped
                 "X_GK5_incl_inserted": "x",
-                "Y__incl_inserted": "y",
-                "Z_GK": "z"
+                "Y__incl_inserted"   : "y",
+                "Z_GK"               : "z"
         }
     )
     df = read_collar(reader)
-    
+   
     # TODO: df to unstruct
     unstruc: UnstructuredData = UnstructuredData.from_array(
-        vertex= df[["x", "y", "z"]].values,
-        cells= SpecialCellCase.POINTS
+        vertex=df[["x", "y", "z"]].values,
+        cells=SpecialCellCase.POINTS
     )
-    
+
     points = PointSet(data=unstruc)
-    
+
     collars = Collars(
         ids=df.index.to_list(),
         collar_loc=points
     )
-    
-    pass
+
+    if PLOT:
+        s = to_pyvista_points(collars.collar_loc)
+        pv_plot([s], image_2d=False)

@@ -47,7 +47,7 @@ def unstruct_factory():
 
 
 @pytest.fixture(scope='session')
-def point_set():
+def point_set_fixture():
     n = 100
 
     data = UnstructuredData.from_array(vertex=np.random.rand(n, 3), cells=np.random.rand(n, 0),
