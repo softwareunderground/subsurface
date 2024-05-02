@@ -12,10 +12,10 @@ def read_collar(reader_helper: GenericReaderFilesHelper) -> pd.DataFrame:
     if reader_helper.index_col is False: reader_helper.index_col = 0
 
     # Check file_or_buffer type
-    d = check_format_and_read_to_df(reader_helper)
-    _map_rows_and_cols_inplace(d, reader_helper)
+    data_df: pd.DataFrame = check_format_and_read_to_df(reader_helper)
+    _map_rows_and_cols_inplace(data_df, reader_helper)
 
-    return d
+    return data_df
 
 
 def read_survey(reader_helper: GenericReaderFilesHelper):

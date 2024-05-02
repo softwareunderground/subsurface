@@ -16,8 +16,6 @@ import pandas as pd
 from .base_structures import UnstructuredData, StructuredData
 
 
-__all__ = ['PointSet', 'TriSurf', 'LineSet', 'TetraMesh']
-
 
 class PointSet:
     """Class for pointset based data structures.

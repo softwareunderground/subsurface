@@ -8,11 +8,11 @@ import pandas as pd
 
 from subsurface.core.utils.utils_core import get_extension
 
-
 if pd.__version__ < '1.4.0':
     pass
 elif pd.__version__ >= '1.4.0':
     from pandas._typing import FilePath, ReadCsvBuffer
+
     fb = Union[FilePath, ReadCsvBuffer[bytes], ReadCsvBuffer[str]]
 
 
@@ -55,11 +55,12 @@ class GenericReaderFilesHelper:
 
     @property
     def pandas_reader_kwargs(self):
-        attr_dict = {"names": self.col_names,
-                     "header": self.header,
-                     "index_col": self.index_col,
-                     "usecols": self.usecols
-                     }
+        attr_dict = {
+                "names"    : self.col_names,
+                "header"   : self.header,
+                "index_col": self.index_col,
+                "usecols"  : self.usecols
+        }
         return {**attr_dict, **self.additional_reader_kwargs}
 
     @property
@@ -78,5 +79,3 @@ class GenericReaderFilesHelper:
 @dataclass
 class RawDataOptions:
     swap_yz_cells: bool = False
-
-

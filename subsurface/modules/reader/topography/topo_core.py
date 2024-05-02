@@ -68,7 +68,7 @@ def read_unstructured_topography(path) -> UnstructuredData:
 
 
 def topography_to_unstructured_data(structured_data: StructuredData) -> UnstructuredData:
-    from subsurface.visualization import to_pyvista_grid
+    from subsurface.modules.visualization import to_pyvista_grid
 
     sg = StructuredGrid(structured_data)
     s = to_pyvista_grid(sg, data_order='C', data_set_name='topography')
