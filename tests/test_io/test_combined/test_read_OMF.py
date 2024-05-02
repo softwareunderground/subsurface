@@ -3,7 +3,7 @@ from dotenv import dotenv_values
 
 import subsurface
 from conftest import RequirementsLevel
-from subsurface import TriSurf, optional_requirements
+from subsurface import optional_requirements, TriSurf
 from subsurface.modules.visualization import to_pyvista_mesh, pv_plot
 from subsurface.modules.writer import base_structs_to_binary_file
 

@@ -44,4 +44,4 @@ def test_read_collar():
 
     if PLOT:
         s = to_pyvista_points(collars.collar_loc)
-        pv_plot([s], image_2d=False)
+        pv_plot([s], image_2d=True)

@@ -5,7 +5,8 @@ from conftest import RequirementsLevel, check_requirements
 import pytest
 import numpy as np
 
-from subsurface import UnstructuredData, TriSurf, StructuredData, optional_requirements
+from subsurface import UnstructuredData, StructuredData, optional_requirements
+from subsurface.core.structs.unstructured_elements import TriSurf
 from subsurface.modules.reader.read_netcdf import read_unstruct
 from subsurface.modules.reader.profiles.profiles_core import create_mesh_from_trace
 from subsurface.modules.visualization import to_pyvista_mesh_and_texture
