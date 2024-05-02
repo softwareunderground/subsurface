@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
-from subsurface.utils.utils_core import get_extension
+from ...core.utils.utils_core import get_extension
 
 __all__ = ['ReaderFilesHelper', 'ReaderUnstructuredHelper',
            'ReaderWellsHelper', 'RawDataOptions', 'RawDataUnstructured']

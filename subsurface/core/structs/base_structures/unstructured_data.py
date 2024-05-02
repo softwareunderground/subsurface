@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
-from subsurface.reader.readers_data import RawDataUnstructured
+from ....modules.reader.readers_data import RawDataUnstructured
 
 __all__ = ['UnstructuredData', ]
 

@@ -1,7 +1,7 @@
 from typing import Union
 
 from subsurface import optional_requirements
-from subsurface.structs.base_structures import StructuredData
+from ....core.structs.base_structures import StructuredData
 import numpy as np
 
 

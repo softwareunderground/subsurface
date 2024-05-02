@@ -1,7 +1,7 @@
 import io
 
-from subsurface.optional_requirements import require_omf, require_pyvista
-from subsurface.structs.unstructured_elements import UnstructuredData
+from ....optional_requirements import require_omf, require_pyvista
+from ....core.structs.unstructured_elements import UnstructuredData
 
 
 def omf_stream_to_unstructs(stream: io.BytesIO) -> list[UnstructuredData]:

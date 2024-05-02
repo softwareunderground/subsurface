@@ -2,13 +2,13 @@ import pathlib
 import pytest
 
 from conftest import RequirementsLevel
-from subsurface.reader.volume.volume_utils import interpolate_unstructured_data_to_structured_data
-from subsurface.structs import PointSet, StructuredGrid
+from subsurface.modules.reader.volume.volume_utils import interpolate_unstructured_data_to_structured_data
+from subsurface.core.structs import PointSet, StructuredGrid
 
-from subsurface.reader.readers_data import ReaderFilesHelper
-from subsurface.reader.volume.read_volume import read_volumetric_mesh_coord_file, read_volumetric_mesh_attr_file, \
+from subsurface.modules.reader.readers_data import ReaderFilesHelper
+from subsurface.modules.reader.volume.read_volume import read_volumetric_mesh_coord_file, read_volumetric_mesh_attr_file, \
     read_volumetric_mesh_to_subsurface
-from subsurface.visualization import to_pyvista_points, pv_plot, to_pyvista_grid
+from subsurface.modules.visualization import to_pyvista_points, pv_plot, to_pyvista_grid
 
 pf = pathlib.Path(__file__).parent.absolute()
 data_path = pf.joinpath('../../data/volume/')

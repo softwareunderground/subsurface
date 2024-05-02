@@ -1,8 +1,8 @@
-import subsurface.reader
-import subsurface.interfaces
-import subsurface.writer
-import subsurface.visualization
-from subsurface.structs import *
+import subsurface.modules.reader
+import subsurface.api.interfaces
+import subsurface.modules.writer
+import subsurface.modules.visualization
+from subsurface.core.structs import *
 from datetime import datetime
 import dotenv
 

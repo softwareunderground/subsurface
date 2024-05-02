@@ -4,8 +4,8 @@ from dotenv import dotenv_values
 import subsurface
 from conftest import RequirementsLevel
 from subsurface import LineSet, UnstructuredData, PointSet, optional_requirements
-from subsurface.visualization import pv_plot, to_pyvista_line, to_pyvista_points
-from subsurface.writer import base_structs_to_binary_file
+from subsurface.modules.visualization import pv_plot, to_pyvista_line, to_pyvista_points
+from subsurface.modules.writer import base_structs_to_binary_file
 
 pytestmark = pytest.mark.skipif(
     condition=(RequirementsLevel.READ_MESH) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),

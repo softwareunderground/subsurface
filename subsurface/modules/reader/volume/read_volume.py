@@ -1,11 +1,6 @@
-from subsurface.structs import UnstructuredData
-
-from subsurface.reader.readers_data import ReaderFilesHelper
+from ....core.structs import UnstructuredData
+from ..readers_data import ReaderFilesHelper
 import pandas as pd
-
-__all__ = ['read_volumetric_mesh_to_subsurface',
-           'read_volumetric_mesh_coord_file',
-           'read_volumetric_mesh_attr_file']
 
 
 def read_volumetric_mesh_to_subsurface(reader_helper_coord: ReaderFilesHelper,

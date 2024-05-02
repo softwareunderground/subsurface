@@ -2,12 +2,12 @@ import os
 
 import pytest
 
-import subsurface.reader.mesh.surfaces_api
 from conftest import RequirementsLevel
-from subsurface.reader.readers_data import ReaderUnstructuredHelper, ReaderFilesHelper
-from subsurface.structs import TriSurf
-from subsurface.structs.base_structures import UnstructuredData
-from subsurface.visualization.to_pyvista import pv_plot, to_pyvista_mesh
+from subsurface.modules.reader.readers_data import ReaderUnstructuredHelper, ReaderFilesHelper
+from subsurface.core.structs import TriSurf
+from subsurface.core.structs.base_structures import UnstructuredData
+from subsurface.modules.visualization.to_pyvista import pv_plot, to_pyvista_mesh
+from subsurface.modules.reader.mesh.surfaces_api import read_2d_mesh_to_unstruct
 
 input_path = os.path.dirname(__file__) + '/../../data/surfaces'
 
@@ -19,14 +19,14 @@ pytestmark = pytest.mark.skipif(
 @pytest.fixture(scope="module")
 def get_less_unstructured_data() -> UnstructuredData:
     fp = input_path + "/less_land_surface_vertices.csv"
-    ud_less = subsurface.reader.mesh.surfaces_api.read_2d_mesh_to_unstruct(ReaderUnstructuredHelper(ReaderFilesHelper(fp)))
+    ud_less = read_2d_mesh_to_unstruct(ReaderUnstructuredHelper(ReaderFilesHelper(fp)))
     return ud_less
 
 
 @pytest.fixture(scope="module")
 def get_unstructured_data_with_cells() -> UnstructuredData:
     fp = input_path + "/vertices_and_edges.csv"
-    ud_cells = subsurface.reader.mesh.surfaces_api.read_2d_mesh_to_unstruct(
+    ud_cells = read_2d_mesh_to_unstruct(
         ReaderUnstructuredHelper(
             reader_vertex_args=ReaderFilesHelper(fp, usecols=['x', 'y', 'z']),
             reader_cells_args=ReaderFilesHelper(
@@ -50,7 +50,7 @@ def get_unstructured_data_with_attribute() -> UnstructuredData:
         reader_vertex_attr_args=ReaderFilesHelper(fp, usecols=['T'])
     )
 
-    ud_attribute = subsurface.reader.mesh.surfaces_api.read_2d_mesh_to_unstruct(reader_unstruc)
+    ud_attribute = read_2d_mesh_to_unstruct(reader_unstruc)
     return ud_attribute
 
 
@@ -59,7 +59,8 @@ def test_read_surface2():
     with pytest.raises(KeyError):
         fp = input_path + "/less_land_surface_vertices_no_col.csv"
         reader_unstruc = ReaderUnstructuredHelper(reader_vertex_args=ReaderFilesHelper(fp))
-        ud = subsurface.reader.mesh.surfaces_api.read_2d_mesh_to_unstruct(reader_unstruc)
+
+        ud = read_2d_mesh_to_unstruct(reader_unstruc)
         print(ud)
 
     # Say pandas that there is no header and the name of the columns
@@ -67,7 +68,7 @@ def test_read_surface2():
     reader_unstruc = ReaderUnstructuredHelper(
         reader_vertex_args=ReaderFilesHelper(fp, header=0, col_names=['x', 'y', 'z'])
     )
-    ud = subsurface.reader.mesh.surfaces_api.read_2d_mesh_to_unstruct(reader_unstruc)
+    ud = read_2d_mesh_to_unstruct(reader_unstruc)
     print(ud)
 
     # Remap column names to fit the requirements
@@ -76,7 +77,7 @@ def test_read_surface2():
         reader_vertex_args=ReaderFilesHelper(fp, columns_map={'foo': 'x', 'bar': 'y', 'baz': 'z'})
     )
 
-    ud = subsurface.reader.mesh.surfaces_api.read_2d_mesh_to_unstruct(reader_unstruc)
+    ud = read_2d_mesh_to_unstruct(reader_unstruc)
     print(ud)
     return ud
 
@@ -122,7 +123,7 @@ def test_read_from_multiple_files():
     reader_unstruc = ReaderUnstructuredHelper(reader_vertex_args, reader_edges_args,
                                               reader_vertex_attrs_args, reader_cells_attrs_args)
 
-    ud = subsurface.reader.mesh.surfaces_api.read_2d_mesh_to_unstruct(reader_unstruc)
+    ud = read_2d_mesh_to_unstruct(reader_unstruc)
     ts = TriSurf(ud)
     s = to_pyvista_mesh(ts)
     pv_plot([s], image_2d=True)

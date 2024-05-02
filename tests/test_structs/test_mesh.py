@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from subsurface.structs import PointSet
-from subsurface.structs.base_structures import UnstructuredData
+from subsurface.core.structs import PointSet
+from subsurface.core.structs.base_structures import UnstructuredData
 
 
 def test_point_set_init(point_set):

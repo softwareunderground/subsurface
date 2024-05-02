@@ -2,8 +2,8 @@ import warnings
 
 from typing import Union, Tuple, Optional
 
-from subsurface import optional_requirements
-from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
+from ... import optional_requirements
+from ...core.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
 import numpy as np
 
 try:

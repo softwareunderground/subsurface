@@ -2,11 +2,11 @@ from typing import Sequence, Optional
 
 import numpy as np
 
-from subsurface.optional_requirements import require_rasterio
-from subsurface.reader.readers_data import ReaderFilesHelper, ReaderUnstructuredHelper
-from subsurface.structs import StructuredData, UnstructuredData, StructuredGrid
-from subsurface.reader.mesh.surfaces_api import read_2d_mesh_to_unstruct
-from subsurface.utils.utils_core import get_extension
+from ....optional_requirements import require_rasterio
+from ....core.structs import StructuredData, UnstructuredData, StructuredGrid
+from ....core.utils.utils_core import get_extension
+from ..readers_data import ReaderFilesHelper, ReaderUnstructuredHelper
+from ..mesh.surfaces_api import read_2d_mesh_to_unstruct
 
 __all__ = ['read_structured_topography', 'rasterio_dataset_to_structured_data', 'read_unstructured_topography']
 

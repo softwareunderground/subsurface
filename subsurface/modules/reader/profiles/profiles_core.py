@@ -7,8 +7,9 @@ import numpy as np
 import pandas as pd
 
 import subsurface
-from subsurface import optional_requirements, TriSurf
-from subsurface.visualization import to_pyvista_line, to_pyvista_mesh
+from subsurface import optional_requirements
+from subsurface.core.structs.unstructured_elements import TriSurf
+from ...visualization import to_pyvista_line, to_pyvista_mesh
 
 
 @dataclass
@@ -120,6 +121,7 @@ def _traces_texture_to_sub_structs(path_to_trace, path_to_texture, idx, uv=None)
         
         textured_mesh.append(tri_surf)
         n += 1
+    
     return textured_mesh
 
 

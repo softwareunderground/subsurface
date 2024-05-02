@@ -4,7 +4,7 @@ from typing import List
 from scipy.interpolate import griddata
 import numpy as np
 
-from subsurface.structs import UnstructuredData, StructuredData
+from ....core.structs import UnstructuredData, StructuredData
 
 
 __all__ = ['interpolate_unstructured_data_to_structured_data', ]

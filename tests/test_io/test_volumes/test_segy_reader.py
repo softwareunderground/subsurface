@@ -5,12 +5,12 @@ import os
 
 from conftest import RequirementsLevel
 from subsurface import TriSurf, optional_requirements
-from subsurface.geological_formats import segy_reader
-from subsurface.structs.base_structures import StructuredData, UnstructuredData
+from subsurface.core.structs.base_structures import StructuredData, UnstructuredData
 import matplotlib.pyplot as plt
 import numpy as np
 
-from subsurface.visualization import to_pyvista_mesh, pv_plot
+from subsurface.modules.reader.volume import segy_reader
+from subsurface.modules.visualization import to_pyvista_mesh, pv_plot
 
 
 pytestmark = pytest.mark.skipif(
