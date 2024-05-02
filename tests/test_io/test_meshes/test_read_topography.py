@@ -3,7 +3,7 @@ import pytest
 from conftest import RequirementsLevel
 from subsurface import TriSurf, StructuredGrid
 from subsurface.modules.reader import read_structured_topography, read_unstructured_topography
-from subsurface.core.structs.base_structures.common_data_utils import replace_outliers
+from subsurface.core.utils.utils_core import replace_outliers
 from subsurface.modules.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
 
 

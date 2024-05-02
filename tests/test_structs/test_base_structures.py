@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
-from subsurface.core.structs.base_structures.common_data_utils import replace_outliers
+from subsurface.core.utils.utils_core import replace_outliers
 from subsurface.modules.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
 
 

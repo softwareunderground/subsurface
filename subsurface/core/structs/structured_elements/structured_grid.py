@@ -1,30 +1,5 @@
-"""For regularly gridded datasets like rasters and tensor meshes.
-
-"""
-
 import numpy as np
-from .base_structures import StructuredData
-
-
-__all__ = ['OctreeMesh', 'StructuredSurface', 'StructuredGrid']
-
-
-class OctreeMesh:
-    """
-    TODO: implement as Dom discussed with data frames to track the levels.
-    """
-
-    def __init__(self, data: StructuredData):
-        raise NotImplementedError
-
-
-class StructuredSurface:
-    def __init__(self, structured_data: StructuredData):
-        # TODO check structured_data has two coordinates
-        self.ds = structured_data
-
-    # Add pyvista methods of gridded data
-
+from subsurface.core.structs.base_structures import StructuredData
 
 class StructuredGrid:
     # TODO check structured_data has three coordinates
