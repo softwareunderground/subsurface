@@ -50,6 +50,7 @@ class UnstructuredData:
             cls,
             vertex: np.ndarray,
             cells: Union[np.ndarray, Literal["lines", "points"], SpecialCellCase],
+            *,
             cells_attr: Union[None, pd.DataFrame, Dict[str, xr.DataArray]] = None,
             vertex_attr: Union[None, pd.DataFrame, Dict[str, xr.DataArray]] = None,
             coords: Mapping[Hashable, Any] = None,

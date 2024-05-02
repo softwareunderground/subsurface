@@ -1,6 +1,9 @@
+from dataclasses import dataclass
+
 from ..base_structures import UnstructuredData
 
 
+@dataclass
 class PointSet:
     """Class for pointset based data structures.
 
@@ -11,7 +14,8 @@ class PointSet:
         data (UnstructuredData): Base object for unstructured data.
 
     """
-
+    data: UnstructuredData
+    
     def __init__(self, data: UnstructuredData):
         if data.cells.shape[1] > 1:
             raise AttributeError('data.cells must be of the format'

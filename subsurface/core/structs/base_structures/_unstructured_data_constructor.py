@@ -45,7 +45,7 @@ def raw_attributes_to_dict_data_arrays(
 
 def _create_default_cells_arg(cells: Union[Literal["points", "lines"], SpecialCellCase],
                               n_vertex: int) -> np.ndarray:
-    if cells is None or cells == 'points':
+    if cells is None or cells == 'points' or cells == SpecialCellCase.POINTS:
         cells_array = np.arange(0, n_vertex).reshape(-1, 1)
     elif cells == 'lines':
         a = np.arange(0, n_vertex - 1, dtype=np.int_)
