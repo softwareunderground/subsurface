@@ -2,14 +2,13 @@ from typing import Sequence, Optional
 
 import numpy as np
 
+from ....core.structs.structured_elements.structured_grid import StructuredGrid
 from ....optional_requirements import require_rasterio
-from ....core.structs import StructuredData, UnstructuredData, StructuredGrid
+from ....core.structs import StructuredData, UnstructuredData
 from ....core.utils.utils_core import get_extension
-from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
+from ....core.reader_helpers.readers_data import GenericReaderFilesHelper
 from ....core.reader_helpers.reader_unstruct import ReaderUnstructuredHelper
 from ..mesh.surfaces_api import read_2d_mesh_to_unstruct
-
-__all__ = ['read_structured_topography', 'rasterio_dataset_to_structured_data', 'read_unstructured_topography']
 
 
 def read_structured_topography(path, crop_to_extent: Optional[Sequence]=None) -> StructuredData:

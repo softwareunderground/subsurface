@@ -1,4 +1,4 @@
-from subsurface import UnstructuredData
+from ..base_structures import UnstructuredData
 
 
 class TetraMesh:

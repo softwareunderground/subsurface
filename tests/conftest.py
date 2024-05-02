@@ -2,7 +2,7 @@ import enum
 
 import pytest
 
-from subsurface.core.structs import PointSet, TriSurf, LineSet, TetraMesh
+from subsurface.core.structs.unstructured_elements import PointSet, TriSurf, LineSet, TetraMesh
 from subsurface.core.structs.base_structures import UnstructuredData
 import numpy as np
 import pandas as pd

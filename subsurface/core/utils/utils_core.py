@@ -2,7 +2,7 @@ from typing import Union
 
 from pathlib import Path
 
-from subsurface import StructuredData, UnstructuredData
+from ..structs import StructuredData, UnstructuredData
 
 
 def get_extension(path):

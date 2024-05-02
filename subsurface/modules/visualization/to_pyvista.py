@@ -3,7 +3,8 @@ import warnings
 from typing import Union, Tuple, Optional
 
 from ... import optional_requirements
-from ...core.structs import PointSet, TriSurf, LineSet, TetraMesh, StructuredGrid
+from ...core.structs.unstructured_elements import PointSet, TriSurf, LineSet, TetraMesh
+from ...core.structs.structured_elements.structured_grid import StructuredGrid
 import numpy as np
 
 try:

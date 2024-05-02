@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from subsurface import UnstructuredData
+from ..base_structures import UnstructuredData
 
 
 class LineSet:
