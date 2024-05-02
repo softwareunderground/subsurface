@@ -1,4 +1,4 @@
-from ..structs import LineSet
+from subsurface.core.structs import LineSet
 
 
 class BoreholeSet:
