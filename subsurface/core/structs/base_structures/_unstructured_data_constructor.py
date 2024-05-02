@@ -47,11 +47,11 @@ def _create_default_cells_arg(cells: Union[Literal["points", "lines"], SpecialCe
                               n_vertex: int) -> np.ndarray:
     if cells is None or cells == 'points' or cells == SpecialCellCase.POINTS:
         cells_array = np.arange(0, n_vertex).reshape(-1, 1)
-    elif cells == 'lines':
+    elif cells == 'lines' or cells == SpecialCellCase.LINES:
         a = np.arange(0, n_vertex - 1, dtype=np.int_)
         b = np.arange(1, n_vertex, dtype=np.int_)
         cells_array = np.vstack([a, b]).T
-    elif type(cells) != np.ndarray:
+    else:
         raise ValueError("cells must be either None (will default to 'points'),"
                          "'points', 'lines' or a 2D ndarray.")
     return cells_array
