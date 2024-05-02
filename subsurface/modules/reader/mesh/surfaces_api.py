@@ -8,8 +8,7 @@ from .surface_reader import read_mesh_file_to_vertex, read_mesh_file_to_cells, c
 from ....core.reader_helpers.reader_unstruct import ReaderUnstructuredHelper
 from ....core.structs import UnstructuredData
 
-
-from ....core.structs.base_structures.unstructured_data import SpecialCellCase
+from ....core.structs.base_structures.base_structures_enum import SpecialCellCase
 
 
 def read_2d_mesh_to_unstruct(

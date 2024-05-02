@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
-from subsurface.core.structs.base_structures.unstructured_data import SpecialCellCase
+from subsurface.core.structs.base_structures.base_structures_enum import SpecialCellCase
 
 
 def vertex_and_cells_arrays_to_data_array(cells: Union[np.ndarray, Literal["lines", "points"], SpecialCellCase],

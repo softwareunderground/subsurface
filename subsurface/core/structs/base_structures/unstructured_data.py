@@ -1,18 +1,12 @@
-import enum
-
 from dataclasses import dataclass
-from typing import Union, Dict, Mapping, Hashable, Any, Literal, List
+from typing import Union, Dict, Mapping, Hashable, Any, Literal
 
 import numpy as np
 import pandas as pd
 import xarray as xr
 
 from subsurface.core.structs.base_structures._unstructured_data_constructor import vertex_and_cells_arrays_to_data_array, raw_attributes_to_dict_data_arrays
-
-
-class SpecialCellCase(enum.Enum):
-    POINTS = "points"
-    LINES = "lines"
+from subsurface.core.structs.base_structures.base_structures_enum import SpecialCellCase
 
 
 @dataclass(frozen=False)
