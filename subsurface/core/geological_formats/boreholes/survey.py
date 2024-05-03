@@ -28,21 +28,25 @@ class Survey:
         )
 
 
-def _correct_angles(df: 'pd.DataFrame') -> 'pd.DataFrame':
+def _correct_angles(df: pd.DataFrame) -> pd.DataFrame:
     def correct_inclination(inc: float) -> float:
-        if -360 < inc < -180:
-            return 180 + inc
-        elif -180 < inc < 0:
-            return -inc
-        elif 360 > inc > 180:
-            return inc - 180
+        if inc < 0:
+            inc = inc % 360  # Normalize to 0-360 range first if negative
+        if 0 <= inc <= 180:
+            return inc - 0.000001
+        elif 180 < inc < 360:
+            return 360 - inc  # Reflect angles greater than 180 back into the 0-180 range
         else:
-            raise ValueError(f'Inclination value {inc} is not in the range of 0 to 360')
+            raise ValueError(f'Inclination value {inc} is out of the expected range of 0 to 360 degrees')
+
+    def correct_azimuth(azi: float) -> float:
+        return azi % 360  # Normalize azimuth to 0-360 range
 
     df['inc'] = df['inc'].apply(correct_inclination)
-    df['azi'] = df['azi'] % 360
+    df['azi'] = df['azi'].apply(correct_azimuth)
 
     return df
+
 
 
 def _data_frame_to_unstructured_data(df: 'pd.DataFrame'):

@@ -53,7 +53,7 @@ def test_read_assay():
         file_or_buffer=os.getenv("PATH_TO_SPREMBERG_SURVEY"),
         columns_map={
                 'depth'  : 'md',
-                'dip'    : 'inc',
+                'dip'    : 'dip',
                 'azimuth': 'azi'
         },
     )
@@ -62,7 +62,7 @@ def test_read_assay():
     survey: Survey = Survey.from_df(df)
 
     if PLOT:
-        s = to_pyvista_line(line_set=survey.survey_trajectory)
+        s = to_pyvista_line(line_set=survey.survey_trajectory, radius=10)
         pv_plot([s], image_2d=False)
 
 
@@ -85,7 +85,7 @@ def test_merge_collar_assay():
         file_or_buffer=os.getenv("PATH_TO_SPREMBERG_SURVEY"),
         columns_map={
                 'depth'  : 'md',
-                'dip'    : 'inc',
+                'dip'    : 'dip',
                 'azimuth': 'azi'
         },
     )
@@ -99,6 +99,6 @@ def test_merge_collar_assay():
     )
 
     if PLOT:
-        s = to_pyvista_line(line_set=borehole_set.combined_trajectory, radius=100)
+        s = to_pyvista_line(line_set=borehole_set.combined_trajectory, radius=10)
         pv_plot([s], image_2d=False)
     
