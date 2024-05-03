@@ -99,6 +99,6 @@ def test_merge_collar_assay():
     )
 
     if PLOT:
-        s = to_pyvista_line(line_set=borehole_set.combined_trajectory, radius=10)
+        s = to_pyvista_line(line_set=borehole_set.combined_trajectory, radius=50)
         pv_plot([s], image_2d=False)
     
