@@ -1,8 +1,8 @@
+import dotenv
 import os
 
-import dotenv
-
-from subsurface import UnstructuredData, LineSet
+from subsurface import UnstructuredData
+from subsurface.core.geological_formats.boreholes.boreholes import BoreholeSet, MergeOptions
 from subsurface.core.geological_formats.boreholes.collars import Collars
 from subsurface.core.geological_formats.boreholes.survey import Survey
 from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
@@ -64,3 +64,41 @@ def test_read_assay():
     if PLOT:
         s = to_pyvista_line(line_set=survey.survey_trajectory)
         pv_plot([s], image_2d=False)
+
+
+def test_merge_collar_assay():
+    reader_collar: GenericReaderFilesHelper = GenericReaderFilesHelper(
+        file_or_buffer=os.getenv("PATH_TO_SPREMBERG_COLLAR"),
+        header=0,
+        usecols=[0, 1, 2, 4],
+        columns_map={
+                "hole_id"            : "id",  # ? Index name is not mapped
+                "X_GK5_incl_inserted": "x",
+                "Y__incl_inserted"   : "y",
+                "Z_GK"               : "z"
+        }
+    )
+    df_collar = read_collar(reader_collar)
+    collar = Collars.from_df(df_collar)
+    
+    reader_survey: GenericReaderFilesHelper = GenericReaderFilesHelper(
+        file_or_buffer=os.getenv("PATH_TO_SPREMBERG_SURVEY"),
+        columns_map={
+                'depth'  : 'md',
+                'dip'    : 'inc',
+                'azimuth': 'azi'
+        },
+    )
+    
+    survey = Survey.from_df(read_survey(reader_survey))
+    
+    borehole_set = BoreholeSet(
+        collars=collar,
+        survey=survey,
+        merge_option=MergeOptions.INTERSECT
+    )
+
+    if PLOT:
+        s = to_pyvista_line(line_set=borehole_set.combined_trajectory, radius=100)
+        pv_plot([s], image_2d=False)
+    

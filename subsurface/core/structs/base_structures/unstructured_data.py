@@ -153,9 +153,12 @@ class UnstructuredData:
         self.data[self.cells_attr_name] = xr.DataArray(dataframe, dims=['element', 'cell_attr'])
 
     @property
-    def points_attributes(self):
-        return self.data[self.vertex_attr_name].to_dataframe()[
-            self.vertex_attr_name].unstack(level=1)
+    def points_attributes(self) -> pd.DataFrame:
+        data_array: xr.DataArray = self.data[self.vertex_attr_name]
+        dataframe: pd.DataFrame = data_array.to_dataframe()
+        not_suer = dataframe[self.vertex_attr_name]
+        unstack = not_suer.unstack(level=1)
+        return unstack
 
     @points_attributes.setter
     def points_attributes(self, dataframe: pd.DataFrame):

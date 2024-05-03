@@ -1,3 +1,4 @@
+import pandas as pd
 from dataclasses import dataclass
 
 from subsurface import optional_requirements
@@ -18,8 +19,11 @@ class Survey:
         trajectories: UnstructuredData = _data_frame_to_unstructured_data(
             df=_correct_angles(df)
         )
+        # Grab the unique ids
+        unique_ids = df.index.get_level_values(0).unique().tolist()
+        
         return cls(
-            ids=df.index.to_list(),
+            ids=unique_ids,
             survey_trajectory=LineSet(data=trajectories, radius=RADIUS)
         )
 
@@ -45,9 +49,12 @@ def _data_frame_to_unstructured_data(df: 'pd.DataFrame'):
     import numpy as np
     
     wp = optional_requirements.require_wellpathpy()
+    pd = optional_requirements.require_pandas()
     
     vertex: np.ndarray = np.empty((0, 3), dtype=np.float_)
     cells: np.ndarray = np.empty((0, 2), dtype=np.int_)
+    cell_attr: pd.DataFrame = pd.DataFrame(columns=['well_id'])
+    vertex_attr: pd.DataFrame = pd.DataFrame(columns=['well_id'])
 
     for e, (borehole_id, data) in enumerate(df.groupby(level=0)):
         dev: wp.deviation = wp.deviation(
@@ -68,10 +75,16 @@ def _data_frame_to_unstructured_data(df: 'pd.DataFrame'):
         n_vertex_shift_1 = np.arange(1, len(pos.depth), dtype=np.int_)
         cell_per_well = np.vstack([n_vertex_shift_0, n_vertex_shift_1]).T + vertex_count
         cells = np.vstack([cells, cell_per_well], dtype=np.int_)
+        
+        # Add the id (e), to cell_attr and vertex_attr
+        cell_attr = pd.concat([cell_attr, pd.DataFrame({'well_id': [e] * len(cell_per_well)})])
+        vertex_attr = pd.concat([vertex_attr, pd.DataFrame({'well_id': [e] * len(pos.depth)})])
 
     unstruct = UnstructuredData.from_array(
         vertex=vertex,
-        cells=cells
+        cells=cells,
+        vertex_attr=vertex_attr.reset_index(),
+        cells_attr=cell_attr.reset_index()
     )
 
     return unstruct

@@ -24,7 +24,7 @@ class PointSet:
         self.data = data
 
     @property
-    def points(self):
+    def points(self) -> "np.ndarray":
         """Fetch the points/vertices dataframe."""
         return self.data.vertex
 
