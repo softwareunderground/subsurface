@@ -13,7 +13,8 @@ RADIUS = 10
 class Survey:
     ids: list[str]
     survey_trajectory: LineSet
-
+    well_id_mapper: dict[str, int] = None
+    
     @classmethod
     def from_df(cls, df: 'pd.DataFrame'):
         trajectories: UnstructuredData = _data_frame_to_unstructured_data(
@@ -22,10 +23,20 @@ class Survey:
         # Grab the unique ids
         unique_ids = df.index.get_level_values(0).unique().tolist()
         
+        # fill well_id_mapper
+        well_id_mapper = {well_id: e for e, well_id in enumerate(unique_ids)}
+        
         return cls(
             ids=unique_ids,
-            survey_trajectory=LineSet(data=trajectories, radius=RADIUS)
+            survey_trajectory=LineSet(data=trajectories, radius=RADIUS),
+            well_id_mapper=well_id_mapper
         )
+    
+    def get_well_string_id(self, well_id: int) -> str:
+        return self.ids[well_id]
+    
+    def get_well_id(self, well_string_id: str) -> int:
+        return self.well_id_mapper.get(well_string_id, None)
 
 
 def _correct_angles(df: pd.DataFrame) -> pd.DataFrame:
@@ -67,7 +78,7 @@ def _data_frame_to_unstructured_data(df: 'pd.DataFrame'):
             azi=data['azi']
         )
         depths = list(range(0, int(dev.md[-1]) + 1, STEP))
-        pos = dev.minimum_curvature().resample(depths=depths)
+        pos: wp.minimum_curvature = dev.minimum_curvature().resample(depths=depths)
         vertex_count = vertex.shape[0]
 
         vertex = np.vstack([
@@ -80,9 +91,15 @@ def _data_frame_to_unstructured_data(df: 'pd.DataFrame'):
         cell_per_well = np.vstack([n_vertex_shift_0, n_vertex_shift_1]).T + vertex_count
         cells = np.vstack([cells, cell_per_well], dtype=np.int_)
         
+        
         # Add the id (e), to cell_attr and vertex_attr
         cell_attr = pd.concat([cell_attr, pd.DataFrame({'well_id': [e] * len(cell_per_well)})])
-        vertex_attr = pd.concat([vertex_attr, pd.DataFrame({'well_id': [e] * len(pos.depth)})])
+        vertex_attr = pd.concat([vertex_attr, pd.DataFrame(
+            {
+                    'well_id': [e] * len(pos.depth),
+                    'depth': pos.depth,
+             }
+        )])
 
     unstruct = UnstructuredData.from_array(
         vertex=vertex,

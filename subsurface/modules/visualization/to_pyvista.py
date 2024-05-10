@@ -1,3 +1,5 @@
+import enum
+
 import warnings
 
 from typing import Union, Tuple, Optional
@@ -34,10 +36,10 @@ def pv_plot(meshes: list,
     """
 
     add_mesh_kwargs = dict() if add_mesh_kwargs is None else add_mesh_kwargs
-    p = init_plotter(image_2d, ve, plotter_kwargs, background_plotter)
+    p: pv.Pll = init_plotter(image_2d, ve, plotter_kwargs, background_plotter)
 
     for m in meshes:
-        p.add_mesh(m, **add_mesh_kwargs)
+        p.add_mesh(m, cmap=cmap, categories=True, **add_mesh_kwargs)
 
     p.show_bounds()
 
@@ -63,7 +65,7 @@ def init_plotter(
         ve=None,
         plotter_kwargs: dict = None,
         background_plotter=False
-):
+) -> pv.Plotter:
     plotter_kwargs = dict() if plotter_kwargs is None else plotter_kwargs
     off_screen = True if image_2d is True else None
     p = pv.Plotter(**plotter_kwargs, off_screen=off_screen)
@@ -96,13 +98,13 @@ def to_pyvista_mesh(triangular_surface: TriSurf) -> "pv.PolyData":
     """
     nve = triangular_surface.mesh.n_vertex_per_element
     vertices = triangular_surface.mesh.vertex
-    
+
     # ? We need better name for these variables
     num_vertex_elements = np.full(triangular_surface.mesh.n_elements, nve)
     x = triangular_surface.mesh.cells
-    
+
     cells = np.c_[num_vertex_elements, x]
-    
+
     pv = optional_requirements.require_pyvista()
     mesh = pv.PolyData(vertices, cells)
     mesh.cell_data.update(triangular_surface.mesh.attributes_to_dict)
@@ -147,20 +149,21 @@ def to_pyvista_mesh_and_texture(triangular_surface: Union[TriSurf], ) -> Tuple["
     return mesh, uv
 
 
-def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,
-                    spline=False, n_interp_points=1000):
-    """Create pyvista PolyData for 1D lines
+class PyvistaScalarType(enum.Enum):
+    POINT = 'point'
+    CELL = 'cell'
 
-    Args:
-        line_set:
-        as_tube (bool):
-        radius (float): radius of the tube
-        spline: NotImplemented
-        n_interp_points: NotImplemented
 
-    Returns:
-        pv.PolyData
-    """
+def to_pyvista_line(
+        line_set: LineSet,
+        as_tube=True,
+        radius=None,
+        spline=False,
+        n_interp_points=1000,
+        scalar_type: PyvistaScalarType = PyvistaScalarType.POINT,
+        active_scalar: Optional[str] = None
+):
+    
     nve = line_set.data.n_vertex_per_element
     vertices = line_set.data.vertex
     cells = np.c_[np.full(line_set.data.n_elements, nve),
@@ -171,8 +174,17 @@ def to_pyvista_line(line_set: LineSet, as_tube=True, radius=None,
         mesh.lines = cells
     else:
         raise NotImplementedError
-        # mesh = pv.Spline(ver)
-    mesh.cell_data.update(line_set.data.attributes_to_dict)
+    
+    match scalar_type:
+        case PyvistaScalarType.POINT:
+            mesh.point_data.update(line_set.data.points_attributes_to_dict)
+            if active_scalar is not None:
+                mesh.set_active_scalars(active_scalar, preference='point')
+        case PyvistaScalarType.CELL:
+            mesh.cell_data.update(line_set.data.attributes_to_dict)
+            if active_scalar is not None:
+                mesh.set_active_scalars(active_scalar, preference='cell')
+            
     if as_tube is True:
         return mesh.tube(radius=radius)
     else:
@@ -251,9 +263,9 @@ def update_grid_attribute(
         data_set_name = structured_grid.ds.data_array_name
     import xarray as xr
     dataset: xr.DataArray = structured_grid.ds.data[data_set_name]
-    
+
     attributeData = {data_set_name: dataset.sel(**attribute_slice).values.ravel(data_order)}
-    mesh.point_data.update( attributeData)
+    mesh.point_data.update(attributeData)
 
     return mesh
 

@@ -9,7 +9,7 @@ from subsurface.core.structs.base_structures._unstructured_data_constructor impo
 from subsurface.core.structs.base_structures.base_structures_enum import SpecialCellCase
 
 
-@dataclass(frozen=False)
+@dataclass(frozen=False) 
 class UnstructuredData:
     data: xr.Dataset
     cells_attr_name: str = "cell_attrs"
@@ -185,7 +185,10 @@ class UnstructuredData:
         return self.attributes.to_dict(orient)
 
     @property
-    def points_attributes_to_dict(self, orient='list'):
+    def points_attributes_to_dict(
+            self,
+            orient: Literal["dict", "list", "series", "split", "tight", "index"] = "list"
+    ):
         return self.points_attributes.to_dict(orient)
 
     @property
