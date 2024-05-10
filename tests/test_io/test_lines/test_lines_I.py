@@ -8,7 +8,7 @@ from subsurface.core.geological_formats.boreholes.survey import Survey
 from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
 from subsurface.core.structs.base_structures.base_structures_enum import SpecialCellCase
 from subsurface.core.structs.unstructured_elements import PointSet
-from subsurface.modules.reader.wells.read_borehole_interface import read_collar, read_survey
+from subsurface.modules.reader.wells.read_borehole_interface import read_collar, read_survey, read_lith
 from subsurface.modules.visualization import to_pyvista_points, pv_plot, to_pyvista_line
 
 dotenv.load_dotenv()
@@ -48,7 +48,7 @@ def test_read_collar():
         pv_plot([s], image_2d=True)
 
 
-def test_read_assay():
+def test_read_survey():
     reader: GenericReaderFilesHelper = GenericReaderFilesHelper(
         file_or_buffer=os.getenv("PATH_TO_SPREMBERG_SURVEY"),
         columns_map={
@@ -64,9 +64,27 @@ def test_read_assay():
     if PLOT:
         s = to_pyvista_line(line_set=survey.survey_trajectory, radius=10)
         pv_plot([s], image_2d=False)
+    
+    return survey
 
 
-def test_merge_collar_assay():
+def test_read_stratigraphy():
+    reader: GenericReaderFilesHelper = GenericReaderFilesHelper(
+        file_or_buffer=os.getenv("PATH_TO_SPREMBERG_STRATIGRAPHY"),
+        columns_map={
+                'hole_id'   : 'id',
+                'depth_from': 'top',
+                'depth_to'  : 'base',
+                'lit_code'  : 'component lith'
+        }
+    )
+    
+    lith = read_lith(reader)
+    survey = test_read_survey()
+    pass
+
+
+def test_merge_collar_survey():
     reader_collar: GenericReaderFilesHelper = GenericReaderFilesHelper(
         file_or_buffer=os.getenv("PATH_TO_SPREMBERG_COLLAR"),
         header=0,
@@ -80,7 +98,7 @@ def test_merge_collar_assay():
     )
     df_collar = read_collar(reader_collar)
     collar = Collars.from_df(df_collar)
-    
+
     reader_survey: GenericReaderFilesHelper = GenericReaderFilesHelper(
         file_or_buffer=os.getenv("PATH_TO_SPREMBERG_SURVEY"),
         columns_map={
@@ -89,9 +107,9 @@ def test_merge_collar_assay():
                 'azimuth': 'azi'
         },
     )
-    
+
     survey = Survey.from_df(read_survey(reader_survey))
-    
+
     borehole_set = BoreholeSet(
         collars=collar,
         survey=survey,
@@ -101,4 +119,3 @@ def test_merge_collar_assay():
     if PLOT:
         s = to_pyvista_line(line_set=borehole_set.combined_trajectory, radius=50)
         pv_plot([s], image_2d=False)
-    

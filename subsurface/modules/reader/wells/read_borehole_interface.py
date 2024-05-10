@@ -5,6 +5,7 @@ from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
 import pandas as pd
 
 from subsurface.modules.reader.wells._read_to_df import check_format_and_read_to_df
+from subsurface.modules.reader.wells.wells_utils import add_tops_from_base_and_altitude_in_place
 
 
 def read_collar(reader_helper: GenericReaderFilesHelper) -> pd.DataFrame:
@@ -29,6 +30,21 @@ def read_survey(reader_helper: GenericReaderFilesHelper):
     return d_no_singles
 
 
+def read_lith(reader_helper: GenericReaderFilesHelper):
+    """Columns MUST contain:
+        - top
+        - base
+        - component lith
+    """
+    if reader_helper.index_col is False: reader_helper.index_col = 0
+
+    d = check_format_and_read_to_df(reader_helper)
+    _map_rows_and_cols_inplace(d, reader_helper)
+    lith_df = _validate_lith_data(d, reader_helper)
+
+    return lith_df
+
+
 def _map_rows_and_cols_inplace(d: pd.DataFrame, reader_helper: GenericReaderFilesHelper):
     if reader_helper.index_map is not None:
         d.rename(reader_helper.index_map, axis="index", inplace=True)  # d.index = d.index.map(reader_helper.index_map)
@@ -44,7 +60,7 @@ def _DEP_validate_survey_data(d):
     elif not np.isin(['md', 'inc', 'azi'], d.columns).all():
         warnings.warn(
             'inc and/or azi columns are not present in the file. The boreholes will be straight.')
-        
+
         d['inc'] = 0
         d['azi'] = 0
 
@@ -77,3 +93,22 @@ def _validate_survey_data(d):
     d_no_singles = d[d.index.duplicated(keep=False)]
 
     return d_no_singles
+
+
+def _validate_lith_data(d: pd.DataFrame, reader_helper: GenericReaderFilesHelper) -> pd.DataFrame:
+    given_top = np.isin(['top', 'base', 'component lith'], d.columns).all()
+    given_altitude_and_base = np.isin(['altitude', 'base', 'component lith'], d.columns).all()
+
+    if given_altitude_and_base and not given_top:
+        d = add_tops_from_base_and_altitude_in_place(
+            data=d,
+            col_well_name=reader_helper.index_col,
+            col_base='base',
+            col_altitude='altitude'
+        )
+
+    elif not given_top and not given_altitude_and_base:
+        raise ValueError('basis column must be present in the file. Use '
+                         'columns_map to assign column names to these fields.')
+    lith_df = d[['top', 'base', 'component lith']]
+    return lith_df
