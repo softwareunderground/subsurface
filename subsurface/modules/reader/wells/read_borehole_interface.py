@@ -30,7 +30,7 @@ def read_survey(reader_helper: GenericReaderFilesHelper):
     return d_no_singles
 
 
-def read_lith(reader_helper: GenericReaderFilesHelper):
+def read_lith(reader_helper: GenericReaderFilesHelper) -> pd.DataFrame:
     """Columns MUST contain:
         - top
         - base

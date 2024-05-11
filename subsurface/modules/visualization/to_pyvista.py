@@ -184,7 +184,6 @@ def to_pyvista_line(
             mesh.cell_data.update(line_set.data.attributes_to_dict)
             if active_scalar is not None:
                 mesh.set_active_scalars(active_scalar, preference='cell')
-            
     if as_tube is True:
         return mesh.tube(radius=radius)
     else:
