@@ -65,8 +65,8 @@ class BoreholeSet:
             combined_trajectory_unstruct = UnstructuredData.from_array(
                 vertex=combined_df_vertex[['X_survey', 'Y_survey', 'Z_survey']].values,
                 cells=combined_df_cells[['cell1', 'cell2']].values,
-                vertex_attr=combined_df_vertex[['well_id']],
-                cells_attr=combined_df_cells[['well_id_int', 'well_id']]
+                vertex_attr=survey.survey_trajectory.data.points_attributes,
+                cells_attr=survey.survey_trajectory.data.cell_attributes
             )
 
             self.combined_trajectory = LineSet(data=combined_trajectory_unstruct, radius=500)

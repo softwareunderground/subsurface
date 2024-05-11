@@ -153,6 +153,14 @@ class UnstructuredData:
         self.data[self.cells_attr_name] = xr.DataArray(dataframe, dims=['element', 'cell_attr'])
 
     @property
+    def cell_attributes(self):
+        return self.attributes
+    
+    @cell_attributes.setter
+    def cell_attributes(self, dataframe):
+        self.attributes = dataframe
+        
+    @property
     def points_attributes(self) -> pd.DataFrame:
         data_array: xr.DataArray = self.data[self.vertex_attr_name]
         dataframe: pd.DataFrame = data_array.to_dataframe()

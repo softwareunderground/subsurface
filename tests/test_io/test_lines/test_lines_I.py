@@ -155,9 +155,30 @@ def test_read_stratigraphy():
     )
     survey.survey_trajectory.data = arrays_dict
 
+
+    reader_collar: GenericReaderFilesHelper = GenericReaderFilesHelper(
+        file_or_buffer=os.getenv("PATH_TO_SPREMBERG_COLLAR"),
+        header=0,
+        usecols=[0, 1, 2, 4],
+        columns_map={
+                "hole_id"            : "id",  # ? Index name is not mapped
+                "X_GK5_incl_inserted": "x",
+                "Y__incl_inserted"   : "y",
+                "Z_GK"               : "z"
+        }
+    )
+    df_collar = read_collar(reader_collar)
+    collar = Collars.from_df(df_collar)
+    
+    borehole_set = BoreholeSet(
+        collars=collar,
+        survey=survey,
+        merge_option=MergeOptions.INTERSECT
+    )
+
     if PLOT and True:
         s = to_pyvista_line(
-            line_set=survey.survey_trajectory,
+            line_set=borehole_set.combined_trajectory,
             active_scalar="lith",
             radius=10
         )
