@@ -130,7 +130,7 @@ def test_read_stratigraphy():
     if PLOT and True:
         s = to_pyvista_line(
             line_set=borehole_set.combined_trajectory,
-            active_scalar="lith",
+            active_scalar="lith_ids",
             radius=10
         )
         pv_plot(

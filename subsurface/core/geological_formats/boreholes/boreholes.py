@@ -70,3 +70,5 @@ class BoreholeSet:
             )
 
             self.combined_trajectory = LineSet(data=combined_trajectory_unstruct, radius=500)
+            self.survey = survey
+            self.collar = collars
