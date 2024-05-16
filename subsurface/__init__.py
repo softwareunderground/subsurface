@@ -1,7 +1,7 @@
 import subsurface.modules.reader
 import subsurface.api.interfaces
 import subsurface.modules.writer
-import subsurface.modules.visualization
+from .modules import visualization
 from subsurface.core.structs import *
 from datetime import datetime
 import dotenv
