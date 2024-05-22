@@ -50,12 +50,6 @@ class LineSet:
         first_index = np.where(array[:-1] != array[1:])[0]
         return first_index
         
-        
-        
-        
-        
-        
-        
     
     def generate_default_cells(self):
         """ Method to generate cells based on the order of the vertex. This

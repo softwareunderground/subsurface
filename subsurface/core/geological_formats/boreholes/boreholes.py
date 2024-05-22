@@ -17,6 +17,7 @@ class MergeOptions(enum.Enum):
 
 @dataclass
 class BoreholeSet:
+    __slots__ = ['collars', 'survey', 'combined_trajectory']
     collars: Collars
     survey: Survey
     combined_trajectory: LineSet
@@ -71,4 +72,4 @@ class BoreholeSet:
 
             self.combined_trajectory = LineSet(data=combined_trajectory_unstruct, radius=500)
             self.survey = survey
-            self.collar = collars
+            self.collars = collars
