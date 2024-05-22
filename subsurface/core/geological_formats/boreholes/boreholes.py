@@ -1,3 +1,5 @@
+from typing import Hashable
+
 import enum
 import numpy as np
 import pandas as pd
@@ -73,3 +75,31 @@ class BoreholeSet:
             self.combined_trajectory = LineSet(data=combined_trajectory_unstruct, radius=500)
             self.survey = survey
             self.collars = collars
+
+    def compute_tops(self) -> dict[Hashable, np.ndarray]:
+        ds = self.combined_trajectory.data.data
+
+        # Convert vertex attributes to a DataFrame for easier manipulation
+        vertex_attrs_df = ds['vertex_attrs'].to_dataframe().reset_index()
+        vertex_attrs_df = vertex_attrs_df.pivot(index='points', columns='vertex_attr', values='vertex_attrs').reset_index()
+
+        # Convert vertex coordinates to a DataFrame
+        vertex_df = ds['vertex'].to_dataframe().reset_index()
+        vertex_df = vertex_df.pivot(index='points', columns='XYZ', values='vertex').reset_index()
+
+        # Merge the attributes with the vertex coordinates
+        merged_df = pd.merge(vertex_df, vertex_attrs_df, on='points')
+        # Create a dictionary to hold the numpy arrays for each component lith
+        component_lith_arrays = {}
+
+        # Iterate over each unique component lith
+        for lith, group in merged_df.groupby('component lith'):
+            lith = int(lith)
+            # Group by well_id to get the first vertex for each well
+            first_vertices = group.groupby('well_id').first().reset_index()
+            # Create a numpy array of shape (n, 4) with X, Y, Z, and component lith
+            array = first_vertices[['X', 'Y', 'Z']].values
+            # Store the array in the dictionary
+            component_lith_arrays[lith] = array
+            
+        return component_lith_arrays
