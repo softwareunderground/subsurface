@@ -6,7 +6,7 @@ import pandas as pd
 
 from dataclasses import dataclass
 
-from subsurface import UnstructuredData
+from ...structs.base_structures import UnstructuredData
 from .collars import Collars
 from .survey import Survey
 from ...structs import LineSet
@@ -76,7 +76,7 @@ class BoreholeSet:
             self.survey = survey
             self.collars = collars
 
-    def compute_tops(self) -> dict[Hashable, np.ndarray]:
+    def get_top_coords_for_each_lith(self) -> dict[Hashable, np.ndarray]:
         ds = self.combined_trajectory.data.data
 
         # Convert vertex attributes to a DataFrame for easier manipulation

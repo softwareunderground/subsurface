@@ -100,3 +100,11 @@ def require_wellpathpy():
     except ImportError:
         raise ImportError("The wellpathpy package is required to run this function.")
     return wellpathpy
+
+
+def require_subsurface():
+    try:
+        import subsurface
+    except ImportError:
+        raise ImportError("The subsurface package is required to run this function.")
+    return subsurface
