@@ -10,7 +10,7 @@ from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
 from subsurface.core.structs.base_structures.base_structures_enum import SpecialCellCase
 from subsurface.core.structs.unstructured_elements import PointSet
 from subsurface.modules.reader.wells.read_borehole_interface import read_collar, read_survey, read_lith
-from subsurface.modules.visualization import to_pyvista_points, pv_plot, to_pyvista_line
+from subsurface.modules.visualization import to_pyvista_points, pv_plot, to_pyvista_line, init_plotter
 
 dotenv.load_dotenv()
 
@@ -126,23 +126,38 @@ def test_read_stratigraphy():
         survey=survey,
         merge_option=MergeOptions.INTERSECT
     )
+    borehole_set.get_bottom_coords_for_each_lith()
+    
+    foo = borehole_set._merge_vertex_data_arrays_to_dataframe()
+    well_id_mapper: dict[str, int] = borehole_set.survey.id_to_well_id
+    # mapp well_id column to well_name
+    foo["well_name"] = foo["well_id"].map(well_id_mapper)
+    
 
     if PLOT and True:
+        trajectory = borehole_set.combined_trajectory
         s = to_pyvista_line(
-            line_set=borehole_set.combined_trajectory,
+            line_set=trajectory,
             active_scalar="lith_ids",
-            radius=10
+            radius=40
         )
-        pv_plot(
-            meshes=[s],
-            image_2d=False,
-            # discrete colormap for at least 32 lithologies
-            cmap="tab20",
-            add_mesh_kwargs=
-            {
-                    #'clim': [0, borehole_set.combined_trajectory.data.points_attributes['lith'].max()],
-            }
+        clim = [0, 20]
+        s = s.threshold(clim)
+
+        collar_mesh = to_pyvista_points(collar.collar_loc)
+
+        p = init_plotter()
+        p.add_mesh(s, clim=clim, cmap="tab20c")
+        p.add_mesh(collar_mesh, render_points_as_spheres=True)
+        p.add_point_labels(
+            points=collar.collar_loc.points,
+            labels=collar.ids,
+            point_size=10,
+            shape_opacity=0.5,
+            font_size=12,
+            bold=True
         )
+        p.show()
 
 
 def test_merge_collar_survey():

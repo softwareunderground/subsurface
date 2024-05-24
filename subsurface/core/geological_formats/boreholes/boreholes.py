@@ -42,8 +42,14 @@ class BoreholeSet:
                 raise ValueError(f"Collars and survey ids do not match. Missing in survey: {missing_from_survey}, Missing in collars: {missing_from_collar}")
 
         elif merge_option == MergeOptions.INTERSECT:
-            combined_df_vertex = pd.merge(collar_df, survey_df_vertex, on='well_id', suffixes=('_collar', '_survey'))  # Perform an inner join to only keep rows present in both DataFrames
+            combined_df_vertex = pd.merge(
+                left=survey_df_vertex, # ! Order matters a lot!
+                right=collar_df,
+                on='well_id', 
+                suffixes=('_collar', '_survey')
+            )  # Perform an inner join to only keep rows present in both DataFrames
 
+            foo = combined_df_vertex["well_id"].unique()
             # Adjust coordinates
             # Assuming we add the collar coordinates to each point of the survey trajectory
             combined_df_vertex['X_survey'] += combined_df_vertex['X_collar']
@@ -52,7 +58,8 @@ class BoreholeSet:
 
             combined_df_cells = []  # Create a DataFrame for the cells
             previous_index = 0
-            for e, well_id in enumerate(combined_df_vertex['well_id'].unique()):  # For each unique well_id in the combined_df_vertex DataFrame
+            # ! We have to revert the ids because we are using append
+            for e, well_id in enumerate(survey.ids):  # For each unique well_id in the combined_df_vertex DataFrame
                 df_vertex_well = combined_df_vertex[combined_df_vertex['well_id'] == well_id]  # Filter the DataFrame for the current well_id 
                 indices = np.arange(len(df_vertex_well)) + previous_index  # Create a range of indices for the current well
                 previous_index += len(df_vertex_well)
@@ -84,20 +91,19 @@ class BoreholeSet:
             first_vertices = group.groupby('well_id').first().reset_index()
             array = first_vertices[['X', 'Y', 'Z']].values
             component_lith_arrays[lith] = array
-            
+
         return component_lith_arrays
-    
+
     def get_bottom_coords_for_each_lith(self) -> dict[Hashable, np.ndarray]:
         merged_df = self._merge_vertex_data_arrays_to_dataframe()
         component_lith_arrays = {}
         for lith, group in merged_df.groupby('component lith'):
             lith = int(lith)
-            first_vertices = group.groupby('well_id').first().reset_index()
+            first_vertices = group.groupby('well_id').last().reset_index()
             array = first_vertices[['X', 'Y', 'Z']].values
             component_lith_arrays[lith] = array
-            
+
         return component_lith_arrays
-    
 
     def _merge_vertex_data_arrays_to_dataframe(self):
         ds = self.combined_trajectory.data.data

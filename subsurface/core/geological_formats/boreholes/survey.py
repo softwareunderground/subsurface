@@ -19,13 +19,19 @@ class Survey:
     survey_trajectory: LineSet
     well_id_mapper: dict[str, int] = None
     
+    @property
+    def id_to_well_id(self):
+        # Reverse the well_id_mapper dictionary to map IDs to well names
+        id_to_well_name_mapper = {v: k for k, v in self.well_id_mapper.items()}
+        return id_to_well_name_mapper
+    
     @classmethod
     def from_df(cls, df: 'pd.DataFrame'):
         trajectories: UnstructuredData = _data_frame_to_unstructured_data(
             df=_correct_angles(df)
         )
         # Grab the unique ids
-        unique_ids = df.index.get_level_values(0).unique().tolist()
+        unique_ids = trajectories.points_attributes["well_name"].unique()
         
         # fill well_id_mapper
         well_id_mapper = {well_id: e for e, well_id in enumerate(unique_ids)}
@@ -51,6 +57,7 @@ def _combine_survey_and_lith(lith: pd.DataFrame, survey: Survey) -> Unstructured
     # Import moved to top for clarity and possibly avoiding repeated imports if called multiple times
     from ...structs.base_structures._unstructured_data_constructor import raw_attributes_to_dict_data_arrays
 
+
     # Accessing trajectory data more succinctly
     trajectory = survey.survey_trajectory.data.data["vertex_attrs"]
     well_ids = trajectory.sel({'vertex_attr': 'well_id'})
@@ -61,6 +68,9 @@ def _combine_survey_and_lith(lith: pd.DataFrame, survey: Survey) -> Unstructured
 
     for index, row in lith.iterrows():
         well_id = survey.get_well_id(index)
+        if well_id is None:
+            print(f'Well ID {index} not found in survey trajectory. Skipping lithology assignment.')
+        
         well_id_mask = well_ids == well_id
         spatial_mask = ((depths <= row['top']) & (depths >= row['base']))
         mask = well_id_mask & spatial_mask
@@ -149,6 +159,7 @@ def _data_frame_to_unstructured_data(df: 'pd.DataFrame'):
         vertex_attr = pd.concat([vertex_attr, pd.DataFrame(
             {
                     'well_id': [e] * len(pos.depth),
+                    'well_name': borehole_id,
                     'depth': pos.depth,
              }
         )])
