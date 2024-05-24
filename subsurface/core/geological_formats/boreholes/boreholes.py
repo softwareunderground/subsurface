@@ -77,29 +77,37 @@ class BoreholeSet:
             self.collars = collars
 
     def get_top_coords_for_each_lith(self) -> dict[Hashable, np.ndarray]:
-        ds = self.combined_trajectory.data.data
-
-        # Convert vertex attributes to a DataFrame for easier manipulation
-        vertex_attrs_df = ds['vertex_attrs'].to_dataframe().reset_index()
-        vertex_attrs_df = vertex_attrs_df.pivot(index='points', columns='vertex_attr', values='vertex_attrs').reset_index()
-
-        # Convert vertex coordinates to a DataFrame
-        vertex_df = ds['vertex'].to_dataframe().reset_index()
-        vertex_df = vertex_df.pivot(index='points', columns='XYZ', values='vertex').reset_index()
-
-        # Merge the attributes with the vertex coordinates
-        merged_df = pd.merge(vertex_df, vertex_attrs_df, on='points')
-        # Create a dictionary to hold the numpy arrays for each component lith
+        merged_df = self._merge_vertex_data_arrays_to_dataframe()
         component_lith_arrays = {}
-
-        # Iterate over each unique component lith
         for lith, group in merged_df.groupby('component lith'):
             lith = int(lith)
-            # Group by well_id to get the first vertex for each well
             first_vertices = group.groupby('well_id').first().reset_index()
-            # Create a numpy array of shape (n, 4) with X, Y, Z, and component lith
             array = first_vertices[['X', 'Y', 'Z']].values
-            # Store the array in the dictionary
             component_lith_arrays[lith] = array
             
         return component_lith_arrays
+    
+    def get_bottom_coords_for_each_lith(self) -> dict[Hashable, np.ndarray]:
+        merged_df = self._merge_vertex_data_arrays_to_dataframe()
+        component_lith_arrays = {}
+        for lith, group in merged_df.groupby('component lith'):
+            lith = int(lith)
+            first_vertices = group.groupby('well_id').first().reset_index()
+            array = first_vertices[['X', 'Y', 'Z']].values
+            component_lith_arrays[lith] = array
+            
+        return component_lith_arrays
+    
+
+    def _merge_vertex_data_arrays_to_dataframe(self):
+        ds = self.combined_trajectory.data.data
+        # Convert vertex attributes to a DataFrame for easier manipulation
+        vertex_attrs_df = ds['vertex_attrs'].to_dataframe().reset_index()
+        vertex_attrs_df = vertex_attrs_df.pivot(index='points', columns='vertex_attr', values='vertex_attrs').reset_index()
+        # Convert vertex coordinates to a DataFrame
+        vertex_df = ds['vertex'].to_dataframe().reset_index()
+        vertex_df = vertex_df.pivot(index='points', columns='XYZ', values='vertex').reset_index()
+        # Merge the attributes with the vertex coordinates
+        merged_df = pd.merge(vertex_df, vertex_attrs_df, on='points')
+        # Create a dictionary to hold the numpy arrays for each component lith
+        return merged_df
