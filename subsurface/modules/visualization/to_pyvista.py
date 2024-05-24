@@ -36,7 +36,7 @@ def pv_plot(meshes: list,
     """
 
     add_mesh_kwargs = dict() if add_mesh_kwargs is None else add_mesh_kwargs
-    p: pv.Pll = init_plotter(image_2d, ve, plotter_kwargs, background_plotter)
+    p: pv.Pll = init_plotter(image_2d, ve, plotter_kwargs)
 
     for m in meshes:
         p.add_mesh(m, cmap=cmap, categories=True, **add_mesh_kwargs)
@@ -63,8 +63,7 @@ def pv_plot(meshes: list,
 def init_plotter(
         image_2d=False,
         ve=None,
-        plotter_kwargs: dict = None,
-        background_plotter=False
+        plotter_kwargs: dict = None
 ) -> pv.Plotter:
     plotter_kwargs = dict() if plotter_kwargs is None else plotter_kwargs
     off_screen = True if image_2d is True else None
