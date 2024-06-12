@@ -68,7 +68,7 @@ def test_read_survey():
             radius=10,
             active_scalar="well_id"
         )
-        pv_plot([s], image_2d=False)
+        pv_plot([s], image_2d=True)
 
     return survey
 
@@ -134,7 +134,7 @@ def test_read_stratigraphy():
     foo["well_name"] = foo["well_id"].map(well_id_mapper)
     
 
-    if PLOT and True:
+    if PLOT and False:
         trajectory = borehole_set.combined_trajectory
         s = to_pyvista_line(
             line_set=trajectory,
@@ -194,4 +194,4 @@ def test_merge_collar_survey():
 
     if PLOT:
         s = to_pyvista_line(line_set=borehole_set.combined_trajectory, radius=50)
-        pv_plot([s], image_2d=False)
+        pv_plot([s], image_2d=True)

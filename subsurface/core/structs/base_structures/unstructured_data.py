@@ -132,6 +132,14 @@ class UnstructuredData:
             ds = ds.reset_index('cell')
         except (KeyError, ValueError) as e:
             print(f"{e} xarray dataset must include 'cell' key (KeyError) or xarray 'cell' has no index (ValueError).")
+        
+        # Check that the Dataset data_vars names matches, "vertex", "cells", default_cells_attributes_name and default_points_attributes_name
+        # and raise an error pointing out which one is missing
+        _vars = [var in ds.data_vars for var in ["vertex", "cells", default_cells_attributes_name, default_points_attributes_name]]
+        if not all(_vars):
+            missing = ["vertex", "cells", default_cells_attributes_name, default_points_attributes_name]
+            raise KeyError(f"DataArray must include the following keys: {missing}. For attributes you can"
+                           f" change the default names with default_cells_attributes_name and default_points_attributes_name.")
 
         return cls(ds, default_cells_attributes_name, default_points_attributes_name)
 

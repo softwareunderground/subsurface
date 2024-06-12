@@ -60,11 +60,18 @@ def test_unstructured_data_no_cells_no_attributes():
                 pd.DataFrame({'foo': np.arange(4)}),
                 dims=['cell', 'cell_attr']
             )}
-
+    with pytest.raises(KeyError):
+        foo = UnstructuredData.from_array(
+            vertex=np.ones((5, 3)),
+            cells=np.ones((4, 3)),
+            cells_attr=attributes2,
+        )
+        
     foo = UnstructuredData.from_array(
         vertex=np.ones((5, 3)),
         cells=np.ones((4, 3)),
-        attributes=attributes2
+        cells_attr=attributes2,
+        default_cells_attr_name='notAttributeName'
     )
 
     print(foo)
