@@ -70,6 +70,9 @@ The difference between data levels is **not** which data they store but which da
 Documentation (WIP)
 -------------------
 
+**Disclaimer: The documentation is currently obsolete and has been unpublished. The best way to learn to use this library at this stage is by looking into the tests.**
+
+
 Note that ``subsurface`` is still in early days; do expect things to change. We
 welcome contributions very much, please get in touch if you would like to add
 support for subsurface in your package.
