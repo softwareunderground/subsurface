@@ -2,13 +2,13 @@ import pathlib
 import pytest
 
 from conftest import RequirementsLevel
-from subsurface.reader.volume.volume_utils import interpolate_unstructured_data_to_structured_data
-from subsurface.structs import PointSet, StructuredGrid
+from subsurface.modules.reader.volume.volume_utils import interpolate_unstructured_data_to_structured_data
+from subsurface.core.structs import PointSet, StructuredGrid
 
-from subsurface.reader.readers_data import ReaderFilesHelper
-from subsurface.reader.volume.read_volume import read_volumetric_mesh_coord_file, read_volumetric_mesh_attr_file, \
+from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
+from subsurface.modules.reader.volume.read_volume import read_volumetric_mesh_coord_file, read_volumetric_mesh_attr_file, \
     read_volumetric_mesh_to_subsurface
-from subsurface.visualization import to_pyvista_points, pv_plot, to_pyvista_grid
+from subsurface.modules.visualization import to_pyvista_points, pv_plot, to_pyvista_grid
 
 pf = pathlib.Path(__file__).parent.absolute()
 data_path = pf.joinpath('../../data/volume/')
@@ -21,7 +21,7 @@ pytestmark = pytest.mark.skipif(
 
 def test_volumetric_mesh_to_subsurface():
     ud = read_volumetric_mesh_to_subsurface(
-        ReaderFilesHelper(
+        GenericReaderFilesHelper(
             data_path.joinpath('mesh'),
             header=None,
             index_col=False,
@@ -33,7 +33,7 @@ def test_volumetric_mesh_to_subsurface():
                 "nrows": None,
             }
         ),
-        ReaderFilesHelper(
+        GenericReaderFilesHelper(
             data_path.joinpath('out_all00'),
             index_col=False,
             additional_reader_kwargs={"sep": ","}
@@ -56,7 +56,7 @@ def test_interpolate_ud_to_sd():
 
 def test_read_volumetric_mesh():
     vol_mesh_coord_df = read_volumetric_mesh_coord_file(
-        ReaderFilesHelper(
+        GenericReaderFilesHelper(
             data_path.joinpath('mesh'),
             header=None,
             index_col=False,
@@ -73,7 +73,7 @@ def test_read_volumetric_mesh():
     print(vol_mesh_coord_df)
 
     vol_mesh_attr_df = read_volumetric_mesh_attr_file(
-        ReaderFilesHelper(
+        GenericReaderFilesHelper(
             data_path.joinpath('out_all00'),
             index_col=False,
             additional_reader_kwargs={"sep": ","}

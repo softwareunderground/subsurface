@@ -2,9 +2,9 @@ import pytest
 
 from conftest import RequirementsLevel
 from subsurface import UnstructuredData, TriSurf, StructuredData, optional_requirements
-from subsurface.reader.profiles.profiles_core import create_mesh_from_trace, \
+from subsurface.modules.reader.profiles.profiles_core import create_mesh_from_trace, \
     create_tri_surf_from_traces_texture, lineset_from_trace
-from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_mesh_and_texture
+from subsurface.modules.visualization import to_pyvista_mesh, pv_plot, to_pyvista_mesh_and_texture
 import numpy as np
 
 

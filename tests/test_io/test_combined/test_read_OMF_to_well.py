@@ -4,8 +4,8 @@ from dotenv import dotenv_values
 import subsurface
 from conftest import RequirementsLevel
 from subsurface import LineSet, UnstructuredData, PointSet, optional_requirements
-from subsurface.visualization import pv_plot, to_pyvista_line, to_pyvista_points
-from subsurface.writer import base_structs_to_binary_file
+from subsurface.modules.visualization import pv_plot, to_pyvista_line, to_pyvista_points, PyvistaScalarType
+from subsurface.modules.writer import base_structs_to_binary_file
 
 pytestmark = pytest.mark.skipif(
     condition=(RequirementsLevel.READ_MESH) not in RequirementsLevel.REQUIREMENT_LEVEL_TO_TEST(),
@@ -48,12 +48,10 @@ def test_omf_to_cylinders(load_omf):
     collars_unstruct = UnstructuredData.from_array(
         vertex= line.data.vertex[index_of_collars],
         cells="points",
-        # cells_attr=collars_attributes.astype('float32'),
-        # xarray_attributes={"wells_names": wells_names.values.tolist()})  # TODO: This should be int16!
     )
 
     p = to_pyvista_points(point_set=PointSet(data=collars_unstruct))
-    s = to_pyvista_line(line, radius=10, as_tube=True, spline=False)
+    s = to_pyvista_line(line, radius=10, as_tube=True, spline=False, scalar_type=PyvistaScalarType.CELL)
     s.set_active_scalars("holeid")
 
     if TO_LIQUID_EARTH := False:

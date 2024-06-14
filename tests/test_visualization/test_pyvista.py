@@ -1,16 +1,16 @@
 import pytest
 
-from subsurface.structs import StructuredGrid
-from subsurface.structs.base_structures import UnstructuredData, StructuredData
-from subsurface.visualization.to_pyvista import to_pyvista_points, pv_plot, \
+from subsurface.core.structs import StructuredGrid
+from subsurface.core.structs.base_structures import UnstructuredData, StructuredData
+from subsurface.modules.visualization.to_pyvista import to_pyvista_points, pv_plot, \
     to_pyvista_mesh, to_pyvista_line, to_pyvista_tetra, to_pyvista_grid
 import xarray as xr
 
 pv = pytest.importorskip("pyvista")
 
 
-def test_pyvista_points(point_set):
-    s = to_pyvista_points(point_set)
+def test_pyvista_points(point_set_fixture):
+    s = to_pyvista_points(point_set_fixture)
     pv_plot([s], image_2d=True)
 
 

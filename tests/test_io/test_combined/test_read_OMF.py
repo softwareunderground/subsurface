@@ -3,9 +3,10 @@ from dotenv import dotenv_values
 
 import subsurface
 from conftest import RequirementsLevel
-from subsurface import TriSurf, optional_requirements
-from subsurface.visualization import to_pyvista_mesh, pv_plot
-from subsurface.writer import base_structs_to_binary_file
+from subsurface import optional_requirements, TriSurf
+from subsurface.modules.visualization import to_pyvista_mesh, pv_plot
+from subsurface.modules.writer import base_structs_to_binary_file
+
 
 import pytest
 
@@ -73,7 +74,7 @@ def test_omf_from_stream_to_unstruct_all_surfaces():
     config = dotenv_values()
     path = config.get('PATH_TO_OMF')
     with open(path, "rb") as stream:
-        list_unstructs = subsurface.reader.omf_stream_to_unstructs(stream)
+        list_unstructs = subsurface.modules.reader.omf_stream_to_unstructs(stream)
 
     list_of_polydata: list[pyvista.PolyData] = []
     for unstruct in list_unstructs:

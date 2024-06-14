@@ -4,7 +4,4 @@ prune tests
 prune .github
 exclude CHANGELOG.rst
 exclude MANIFEST.in
-exclude requirements.txt
-exclude requirements_dev.txt
-exclude requirements_opt.txt
 exclude .gitignore

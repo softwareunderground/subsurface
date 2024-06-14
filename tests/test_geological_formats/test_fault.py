@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
-from subsurface.reader.faults import faults
-from subsurface.geological_formats.fault import FaultSticks
+from subsurface.modules.reader.faults import faults
+from subsurface.core.geological_formats.fault import FaultSticks
 import os
 
 input_path = os.path.dirname(__file__)+'/../data/faults'

@@ -1,11 +1,12 @@
 import pytest
 
 from conftest import RequirementsLevel
-from subsurface.structs import UnstructuredData
+from subsurface.core.structs import UnstructuredData
 from subsurface import TriSurf, PointSet, optional_requirements
-from subsurface.reader.mesh.surfaces_api import read_2d_mesh_to_unstruct
-from subsurface.reader.readers_data import ReaderUnstructuredHelper, ReaderFilesHelper
-import subsurface.visualization as sb_viz
+from subsurface.modules.reader.mesh.surfaces_api import read_2d_mesh_to_unstruct
+from subsurface.core.reader_helpers.readers_data import GenericReaderFilesHelper
+from subsurface.core.reader_helpers.reader_unstruct import ReaderUnstructuredHelper
+import subsurface.modules.visualization as sb_viz
 
 import numpy as np
 import pandas
@@ -19,7 +20,7 @@ class TestReadDxfAndPlot:
     def test_read_dxf_only_vertex(self, data_path):
         path = data_path + '/surfaces/shafts_small.dxf'
 
-        foo = ReaderUnstructuredHelper(ReaderFilesHelper(path))
+        foo = ReaderUnstructuredHelper(GenericReaderFilesHelper(path))
 
         unstruct = read_2d_mesh_to_unstruct(foo, delaunay=False)
 
@@ -30,7 +31,7 @@ class TestReadDxfAndPlot:
 
     def test_read_dxf_into_mesh(self, data_path):
         path = data_path + '/surfaces/shafts_small.dxf'
-        from subsurface.reader.mesh.dxf_reader import dxf_file_to_unstruct_input
+        from subsurface.modules.reader.mesh.dxf_reader import dxf_file_to_unstruct_input
 
         vertex, cells, cell_attr_int, cell_attr_map = dxf_file_to_unstruct_input(path)
 
@@ -59,7 +60,7 @@ class TestReadDxfAndPlot:
 
     def test_read_dxf_into_mesh_split_by_bodies(self, data_path):
         path = data_path + '/surfaces/shafts_small.dxf'
-        from subsurface.reader.mesh.dxf_reader import dxf_file_to_unstruct_input
+        from subsurface.modules.reader.mesh.dxf_reader import dxf_file_to_unstruct_input
         import trimesh
         import numpy as np
         import pandas
@@ -100,7 +101,7 @@ class TestReadDxfAndPlot:
 class TestReadDxfNoPlot:
     def test_read_dxf_into_dirty_mesh(self, data_path):
         path = data_path + '/surfaces/shafts_small.dxf'
-        from subsurface.reader.mesh.dxf_reader import dxf_file_to_unstruct_input
+        from subsurface.modules.reader.mesh.dxf_reader import dxf_file_to_unstruct_input
         vertex, cells, cell_attr, cell_attr_map = dxf_file_to_unstruct_input(path)
         print("Vertex shape: ", vertex.shape)
 

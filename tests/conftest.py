@@ -2,8 +2,8 @@ import enum
 
 import pytest
 
-from subsurface.structs import PointSet, TriSurf, LineSet, TetraMesh
-from subsurface.structs.base_structures import UnstructuredData
+from subsurface.core.structs.unstructured_elements import PointSet, TriSurf, LineSet, TetraMesh
+from subsurface.core.structs.base_structures import UnstructuredData
 import numpy as np
 import pandas as pd
 import os
@@ -42,12 +42,17 @@ def data_path():
 
 @pytest.fixture(scope='session')
 def unstruct_factory():
-    foo = UnstructuredData.from_array(np.ones((5, 3)), np.ones((4, 3)), pd.DataFrame({'foo': np.arange(4)}))
+    foo = UnstructuredData.from_array(
+        vertex=np.ones((5, 3)),
+        cells=np.ones((4, 3)),
+        cells_attr=pd.DataFrame({'foo': np.arange(4)}),
+        vertex_attr=None
+    )
     return foo
 
 
 @pytest.fixture(scope='session')
-def point_set():
+def point_set_fixture():
     n = 100
 
     data = UnstructuredData.from_array(vertex=np.random.rand(n, 3), cells=np.random.rand(n, 0),

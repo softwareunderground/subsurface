@@ -92,3 +92,19 @@ def require_pandas():
     except ImportError:
         raise ImportError("The pandas package is required to run this function.")
     return pd
+
+
+def require_wellpathpy():
+    try:
+        import wellpathpy
+    except ImportError:
+        raise ImportError("The wellpathpy package is required to run this function.")
+    return wellpathpy
+
+
+def require_subsurface():
+    try:
+        import subsurface
+    except ImportError:
+        raise ImportError("The subsurface package is required to run this function.")
+    return subsurface

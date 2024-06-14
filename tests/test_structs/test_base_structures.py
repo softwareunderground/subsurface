@@ -2,16 +2,16 @@ import pytest
 
 from conftest import RequirementsLevel, check_requirements
 from subsurface import TriSurf, StructuredGrid
-from subsurface.reader.read_netcdf import read_unstruct, read_struct
-from subsurface.reader.topography.topo_core import read_structured_topography
+from subsurface.modules.reader.read_netcdf import read_unstruct, read_struct
+from subsurface.modules.reader.topography.topo_core import read_structured_topography
 
-from subsurface.structs.base_structures import UnstructuredData, StructuredData
+from subsurface.core.structs.base_structures import UnstructuredData, StructuredData
 import numpy as np
 import pandas as pd
 import xarray as xr
 
-from subsurface.structs.base_structures.common_data_utils import replace_outliers
-from subsurface.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
+from subsurface.core.utils.utils_core import replace_outliers
+from subsurface.modules.visualization import to_pyvista_mesh, pv_plot, to_pyvista_grid
 
 
 def test_unstructured_data():
@@ -60,11 +60,18 @@ def test_unstructured_data_no_cells_no_attributes():
                 pd.DataFrame({'foo': np.arange(4)}),
                 dims=['cell', 'cell_attr']
             )}
-
+    with pytest.raises(KeyError):
+        foo = UnstructuredData.from_array(
+            vertex=np.ones((5, 3)),
+            cells=np.ones((4, 3)),
+            cells_attr=attributes2,
+        )
+        
     foo = UnstructuredData.from_array(
         vertex=np.ones((5, 3)),
         cells=np.ones((4, 3)),
-        attributes=attributes2
+        cells_attr=attributes2,
+        default_cells_attr_name='notAttributeName'
     )
 
     print(foo)
